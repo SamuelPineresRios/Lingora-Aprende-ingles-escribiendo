@@ -13,7 +13,7 @@ import { StepHintStack, type StepHint } from './StepHintToast'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { readJson } from '@/lib/api'
-import { avatarUrl } from '@/lib/avatar'
+import { avatarUrl, type AvatarGender } from '@/lib/avatar'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { IntroductionPlayer } from '@/components/IntroductionPlayer'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
@@ -21,10 +21,10 @@ import { ConversationLog } from '@/components/ConversationLog'
 
 
 /** Avatar pequeño del personaje para el chat: el mismo de la escena. */
-function ChatAvatar({ name }: { name: string }) {
+function ChatAvatar({ name, gender }: { name: string; gender?: AvatarGender }) {
   return (
     <img
-      src={avatarUrl(name)}
+      src={avatarUrl(name, gender)}
       alt=""
       className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]"
     />
@@ -456,6 +456,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   }, [state, introduction, loadingIntroduction, introductionError, ensureIntroduction])
 
 
+
   const handleKeyDown = (e: React.KeyboardEvent) => { 
       if (e.key === 'Enter' && !e.shiftKey) { 
           e.preventDefault(); 
@@ -630,6 +631,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   }
 
   const usedPhrases = messages.filter(message => message.role === 'user')
+  /** Género del personaje que interpreta la IA, para que el avatar del chat coincida. */
+  const characterGender = introduction?.characters.find(character => character.played_by === 'ai')?.gender
 
   return (
     <div className="h-screen flex flex-col w-full px-4 pt-4 pb-4 relative overflow-hidden">
@@ -704,7 +707,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
               
               return (
                   <div key={i} className={cn("flex gap-2 mb-4", isUser ? "flex-row-reverse items-end" : "items-end")}>
-                      {!isUser && <ChatAvatar name={mission.character_name} />}
+                      {!isUser && <ChatAvatar name={mission.character_name} gender={characterGender} />}
                       <div className="flex flex-col gap-1">
                           <span className={cn("text-[9px] uppercase tracking-wider opacity-60", isUser ? "text-emerald text-right" : "text-cyan")}>
                               {isUser ? 'YOU' : mission.character_name}
@@ -752,7 +755,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           
           {isThinking && (
               <div className="flex gap-2 items-end animate-pulse">
-                  <ChatAvatar name={mission.character_name} />
+                  <ChatAvatar name={mission.character_name} gender={characterGender} />
                   <div className="flex flex-col gap-1">
                       <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
                       <div className="bg-cyan/5 border border-cyan/10 text-cyan px-3 py-2 rounded-2xl rounded-tl-none text-xs">
@@ -764,7 +767,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
           {startError && messages.length === 0 && (
               <div className="flex gap-2 items-end">
-                  <ChatAvatar name={mission.character_name} />
+                  <ChatAvatar name={mission.character_name} gender={characterGender} />
                   <div className="flex flex-col gap-1">
                       <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
                       <div className="bg-coral/10 border border-coral/30 text-red-100 px-4 py-3 rounded-2xl rounded-tl-none text-sm space-y-2 max-w-md">

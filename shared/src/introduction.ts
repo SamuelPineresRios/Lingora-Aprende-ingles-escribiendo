@@ -19,6 +19,11 @@ export interface IntroductionCharacter {
   role: string
   emoji: string
   played_by: IntroductionRole
+  /**
+   * Género del personaje, decidido al generar la escena: el avatar se pinta
+   * acorde (pelo, barba y ropa). Falta en las escenas anteriores a la función.
+   */
+  gender?: 'male' | 'female'
 }
 
 export interface IntroductionLine {

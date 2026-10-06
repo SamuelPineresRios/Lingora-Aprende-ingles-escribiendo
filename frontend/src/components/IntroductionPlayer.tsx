@@ -118,7 +118,7 @@ function CharacterStage({
         {/* El sprite voxel-art ya trae el personaje completo y centrado en su
             lienzo cuadrado: se muestra entero, sin marco ni recortes. */}
         <img
-          src={avatarUrl(character.name)}
+          src={avatarUrl(character.name, character.gender)}
           alt={character.name}
           className={cn('h-full w-full', speaking && theme.glow)}
         />

@@ -42,8 +42,8 @@ function validScene(overrides: Record<string, unknown> = {}) {
     scene_title: 'Llamada al soporte',
     scene_description: 'Una oficina moderna con un computador averiado.',
     characters: [
-      { id: 'A', name: 'Tech Support', role: 'Agente de soporte', emoji: '🖥️', played_by: 'ai' },
-      { id: 'B', name: 'Alex', role: 'Empleado', emoji: '👨‍💼', played_by: 'student' },
+      { id: 'A', name: 'Tech Support', role: 'Agente de soporte', emoji: '🖥️', played_by: 'ai', gender: 'female' },
+      { id: 'B', name: 'Alex', role: 'Empleado', emoji: '👨‍💼', played_by: 'student', gender: 'male' },
     ],
     lines: [
       { speaker: 'A', text: 'How can I help you today?', translation: '¿Cómo puedo ayudarte?' },
@@ -96,6 +96,7 @@ describe('GET /api/missions/:id/introduction', () => {
     expect(res.body.introduction.scene_title).toBe('Llamada al soporte')
     expect(res.body.introduction.lines).toHaveLength(4)
     expect(res.body.introduction.characters).toHaveLength(2)
+    expect(res.body.introduction.characters[1]).toMatchObject({ name: 'Alex', gender: 'male' })
     expect(res.body.introduction.backdrop).toEqual({
       kind: 'office',
       style: 'blueprint',

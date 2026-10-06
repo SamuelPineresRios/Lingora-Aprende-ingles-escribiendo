@@ -73,9 +73,14 @@ function validateIntroduction(raw: MissionIntroduction): MissionIntroduction {
     throw new Error('La escena no tiene título o descripción')
   }
 
-  // El fondo no bloquea la escena: si el modelo lo trae mal, se descarta y el
-  // frontend usa su fondo de respaldo por palabras clave.
-  return { ...raw, backdrop: sanitizeBackdrop(raw.backdrop) }
+  // Un género raro se descarta (el avatar cae a su variante neutra) y el fondo
+  // tampoco bloquea: si viene mal, el frontend usa el respaldo por palabras clave.
+  const sanitizedCharacters = raw.characters.map(character => ({
+    ...character,
+    gender: character.gender === 'male' || character.gender === 'female' ? character.gender : undefined,
+  }))
+
+  return { ...raw, characters: sanitizedCharacters, backdrop: sanitizeBackdrop(raw.backdrop) }
 }
 
 /** Datos de la misión que alimentan la generación. */

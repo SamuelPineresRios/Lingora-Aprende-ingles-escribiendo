@@ -95,8 +95,13 @@ export const INTRODUCTION_SCHEMA: JsonSchema = {
             enum: ['ai', 'student'],
             description: "'ai' lo interpretará el asistente; 'student' es el papel que asumirá el alumno.",
           },
+          gender: {
+            type: 'string',
+            enum: ['male', 'female'],
+            description: "Género del personaje, coherente con su nombre y su papel.",
+          },
         },
-        required: ['id', 'name', 'role', 'emoji', 'played_by'],
+        required: ['id', 'name', 'role', 'emoji', 'played_by', 'gender'],
         additionalProperties: false,
       },
     },
@@ -142,6 +147,7 @@ ${source.exampleConversation ? `REFERENCE CONVERSATION provided by the teacher (
 
 RULES
 1. Exactly TWO characters: one with played_by "ai" and one with played_by "student".
+1b. Give each character a gender ("male" or "female") that fits their name and role. If the name is ambiguous (Alex, Sam, Jordan…), pick the most likely one for that role and stay consistent with it.
 2. The character played_by "ai" MUST be named exactly "${source.characterName ?? 'Assistant'}". Never rename that character.
 3. The character played_by "student" is a natural counterpart (customer, passenger, patient...). Never name it after the student.
 4. 4 to 6 lines in total, alternating speakers, starting with the character played_by "ai" greeting the other.
@@ -181,4 +187,54 @@ RULES
 3. light: day, sunset or night, as the scene suggests.
 4. palette: THREE hex colors (#rrggbb): the first for the sky or base, the second for the mid distance, the third as an accent (objects and lights). They must feel like this place and time of day.
 5. props: up to 4 short English words with the details that make it recognizable (e.g. "skyline", "plants", "rain").`
+}
+
+/** Esquema suelto: solo el género de los personajes de una escena ya guardada. */
+export const GENDERS_SCHEMA: JsonSchema = {
+  type: 'object',
+  properties: {
+    characters: {
+      type: 'array',
+      description: 'Un elemento por personaje, con su id y su género.',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', enum: ['A', 'B'] },
+          gender: { type: 'string', enum: ['male', 'female'] },
+        },
+        required: ['id', 'gender'],
+        additionalProperties: false,
+      },
+    },
+  },
+  required: ['characters'],
+  additionalProperties: false,
+}
+
+/**
+ * Prompt suelto para pedir SOLO el género de una escena ya existente.
+ *
+ * Lo usa el script que rellena las introducciones cacheadas antes de que
+ * existiera el campo; comparte con la introducción la misma regla.
+ */
+export function buildGendersPrompt(source: {
+  title: string
+  sceneContext: string | null
+  sceneDescription: string
+  characters: Array<{ id: string; name: string; role: string }>
+}): string {
+  return `Assign a gender to each character of this language-learning scene. Return ONLY valid JSON.
+
+MISSION
+- Title: ${source.title}
+- Scene: ${source.sceneContext ?? '(none)'}
+- Scene description: ${source.sceneDescription}
+
+CHARACTERS
+${source.characters.map(character => `- id "${character.id}": ${character.name} (${character.role})`).join('\n')}
+
+RULES
+1. gender must be "male" or "female".
+2. It must fit the character's name and role. If the name is ambiguous (Alex, Sam, Jordan…), pick the most likely one for that role.
+3. Return exactly one entry per character id.`
 }

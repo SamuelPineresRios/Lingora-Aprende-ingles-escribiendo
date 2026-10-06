@@ -13,6 +13,7 @@
     "db:push:test": "DATABASE_URL=postgresql://postgres@127.0.0.1:5432/vox_test drizzle-kit push",
     "backdrops:backfill": "node --env-file-if-exists=.env.local scripts/backfill-backdrops.ts",
     "vocabulary:backfill": "node --env-file-if-exists=.env.local scripts/backfill-vocabulary.ts",
+    "genders:backfill": "node --env-file-if-exists=.env.local scripts/backfill-genders.ts",
     "xp:backfill": "node --env-file-if-exists=.env.local scripts/backfill-xp.ts",
     "missions:generate": "node --env-file-if-exists=.env.local scripts/generate-missions.ts",
     "missions:seed": "node --env-file-if-exists=.env.local scripts/seed-missions.ts",
