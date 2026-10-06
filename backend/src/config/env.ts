@@ -42,6 +42,17 @@ export const env = {
   /** Modelo de Claude; por defecto Haiku 4.5 con snapshot fijado. */
   anthropicModel: process.env.ANTHROPIC_MODEL?.trim() || null,
   /**
+   * Proveedor de IA: `anthropic` (por defecto) u `openai` para cualquier API
+   * compatible con OpenAI (OpenRouter, DeepSeek, Groq, Ollama…).
+   */
+  aiProvider: process.env.AI_PROVIDER?.trim().toLowerCase() === 'openai' ? ('openai' as const) : ('anthropic' as const),
+  /** URL base del proveedor compatible (sin la ruta final). */
+  aiBaseUrl: process.env.AI_BASE_URL?.trim() || 'https://openrouter.ai/api/v1',
+  /** Clave del proveedor compatible con OpenAI. */
+  aiApiKey: process.env.AI_API_KEY?.trim() || null,
+  /** Modelo del proveedor compatible; por defecto Haiku 4.5 vía OpenRouter. */
+  aiModel: process.env.AI_MODEL?.trim() || 'anthropic/claude-haiku-4.5',
+  /**
    * Opcional: mientras esté vacía, las rutas de voz responden 503 y el
    * navegador usa su voz nativa si la tiene.
    */

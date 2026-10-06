@@ -8,21 +8,30 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 // El cliente de IA no debe depender del entorno real para probar su formato:
-// se inyecta una config con clave y sin modelo explícito.
-vi.mock('../src/config/env.ts', () => ({
-  env: {
-    nodeEnv: 'test',
-    isProduction: false,
-    port: 0,
-    databaseUrl: 'postgresql://no-se-usa',
-    jwtSecret: 'test-jwt-secret-de-al-menos-32-caracteres',
-    anthropicApiKey: 'test-anthropic-key',
-    anthropicModel: null,
-    adminEmails: [],
-  },
+// se inyecta una config mutable (los tests cambian de proveedor a voluntad).
+const mockEnv = vi.hoisted(() => ({
+  nodeEnv: 'test',
+  isProduction: false,
+  port: 0,
+  databaseUrl: 'postgresql://no-se-usa',
+  jwtSecret: 'test-jwt-secret-de-al-menos-32-caracteres',
+  anthropicApiKey: 'test-anthropic-key' as string | null,
+  anthropicModel: null as string | null,
+  aiProvider: 'anthropic' as 'anthropic' | 'openai',
+  aiBaseUrl: 'https://openrouter.ai/api/v1',
+  aiApiKey: null as string | null,
+  aiModel: 'anthropic/claude-haiku-4.5',
+  adminEmails: [],
 }))
 
-import { AIProviderError, completeChat } from '../src/lib/ai.ts'
+vi.mock('../src/config/env.ts', () => ({ env: mockEnv }))
+
+import {
+  AIProviderError,
+  completeChat,
+  providerBlockedForMs,
+  resetProviderCooldown,
+} from '../src/lib/ai.ts'
 
 const fetchMock = vi.fn()
 
@@ -48,6 +57,11 @@ function sentBody(): Record<string, unknown> {
 beforeEach(() => {
   fetchMock.mockReset()
   vi.stubGlobal('fetch', fetchMock)
+  // Cada test arranca con Anthropic configurado y sin cortafuegos heredado.
+  resetProviderCooldown()
+  mockEnv.aiProvider = 'anthropic'
+  mockEnv.anthropicApiKey = 'test-anthropic-key'
+  mockEnv.aiApiKey = null
 })
 
 afterEach(() => {
@@ -258,5 +272,122 @@ describe('respuesta y errores', () => {
     await expect(
       completeChat({ messages: [{ role: 'user', content: 'Hola' }] }),
     ).rejects.toBeInstanceOf(AIProviderError)
+  })
+})
+
+describe('proveedor compatible con OpenAI', () => {
+  it('traduce la petición a chat completions y lee la respuesta', async () => {
+    mockEnv.aiProvider = 'openai'
+    mockEnv.aiApiKey = 'test-openrouter-key'
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ choices: [{ message: { content: 'Respuesta final' } }] }), {
+        status: 200,
+      }),
+    )
+
+    await expect(
+      completeChat({
+        messages: [
+          { role: 'system', content: 'Reglas' },
+          { role: 'user', content: 'Hola' },
+        ],
+        schema: { type: 'object' },
+        maxTokens: 500,
+      }),
+    ).resolves.toBe('Respuesta final')
+
+    const [url, init] = fetchMock.mock.calls[0]!
+    expect(String(url)).toBe('https://openrouter.ai/api/v1/chat/completions')
+    expect((init?.headers as Record<string, string>).Authorization).toBe('Bearer test-openrouter-key')
+
+    const body = JSON.parse(String(init?.body)) as {
+      model: string
+      messages: Array<{ role: string; content: string }>
+      max_tokens: number
+      response_format: { json_schema: { schema: unknown } }
+    }
+    expect(body.model).toBe('anthropic/claude-haiku-4.5')
+    expect(body.messages[0]).toEqual({ role: 'system', content: 'Reglas' })
+    expect(body.max_tokens).toBe(500)
+    expect(body.response_format.json_schema.schema).toEqual({ type: 'object' })
+  })
+
+  it('si el proveedor rechaza response_format, reintenta con el esquema en el prompt', async () => {
+    mockEnv.aiProvider = 'openai'
+    mockEnv.aiApiKey = 'test-key'
+    fetchMock
+      .mockResolvedValueOnce(
+        new Response('{"error":{"message":"response_format is not supported"}}', { status: 400 }),
+      )
+      .mockImplementationOnce(() =>
+        Promise.resolve(
+          new Response(JSON.stringify({ choices: [{ message: { content: '{"ok":true}' } }] }), {
+            status: 200,
+          }),
+        ),
+      )
+
+    const result = await completeChat({
+      messages: [{ role: 'user', content: 'Hola' }],
+      schema: { type: 'object', properties: { ok: { type: 'boolean' } } },
+    })
+
+    expect(result).toBe('{"ok":true}')
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+    const secondBody = JSON.parse(String(fetchMock.mock.calls[1]![1]?.body)) as {
+      response_format?: unknown
+      messages: Array<{ role: string; content: string }>
+    }
+    expect(secondBody.response_format).toBeUndefined()
+    expect(secondBody.messages[0]!.content).toContain('esquema JSON')
+  })
+
+  it('sin clave responde 503 de configuración sin llamar al proveedor', async () => {
+    mockEnv.aiProvider = 'openai'
+    mockEnv.aiApiKey = null
+
+    const error = (await completeChat({ messages: [{ role: 'user', content: 'Hola' }] }).catch(
+      (err: unknown) => err,
+    )) as { status?: number }
+
+    expect(error.status).toBe(503)
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('una respuesta sin contenido se traduce a AIProviderError', async () => {
+    mockEnv.aiProvider = 'openai'
+    mockEnv.aiApiKey = 'test-key'
+    fetchMock.mockResolvedValue(new Response(JSON.stringify({ choices: [] }), { status: 200 }))
+
+    await expect(
+      completeChat({ messages: [{ role: 'user', content: 'Hola' }] }),
+    ).rejects.toBeInstanceOf(AIProviderError)
+  })
+})
+
+describe('cortafuegos del proveedor', () => {
+  it('un error no recuperable bloquea las llamadas siguientes sin tocar la red', async () => {
+    fetchMock.mockResolvedValue(new Response('{"error":"credit balance is too low"}', { status: 400 }))
+
+    await completeChat({ messages: [{ role: 'user', content: 'Hola' }] }).catch(() => {})
+    const llamadas = fetchMock.mock.calls.length
+
+    const error = (await completeChat({ messages: [{ role: 'user', content: 'Otra' }] }).catch(
+      (err: unknown) => err,
+    )) as AIProviderError
+
+    expect(error.status).toBe(503)
+    expect(fetchMock.mock.calls.length).toBe(llamadas)
+    expect(providerBlockedForMs()).toBeGreaterThan(0)
+  })
+
+  it('el enfriamiento se puede reiniciar', async () => {
+    fetchMock.mockResolvedValue(new Response('bad request', { status: 400 }))
+
+    await completeChat({ messages: [{ role: 'user', content: 'Hola' }] }).catch(() => {})
+    expect(providerBlockedForMs()).toBeGreaterThan(0)
+
+    resetProviderCooldown()
+    expect(providerBlockedForMs()).toBe(0)
   })
 })
