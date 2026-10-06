@@ -9,6 +9,7 @@ const config: Config = {
       fontFamily: { 
         display: ["'Sora'","sans-serif"], 
         body: ["'DM Sans'","sans-serif"], 
+        reading: ["'Literata'","Georgia","serif"], 
         mono: ["'JetBrains Mono'","monospace"],
         tech: ["'Orbitron'", "sans-serif"],
         techBody: ["'Rajdhani'", "sans-serif"],

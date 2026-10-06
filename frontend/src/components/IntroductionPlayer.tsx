@@ -84,11 +84,18 @@ function CharacterStage({
   character,
   speaking,
   finished,
+  mirrored,
   mouthRef,
 }: {
   character: IntroductionCharacter
   speaking: boolean
   finished: boolean
+  /**
+   * El personaje de la derecha se pinta en espejo para que mire hacia el de la
+   * izquierda; se voltea el bloque entero (avatar + boca) y los textos de
+   * debajo quedan fuera, así que no se invierten.
+   */
+  mirrored?: boolean
   /** Pieza de la boca: el reproductor le escribe el nivel por CSS. */
   mouthRef: RefObject<HTMLSpanElement>
 }) {
@@ -104,6 +111,7 @@ function CharacterStage({
           // Sin marco: el sprite va suelto sobre la escena y la sombra es un
           // `drop-shadow`, que sigue su silueta en vez de dibujar una caja.
           'relative aspect-square w-[min(42vw,11rem,36vh)] sm:w-[min(29vw,25rem,38vh)] [@media(min-height:840px)]:sm:w-[min(29vw,25rem,42vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
+          mirrored && '-scale-x-100',
           !speaking && 'opacity-55 grayscale',
         )}
       >
@@ -440,7 +448,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip }
         variant="scene"
         className="opacity-80"
       />
-      <div className="absolute inset-0 bg-slate-950/40" />
+      <div className="absolute inset-0 bg-slate-950/55" />
 
       {/* Cabecera */}
       <header className="relative z-10 shrink-0 flex items-center justify-between gap-4 px-6 py-4">
@@ -472,12 +480,13 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip }
           burbuja (que vive en su propio bloque al pie). */}
       <div className="relative z-10 flex-1 min-h-0 flex items-center justify-center px-1 sm:px-6 py-4">
         <div className="grid w-full grid-cols-2 gap-1 sm:gap-16 items-end justify-items-center">
-          {introduction.characters.map(character => (
+          {introduction.characters.map((character, index) => (
             <CharacterStage
               key={character.id}
               character={character}
               speaking={!finished && speaker?.id === character.id}
               finished={finished}
+              mirrored={index === 1}
               mouthRef={character.id === 'A' ? mouthARef : mouthBRef}
             />
           ))}
@@ -528,7 +537,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip }
                   </div>
                 </div>
 
-                <p className={cn('text-xl sm:text-2xl leading-relaxed font-medium', speaker ? ROLE_THEME[speaker.id].text : 'text-slate-100')}>
+                <p className={cn('font-reading text-xl sm:text-2xl leading-relaxed font-medium tracking-[0.01em]', speaker ? ROLE_THEME[speaker.id].text : 'text-slate-100')}>
                   {lineComplete ? (
                     <InteractiveWords text={line.text} context={line.text} />
                   ) : (
@@ -537,7 +546,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip }
                 </p>
 
                 {showTranslations && lineComplete && (
-                  <p className="mt-3 pt-3 border-t border-white/10 text-[15px] italic text-emerald-200/90 animate-in fade-in duration-500">
+                  <p className="font-reading mt-3 pt-3 border-t border-white/10 text-[15px] italic text-emerald-200/90 animate-in fade-in duration-500">
                     {line.translation}
                   </p>
                 )}
