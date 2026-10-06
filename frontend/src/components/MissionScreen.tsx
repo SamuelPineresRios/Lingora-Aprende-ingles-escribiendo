@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import type { MissionIntroduction } from '@vox/shared'
+import type { MissionBackdrop as MissionBackdropSpec, MissionIntroduction } from '@vox/shared'
 import { useNavigate } from 'react-router-dom'
 import { Timer } from './Timer'
 import { TypewriterMessage } from './TypewriterMessage'
@@ -14,7 +14,9 @@ import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { readJson } from '@/lib/api'
 import { avatarUrl } from '@/lib/avatar'
+import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { IntroductionPlayer } from '@/components/IntroductionPlayer'
+import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { ConversationLog } from '@/components/ConversationLog'
 
 
@@ -36,6 +38,8 @@ interface Mission {
   key_verbs?: string[]
   useful_phrases?: string[]
   grammar_tips?: string
+  /** Dirección de arte del fondo; nula si la escena es anterior a la función. */
+  backdrop?: MissionBackdropSpec | null
 }
 
 
@@ -618,8 +622,16 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const usedPhrases = messages.filter(message => message.role === 'user')
 
   return (
-    <div className="h-screen flex flex-col w-full px-4 pt-4 pb-4">
-      <div className="grid flex-1 min-h-0 lg:grid-cols-[minmax(0,1fr)_320px] gap-4 lg:gap-6">
+    <div className="h-screen flex flex-col w-full px-4 pt-4 pb-4 relative overflow-hidden">
+      {/* Fondo ambientado de la misión, tenue: el chat manda. */}
+      <MissionBackdrop
+        backdrop={resolveBackdrop(mission.backdrop, `${mission.title} ${mission.scene_context}`)}
+        seed={mission.id}
+        variant="scene"
+        className="opacity-30"
+      />
+      <div className="absolute inset-0 bg-slate-950/50" />
+      <div className="relative z-10 grid flex-1 min-h-0 lg:grid-cols-[minmax(0,1fr)_320px] gap-4 lg:gap-6">
         {/* Columna izquierda: chat de la misión */}
         <div className="flex flex-col min-h-0">
       <div className="px-4 shrink-0 space-y-2">

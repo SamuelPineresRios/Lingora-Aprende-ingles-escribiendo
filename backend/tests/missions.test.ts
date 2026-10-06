@@ -10,7 +10,7 @@ import request from 'supertest'
 import { createApp } from '../src/app.ts'
 import { sql } from '../src/db/client.ts'
 import { resetDb } from './helpers/db.ts'
-import { createMission, signupActor } from './helpers/fixtures.ts'
+import { createIntroduction, createMission, signupActor, TEST_BACKDROP } from './helpers/fixtures.ts'
 
 const app = createApp()
 
@@ -24,6 +24,21 @@ describe('GET /api/missions', () => {
 
     expect(res.status).toBe(401)
     expect(res.body).toEqual({ error: 'Unauthorized' })
+  })
+
+  it('incluye el fondo de la introducción y null cuando no hay escena', async () => {
+    const student = await signupActor(app, 'student')
+    await createMission({ id: 'mission-a' })
+    await createMission({ id: 'mission-b' })
+    await createIntroduction('mission-a')
+
+    const res = await student.agent.get('/api/missions')
+
+    expect(res.status).toBe(200)
+    const conFondo = res.body.missions.find((m: { id: string }) => m.id === 'mission-a')
+    const sinFondo = res.body.missions.find((m: { id: string }) => m.id === 'mission-b')
+    expect(conFondo.backdrop).toEqual(TEST_BACKDROP)
+    expect(sinFondo.backdrop).toBeNull()
   })
 
   it('devuelve las misiones ordenadas con estado not_started', async () => {

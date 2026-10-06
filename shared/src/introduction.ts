@@ -6,6 +6,8 @@
  * `played_by: 'student'`; el otro es el que interpretará el asistente.
  */
 
+import type { MissionBackdrop } from './backdrop.ts'
+
 /** Papel del personaje dentro de la misión. */
 export type IntroductionRole = 'ai' | 'student'
 
@@ -38,4 +40,9 @@ export interface MissionIntroduction {
   lines: IntroductionLine[]
   /** 3-5 expresiones para usar en la misión real. */
   useful_expressions: string[]
+  /**
+   * Dirección de arte del fondo. Falta en las introducciones antiguas (se
+   * cachearon antes de existir): el frontend cae a un fondo por palabras clave.
+   */
+  backdrop?: MissionBackdrop | null
 }

@@ -20,7 +20,7 @@ import {
   timestamp,
   uniqueIndex,
 } from 'drizzle-orm/pg-core'
-import type { CefrLevel, IntroductionCharacter, IntroductionLine, UserRole } from '@vox/shared'
+import type { CefrLevel, IntroductionCharacter, IntroductionLine, MissionBackdrop, UserRole } from '@vox/shared'
 
 /** Estados por los que pasa una respuesta de misión. */
 export type ResponseStatus = 'submitted' | 'in_progress' | 'completed' | 'paused'
@@ -199,6 +199,12 @@ export const mission_introductions = pgTable(
     characters: jsonb('characters').$type<IntroductionCharacter[]>().notNull(),
     lines: jsonb('lines').$type<IntroductionLine[]>().notNull(),
     useful_expressions: jsonb('useful_expressions').$type<string[]>().notNull(),
+    /**
+     * Dirección de arte del fondo de la escena. Nula en las introducciones
+     * anteriores a la función: el frontend entonces usa su respaldo por
+     * palabras clave.
+     */
+    backdrop: jsonb('backdrop').$type<MissionBackdrop | null>(),
     /** Modelo que la generó: sirve para saber qué hay que regenerar. */
     generated_by: text('generated_by').notNull(),
     /** Cada regeneración suma 1; no se guardan versiones antiguas. */

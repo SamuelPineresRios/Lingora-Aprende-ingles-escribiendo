@@ -10,6 +10,7 @@ import { db } from '../../db/client.ts'
 import {
   evaluations,
   group_members,
+  mission_introductions,
   missions,
   narrative_states,
   responses,
@@ -32,17 +33,24 @@ export async function listMissions(userId: string) {
   const [userRows, allMissions, states] = await Promise.all([
     db.select({ cefr_level: users.cefr_level }).from(users).where(eq(users.id, userId)).limit(1),
     // Orden por id: estable entre consultas (Postgres no garantiza orden sin ORDER BY).
-    db.select().from(missions).orderBy(asc(missions.id)),
+    // El fondo viaja con la misión para ambientar también las tarjetas; las
+    // misiones sin escena generada lo traen en null y el frontend usa su respaldo.
+    db
+      .select({ mission: missions, backdrop: mission_introductions.backdrop })
+      .from(missions)
+      .leftJoin(mission_introductions, eq(mission_introductions.mission_id, missions.id))
+      .orderBy(asc(missions.id)),
     db.select().from(narrative_states).where(eq(narrative_states.student_id, userId)),
   ])
 
   const cefrLevel = userRows[0]?.cefr_level ?? 'A1'
   const stateByMission = new Map(states.map(state => [state.mission_id, state]))
 
-  const missionsWithStatus = allMissions.map(mission => {
+  const missionsWithStatus = allMissions.map(({ mission, backdrop }) => {
     const state = stateByMission.get(mission.id)
     return {
       ...mission,
+      backdrop: backdrop ?? null,
       status:
         state?.state === 'completed'
           ? 'completed'

@@ -5,7 +5,8 @@ import request from 'supertest'
 import type { Express } from 'express'
 import { randomUUID } from 'node:crypto'
 import { db } from '../../src/db/client.ts'
-import { missions } from '../../src/db/schema.ts'
+import { mission_introductions, missions } from '../../src/db/schema.ts'
+import type { MissionBackdrop } from '@vox/shared'
 
 export const TEST_PASSWORD = 'contrasena-segura'
 
@@ -69,4 +70,42 @@ export async function createGroup(app: Express, teacher: Actor, name = 'Grupo Pr
   }
 
   return response.body as { id: string; access_code: string; name: string }
+}
+
+export const TEST_BACKDROP: MissionBackdrop = {
+  kind: 'office',
+  style: 'blueprint',
+  light: 'night',
+  palette: ['#0b1f33', '#123a5c', '#22d3ee'],
+  props: ['skyline'],
+}
+
+/** Escena guardada directamente, sin pasar por el modelo (para la lista). */
+export async function createIntroduction(
+  missionId: string,
+  backdrop: MissionBackdrop | null = TEST_BACKDROP,
+): Promise<string> {
+  const id = `intro-${randomUUID()}`
+
+  await db.insert(mission_introductions).values({
+    id,
+    mission_id: missionId,
+    scene_title: 'En la oficina',
+    scene_description: 'Una oficina con vistas a la ciudad.',
+    characters: [
+      { id: 'A', name: 'Alex', role: 'Recepcionista', emoji: 'A', played_by: 'ai' },
+      { id: 'B', name: 'Sam', role: 'Visitante', emoji: 'B', played_by: 'student' },
+    ],
+    lines: [
+      { speaker: 'A', text: 'Hello!', translation: '¡Hola!' },
+      { speaker: 'B', text: 'Hi there.', translation: 'Hola.' },
+      { speaker: 'A', text: 'How can I help you?', translation: '¿Cómo puedo ayudarte?' },
+      { speaker: 'B', text: 'I have a meeting.', translation: 'Tengo una reunión.' },
+    ],
+    useful_expressions: ['I have a meeting'],
+    backdrop,
+    generated_by: 'test',
+  })
+
+  return id
 }

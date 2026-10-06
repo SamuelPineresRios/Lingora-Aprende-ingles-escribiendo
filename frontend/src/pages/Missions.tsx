@@ -5,9 +5,12 @@ import { getCefrLabel } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
+import { MissionBackdrop } from '@/components/MissionBackdrop'
+import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { readJson } from '@/lib/api'
+import type { MissionBackdrop as MissionBackdropSpec } from '@vox/shared'
 
-interface Mission { id:string; title:string; description:string|null; cefr_level:string; base_duration_seconds:number; status:string }
+interface Mission { id:string; title:string; description:string|null; scene_context?:string|null; cefr_level:string; base_duration_seconds:number; status:string; backdrop?:MissionBackdropSpec|null }
 const LEVEL_COLORS: Record<string,string> = { A1:'text-emerald border-emerald/40', A2:'text-cyan border-cyan/40', B1:'text-amber border-amber/40', B2:'text-violet border-violet/40', C1:'text-coral border-coral/40' }
 const LEVEL_BG: Record<string,string> = { A1:'bg-emerald/10', A2:'bg-cyan/10', B1:'bg-amber/10', B2:'bg-violet/10', C1:'bg-coral/10' }
 const STATUS = { not_started:{label:'',color:''}, in_progress:{label:'IN PROGRESS',color:'text-amber animate-pulse'}, completed:{label:'COMPLETED',color:'text-emerald'}, paused:{label:'RETRY',color:'text-slate-light'} }
@@ -166,6 +169,17 @@ export default function MissionsPage() {
                     <div className={cn("absolute inset-0 border border-white/10 bg-black/40 backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] clip-path-cyber", 
                       m.status==='completed' ? 'opacity-80 grayscale-[0.8] border-dashed' : 'opacity-100'
                     )} />
+
+                    {/* Fondo ambientado de la misión (el generado o el de respaldo) */}
+                    <div className={cn('absolute inset-0 overflow-hidden', m.status==='completed' && 'opacity-45 grayscale')}>
+                      <MissionBackdrop
+                        backdrop={resolveBackdrop(m.backdrop, `${m.title} ${m.scene_context ?? ''}`)}
+                        variant="card"
+                        seed={m.id}
+                        className="opacity-70"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/50" />
+                    </div>
                     
                     {/* Decorative Corners */}
                     <div className={cn("absolute top-0 left-0 w-2 h-2 border-t border-l transition-colors", 'border-white/20 group-hover:border-cyan')} />

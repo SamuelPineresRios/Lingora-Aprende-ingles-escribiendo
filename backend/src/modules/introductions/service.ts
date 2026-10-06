@@ -12,6 +12,7 @@ import { AIProviderError, completeChat } from '../../lib/ai.ts'
 import { db } from '../../db/client.ts'
 import { missions, mission_introductions } from '../../db/schema.ts'
 import { HttpError } from '../../utils/http-error.ts'
+import { sanitizeBackdrop } from './backdrop.ts'
 import { buildIntroductionPrompt, INTRODUCTION_SCHEMA, type IntroductionSource } from './prompts.ts'
 
 export type IntroductionRow = typeof mission_introductions.$inferSelect
@@ -72,7 +73,9 @@ function validateIntroduction(raw: MissionIntroduction): MissionIntroduction {
     throw new Error('La escena no tiene título o descripción')
   }
 
-  return raw
+  // El fondo no bloquea la escena: si el modelo lo trae mal, se descarta y el
+  // frontend usa su fondo de respaldo por palabras clave.
+  return { ...raw, backdrop: sanitizeBackdrop(raw.backdrop) }
 }
 
 /** Datos de la misión que alimentan la generación. */
@@ -154,6 +157,7 @@ async function createIntroductionRow(
       characters: introduction.characters,
       lines: introduction.lines,
       useful_expressions: introduction.useful_expressions,
+      backdrop: introduction.backdrop ?? null,
       generated_by: 'anthropic',
       version,
       created_at: new Date(),
@@ -190,6 +194,7 @@ export async function regenerateIntroduction(missionId: string): Promise<Introdu
       characters: introduction.characters,
       lines: introduction.lines,
       useful_expressions: introduction.useful_expressions,
+      backdrop: introduction.backdrop ?? null,
       generated_by: 'anthropic',
       version: nextVersion,
       created_at: new Date(),
@@ -203,6 +208,7 @@ export async function regenerateIntroduction(missionId: string): Promise<Introdu
         characters: introduction.characters,
         lines: introduction.lines,
         useful_expressions: introduction.useful_expressions,
+        backdrop: introduction.backdrop ?? null,
         generated_by: 'anthropic',
         version: nextVersion,
         updated_at: new Date(),

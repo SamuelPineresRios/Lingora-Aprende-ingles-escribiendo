@@ -124,6 +124,11 @@ El frontend **no usa variables de entorno**: habla siempre con `/api` en su mism
 0. Cada misión se abre con una **escena narrativa** (dos personajes, con
 traducción) generada una sola vez por misión y guardada en
 `mission_introductions`; después el alumno pasa a la preparación y al chat.
+La escena trae además la **dirección de arte del fondo** (`backdrop`: tipo de
+lugar, estilo, luz y paleta) que el frontend pinta con capas SVG en la escena,
+el chat y las tarjetas de misión. Las escenas anteriores a la función no tienen
+`backdrop` y usan un respaldo por palabras clave; las que falten se rellenan
+con `npm run backdrops:backfill -w @vox/backend`.
 1. El navegador carga la SPA servida por **Vite** (`:5173` en desarrollo).
 2. Toda llamada a `/api/*` la reenvía el **proxy de Vite** al backend (`:4000`). Al
    ser el mismo origen para el navegador, la cookie de sesión viaja sin CORS.

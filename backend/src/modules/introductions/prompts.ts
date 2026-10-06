@@ -5,6 +5,7 @@
  * (`missions.example_conversation`) para no inventar una situación distinta.
  */
 import type { CefrLevel } from '@vox/shared'
+import { BACKDROP_KINDS, BACKDROP_LIGHTS, BACKDROP_STYLES } from '@vox/shared'
 import type { JsonSchema } from '../../lib/ai.ts'
 
 /** Complexidad de la escena según el nivel; la introducción debe seguirlo. */
@@ -28,6 +29,45 @@ export interface IntroductionSource {
   expectedOutcome: string | null
 }
 
+/** A qué lugar corresponde cada tipo de fondo, para que el modelo no dude. */
+const BACKDROP_KIND_GUIDE =
+  'office = oficina, despacho, sala de reuniones; shop = tienda, supermercado, librería, mercado; restaurant = restaurante, café, bar, pub; street = calle, plaza, exterior urbano; transport = estación, aeropuerto, parada de autobús, tren, taxi; campus = universidad, instituto, biblioteca, colegio; home = casa, apartamento, Airbnb; gym = gimnasio, centro deportivo; park = parque, jardín, playa; hotel = hotel, alojamiento, recepción; health = farmacia, hospital, consulta médica; services = banco, oficina de cambio, atención al cliente, suscripciones; generic = cualquier otro lugar.'
+
+/** Esquema de la dirección de arte del fondo. */
+export const BACKDROP_SCHEMA: JsonSchema = {
+  type: 'object',
+  properties: {
+    kind: {
+      type: 'string',
+      enum: [...BACKDROP_KINDS],
+      description: 'Tipo de lugar de la escena.',
+    },
+    style: {
+      type: 'string',
+      enum: [...BACKDROP_STYLES],
+      description:
+        "Tratamiento visual: 'flat' (formas planas y limpias), 'diorama' (capas con volumen, estilo maqueta) o 'blueprint' (líneas técnicas sobre fondo oscuro).",
+    },
+    light: {
+      type: 'string',
+      enum: [...BACKDROP_LIGHTS],
+      description: 'Momento del día de la escena.',
+    },
+    palette: {
+      type: 'array',
+      items: { type: 'string', description: 'Color hex #rrggbb.' },
+      description:
+        'Exactamente tres colores hex: el primero tiñe el cielo o el fondo, el segundo la media distancia y el tercero el acento (objetos y luces).',
+    },
+    props: {
+      type: 'array',
+      items: { type: 'string', description: 'Detalle corto en inglés, p. ej. "skyline".' },
+      description: 'Hasta 4 detalles que caracterizan el lugar: skyline, plants, lamps, rain…',
+    },
+  },
+  required: ['kind', 'style', 'light', 'palette'],
+  additionalProperties: false,
+}
 /** Esquema de la introducción que devuelve el modelo. */
 export const INTRODUCTION_SCHEMA: JsonSchema = {
   type: 'object',
@@ -78,8 +118,9 @@ export const INTRODUCTION_SCHEMA: JsonSchema = {
       items: { type: 'string', description: 'Expresión en inglés para la misión real.' },
       description: 'Entre 3 y 5 expresiones que el alumno necesitará.',
     },
+    backdrop: BACKDROP_SCHEMA,
   },
-  required: ['scene_title', 'scene_description', 'characters', 'lines', 'useful_expressions'],
+  required: ['scene_title', 'scene_description', 'characters', 'lines', 'useful_expressions', 'backdrop'],
   additionalProperties: false,
 }
 
@@ -109,7 +150,35 @@ RULES
 7. useful_expressions: 3 to 5 phrases the student will actually need to achieve the objective. They must fit this mission, not be generic.
 8. Level of complexity: ${guidance}
 9. Write for a ${source.cefrLevel} student: the scene prepares, it does not test.
-10. Return ONLY valid JSON.
+10. backdrop: art direction for the background of THIS mission. Pick the kind that matches the place (${[...BACKDROP_KINDS].join(', ')}). Guide: ${BACKDROP_KIND_GUIDE} Pick the style that matches the tone: "blueprint" for tech, finance or formal settings; "diorama" for everyday, warm places; "flat" for clean minimal scenes. Pick the light (day, sunset, night) that the scene suggests. The palette must be THREE hex colors (#rrggbb): the first for the sky or base, the second for the mid distance, the third as an accent (objects and lights); they must feel like the place and time of day. Add up to 4 props (short English words) with the details that make it recognizable, e.g. "skyline", "plants", "rain".
+11. Return ONLY valid JSON.
 
 Language note: the scene_title, scene_description, character roles and translations are in SPANISH; the lines' text and useful_expressions are in ENGLISH.`
+}
+
+/**
+ * Prompt suelto para pedir SOLO el fondo de una escena ya existente.
+ *
+ * Lo usa el script que rellena el `backdrop` de las introducciones cacheadas
+ * antes de que existiera la función; comparte con la introducción el esquema y
+ * las mismas reglas de estilo.
+ */
+export function buildBackdropPrompt(source: {
+  title: string
+  sceneContext: string | null
+  sceneDescription: string
+}): string {
+  return `Choose the BACKGROUND of a language-learning mission as art direction. Return ONLY valid JSON.
+
+MISSION
+- Title: ${source.title}
+- Scene: ${source.sceneContext ?? '(none)'}
+- Scene description: ${source.sceneDescription}
+
+RULES
+1. kind: the place of the scene, one of: ${[...BACKDROP_KINDS].join(', ')}. Guide: ${BACKDROP_KIND_GUIDE}
+2. style: "blueprint" for tech, finance or formal settings; "diorama" for everyday, warm places; "flat" for clean minimal scenes. Pick the one that matches the tone.
+3. light: day, sunset or night, as the scene suggests.
+4. palette: THREE hex colors (#rrggbb): the first for the sky or base, the second for the mid distance, the third as an accent (objects and lights). They must feel like this place and time of day.
+5. props: up to 4 short English words with the details that make it recognizable (e.g. "skyline", "plants", "rain").`
 }

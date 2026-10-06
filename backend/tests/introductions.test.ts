@@ -52,6 +52,13 @@ function validScene(overrides: Record<string, unknown> = {}) {
       { speaker: 'B', text: 'I heard a strange noise.', translation: 'Escuché un ruido extraño.' },
     ],
     useful_expressions: ['My computer will not turn on', 'I heard a strange noise', 'Can you help me?'],
+    backdrop: {
+      kind: 'office',
+      style: 'blueprint',
+      light: 'night',
+      palette: ['#0b1f33', '#123a5c', '#22d3ee'],
+      props: ['skyline'],
+    },
     ...overrides,
   })
 }
@@ -89,12 +96,40 @@ describe('GET /api/missions/:id/introduction', () => {
     expect(res.body.introduction.scene_title).toBe('Llamada al soporte')
     expect(res.body.introduction.lines).toHaveLength(4)
     expect(res.body.introduction.characters).toHaveLength(2)
+    expect(res.body.introduction.backdrop).toEqual({
+      kind: 'office',
+      style: 'blueprint',
+      light: 'night',
+      palette: ['#0b1f33', '#123a5c', '#22d3ee'],
+      props: ['skyline'],
+    })
     expect(mockedCompleteChat).toHaveBeenCalledTimes(1)
 
     const [row] = await sql<{ count: number }[]>`
       SELECT count(*)::int AS count FROM mission_introductions
     `
     expect(row?.count).toBe(1)
+  })
+
+  it('un fondo inválido no tumba la escena: se guarda sin fondo', async () => {
+    mockedCompleteChat.mockResolvedValue(
+      validScene({
+        backdrop: {
+          kind: 'holodeck',
+          style: 'blueprint',
+          light: 'night',
+          palette: ['no-es-color', '#123456', '#654321'],
+        },
+      }),
+    )
+
+    const student = await signupActor(app, 'student')
+    const missionId = await createMission({ id: 'm-1' })
+
+    const res = await student.agent.get(`/api/missions/${missionId}/introduction`)
+
+    expect(res.status).toBe(200)
+    expect(res.body.introduction.backdrop).toBeNull()
   })
 
   it('la segunda vez usa la guardada y NO vuelve a llamar al modelo', async () => {
