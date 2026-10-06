@@ -11,6 +11,7 @@ import type { IntroductionCharacter, MissionIntroduction } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { TypewriterMessage } from './TypewriterMessage'
 import { InteractiveWords } from './InteractiveWords'
+import { avatarUrl } from '@/lib/avatar'
 import { warmWords } from '@/lib/word-cache'
 
 /** Milisegundos que espera el modo automático tras terminar la frase. */
@@ -21,17 +22,6 @@ const AUTOPLAY_NEXT_DELAY_MS = 2400
  * a leer las expresiones desbloqueadas sin obligar a pulsar nada.
  */
 const SCENE_AUTO_CONTINUE_MS = 2000
-
-/**
- * Avatar del personaje: voxel-art animado de DiceBear (licencia CC0).
- * `tags=animation` activa el parpadeo y la respiración por CSS (respetan
- * `prefers-reduced-motion`) y el alfa `00` del fondo deja el lienzo
- * transparente: el estilo trae por defecto un fondo lila que chocaría con la
- * escena oscura.
- */
-function avatarUrl(name: string): string {
-  return `https://api.dicebear.com/10.x/voxel-art/svg?seed=${encodeURIComponent(name)}&tags=animation&flip=horizontal&backgroundColor=00000000`
-}
 
 /** URL del MP3 sintetizado por el backend (voz natural y cacheada). */
 function speechUrl(text: string, role: 'A' | 'B'): string {

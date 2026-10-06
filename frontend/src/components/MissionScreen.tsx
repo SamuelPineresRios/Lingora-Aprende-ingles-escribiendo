@@ -13,8 +13,21 @@ import { StepHintStack, type StepHint } from './StepHintToast'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { readJson } from '@/lib/api'
+import { avatarUrl } from '@/lib/avatar'
 import { IntroductionPlayer } from '@/components/IntroductionPlayer'
 import { ConversationLog } from '@/components/ConversationLog'
+
+
+/** Avatar pequeño del personaje para el chat: el mismo de la escena. */
+function ChatAvatar({ name }: { name: string }) {
+  return (
+    <img
+      src={avatarUrl(name)}
+      alt=""
+      className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]"
+    />
+  )
+}
 
 
 interface Mission {
@@ -668,6 +681,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
               
               return (
                   <div key={i} className={cn("flex gap-2 mb-4", isUser ? "flex-row-reverse items-end" : "items-end")}>
+                      {!isUser && <ChatAvatar name={mission.character_name} />}
                       <div className="flex flex-col gap-1">
                           <span className={cn("text-[9px] uppercase tracking-wider opacity-60", isUser ? "text-emerald text-right" : "text-cyan")}>
                               {isUser ? 'YOU' : mission.character_name}
@@ -714,10 +728,13 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           })}
           
           {isThinking && (
-              <div className="flex flex-col gap-1 items-start animate-pulse">
-                  <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
-                  <div className="bg-cyan/5 border border-cyan/10 text-cyan px-3 py-2 rounded-2xl rounded-tl-none text-xs">
-                      Thinking...
+              <div className="flex gap-2 items-end animate-pulse">
+                  <ChatAvatar name={mission.character_name} />
+                  <div className="flex flex-col gap-1">
+                      <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
+                      <div className="bg-cyan/5 border border-cyan/10 text-cyan px-3 py-2 rounded-2xl rounded-tl-none text-xs">
+                          escribiendo…
+                      </div>
                   </div>
               </div>
           )}
