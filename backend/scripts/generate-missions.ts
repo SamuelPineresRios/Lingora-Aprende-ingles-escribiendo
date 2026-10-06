@@ -14,6 +14,7 @@ import { eq } from 'drizzle-orm'
 import { completeChat, type JsonSchema } from '../src/lib/ai.ts'
 import { db, sql } from '../src/db/client.ts'
 import { missions } from '../src/db/schema.ts'
+import { prewarmMissingContent } from './lib/prewarm-content.ts'
 import type { CefrLevel } from '@vox/shared'
 
 /** Duración por nivel, en segundos (la misma que usan las misiones actuales). */
@@ -333,6 +334,14 @@ async function main() {
 
   console.log(`\n${rows.length} misiones insertadas:`)
   for (const row of rows) console.log(`  ${row.id}  ${row.title}`)
+
+  // El contenido generado (escena y vocabulario) se cachea en la base de
+  // datos: precalentarlo aquí evita que el primer alumno espere. Con
+  // `--no-prewarm` se omite (p. ej. si el proveedor de IA está caído).
+  if (!process.argv.includes('--no-prewarm')) {
+    console.log('\nPrecalentando escena y vocabulario de lo que falte…')
+    await prewarmMissingContent()
+  }
 }
 
 main()

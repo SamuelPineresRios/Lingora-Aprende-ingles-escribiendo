@@ -15,6 +15,7 @@ import path from 'node:path'
 import type { CefrLevel } from '@vox/shared'
 import { db, sql } from '../src/db/client.ts'
 import { missions } from '../src/db/schema.ts'
+import { prewarmMissingContent } from './lib/prewarm-content.ts'
 
 const FIXTURE = path.join(import.meta.dirname, 'fixtures', 'missions.json')
 
@@ -63,6 +64,14 @@ async function main() {
 
   console.log(`${rows.length} misiones sembradas:`)
   for (const [level, count] of [...counts].sort()) console.log(`  ${level}: ${count}`)
+
+  // El contenido generado (escena y vocabulario) se cachea en la base de
+  // datos: precalentarlo aquí evita que el primer alumno espere. Con
+  // `--no-prewarm` se omite (p. ej. si el proveedor de IA está caído).
+  if (!process.argv.includes('--no-prewarm')) {
+    console.log('\nPrecalentando escena y vocabulario de lo que falte…')
+    await prewarmMissingContent()
+  }
 }
 
 main()

@@ -300,10 +300,29 @@ npm run db:push:test -w @vox/backend  # aplicar el esquema a vox_test
 
 ## Despliegue
 
-Pendiente de definir (fase posterior). Puntos a resolver:
+Guía completa del contenido generado: [`docs/PRODUCCION.md`](docs/PRODUCCION.md).
 
-- `DATABASE_URL` debe apuntar a un PostgreSQL accesible; el esquema se aplica con
-  `drizzle-kit push` desde local, no en cada despliegue.
+Orden de puesta en producción:
+
+1. Aplicar el esquema contra la base de datos de producción:
+   `DATABASE_URL=<prod> npm run db:push -w @vox/backend`
+2. Sembrar las misiones (`missions:seed`) si la base está vacía. El script ya
+   precalienta escena y vocabulario de lo que falte; también se puede lanzar a
+   mano con `content:prewarm -w @vox/backend`.
+3. Comprobar que no queda contenido pendiente (las tres cifras deben coincidir):
+
+   ```sql
+   SELECT (SELECT count(*) FROM missions)               AS misiones,
+          (SELECT count(*) FROM mission_introductions) AS escenas,
+          (SELECT count(*) FROM mission_vocabulary)    AS vocabularios;
+   ```
+
+   Eso es lo que evita que el primer alumno vea «Preparando la escena» o
+   «Preparando el vocabulario»: el contenido es dato, no código, y cada
+   entorno necesita su precalentado.
+
+Puntos a resolver (fase posterior):
+
 - El frontend es estático (`frontend/dist/`): se puede servir desde un CDN/host
   estático con fallback SPA a `index.html`.
 - Si frontend y API quedan en dominios distintos, harán falta CORS con
