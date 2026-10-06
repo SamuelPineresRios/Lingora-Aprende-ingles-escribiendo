@@ -170,15 +170,17 @@ export default function MissionsPage() {
                       m.status==='completed' ? 'opacity-80 grayscale-[0.8] border-dashed' : 'opacity-100'
                     )} />
 
-                    {/* Fondo ambientado de la misión (el generado o el de respaldo) */}
+                    {/* Fondo ambientado de la misión (el generado o el de respaldo).
+                        En reposo queda apagado para que manden el título y la
+                        descripción; al pasar el cursor se enciende como antes. */}
                     <div className={cn('absolute inset-0 overflow-hidden', m.status==='completed' && 'opacity-45 grayscale')}>
                       <MissionBackdrop
                         backdrop={resolveBackdrop(m.backdrop, `${m.title} ${m.scene_context ?? ''}`)}
                         variant="card"
                         seed={m.id}
-                        className="opacity-70"
+                        className="opacity-40 transition-opacity duration-300 group-hover:opacity-70"
                       />
-                      <div className="absolute inset-0 bg-slate-950/50" />
+                      <div className="absolute inset-0 bg-slate-950/65 transition-colors duration-300 group-hover:bg-slate-950/50" />
                     </div>
                     
                     {/* Decorative Corners */}
@@ -219,6 +221,15 @@ export default function MissionsPage() {
                         →
                       </div>
                     </div>
+
+                    {/* Sello de misión completada, centrado sobre el contenido */}
+                    {m.status === 'completed' && (
+                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+                        <span className="-rotate-6 rounded-lg border border-emerald/50 bg-slate-950/70 px-3 py-1 font-mono text-[12px] font-bold uppercase tracking-[0.3em] text-emerald shadow-[0_0_25px_-8px_rgba(16,185,129,0.9)] backdrop-blur-sm">
+                          Completadas
+                        </span>
+                      </div>
+                    )}
                   </Link>
                 </div>
               )
