@@ -11,6 +11,7 @@
     "test:watch": "vitest",
     "db:push": "drizzle-kit push",
     "db:push:test": "DATABASE_URL=postgresql://postgres@127.0.0.1:5432/vox_test drizzle-kit push",
+    "xp:backfill": "node --env-file-if-exists=.env.local scripts/backfill-xp.ts",
     "missions:generate": "node --env-file-if-exists=.env.local scripts/generate-missions.ts",
     "missions:seed": "node --env-file-if-exists=.env.local scripts/seed-missions.ts",
     "missions:renumber": "node --env-file-if-exists=.env.local scripts/renumber-missions.ts"
