@@ -2,7 +2,7 @@
  * Prompt y esquema del vocabulario clave de una misión.
  *
  * Parte de la escena narrativa que el alumno acaba de leer y de los datos de la
- * misión: las 7 palabras deben prepararle para la conversación, no ser una
+ * misión: las 5 palabras deben prepararle para la conversación, no ser una
  * lista suelta.
  */
 import type { CefrLevel } from '@vox/shared'
@@ -40,7 +40,7 @@ export const VOCABULARY_SCHEMA: JsonSchema = {
   properties: {
     words: {
       type: 'array',
-      description: 'Exactamente 7 palabras clave, en el orden en que conviene estudiarlas.',
+      description: 'Exactamente 5 palabras clave, en el orden en que conviene estudiarlas.',
       items: {
         type: 'object',
         properties: {
@@ -94,17 +94,17 @@ Example conversation: ${source.exampleConversation ?? '(none)'}
 
 ${sceneBlock}
 
-Choose EXACTLY 7 key English words the student needs to understand this scene and succeed in the mission.
+Choose EXACTLY 5 key English words the student needs to understand this scene and succeed in the mission.
 
 Rules:
-- EXACTLY 7 words. Never 5, 6, 8 or 10.
+- EXACTLY 5 words. Never 4, 6, 7 or 10.
 - Every word must appear in the scene or be directly tied to the expressions and the task the student must perform.
 - PRIORITISE what the STUDENT has to say: the words and chunks they will need to produce their own lines (the "S" lines above) and to reach the objective. The character's words only matter if the student must understand or answer them. This is production practice, not a glossary of the scene.
 - No generic filler (person, thing, good, day) unless it is genuinely essential to the mission.
 - Difficulty for level ${source.cefrLevel}: ${CEFR_VOCABULARY_GUIDANCE[source.cefrLevel]}
 - The words must anticipate what the student will need when speaking to ${source.characterName ?? 'the character'}, not be a random vocabulary list.
 - Lowercase the English word. Single words only; short phrasal verbs are allowed from B1 up. No proper nouns or place names (cities, brands, people).
-- No two words may share the same Spanish meaning: each of the 7 must teach something different.
+- No two words may share the same Spanish meaning: each of the 5 must teach something different.
 - For each word: the Spanish translation, one example sentence in English that the student could plausibly say in this mission (6-14 words, level-appropriate), and its Spanish translation.
 - The example sentence MUST contain the word exactly as written (same form), so it can be highlighted inside the sentence.
 

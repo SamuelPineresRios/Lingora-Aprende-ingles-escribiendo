@@ -1,7 +1,7 @@
 /**
  * Rutas del vocabulario clave de una misión (montadas en `/api/missions`).
  *
- * - GET  /:id/vocabulary             -> las 7 palabras, o las genera al vuelo
+ * - GET  /:id/vocabulary             -> las 5 palabras, o las genera al vuelo
  * - POST /:id/vocabulary/regenerate  -> vocabulario nuevo (solo docentes)
  */
 import { Router } from 'express'

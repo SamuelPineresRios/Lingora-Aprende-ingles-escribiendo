@@ -506,7 +506,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
     )
   }
 
-  // ── Fase 3: vocabulario clave (7 palabras de la escena) ──────────────
+  // ── Fase 3: vocabulario clave (5 palabras de la escena) ──────────────
   if (state === 'vocabulary') {
     return (
       <VocabularyQuiz

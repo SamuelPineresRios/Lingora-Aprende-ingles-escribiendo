@@ -285,7 +285,7 @@ export interface VocabularyWord {
 }
 
 /**
- * Vocabulario clave de una misión: las 7 palabras que el alumno repasa entre
+ * Vocabulario clave de una misión: las 5 palabras que el alumno repasa entre
  * la escena narrativa y la conversación. Se genera una vez por misión y se
  * comparte entre todos los alumnos, como la introducción.
  */

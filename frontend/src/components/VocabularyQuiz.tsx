@@ -1,11 +1,12 @@
 /**
  * Vocabulario clave: la actividad entre la escena narrativa y la misión.
  *
- * Primero se estudian las 7 palabras (traducción y frase de ejemplo) y después
- * se emparejan: todas las palabras inglesas en la columna izquierda y todas las
- * traducciones barajadas en la derecha. La evaluación es local.
+ * Primero se estudian las palabras (traducción y frase de ejemplo) y después
+ * se emparejan: todas las palabras inglesas en la columna izquierda y todas
+ * las traducciones barajadas en la derecha. Cada acierto queda unido con una
+ * línea que se dibuja sola; la evaluación es local.
  */
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowRight, Check, Eye, Loader2, RotateCcw, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { readJson } from '@/lib/api'
@@ -18,6 +19,22 @@ interface VocabularyWord {
 }
 
 type Phase = 'study' | 'match' | 'summary'
+
+/** Línea que une una palabra con su traducción (coordenadas del tablero). */
+interface Connector {
+  id: string
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+  wrong?: boolean
+}
+
+/** Animaciones de los conectores: la línea se dibuja y los puntos aparecen. */
+const CONNECTOR_KEYFRAMES = `
+@keyframes pair-draw { to { stroke-dashoffset: 0 } }
+@keyframes pair-pop { from { opacity: 0 } to { opacity: 1 } }
+`
 
 interface VocabularyQuizProps {
   missionId: string
@@ -68,8 +85,8 @@ function ExampleText({ text, word }: { text: string; word: string }) {
 }
 
 /** Mensaje final según los fallos. */
-function closingMessage(mistakes: number): string {
-  if (mistakes === 0) return 'Los 7 pares a la primera. A por la conversación.'
+function closingMessage(mistakes: number, total: number): string {
+  if (mistakes === 0) return `Los ${total} pares a la primera. A por la conversación.`
   if (mistakes <= 3) return 'Buen trabajo: un par de fallos que ya conoces.'
   return 'Vuelve a leer la lista si quieres y entra a la misión: estas palabras saldrán en la conversación.'
 }
@@ -89,6 +106,11 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
   /** Par fallado, para el destello rojo antes de soltarlo. */
   const [wrong, setWrong] = useState<{ word: string; translation: string } | null>(null)
   const [mistakes, setMistakes] = useState(0)
+  /** Líneas del tablero: pares acertados (verde) y el fallo momentáneo (rojo). */
+  const [connectors, setConnectors] = useState<Connector[]>([])
+  const boardRef = useRef<HTMLDivElement>(null)
+  const wordRefs = useRef(new Map<string, HTMLButtonElement>())
+  const translationRefs = useRef(new Map<string, HTMLButtonElement>())
 
   useEffect(() => {
     let cancelled = false
@@ -132,6 +154,68 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
   )
 
   const isMatchedWord = (word: string) => matched.includes(word)
+
+  /**
+   * Mide dónde están los botones y calcula las líneas del tablero.
+   *
+   * Se lee del DOM (no de un modelo de posiciones) porque el tamaño de los
+   * botones depende del texto: así las líneas caen justo en los bordes aunque
+   * cambie el ancho de la pantalla.
+   */
+  const measure = useCallback(() => {
+    const board = boardRef.current
+    if (!board) return
+    const base = board.getBoundingClientRect()
+
+    const next: Connector[] = []
+    for (const word of matched) {
+      const left = wordRefs.current.get(word)
+      const translation = words.find(entry => entry.word === word)?.translation
+      const right = translation ? translationRefs.current.get(translation) : undefined
+      if (!left || !right) continue
+      const leftRect = left.getBoundingClientRect()
+      const rightRect = right.getBoundingClientRect()
+      next.push({
+        id: word,
+        x1: leftRect.right - base.left + 5,
+        y1: leftRect.top + leftRect.height / 2 - base.top,
+        x2: rightRect.left - base.left - 5,
+        y2: rightRect.top + rightRect.height / 2 - base.top,
+      })
+    }
+
+    if (wrong) {
+      const left = wordRefs.current.get(wrong.word)
+      const right = translationRefs.current.get(wrong.translation)
+      if (left && right) {
+        const leftRect = left.getBoundingClientRect()
+        const rightRect = right.getBoundingClientRect()
+        next.push({
+          id: `wrong-${wrong.word}`,
+          x1: leftRect.right - base.left + 5,
+          y1: leftRect.top + leftRect.height / 2 - base.top,
+          x2: rightRect.left - base.left - 5,
+          y2: rightRect.top + rightRect.height / 2 - base.top,
+          wrong: true,
+        })
+      }
+    }
+
+    setConnectors(next)
+  }, [matched, wrong, words])
+
+  useEffect(() => {
+    measure()
+    const board = boardRef.current
+    if (!board) return
+    const observer = new ResizeObserver(measure)
+    observer.observe(board)
+    window.addEventListener('resize', measure)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [measure])
 
   const evaluate = (word: string, translation: string) => {
     const entry = words.find(item => item.word === word)
@@ -248,7 +332,7 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
               </span>
             </header>
             <p className="text-[12px] text-slate-400 mb-4">
-              Estas son las 7 palabras de la escena, con su traducción y un ejemplo. Después las emparejarás.
+              Estas son las {words.length} palabras de la escena, con su traducción y un ejemplo. Después las emparejarás.
             </p>
 
             <ul className="space-y-3 mb-6">
@@ -304,8 +388,8 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
               {mistakes > 0 && <> · {mistakes} fallo{mistakes === 1 ? '' : 's'}</>}.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 mb-5">
-              <div className="space-y-2">
+            <div ref={boardRef} className="relative grid grid-cols-2 gap-x-8 sm:gap-x-14 gap-y-2.5 mb-5">
+              <div className="space-y-2.5">
                 {words.map(entry => {
                   const done = isMatchedWord(entry.word)
                   const failed = wrong?.word === entry.word
@@ -313,14 +397,18 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
                   return (
                     <button
                       key={entry.word}
+                      ref={element => {
+                        if (element) wordRefs.current.set(entry.word, element)
+                        else wordRefs.current.delete(entry.word)
+                      }}
                       onClick={() => pickWord(entry.word)}
                       disabled={done || wrong !== null}
                       className={cn(
-                        'w-full flex items-center justify-between gap-2 rounded-xl border px-3 py-3 text-left text-sm font-bold transition-colors',
-                        done && 'border-emerald/50 bg-emerald/10 text-emerald-200',
+                        'w-full flex items-center justify-between gap-2 rounded-xl border px-3.5 py-3 text-left text-sm font-bold transition-all duration-200',
+                        done && 'border-emerald/50 bg-emerald/10 text-emerald-200 shadow-[0_0_20px_-8px_rgba(52,211,153,0.9)]',
                         failed && 'border-coral/60 bg-coral/10 text-red-100',
-                        !done && !failed && selected && 'border-cyan/60 bg-cyan/10 text-cyan-100',
-                        !done && !failed && !selected && 'border-white/10 bg-white/5 text-white hover:border-cyan/40',
+                        !done && !failed && selected && 'border-cyan/60 bg-cyan/10 text-cyan-100 shadow-[0_0_20px_-6px_rgba(6,182,212,0.8)]',
+                        !done && !failed && !selected && 'border-white/10 bg-white/5 text-white hover:border-cyan/40 hover:bg-cyan/5 active:scale-[0.98]',
                       )}
                     >
                       {entry.word}
@@ -331,7 +419,7 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
                 })}
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {rightColumn.map(translation => {
                   const done = matchedTranslations.has(translation)
                   const failed = wrong?.translation === translation
@@ -339,14 +427,18 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
                   return (
                     <button
                       key={translation}
+                      ref={element => {
+                        if (element) translationRefs.current.set(translation, element)
+                        else translationRefs.current.delete(translation)
+                      }}
                       onClick={() => pickTranslation(translation)}
                       disabled={done || wrong !== null}
                       className={cn(
-                        'w-full flex items-center justify-between gap-2 rounded-xl border px-3 py-3 text-left text-sm transition-colors',
-                        done && 'border-emerald/50 bg-emerald/10 text-emerald-200',
+                        'w-full flex items-center justify-between gap-2 rounded-xl border px-3.5 py-3 text-left text-sm font-medium transition-all duration-200',
+                        done && 'border-emerald/50 bg-emerald/10 text-emerald-200 shadow-[0_0_20px_-8px_rgba(52,211,153,0.9)]',
                         failed && 'border-coral/60 bg-coral/10 text-red-100',
-                        !done && !failed && selected && 'border-cyan/60 bg-cyan/10 text-cyan-100',
-                        !done && !failed && !selected && 'border-white/10 bg-white/5 text-slate-200 hover:border-cyan/40',
+                        !done && !failed && selected && 'border-cyan/60 bg-cyan/10 text-cyan-100 shadow-[0_0_20px_-6px_rgba(6,182,212,0.8)]',
+                        !done && !failed && !selected && 'border-white/10 bg-white/5 text-slate-200 hover:border-cyan/40 hover:bg-cyan/5 active:scale-[0.98]',
                       )}
                     >
                       {translation}
@@ -356,6 +448,45 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
                   )
                 })}
               </div>
+
+              {/* Conectores: el acierto se dibuja solo y el fallo destella en rojo */}
+              <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden>
+                <style>{CONNECTOR_KEYFRAMES}</style>
+                {connectors.map(line => {
+                  const color = line.wrong ? '#fb7185' : '#34d399'
+                  const pull = Math.min(Math.max(Math.abs(line.x2 - line.x1) * 0.45, 26), 70)
+                  const path = `M ${line.x1} ${line.y1} C ${line.x1 + pull} ${line.y1}, ${line.x2 - pull} ${line.y2}, ${line.x2} ${line.y2}`
+                  return (
+                    <g key={line.id} style={{ animation: 'pair-pop 200ms ease-out both' }}>
+                      <path
+                        d={path}
+                        fill="none"
+                        stroke={color}
+                        strokeWidth={line.wrong ? 3 : 8}
+                        strokeLinecap="round"
+                        opacity={line.wrong ? 0.22 : 0.14}
+                      />
+                      <path
+                        d={path}
+                        fill="none"
+                        stroke={color}
+                        strokeWidth={line.wrong ? 2.5 : 2}
+                        strokeLinecap="round"
+                        {...(line.wrong
+                          ? { strokeDasharray: '7 7' }
+                          : {
+                              pathLength: 1,
+                              strokeDasharray: 1,
+                              strokeDashoffset: 1,
+                              style: { animation: 'pair-draw 420ms ease forwards' },
+                            })}
+                      />
+                      <circle cx={line.x1} cy={line.y1} r={4} fill={color} />
+                      <circle cx={line.x2} cy={line.y2} r={4} fill={color} />
+                    </g>
+                  )
+                })}
+              </svg>
             </div>
 
             <button
@@ -378,7 +509,7 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
             <div className="h-2 rounded-full bg-white/10 overflow-hidden">
               <div className="h-full w-full bg-cyan shadow-[0_0_10px_rgba(6,182,212,0.6)]" />
             </div>
-            <p className="text-[12px] text-slate-400">{closingMessage(mistakes)}</p>
+            <p className="text-[12px] text-slate-400">{closingMessage(mistakes, words.length)}</p>
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
               <button
                 onClick={onFinish}

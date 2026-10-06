@@ -1,7 +1,7 @@
 /**
  * Tests del vocabulario clave de la misión.
  *
- * Lo esencial: que salgan SIEMPRE 7 palabras, que se genere una sola vez por
+ * Lo esencial: que salgan SIEMPRE 5 palabras, que se genere una sola vez por
  * misión (la llamada al modelo es cara) y que las opciones sirvan para la
  * actividad (la correcta + 3 incorrectas verosímiles, sin repetidos).
  */
@@ -39,7 +39,7 @@ const app = createApp()
 const mockedCompleteChat = vi.mocked(completeChat)
 
 /** Respuesta válida con `count` palabras, como la devolvería el modelo. */
-function vocabularyResponse(count = 7): string {
+function vocabularyResponse(count = 5): string {
   return JSON.stringify({
     words: Array.from({ length: count }, (_, index) => ({
       word: `word${index}`,
@@ -75,7 +75,7 @@ async function createScene(missionId: string): Promise<void> {
 beforeEach(async () => {
   await resetDb()
   mockedCompleteChat.mockReset()
-  mockedCompleteChat.mockResolvedValue(vocabularyResponse(7))
+  mockedCompleteChat.mockResolvedValue(vocabularyResponse(5))
 })
 
 describe('GET /api/missions/:id/vocabulary', () => {
@@ -92,20 +92,20 @@ describe('GET /api/missions/:id/vocabulary', () => {
     expect(mockedCompleteChat).not.toHaveBeenCalled()
   })
 
-  it('genera exactamente 7 palabras y las reutiliza para todos', async () => {
+  it('genera exactamente 5 palabras y las reutiliza para todos', async () => {
     const student = await signupActor(app, 'student')
     const otro = await signupActor(app, 'student')
     const missionId = await createMission({ cefr_level: 'A2' })
 
     const primera = await student.agent.get(`/api/missions/${missionId}/vocabulary`)
     expect(primera.status).toBe(200)
-    expect(primera.body.vocabulary.words).toHaveLength(7)
+    expect(primera.body.vocabulary.words).toHaveLength(5)
     expect(mockedCompleteChat).toHaveBeenCalledTimes(1)
 
     // El segundo alumno no dispara otra generación.
     const segunda = await otro.agent.get(`/api/missions/${missionId}/vocabulary`)
     expect(segunda.status).toBe(200)
-    expect(segunda.body.vocabulary.words).toHaveLength(7)
+    expect(segunda.body.vocabulary.words).toHaveLength(5)
     expect(mockedCompleteChat).toHaveBeenCalledTimes(1)
   })
 
@@ -125,7 +125,7 @@ describe('GET /api/missions/:id/vocabulary', () => {
     }
   })
 
-  it('recorta a 7 si el modelo devuelve de más', async () => {
+  it('recorta a 5 si el modelo devuelve de más', async () => {
     mockedCompleteChat.mockResolvedValue(vocabularyResponse(10))
     const student = await signupActor(app, 'student')
     const missionId = await createMission({ cefr_level: 'B1' })
@@ -133,12 +133,12 @@ describe('GET /api/missions/:id/vocabulary', () => {
     const res = await student.agent.get(`/api/missions/${missionId}/vocabulary`)
 
     expect(res.status).toBe(200)
-    expect(res.body.vocabulary.words).toHaveLength(7)
+    expect(res.body.vocabulary.words).toHaveLength(5)
     expect(mockedCompleteChat).toHaveBeenCalledTimes(1)
   })
 
-  it('reintenta si el modelo trae menos de 7 y devuelve 502 si no lo logra', async () => {
-    mockedCompleteChat.mockResolvedValue(vocabularyResponse(6))
+  it('reintenta si el modelo trae menos de 5 y devuelve 502 si no lo logra', async () => {
+    mockedCompleteChat.mockResolvedValue(vocabularyResponse(4))
     const student = await signupActor(app, 'student')
     const missionId = await createMission({ cefr_level: 'B2' })
 
@@ -150,15 +150,15 @@ describe('GET /api/missions/:id/vocabulary', () => {
 
   it('acepta el segundo intento cuando el primero traía menos palabras', async () => {
     mockedCompleteChat
+      .mockResolvedValueOnce(vocabularyResponse(3))
       .mockResolvedValueOnce(vocabularyResponse(5))
-      .mockResolvedValueOnce(vocabularyResponse(7))
     const student = await signupActor(app, 'student')
     const missionId = await createMission({ cefr_level: 'C1' })
 
     const res = await student.agent.get(`/api/missions/${missionId}/vocabulary`)
 
     expect(res.status).toBe(200)
-    expect(res.body.vocabulary.words).toHaveLength(7)
+    expect(res.body.vocabulary.words).toHaveLength(5)
     expect(mockedCompleteChat).toHaveBeenCalledTimes(2)
   })
 
@@ -182,7 +182,7 @@ describe('GET /api/missions/:id/vocabulary', () => {
 
     const prompt = mockedCompleteChat.mock.calls[0]?.[0]?.messages?.[0]?.content ?? ''
     expect(prompt).toContain('Pidiendo direcciones')
-    expect(prompt).toContain('EXACTLY 7')
+    expect(prompt).toContain('EXACTLY 5')
     // El diálogo llega anotado: S lo que dirá el alumno, C lo del personaje.
     expect(prompt).toContain('- S: Thank you very much!')
     expect(prompt).toContain('- C: Turn right at the corner, please.')
@@ -220,7 +220,7 @@ describe('validateWords', () => {
     example: 'Can you help me?',
     example_translation: '¿Puedes ayudarme?',
   }
-  const sixMore = Array.from({ length: 6 }, (_, i) => ({
+  const fourMore = Array.from({ length: 4 }, (_, i) => ({
     word: `w${i}`,
     translation: `t${i}`,
     example: `Example ${i}.`,
@@ -228,15 +228,15 @@ describe('validateWords', () => {
   }))
 
   it('exige los cuatro campos de cada palabra', () => {
-    expect(validateWords({ words: [{ ...base, word: 'help' }] })).toBeNull() // una sola no llega a 7
+    expect(validateWords({ words: [{ ...base, word: 'help' }] })).toBeNull() // una sola no llega a 5
     expect(
       validateWords({
-        words: [{ word: 'help', translation: 'ayudar' }, ...sixMore],
+        words: [{ word: 'help', translation: 'ayudar' }, ...fourMore],
       }),
     ).toBeNull() // sin ejemplo
     expect(
       validateWords({
-        words: [{ ...base, word: 'help', example: '' }, ...sixMore],
+        words: [{ ...base, word: 'help', example: '' }, ...fourMore],
       }),
     ).toBeNull() // ejemplo vacío
   })
@@ -244,18 +244,18 @@ describe('validateWords', () => {
   it('rechaza palabras o significados repetidos', () => {
     expect(
       validateWords({
-        words: [{ ...base, word: 'help' }, { ...base, word: 'help' }, ...sixMore],
+        words: [{ ...base, word: 'help' }, { ...base, word: 'help' }, ...fourMore],
       }),
     ).toBeNull() // palabra repetida
 
     expect(
       validateWords({
-        words: [{ ...base, word: 'help' }, { ...base, word: 'aid' }, ...sixMore],
+        words: [{ ...base, word: 'help' }, { ...base, word: 'aid' }, ...fourMore],
       }),
     ).toBeNull() // "help" y "aid" enseñan lo mismo
   })
 
-  it('devuelve exactamente 7 cuando son válidas y recorta las de más', () => {
+  it('devuelve exactamente 5 cuando son válidas y recorta las de más', () => {
     const words = Array.from({ length: 9 }, (_, i) => ({
       word: `word${i}`,
       translation: `t${i}`,
@@ -264,7 +264,7 @@ describe('validateWords', () => {
     }))
 
     const valid = validateWords({ words })
-    expect(valid).toHaveLength(7)
+    expect(valid).toHaveLength(5)
     expect(valid?.[0]?.word).toBe('word0')
     expect(valid?.[0]?.example_translation).toBe('Ejemplo 0.')
   })

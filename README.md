@@ -194,7 +194,7 @@ Operaciones agrupadas por módulo (`backend/src/modules/*/routes.ts`).
 | auth | `POST /signup` · `POST /login` · `POST /logout` · `GET /me` · `PATCH /update-profile` |
 | missions | `GET /api/missions` · `GET /api/missions/:id` · `POST /:id/submit` · `POST /:id/mark-completed` |
 | introductions | `GET /api/missions/:id/introduction` (genera si falta) · `POST /:id/introduction/regenerate` (docentes) |
-| vocabulary | `GET /api/missions/:id/vocabulary` (genera las 7 palabras si faltan) · `POST /:id/vocabulary/regenerate` (docentes) |
+| vocabulary | `GET /api/missions/:id/vocabulary` (genera las 5 palabras si faltan) · `POST /:id/vocabulary/regenerate` (docentes) |
 | students | `GET /api/students/groups` · `POST /join-group` · `GET /:id/weekly-stats` · `GET /:id/skills` · `GET /:id/activity` · `GET /:id/session-summary` |
 | teachers | `GET /api/teachers/groups` · `POST /groups/create` · `GET /groups/:id` · `GET /groups/:id/students` · `GET/POST /groups/:id/assign-mission` · `GET /students/:id/profile` |
 | evaluations | `GET /api/evaluations/:id` |

@@ -2,7 +2,7 @@
  * Vocabulario clave de una misión.
  *
  * Se genera una vez por misión (una llamada al modelo) y se reutiliza con
- * todos los alumnos, como la introducción. La regla es estricta: **siempre 7
+ * todos los alumnos, como la introducción. La regla es estricta: **siempre 5
  * palabras**; si el modelo trae de más se recorta y si trae de menos se
  * reintenta.
  */
@@ -22,8 +22,8 @@ import {
 
 export type VocabularyRow = typeof mission_vocabulary.$inferSelect
 
-/** El requisito es exacto: ni 5, ni 8. */
-export const REQUIRED_WORDS = 7
+/** El requisito es exacto: ni 4, ni 6. */
+export const REQUIRED_WORDS = 5
 /** Intentos de generación antes de rendirse. */
 const MAX_ATTEMPTS = 2
 
@@ -58,7 +58,7 @@ function toPayload(row: VocabularyRow): VocabularyPayload {
  *
  * La salida estructurada garantiza claves y tipos, pero no cuántas palabras
  * trae ni si sirven: aquí se normaliza (palabra, traducción, ejemplo y
- * traducción del ejemplo), se exige el 7 exacto y se rechazan repetidas.
+ * traducción del ejemplo), se exige el 5 exacto y se rechazan repetidas.
  * Devuelve null cuando hay que reintentar.
  */
 export function validateWords(raw: unknown): VocabularyWord[] | null {
@@ -126,7 +126,7 @@ function toScene(introduction: Awaited<ReturnType<typeof findIntroductionByMissi
   }
 }
 
-/** Genera y valida las 7 palabras; reintenta una vez si no cumplen. */
+/** Genera y valida las 5 palabras; reintenta una vez si no cumplen. */
 async function generateWords(
   source: VocabularySource,
   scene: VocabularyScene | null,
@@ -152,7 +152,7 @@ async function generateWords(
     try {
       const valid = validateWords(JSON.parse(content))
       if (valid) return valid
-      lastError = 'no trajo exactamente 7 palabras utilizables'
+      lastError = 'no trajo exactamente 5 palabras utilizables'
     } catch {
       lastError = 'respuesta ilegible'
     }
