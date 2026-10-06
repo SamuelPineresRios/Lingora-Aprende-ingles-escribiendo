@@ -66,6 +66,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const [startTime, setStartTime] = useState<number | null>(null)
   const [isThinking, setIsThinking] = useState(false)
   const [isLastMessageTyping, setIsLastMessageTyping] = useState(false)
+  /** El saludo inicial no llegó (proveedor de IA): se ofrece reintentar. */
+  const [startError, setStartError] = useState<string | null>(null)
   const [timedOut, setTimedOut] = useState(false)
   const { progress } = useProgress(user?.id)
   const [showCompletionNotification, setShowCompletionNotification] = useState(false)
@@ -109,49 +111,56 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
     setMissionMode(mode)
     setState('active'); setStartTime(Date.now())
     setIsThinking(true)
+    setStartError(null)
     setHearts(TOTAL_HEARTS)
     setShowFailedNotification(false)
     setMissionCompleted(false)
-    
-    // Initial system prompt + optional fake first message or trigger API
-    // Let's trigger the API to get the first greeting based on context
-    try {
-        const initialMessages: Message[] = []
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                mode: 'chat',
-                missionMode: mode,
-                messages: initialMessages, 
-                mission, 
-                userLevel: user?.cefr_level || mission.cefr_level 
-            })
-        })
-        const data = await readJson(res)
-        if (data?.message) {
-            setMessages([data.message])
-            setIsLastMessageTyping(true)
-            if (mode === 'evaluation' && data.estimated_time) {
-                setTimerDuration(data.estimated_time)
-                setTimerKey(prev => prev + 1)
-                setTimedOut(false)
-            }
-        } else {
-            console.error('No message in start response', data)
-            // Fallback message if API fails
-            setMessages([{ role: 'assistant', content: "System: Connection established. Please initiate the conversation." }])
-            setIsLastMessageTyping(true)
-        }
-    } catch (e) {
-        console.error(e)
-        // Fallback message if API fails
-        setMessages([{ role: 'assistant', content: "System: Connection error. Please try refreshing." }])
-        setIsLastMessageTyping(true)
-    } finally {
-        setIsThinking(false)
-        setTimeout(() => textareaRef.current?.focus(), 100)
+
+    const payload = {
+        mode: 'chat',
+        missionMode: mode,
+        messages: [] as Message[],
+        mission,
+        userLevel: user?.cefr_level || mission.cefr_level
     }
+
+    // El proveedor de IA falla a ráfagas (red, límite de uso): un reintento
+    // silencioso suele bastar. Si aun así no hay saludo, se dice claramente en
+    // vez de inventar un mensaje del personaje.
+    let lastError = 'El coach no pudo responder. Reintenta en unos segundos.'
+    for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            const data = await readJson(res)
+
+            if (!res.ok || !data?.message) {
+                lastError = data?.error ?? 'El coach no pudo responder. Reintenta en unos segundos.'
+                console.warn(`[chat] Arranque fallido (intento ${attempt}):`, res.status, data)
+            } else {
+                setMessages([data.message])
+                setIsLastMessageTyping(true)
+                if (mode === 'evaluation' && data.estimated_time) {
+                    setTimerDuration(data.estimated_time)
+                    setTimerKey(prev => prev + 1)
+                    setTimedOut(false)
+                }
+                setIsThinking(false)
+                setTimeout(() => textareaRef.current?.focus(), 100)
+                return
+            }
+        } catch (e) {
+            lastError = 'No hay conexión con el coach. Reintenta en unos segundos.'
+            console.warn(`[chat] Arranque fallido (intento ${attempt}):`, e)
+        }
+        if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 1200))
+    }
+
+    setStartError(lastError)
+    setIsThinking(false)
   }, [mission, user])
 
   /**
@@ -746,6 +755,24 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                       <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
                       <div className="bg-cyan/5 border border-cyan/10 text-cyan px-3 py-2 rounded-2xl rounded-tl-none text-xs">
                           escribiendo…
+                      </div>
+                  </div>
+              </div>
+          )}
+
+          {startError && messages.length === 0 && (
+              <div className="flex gap-2 items-end">
+                  <ChatAvatar name={mission.character_name} />
+                  <div className="flex flex-col gap-1">
+                      <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
+                      <div className="bg-coral/10 border border-coral/30 text-red-100 px-4 py-3 rounded-2xl rounded-tl-none text-sm space-y-2 max-w-md">
+                          <p>{startError}</p>
+                          <button
+                              onClick={() => startMission(missionMode)}
+                              className="text-[11px] font-mono uppercase tracking-widest border border-coral/40 rounded-lg px-3 py-1.5 text-red-100 hover:bg-coral/10 transition-colors"
+                          >
+                              Reintentar
+                          </button>
                       </div>
                   </div>
               </div>
