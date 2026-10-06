@@ -17,6 +17,7 @@ import { avatarUrl, type AvatarGender } from '@/lib/avatar'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { IntroductionPlayer } from '@/components/IntroductionPlayer'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
+import { MissionTitleCard } from '@/components/MissionTitleCard'
 import { ConversationLog } from '@/components/ConversationLog'
 
 
@@ -68,6 +69,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const [isLastMessageTyping, setIsLastMessageTyping] = useState(false)
   /** El saludo inicial no llegó (proveedor de IA): se ofrece reintentar. */
   const [startError, setStartError] = useState<string | null>(null)
+  /** Misión cuya cabecera de presentación ya se vio (se rearma al cambiar). */
+  const [titleDoneFor, setTitleDoneFor] = useState<string | null>(null)
   const [timedOut, setTimedOut] = useState(false)
   const { progress } = useProgress(user?.id)
   const [showCompletionNotification, setShowCompletionNotification] = useState(false)
@@ -503,6 +506,20 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             </button>
           </div>
         </div>
+      )
+    }
+
+    // Primero la cabecera (título y descripción), después la escena.
+    if (titleDoneFor !== mission.id) {
+      return (
+        <MissionTitleCard
+          title={introduction.scene_title}
+          description={introduction.scene_description}
+          backdrop={introduction.backdrop}
+          seed={mission.id}
+          characters={introduction.characters}
+          onDone={() => setTitleDoneFor(mission.id)}
+        />
       )
     }
 

@@ -31,3 +31,25 @@ export function avatarUrl(name: string, gender?: AvatarGender): string {
   if (gender === 'female') return `${base}&${FEMALE_LOOK}`
   return base
 }
+
+/** Avatares ya pedidos: pedir dos veces la misma URL no aporta nada. */
+const preloaded = new Set<string>()
+
+/**
+ * Precalienta los avatares mientras se ve la cabecera de la misión: cuando la
+ * escena entra, las imágenes ya están en la caché del navegador (DiceBear
+ * responde con `max-age` de un año) y no aparecen vacías un instante.
+ */
+export function preloadAvatars(people: Array<{ name: string; gender?: AvatarGender }>): void {
+  if (typeof window === 'undefined') return
+
+  for (const person of people) {
+    const url = avatarUrl(person.name, person.gender)
+    if (preloaded.has(url)) continue
+    preloaded.add(url)
+
+    const image = new Image()
+    image.src = url
+    void image.decode?.().catch(() => {})
+  }
+}
