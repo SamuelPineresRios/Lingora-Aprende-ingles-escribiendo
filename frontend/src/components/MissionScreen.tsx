@@ -18,6 +18,7 @@ import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { IntroductionPlayer } from '@/components/IntroductionPlayer'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { MissionTitleCard } from '@/components/MissionTitleCard'
+import { prewarmVocabulary } from '@/lib/mission-prewarm'
 import { ConversationLog } from '@/components/ConversationLog'
 
 
@@ -457,6 +458,12 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
       void ensureIntroduction()
     }
   }, [state, introduction, loadingIntroduction, introductionError, ensureIntroduction])
+
+  // Con la escena ya en el estado (cabecera en pantalla) se adelanta el
+  // vocabulario: cuando el alumno llegue a esa fase, estará listo.
+  useEffect(() => {
+    if (introduction) prewarmVocabulary(mission.id)
+  }, [introduction, mission.id])
 
 
 

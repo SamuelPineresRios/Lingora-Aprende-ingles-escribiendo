@@ -7,6 +7,7 @@ import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
+import { prewarmIntroduction } from '@/lib/mission-prewarm'
 import { readJson } from '@/lib/api'
 import type { MissionBackdrop as MissionBackdropSpec } from '@vox/shared'
 
@@ -164,7 +165,12 @@ export default function MissionsPage() {
 
               return (
                 <div key={m.id}>
-                  <Link to={`/mission/${m.id}`} className="group block relative">
+                  <Link
+                    to={`/mission/${m.id}`}
+                    className="group block relative"
+                    onMouseEnter={() => prewarmIntroduction(m.id)}
+                    onFocus={() => prewarmIntroduction(m.id)}
+                  >
                     {/* Cyber Card Background */}
                     <div className={cn("absolute inset-0 border border-white/10 bg-black/40 backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] clip-path-cyber", 
                       m.status==='completed' ? 'opacity-80 grayscale-[0.8] border-dashed' : 'opacity-100'
