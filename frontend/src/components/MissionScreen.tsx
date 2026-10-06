@@ -632,14 +632,15 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
   return (
     <div className="h-screen flex flex-col w-full px-4 pt-4 pb-4 relative overflow-hidden">
-      {/* Fondo ambientado de la misión, tenue: el chat manda. */}
+      {/* Fondo ambientado de la misión, muy tenue: aquí mandan los mensajes y
+          la conversación, así que va más apagado que en la escena. */}
       <MissionBackdrop
         backdrop={resolveBackdrop(mission.backdrop, `${mission.title} ${mission.scene_context}`)}
         seed={mission.id}
         variant="scene"
-        className="opacity-30"
+        className="opacity-20"
       />
-      <div className="absolute inset-0 bg-slate-950/50" />
+      <div className="absolute inset-0 bg-slate-950/65" />
       <div className="relative z-10 grid flex-1 min-h-0 lg:grid-cols-[minmax(0,1fr)_320px] gap-4 lg:gap-6">
         {/* Columna izquierda: chat de la misión */}
         <div className="flex flex-col min-h-0">
