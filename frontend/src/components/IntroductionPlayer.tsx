@@ -46,18 +46,16 @@ function syntheticMouthLevel(now: number): number {
  * brillo del avatar. Son clases completas porque Tailwind no genera nombres
  * construidos.
  */
-const ROLE_THEME: Record<'A' | 'B', { label: string; text: string; bubble: string; glow: string; dot: string }> = {
+const ROLE_THEME: Record<'A' | 'B', { label: string; text: string; glow: string; dot: string }> = {
   A: {
     label: 'text-cyan',
     text: 'text-cyan-50',
-    bubble: 'border-cyan/40',
     glow: 'drop-shadow-[0_0_26px_rgba(6,182,212,0.5)]',
     dot: 'bg-cyan',
   },
   B: {
     label: 'text-violet',
     text: 'text-violet-50',
-    bubble: 'border-violet/40',
     glow: 'drop-shadow-[0_0_26px_rgba(139,92,246,0.5)]',
     dot: 'bg-violet',
   },
@@ -450,7 +448,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
         variant="scene"
         className="opacity-80"
       />
-      <div className="absolute inset-0 bg-slate-950/55" />
+      <div className="absolute inset-0 bg-slate-950/65" />
 
       {/* Cabecera */}
       <header className="relative z-10 shrink-0 flex items-center justify-between gap-4 px-6 py-4">
@@ -509,16 +507,9 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
             speaker?.id === 'A' ? 'mr-auto' : 'ml-auto',
           )}
         >
-          <div
-            className={cn(
-              'relative rounded-2xl border bg-slate-900/95 p-5 min-h-[132px] flex flex-col justify-center transition-colors duration-500',
-              finished
-                ? 'border-emerald/40'
-                : speaker
-                  ? ROLE_THEME[speaker.id].bubble
-                  : 'border-cyan/30',
-            )}
-          >
+          {/* Sin caja: solo el texto del rol, sobre la escena. El alto mínimo
+              evita que la escena salte al cambiar de frase. */}
+          <div className="relative min-h-[132px] flex flex-col justify-center px-2 py-4 sm:px-4">
             {line && !finished && (
               <>
                 <div className="flex items-center justify-between gap-3 mb-2">
@@ -545,7 +536,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
                   </div>
                 </div>
 
-                <p className={cn('font-reading text-xl sm:text-2xl leading-relaxed font-medium tracking-[0.01em]', speaker ? ROLE_THEME[speaker.id].text : 'text-slate-100')}>
+                <p className={cn('font-reading text-xl sm:text-2xl leading-relaxed font-medium tracking-[0.01em] drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)]', speaker ? ROLE_THEME[speaker.id].text : 'text-slate-100')}>
                   {lineComplete ? (
                     <InteractiveWords text={line.text} context={line.text} />
                   ) : (
@@ -554,7 +545,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
                 </p>
 
                 {showTranslations && lineComplete && (
-                  <p className="font-reading mt-3 pt-3 border-t border-white/10 text-[15px] italic text-emerald-200/90 animate-in fade-in duration-500">
+                  <p className="font-reading mt-3 text-[15px] italic text-emerald-200/90 drop-shadow-[0_2px_10px_rgba(2,6,23,0.95)] animate-in fade-in duration-500">
                     {line.translation}
                   </p>
                 )}
