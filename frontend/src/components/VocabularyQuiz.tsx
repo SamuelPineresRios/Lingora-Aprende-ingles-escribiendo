@@ -7,16 +7,10 @@
  * línea que se dibuja sola; la evaluación es local.
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowRight, Check, Eye, Loader2, RotateCcw, X } from 'lucide-react'
+import { ArrowRight, Check, Eye, RotateCcw, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { readJson } from '@/lib/api'
-
-interface VocabularyWord {
-  word: string
-  translation: string
-  example: string
-  example_translation: string
-}
+import { getCachedVocabulary, setCachedVocabulary, type KeyWord } from '@/lib/mission-content'
 
 type Phase = 'study' | 'match' | 'summary'
 
@@ -92,8 +86,9 @@ function closingMessage(mistakes: number, total: number): string {
 }
 
 export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQuizProps) {
-  const [words, setWords] = useState<VocabularyWord[]>([])
-  const [loading, setLoading] = useState(true)
+  // Si el vocabulario se precargó durante la cabecera, monta sin pedir nada.
+  const [words, setWords] = useState<KeyWord[]>(() => getCachedVocabulary(missionId) ?? [])
+  const [loading, setLoading] = useState(() => !(getCachedVocabulary(missionId)?.length))
   const [error, setError] = useState<string | null>(null)
   const [reloadKey, setReloadKey] = useState(0)
 
@@ -115,25 +110,39 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
   useEffect(() => {
     let cancelled = false
 
+    /** Deja la actividad lista con la lista de palabras. */
+    const applyWords = (list: KeyWord[]) => {
+      setWords(list)
+      setPhase('study')
+      setMatched([])
+      setMistakes(0)
+      setSelectedWord(null)
+      setSelectedTranslation(null)
+      setWrong(null)
+      setRightColumn(shuffled(list.map(entry => entry.translation)))
+      setLoading(false)
+    }
+
+    // Precargado (cabecera o tarjetas): no hay nada que pedir.
+    const cached = getCachedVocabulary(missionId)
+    if (cached && cached.length > 0) {
+      applyWords(cached)
+      return () => {
+        cancelled = true
+      }
+    }
+
     fetch(`/api/missions/${missionId}/vocabulary`)
       .then(readJson)
       .then(data => {
         if (cancelled) return
-        const list: VocabularyWord[] = data?.vocabulary?.words ?? []
+        const list: KeyWord[] = data?.vocabulary?.words ?? []
         if (list.length === 0) throw new Error('La actividad llegó vacía')
-        setWords(list)
-        setPhase('study')
-        setMatched([])
-        setMistakes(0)
-        setSelectedWord(null)
-        setSelectedTranslation(null)
-        setWrong(null)
-        setRightColumn(shuffled(list.map(entry => entry.translation)))
+        setCachedVocabulary(missionId, list)
+        applyWords(list)
       })
       .catch(err => {
         if (!cancelled) setError((err as Error).message)
-      })
-      .finally(() => {
         if (!cancelled) setLoading(false)
       })
 
@@ -286,17 +295,6 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0e2a38_1px,transparent_1px),linear-gradient(to_bottom,#0e2a38_1px,transparent_1px)] bg-[size:56px_56px] opacity-20" />
 
       <div className="relative z-10 flex-1 flex items-center justify-center px-4 py-10">
-        {loading && (
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="h-8 w-8 text-cyan animate-spin" />
-            <p className="text-cyan text-xs font-bold uppercase tracking-[0.25em] animate-pulse">
-              Preparando el vocabulario
-            </p>
-            <p className="text-[11px] text-slate-400 text-center max-w-xs">
-              Es la primera vez que se abre esta misión: el coach está eligiendo las palabras clave de la escena.
-            </p>
-          </div>
-        )}
 
         {!loading && error && (
           <div className="flex flex-col items-center gap-4 text-center">

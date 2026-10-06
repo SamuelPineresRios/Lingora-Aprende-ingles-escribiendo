@@ -18,7 +18,7 @@ import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { IntroductionPlayer } from '@/components/IntroductionPlayer'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { MissionTitleCard } from '@/components/MissionTitleCard'
-import { prewarmVocabulary } from '@/lib/mission-prewarm'
+import { getCachedIntroduction, prewarmVocabulary, setCachedIntroduction } from '@/lib/mission-content'
 import { ConversationLog } from '@/components/ConversationLog'
 
 
@@ -102,7 +102,10 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
   // Escena narrativa: se pide a la API (genera la primera vez) y se recuerda
   // mientras el alumno está en la pantalla, para no repetir la espera.
-  const [introduction, setIntroduction] = useState<MissionIntroduction | null>(null)
+  // Si la escena ya se precargó (tarjetas visibles, hover), arranca de una.
+  const [introduction, setIntroduction] = useState<MissionIntroduction | null>(
+    () => getCachedIntroduction(mission.id) ?? null,
+  )
   const [introductionError, setIntroductionError] = useState<string | null>(null)
   const [loadingIntroduction, setLoadingIntroduction] = useState(false)
 
@@ -444,6 +447,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
       if (!res.ok) throw new Error(res.status === 503 ? 'Servicio de IA no configurado' : `Error ${res.status}`)
       const data = await readJson<{ introduction: MissionIntroduction }>(res)
       if (!data?.introduction) throw new Error('La escena llegó vacía')
+      setCachedIntroduction(mission.id, data.introduction)
       setIntroduction(data.introduction)
     } catch (err) {
       setIntroductionError((err as Error).message)
@@ -476,21 +480,10 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
   // ── Fase 2: escena narrativa ──────────────────────────────────────────
   if (state === 'introduction') {
+    // Sin spinner ni texto: con el contenido precalentado esto dura milisegundos
+    // y, si alguna vez hay que generar, se ve solo un fondo oscuro un instante.
     if (loadingIntroduction) {
-      return (
-        <div className="min-h-screen flex flex-col items-center justify-center gap-5 bg-slate-950 p-6">
-          <div className="relative w-14 h-14">
-            <div className="absolute inset-0 border-2 border-cyan/20 rounded-full animate-ping" />
-            <div className="absolute inset-0 border-2 border-t-cyan border-r-transparent border-b-cyan/50 border-l-transparent rounded-full animate-spin" />
-          </div>
-          <p className="text-cyan font-body text-sm font-bold uppercase tracking-[0.25em] animate-pulse">
-            Preparando la escena
-          </p>
-          <p className="text-[11px] text-slate-400 font-body text-center max-w-xs">
-            Es la primera vez que se abre esta misión, así que el coach está escribiendo la conversación de ejemplo.
-          </p>
-        </div>
-      )
+      return <div className="min-h-screen bg-slate-950" />
     }
 
     if (introductionError || !introduction) {

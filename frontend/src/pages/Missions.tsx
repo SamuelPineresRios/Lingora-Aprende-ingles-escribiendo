@@ -7,7 +7,7 @@ import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
-import { prewarmIntroduction } from '@/lib/mission-prewarm'
+import { prewarmIntroduction } from '@/lib/mission-content'
 import { readJson } from '@/lib/api'
 import type { MissionBackdrop as MissionBackdropSpec } from '@vox/shared'
 
@@ -83,6 +83,14 @@ export default function MissionsPage() {
     }
   }
   
+  // Precarga la escena de las tarjetas visibles: en móvil no hay hover y, con
+  // la respuesta en memoria, abrir cualquiera de ellas no espera nada.
+  useEffect(() => {
+    const list = filter === 'all' ? missions : missions.filter(mission => mission.cefr_level === filter)
+    const start = currentPage * 6
+    for (const mission of list.slice(start, start + 6)) prewarmIntroduction(mission.id)
+  }, [missions, filter, currentPage])
+
   // Reset to first page when filter changes
   useEffect(() => {
     setCurrentPage(0)
