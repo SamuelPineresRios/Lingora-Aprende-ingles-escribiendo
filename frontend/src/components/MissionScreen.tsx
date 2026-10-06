@@ -511,6 +511,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
         cefrLevel={mission.cefr_level}
         onFinish={() => setState('vocabulary')}
         onSkip={() => setState('vocabulary')}
+        onSkipToMission={() => setState('preparation')}
       />
     )
   }

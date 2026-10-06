@@ -77,6 +77,8 @@ interface IntroductionPlayerProps {
   cefrLevel: string
   onFinish: () => void
   onSkip: () => void
+  /** Salta también el vocabulario y el emparejamiento, directo a la misión. */
+  onSkipToMission: () => void
 }
 
 /** Avatar grande de un personaje, resaltado cuando le toca hablar. */
@@ -157,7 +159,7 @@ function CharacterStage({
   )
 }
 
-export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip }: IntroductionPlayerProps) {
+export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, onSkipToMission }: IntroductionPlayerProps) {
   const [index, setIndex] = useState(0)
   const [autoPlay, setAutoPlay] = useState(false)
   const [showTranslations, setShowTranslations] = useState(false)
@@ -456,15 +458,21 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip }
           <span className="text-[10px] text-cyan uppercase tracking-[0.25em] block">Escena narrativa</span>
           <h2 className="font-body text-xl sm:text-2xl font-bold text-white truncate">{introduction.scene_title}</h2>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <span className={cn('text-xs px-2 py-1 rounded border font-bold', CEFR_BADGE[cefrLevel] ?? CEFR_BADGE.B1)}>
             {cefrLevel}
           </span>
           <button
             onClick={onSkip}
-            className="text-slate-400 hover:text-white text-[11px] font-mono uppercase tracking-widest flex items-center gap-1"
+            className="text-slate-400 hover:text-white text-[11px] font-mono uppercase tracking-widest flex items-center gap-1 whitespace-nowrap"
           >
-            <X className="h-4 w-4" /> Saltar
+            <X className="h-4 w-4" /> Saltar escena
+          </button>
+          <button
+            onClick={onSkipToMission}
+            className="flex items-center gap-1 whitespace-nowrap rounded-lg border border-cyan/40 bg-cyan/10 px-2.5 py-1.5 text-[11px] font-mono uppercase tracking-widest text-cyan transition-colors hover:bg-cyan/20"
+          >
+            <SkipForward className="h-3.5 w-3.5" /> Saltar a la misión
           </button>
         </div>
       </header>
