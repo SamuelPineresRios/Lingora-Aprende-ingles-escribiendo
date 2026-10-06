@@ -22,8 +22,15 @@ const AUTOPLAY_NEXT_DELAY_MS = 2400
  */
 const SCENE_AUTO_CONTINUE_MS = 2000
 
+/**
+ * Avatar del personaje: voxel-art animado de DiceBear (licencia CC0).
+ * `tags=animation` activa el parpadeo y la respiración por CSS (respetan
+ * `prefers-reduced-motion`) y el alfa `00` del fondo deja el lienzo
+ * transparente: el estilo trae por defecto un fondo lila que chocaría con la
+ * escena oscura.
+ */
 function avatarUrl(name: string): string {
-  return `https://api.dicebear.com/9.x/pixel-art/svg?seed=${encodeURIComponent(name)}`
+  return `https://api.dicebear.com/10.x/voxel-art/svg?seed=${encodeURIComponent(name)}&tags=animation&flip=horizontal&backgroundColor=00000000`
 }
 
 /** URL del MP3 sintetizado por el backend (voz natural y cacheada). */
@@ -43,22 +50,23 @@ function syntheticMouthLevel(now: number): number {
 }
 
 /**
- * Identidad visual de cada rol: color del nombre, del texto y de la burbuja.
- * Son clases completas porque Tailwind no genera nombres construidos.
+ * Identidad visual de cada rol: color del nombre, del texto, de la burbuja y
+ * brillo del avatar. Son clases completas porque Tailwind no genera nombres
+ * construidos.
  */
-const ROLE_THEME: Record<'A' | 'B', { label: string; text: string; bubble: string; ring: string; dot: string }> = {
+const ROLE_THEME: Record<'A' | 'B', { label: string; text: string; bubble: string; glow: string; dot: string }> = {
   A: {
     label: 'text-cyan',
     text: 'text-cyan-50',
     bubble: 'border-cyan/40',
-    ring: 'border-cyan/70 shadow-[0_0_45px_-8px_rgba(6,182,212,0.75)]',
+    glow: 'drop-shadow-[0_0_26px_rgba(6,182,212,0.5)]',
     dot: 'bg-cyan',
   },
   B: {
     label: 'text-violet',
     text: 'text-violet-50',
     bubble: 'border-violet/40',
-    ring: 'border-violet/70 shadow-[0_0_45px_-8px_rgba(139,92,246,0.75)]',
+    glow: 'drop-shadow-[0_0_26px_rgba(139,92,246,0.5)]',
     dot: 'bg-violet',
   },
 }
@@ -79,7 +87,7 @@ interface IntroductionPlayerProps {
   onSkip: () => void
 }
 
-/** Busto grande de un personaje, resaltado cuando le toca hablar. */
+/** Avatar grande de un personaje, resaltado cuando le toca hablar. */
 function CharacterStage({
   character,
   speaking,
@@ -98,31 +106,32 @@ function CharacterStage({
       <div
         className={cn(
           // El ancho responde al viewport: en móvil manda el ancho de la
-          // columna, en escritorio el alto de la pantalla (para que el busto
+          // columna, en escritorio el alto de la pantalla (para que el avatar
           // nunca desplace la burbuja ni el pie en portátiles bajos). En
           // pantallas altas se permite crecer más.
-          'relative aspect-square w-[min(38vw,9.5rem,32vh)] sm:w-[min(26vw,22rem,34vh)] [@media(min-height:840px)]:sm:w-[min(26vw,22rem,38vh)] overflow-hidden rounded-2xl border-2 transition-all duration-500',
-          speaking ? theme.ring : 'border-white/10 opacity-55 grayscale',
+          // Sin marco: el sprite va suelto sobre la escena y la sombra es un
+          // `drop-shadow`, que sigue su silueta en vez de dibujar una caja.
+          'relative aspect-square w-[min(42vw,11rem,36vh)] sm:w-[min(29vw,25rem,38vh)] [@media(min-height:840px)]:sm:w-[min(29vw,25rem,42vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
+          !speaking && 'opacity-55 grayscale',
         )}
       >
-        {/* El sprite de dicebear ya es un busto (cabeza grande y camiseta):
-            se muestra entero y a buen tamaño, sin recortes. */}
+        {/* El sprite voxel-art ya trae el personaje completo y centrado en su
+            lienzo cuadrado: se muestra entero, sin marco ni recortes. */}
         <img
           src={avatarUrl(character.name)}
           alt={character.name}
-          className="h-full w-full p-2"
+          className={cn('h-full w-full', speaking && theme.glow)}
         />
 
-        {/* Boca animada. El sprite trae una boca fija en la zona x6-10, y9 de
-            su rejilla 16x16 (el marco interior coincide con el `p-2` de la
-            imagen); encima va esta pieza, que crece con el volumen real de la
-            voz. A nivel 0 queda invisible y se ve la boca original: el máximo
-            es media boca de alto (1,2 px de la rejilla), no el hueco entero. */}
-        <span className="pointer-events-none absolute inset-2" aria-hidden>
+        {/* Boca animada. La rejilla del sprite voxel la sitúa en x 48-59,4 %
+            e y 57,8-63,3 % del lienzo (medido sobre el SVG de DiceBear);
+            encima va esta pieza, que crece con el volumen real de la voz. A
+            nivel 0 queda invisible y se ve la boca original. */}
+        <span className="pointer-events-none absolute inset-0" aria-hidden>
           <span
             ref={mouthRef}
-            className="absolute left-[43.75%] top-[56.25%] w-[12.5%] rounded-[3px] bg-[#5b1f2a]"
-            style={{ height: 'calc(var(--mouth-open, 0) * 7.5%)' }}
+            className="absolute left-[48%] top-[57.8%] w-[11.4%] rounded-[3px] bg-[#261910]"
+            style={{ height: 'calc(var(--mouth-open, 0) * 5.5%)' }}
           />
         </span>
 
