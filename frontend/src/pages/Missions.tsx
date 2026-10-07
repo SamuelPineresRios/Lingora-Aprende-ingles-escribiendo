@@ -4,6 +4,7 @@ import { useAuth } from '@/lib/hooks/useAuth'
 import { getCefrLabel } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
+import { DailyQuests } from '@/components/QuestBoard'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
@@ -142,6 +143,9 @@ export default function MissionsPage() {
           </div>
         </div>
       </div>
+
+      {/* Retos del día: lo primero que se ve al entrar */}
+      <DailyQuests />
 
       {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">

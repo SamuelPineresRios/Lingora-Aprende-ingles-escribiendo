@@ -17,6 +17,7 @@ import {
 } from '../../db/schema.ts'
 import { levelProgress, streakFromDays, type LevelProgress } from '../../lib/xp.ts'
 import { HttpError } from '../../utils/http-error.ts'
+import { minusDays, safeTimeZone, todayKeyIn } from '../../lib/date-keys.ts'
 import { getWeekStart } from '../../utils/week.ts'
 
 /** Grupos del alumno con sus misiones asignadas y el estado de cada una. */
@@ -205,17 +206,6 @@ export interface DailyActivity {
   seconds: number
 }
 
-/** Zona horaria IANA válida, o null para usar la de la base de datos. */
-function safeTimeZone(value: unknown): string | null {
-  if (typeof value !== 'string' || value.length === 0 || value.length > 64) return null
-  try {
-    new Intl.DateTimeFormat('en-US', { timeZone: value })
-    return value
-  } catch {
-    return null
-  }
-}
-
 /**
  * Actividad diaria del alumno entre dos fechas (ambas incluidas).
  *
@@ -273,21 +263,6 @@ export interface StudentProgress extends LevelProgress {
 
 /** Días hacia atrás que se miran para calcular la racha. */
 const STREAK_WINDOW_DAYS = 60
-
-/** `YYYY-MM-DD` de hoy en la zona del alumno (o en la del servidor). */
-function todayKeyIn(timeZone: string | null): string {
-  if (!timeZone) {
-    const now = new Date()
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
-  }
-  // en-CA formatea justo como YYYY-MM-DD.
-  return new Intl.DateTimeFormat('en-CA', { timeZone }).format(new Date())
-}
-
-/** Resta días a una clave `YYYY-MM-DD` (en UTC, para no bailar con el DST). */
-function minusDays(key: string, days: number): string {
-  return new Date(Date.parse(`${key}T00:00:00Z`) - days * 86_400_000).toISOString().slice(0, 10)
-}
 
 /**
  * Progreso del alumno. El XP sale de `evaluations.xp_awarded` y el nivel se
