@@ -56,6 +56,7 @@ missionsRouter.post('/:id/submit', requireAuth, async (req, res) => {
     responseText,
     groupId,
     timeTakenSeconds: readTimeTakenSeconds(body.time_taken_seconds),
+    timezone: body.tz,
   })
 
   if (outcome.kind === 'rejected') {

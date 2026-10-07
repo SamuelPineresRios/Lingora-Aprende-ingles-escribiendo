@@ -12,6 +12,7 @@ import {
   getDailyActivity,
   getGlobalRanking,
   getStudentProgress,
+  useStreakShield,
   type RankingMetric,
   getSessionSummary,
   getStudentSkills,
@@ -125,6 +126,17 @@ studentsRouter.get('/:id/xp', requireAuth, async (req, res) => {
   if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
 
   res.json({ progress: await getStudentProgress(studentId, req.query.tz) })
+})
+
+/**
+ * Usa un escudo de racha para cubrir el día que falta (solo el propio alumno).
+ */
+studentsRouter.post('/:id/streak/use-shield', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+  if (session.role !== 'student' || session.userId !== studentId) throw new HttpError(403, 'Forbidden')
+
+  res.json(await useStreakShield(studentId, req.query.tz))
 })
 
 /**

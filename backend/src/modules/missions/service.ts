@@ -17,8 +17,9 @@ import {
   users,
   weekly_aggregates,
 } from '../../db/schema.ts'
-import { missionXp } from '../../lib/xp.ts'
+import { missionXp, streakMultiplier } from '../../lib/xp.ts'
 import { HttpError } from '../../utils/http-error.ts'
+import { getActivityStreak } from '../students/service.ts'
 import { getWeekStart } from '../../utils/week.ts'
 import {
   NON_GENUINE_EVALUATION,
@@ -103,6 +104,8 @@ export interface SubmitInput {
   responseText: string
   groupId: string | null
   timeTakenSeconds: number | null
+  /** Zona horaria del cliente, para medir la racha en su «hoy». */
+  timezone?: unknown
 }
 
 export interface SubmitOutcome {
@@ -191,7 +194,7 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
   // ¿Ya había completado esta misión antes? La primera vez paga el bonus;
   // repetirla sólo da práctica (y evita farmear XP con la misma misión).
   const firstCompletion = completed ? !(await hasCompletedMission(input.studentId, input.missionId)) : false
-  const xp = missionXp({
+  const baseXp = missionXp({
     cefrLevel,
     completed,
     firstCompletion,
@@ -201,6 +204,11 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
       evaluation.lexical_richness_score,
     ],
   })
+
+  // La racha multiplica el XP de las misiones completadas; los intentos
+  // parciales no la aprovechan (la racha premia terminar).
+  const streak = completed ? await getActivityStreak(input.studentId, input.timezone) : 0
+  const xp = completed ? Math.round(baseXp * streakMultiplier(streak)) : baseXp
 
   await db.transaction(async tx => {
     await tx.insert(responses).values({

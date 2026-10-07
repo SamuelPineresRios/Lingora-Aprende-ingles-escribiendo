@@ -53,6 +53,18 @@ export function missionXp({ cefrLevel, completed, firstCompletion, scores }: Mis
   return Math.round(base + performance + FIRST_TIME_BONUS)
 }
 
+/**
+ * Multiplicador de XP por racha: premia aparecer varios días seguidos, con
+ * tope para que no se dispare.
+ */
+export function streakMultiplier(streak: number): number {
+  if (streak >= 30) return 1.5
+  if (streak >= 14) return 1.3
+  if (streak >= 7) return 1.2
+  if (streak >= 3) return 1.1
+  return 1
+}
+
 /** XP acumulado necesario para estar en `level` (nivel 1 = 0). */
 export function xpForLevel(level: number): number {
   if (level <= 1) return 0
@@ -97,15 +109,22 @@ export function levelProgress(totalXp: number): LevelProgress {
  * Si hoy aún no hay envíos pero ayer sí, la racha sigue viva (se cuenta desde
  * ayer): perderla exige dejar pasar un día entero.
  */
-export function streakFromDays(days: Set<string>, todayKey: string, yesterdayKey: string): number {
-  const cursor = days.has(todayKey) ? todayKey : days.has(yesterdayKey) ? yesterdayKey : null
+export function streakFromDays(
+  days: Set<string>,
+  todayKey: string,
+  yesterdayKey: string,
+  /** Días salvados con un escudo: cuentan como actividad. */
+  covered: Set<string> = new Set(),
+): number {
+  const activo = (key: string) => days.has(key) || covered.has(key)
+  const cursor = activo(todayKey) ? todayKey : activo(yesterdayKey) ? yesterdayKey : null
   if (!cursor) return 0
 
   let streak = 0
   // Se trabaja en UTC a propósito: las claves ya vienen fechadas en la zona
   // del alumno y aquí sólo se resta un día.
   let date = new Date(`${cursor}T00:00:00Z`)
-  while (days.has(dayKeyUtc(date))) {
+  while (activo(dayKeyUtc(date))) {
     streak += 1
     date = new Date(date.getTime() - 24 * 60 * 60 * 1000)
   }

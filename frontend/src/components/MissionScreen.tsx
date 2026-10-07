@@ -377,7 +377,13 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             const res = await fetch(`/api/missions/${mission.id}/submit`, {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ response_text: transcript, student_id: studentId, group_id: groupId, time_taken_seconds: timeTaken }),
+                body: JSON.stringify({
+                response_text: transcript,
+                student_id: studentId,
+                group_id: groupId,
+                time_taken_seconds: timeTaken,
+                tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            }),
             })
             const data = await readJson(res)
 

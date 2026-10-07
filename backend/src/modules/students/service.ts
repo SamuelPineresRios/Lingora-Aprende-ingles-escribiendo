@@ -2,7 +2,7 @@
  * Lógica de dominio de alumnos: grupos del alumno, unirse a un grupo y
  * agregados de escritura (semanal y de sesión).
  */
-import { and, asc, desc, eq, gte, inArray, sql } from 'drizzle-orm'
+import { and, asc, desc, eq, gte, inArray, isNotNull, isNull, sql } from 'drizzle-orm'
 import { randomUUID } from 'node:crypto'
 import { db } from '../../db/client.ts'
 import {
@@ -12,6 +12,7 @@ import {
   mission_assignments,
   missions,
   responses,
+  streak_shields,
   users,
   weekly_aggregates,
 } from '../../db/schema.ts'
@@ -256,6 +257,12 @@ export async function getDailyActivity(
 export interface StudentProgress extends LevelProgress {
   /** Días seguidos con actividad (hoy o ayer como último día). */
   streak: number
+  /** Practicó ayer y aún no hoy: la racha se rompe al terminar el día. */
+  streak_at_risk: boolean
+  /** Hubo actividad pero se dejó pasar el día: un escudo puede salvarla. */
+  streak_broken: boolean
+  /** Escudos de racha disponibles. */
+  streak_shields: number
   missions_completed: number
   writing_seconds: number
   xp_today: number
@@ -263,6 +270,88 @@ export interface StudentProgress extends LevelProgress {
 
 /** Días hacia atrás que se miran para calcular la racha. */
 const STREAK_WINDOW_DAYS = 60
+
+/**
+ * Días con actividad reciente y días salvados con un escudo.
+ *
+ * El escudo cuenta como día activo en la racha: es justo lo que compra.
+ */
+async function activityDays(
+  studentId: string,
+  tz: string | null,
+  todayKey: string,
+): Promise<{ days: Set<string>; covered: Set<string> }> {
+  const day = tz
+    ? sql`((${responses.submitted_at} AT TIME ZONE ${tz}::text)::date)`
+    : sql`(${responses.submitted_at}::date)`
+
+  const [dayRows, shieldRows] = await Promise.all([
+    db
+      .select({ day: sql<string>`to_char(${day}, 'YYYY-MM-DD')` })
+      .from(responses)
+      .where(
+        and(eq(responses.student_id, studentId), sql`${day} >= ${minusDays(todayKey, STREAK_WINDOW_DAYS)}::date`),
+      )
+      // Por posición: repetir la expresión con su parámetro rompe el GROUP BY.
+      .groupBy(sql`1`),
+    db
+      .select({ day: streak_shields.used_for_day })
+      .from(streak_shields)
+      .where(and(eq(streak_shields.student_id, studentId), isNotNull(streak_shields.used_for_day))),
+  ])
+
+  return {
+    days: new Set(dayRows.map(row => row.day)),
+    covered: new Set(shieldRows.map(row => row.day).filter((day): day is string => Boolean(day))),
+  }
+}
+
+/** Racha actual del alumno (con los días que salvaron los escudos). */
+export async function getActivityStreak(studentId: string, timezone?: unknown): Promise<number> {
+  const tz = safeTimeZone(timezone)
+  const todayKey = todayKeyIn(tz)
+  const { days, covered } = await activityDays(studentId, tz, todayKey)
+  return streakFromDays(days, todayKey, minusDays(todayKey, 1), covered)
+}
+
+/** Escudos sin usar. */
+async function availableShields(studentId: string): Promise<number> {
+  const [row] = await db
+    .select({ total: sql<number>`count(*)::int` })
+    .from(streak_shields)
+    .where(and(eq(streak_shields.student_id, studentId), isNull(streak_shields.used_for_day)))
+  return row?.total ?? 0
+}
+
+/**
+ * Usa un escudo para salvar la racha: marca como cubierto el primer día que
+ * falta después de la última actividad. Si no hay hueco, no gasta nada.
+ */
+export async function useStreakShield(studentId: string, timezone?: unknown): Promise<{ used_for: string }> {
+  const tz = safeTimeZone(timezone)
+  const todayKey = todayKeyIn(tz)
+  const { days, covered } = await activityDays(studentId, tz, todayKey)
+
+  const [shield] = await db
+    .select({ id: streak_shields.id })
+    .from(streak_shields)
+    .where(and(eq(streak_shields.student_id, studentId), isNull(streak_shields.used_for_day)))
+    .limit(1)
+  if (!shield) throw new HttpError(400, 'No tienes escudos')
+
+  if (days.has(todayKey) || covered.has(todayKey)) {
+    throw new HttpError(400, 'Tu racha no necesita escudo')
+  }
+
+  const lastActive = [...days, ...covered].sort().at(-1)
+  if (!lastActive) throw new HttpError(400, 'Todavía no tienes racha que salvar')
+
+  const gap = minusDays(lastActive, -1)
+  if (gap >= todayKey) throw new HttpError(400, 'Tu racha no necesita escudo')
+
+  await db.update(streak_shields).set({ used_for_day: gap }).where(eq(streak_shields.id, shield.id))
+  return { used_for: gap }
+}
 
 /**
  * Progreso del alumno. El XP sale de `evaluations.xp_awarded` y el nivel se
@@ -289,25 +378,18 @@ export async function getStudentProgress(
     .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
     .where(eq(responses.student_id, studentId))
 
-  // Días con actividad reciente: con ellos se calcula la racha.
-  const dayRows = await db
-    .select({ day: sql<string>`to_char(${day}, 'YYYY-MM-DD')` })
-    .from(responses)
-    .where(
-      and(
-        eq(responses.student_id, studentId),
-        sql`${day} >= ${minusDays(todayKey, STREAK_WINDOW_DAYS)}::date`,
-      ),
-    )
-    // Por posición: repetir la expresión con su parámetro rompe el GROUP BY.
-    .groupBy(sql`1`)
-
-  const days = new Set(dayRows.map(row => row.day))
+  const { days, covered } = await activityDays(studentId, tz, todayKey)
   const progress = levelProgress(totals?.total_xp ?? 0)
+  const yesterdayKey = minusDays(todayKey, 1)
+  const hasToday = days.has(todayKey) || covered.has(todayKey)
+  const hasYesterday = days.has(yesterdayKey) || covered.has(yesterdayKey)
 
   return {
     ...progress,
-    streak: streakFromDays(days, todayKey, minusDays(todayKey, 1)),
+    streak: streakFromDays(days, todayKey, yesterdayKey, covered),
+    streak_at_risk: hasYesterday && !hasToday,
+    streak_broken: !hasToday && !hasYesterday && days.size > 0,
+    streak_shields: await availableShields(studentId),
     missions_completed: totals?.missions_completed ?? 0,
     writing_seconds: totals?.writing_seconds ?? 0,
     xp_today: totals?.xp_today ?? 0,

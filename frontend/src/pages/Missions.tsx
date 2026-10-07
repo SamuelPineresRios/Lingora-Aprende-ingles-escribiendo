@@ -5,6 +5,7 @@ import { getCefrLabel } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { DailyQuests } from '@/components/QuestBoard'
+import { StreakBanner } from '@/components/StreakBanner'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
@@ -144,7 +145,8 @@ export default function MissionsPage() {
         </div>
       </div>
 
-      {/* Retos del día: lo primero que se ve al entrar */}
+      {/* Racha y retos del día: lo primero que se ve al entrar */}
+      <StreakBanner />
       <DailyQuests />
 
       {/* Grid Layout */}
