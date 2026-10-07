@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy } from 'lucide-react'
+import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useState } from 'react'
 
@@ -14,6 +14,7 @@ export function StudentSidebar() {
     { href: '/missions', label: 'MISIONES', icon: Radio },
     { href: '/words', label: 'VOCABULARIO', icon: BookMarked },
     { href: '/ranking', label: 'RANKING', icon: Trophy },
+    { href: '/season', label: 'PASE', icon: Medal },
     { href: '/groups', label: 'GRUPOS', icon: Users },
     { href: '/profile', label: 'PERFIL', icon: User },
   ]

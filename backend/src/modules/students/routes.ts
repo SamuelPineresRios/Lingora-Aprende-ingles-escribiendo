@@ -11,6 +11,7 @@ import {
   getDailyActivity,
   getGlobalRanking,
   getStudentProgress,
+  getStudentSeason,
   type RankingMetric,
   getSessionSummary,
   getStudentSkills,
@@ -124,6 +125,19 @@ studentsRouter.get('/:id/xp', requireAuth, async (req, res) => {
   if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
 
   res.json({ progress: await getStudentProgress(studentId, req.query.tz) })
+})
+
+/**
+ * Pase de batalla: temporada actual, XP dentro de ella, casilla y recompensas
+ * (marcos, insignias y monedas).
+ */
+studentsRouter.get('/:id/season', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+
+  if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
+
+  res.json(await getStudentSeason(studentId))
 })
 
 /**

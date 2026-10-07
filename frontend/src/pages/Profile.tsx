@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
-import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp, Coins } from 'lucide-react'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { ActivityHistory } from '@/components/ActivityHistory'
 import { XpBar } from '@/components/XpBar'
 import { useProgress } from '@/lib/hooks/useProgress'
 import { readJson } from '@/lib/api'
+import { avatarUrl } from '@/lib/avatar'
+import { cn } from '@/lib/utils'
+import { activeFrame, badgeIcon, unlockedBadges, type SeasonProgress } from '@/lib/season'
 
 interface Mission { id:string; title:string; description:string|null; cefr_level:string; status:string }
 
@@ -55,11 +59,33 @@ function statusFor(overall: number | null): string {
 export default function ProfilePage() {
   const { user, refetch } = useAuth()
   const { progress } = useProgress(user?.id)
+  /** Pase de temporada: marco activo, insignias y monedas. */
+  const [season, setSeason] = useState<SeasonProgress | null>(null)
   const [missions, setMissions] = useState<Mission[]>([])
   const [skills, setSkills] = useState<StudentSkills | null>(null)
   const [, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState('')
+
+  // El pase se carga aparte: si falla, el perfil sigue funcionando sin él.
+  useEffect(() => {
+    if (!user?.id) return
+    let cancelled = false
+
+    fetch(`/api/students/${user.id}/season`)
+      .then(readJson<SeasonProgress>)
+      .then(data => {
+        if (!cancelled && data) setSeason(data)
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [user?.id])
+
+  const frame = activeFrame(season)
+  const badges = unlockedBadges(season)
 
   const saveName = async () => {
     setIsEditing(false)
@@ -140,14 +166,20 @@ export default function ProfilePage() {
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
               
               <div className="relative mb-4">
-                 <div className="w-32 h-32 rounded-full border-2 border-dashed border-cyan/30 p-1 group-hover:border-cyan transition-colors relative overflow-hidden">
-                    <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
-                       {/* Placeholder for user photo or actual photo */}
-                       <UserAvatar name={user?.full_name || 'Usuari'} />
+                 {/* Con marco del pase, el anillo lleva sus colores; sin él, el punteado */}
+                 <div
+                   className={cn(
+                     'w-32 h-32 rounded-full transition-colors',
+                     frame ? 'p-[3px]' : 'border-2 border-dashed border-cyan/30 p-1 group-hover:border-cyan',
+                   )}
+                   style={frame ? { backgroundImage: `linear-gradient(135deg, ${frame.colors[0]}, ${frame.colors[1]})` } : undefined}
+                 >
+                    <div className="relative w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
+                       <img src={avatarUrl(user?.full_name || 'Letoura')} alt="" className="h-full w-full" />
+                       <button className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                          <Camera className="w-6 h-6 text-white" />
+                       </button>
                     </div>
-                    <button className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                       <Camera className="w-6 h-6 text-white" />
-                    </button>
                  </div>
                  <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 border border-cyan shadow-[0_0_10px_cyan]">
                     <Shield className="w-4 h-4 text-cyan fill-cyan/20" />
@@ -175,7 +207,21 @@ export default function ProfilePage() {
                   </h2>
               )}
               
-              <p className="text-xs text-slate-500 uppercase tracking-widest mb-4">Level {user?.cefr_level || 'N/A'} Operative</p>
+              <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">Level {user?.cefr_level || 'N/A'} Operative</p>
+
+              <Link
+                to="/season"
+                title="Pase de temporada"
+                className="flex items-center gap-3 mb-4 text-xs hover:opacity-80 transition-opacity"
+              >
+                <span className="flex items-center gap-1 text-amber">
+                  <Coins className="h-3.5 w-3.5" /> {season?.coins ?? 0}
+                </span>
+                {badges.map(badge => {
+                  const Icon = badgeIcon(badge.id)
+                  return <Icon key={badge.id} className="h-4 w-4 text-violet" />
+                })}
+              </Link>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full p-4 bg-white/5 rounded-xl border border-white/5">
                  <div className="text-center">
@@ -334,7 +380,4 @@ export default function ProfilePage() {
   )
 }
 
-function UserAvatar({ name }: { name: string }) {
-    const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
-    return <span className="text-2xl font-bold text-slate-500">{initials}</span>
-}
+

@@ -13,6 +13,7 @@ import MissionPage from '@/pages/MissionPage'
 import Missions from '@/pages/Missions'
 import Profile from '@/pages/Profile'
 import Ranking from '@/pages/Ranking'
+import Season from '@/pages/Season'
 import SessionSummary from '@/pages/SessionSummary'
 import Signup from '@/pages/Signup'
 import Words from '@/pages/Words'
@@ -47,6 +48,7 @@ export function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/words" element={<Words />} />
             <Route path="/ranking" element={<Ranking />} />
+            <Route path="/season" element={<Season />} />
           </Route>
 
           <Route element={<ProtectedRoute teacherOnly />}>
