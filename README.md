@@ -114,6 +114,7 @@ Plantilla: `backend/.env.example`. **Ninguna** está versionada.
 | `AI_BASE_URL` | No | URL base del proveedor compatible (por defecto `https://openrouter.ai/api/v1`) |
 | `AI_API_KEY` | No | Clave del proveedor compatible (con `AI_PROVIDER=openai`) |
 | `AI_MODEL` | No | Modelo del proveedor compatible (por defecto `anthropic/claude-haiku-4.5`) |
+| `AI_REASONING` | No | `off` apaga el razonamiento y `low`/`medium`/`high` lo limita (OpenRouter). Útil con modelos razonadores que se quedan sin respuesta |
 | `ELEVENLABS_API_KEY` | No | Voz natural de la escena narrativa ([elevenlabs.io](https://elevenlabs.io/app/settings/api-keys)). Sin ella la escena usa la voz nativa del navegador. El audio se cachea en `backend/.cache/tts` |
 | `ELEVENLABS_VOICE_A` / `_B` | No | Voces de los dos personajes (ids de ElevenLabs). Por defecto Sarah y Adam |
 | `TTS_CACHE_DIR` | No | Directorio de la caché de audio (por defecto `backend/.cache/tts`) |

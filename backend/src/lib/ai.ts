@@ -237,12 +237,19 @@ async function readAnthropicText(response: Response): Promise<string> {
 /** Extrae el texto del asistente del formato compatible con OpenAI. */
 async function readOpenAiText(response: Response): Promise<string> {
   const result = (await response.json()) as {
-    choices?: Array<{ message?: { content?: unknown } }>
+    choices?: Array<{ finish_reason?: string; message?: { content?: unknown; reasoning?: unknown } }>
   }
-  const text = result.choices?.[0]?.message?.content
+  const choice = result.choices?.[0]
+  const text = choice?.message?.content
   if (typeof text !== 'string' || text.length === 0) {
-    console.error('[AI] Respuesta inválida del proveedor:', result)
-    throw new AIProviderError('Invalid response from AI provider', 500)
+    // El caso típico: modelo razonador que se quedó sin tokens para responder.
+    const motivo = choice?.finish_reason === 'length'
+      ? 'se agotaron los max_tokens (¿modelo razonador?)'
+      : choice?.message?.reasoning
+        ? 'solo devolvió razonamiento, sin respuesta'
+        : 'respuesta vacía'
+    console.error('[AI] Respuesta inválida del proveedor:', motivo)
+    throw new AIProviderError(`Invalid response from AI provider (${motivo})`, 500)
   }
   return text
 }
@@ -285,6 +292,15 @@ function toOpenAiBody(
       json_schema: { name: 'response', schema, strict: true },
     }
   }
+
+  // Los modelos razonadores gastan los tokens pensando y pueden quedarse sin
+  // margen para la respuesta (`content: null`). Con AI_REASONING se apaga o se
+  // limita; sin la variable no se envía nada y el proveedor decide.
+  if (env.aiReasoning === 'off') body.reasoning = { enabled: false }
+  else if (env.aiReasoning === 'low' || env.aiReasoning === 'medium' || env.aiReasoning === 'high') {
+    body.reasoning = { effort: env.aiReasoning }
+  }
+
   return body
 }
 

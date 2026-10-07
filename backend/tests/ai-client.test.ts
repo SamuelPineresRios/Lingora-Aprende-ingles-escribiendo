@@ -21,6 +21,7 @@ const mockEnv = vi.hoisted(() => ({
   aiBaseUrl: 'https://openrouter.ai/api/v1',
   aiApiKey: null as string | null,
   aiModel: 'anthropic/claude-haiku-4.5',
+  aiReasoning: null as string | null,
   adminEmails: [],
 }))
 
@@ -62,6 +63,7 @@ beforeEach(() => {
   mockEnv.aiProvider = 'anthropic'
   mockEnv.anthropicApiKey = 'test-anthropic-key'
   mockEnv.aiApiKey = null
+  mockEnv.aiReasoning = null
 })
 
 afterEach(() => {
@@ -340,6 +342,28 @@ describe('proveedor compatible con OpenAI', () => {
     }
     expect(secondBody.response_format).toBeUndefined()
     expect(secondBody.messages[0]!.content).toContain('esquema JSON')
+  })
+
+  it('propaga el control de razonamiento (AI_REASONING)', async () => {
+    mockEnv.aiProvider = 'openai'
+    mockEnv.aiApiKey = 'test-key'
+    mockEnv.aiReasoning = 'off'
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ choices: [{ message: { content: 'ok' } }] }), { status: 200 }),
+    )
+
+    await completeChat({ messages: [{ role: 'user', content: 'Hola' }] })
+    const apagado = JSON.parse(String(fetchMock.mock.calls[0]![1]?.body)) as { reasoning: unknown }
+    expect(apagado.reasoning).toEqual({ enabled: false })
+
+    mockEnv.aiReasoning = 'low'
+    fetchMock.mockClear()
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ choices: [{ message: { content: 'ok' } }] }), { status: 200 }),
+    )
+    await completeChat({ messages: [{ role: 'user', content: 'Hola' }] })
+    const limitado = JSON.parse(String(fetchMock.mock.calls[0]![1]?.body)) as { reasoning: unknown }
+    expect(limitado.reasoning).toEqual({ effort: 'low' })
   })
 
   it('sin clave responde 503 de configuración sin llamar al proveedor', async () => {

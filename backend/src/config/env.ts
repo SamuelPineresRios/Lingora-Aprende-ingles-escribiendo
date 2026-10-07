@@ -53,6 +53,11 @@ export const env = {
   /** Modelo del proveedor compatible; por defecto Haiku 4.5 vía OpenRouter. */
   aiModel: process.env.AI_MODEL?.trim() || 'anthropic/claude-haiku-4.5',
   /**
+   * Control del razonamiento en modelos que lo permiten (OpenRouter):
+   * `off` lo desactiva y `low`/`medium`/`high` lo limitan. Vacío = no se envía.
+   */
+  aiReasoning: process.env.AI_REASONING?.trim().toLowerCase() || null,
+  /**
    * Opcional: mientras esté vacía, las rutas de voz responden 503 y el
    * navegador usa su voz nativa si la tiene.
    */
