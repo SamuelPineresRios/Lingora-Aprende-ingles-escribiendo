@@ -260,6 +260,8 @@ export async function saveWord(
       student_id: studentId,
       word_lookup_id: card.id,
       context: context || null,
+      // Primer repaso espaciado: mañana (la escalera sigue 3, 7 y 21 días).
+      review_due_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
     })
     .onConflictDoNothing({ target: [saved_words.student_id, saved_words.word_lookup_id] })
 

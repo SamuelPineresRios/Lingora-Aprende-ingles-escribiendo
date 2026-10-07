@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { DailyQuests } from '@/components/QuestBoard'
 import { StreakBanner } from '@/components/StreakBanner'
+import { ReviewSession } from '@/components/ReviewSession'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
@@ -145,9 +146,10 @@ export default function MissionsPage() {
         </div>
       </div>
 
-      {/* Racha y retos del día: lo primero que se ve al entrar */}
+      {/* Racha, retos y repaso: lo primero que se ve al entrar */}
       <StreakBanner />
       <DailyQuests />
+      <ReviewSession />
 
       {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">

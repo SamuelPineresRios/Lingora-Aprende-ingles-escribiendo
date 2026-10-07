@@ -19,6 +19,7 @@ import { introductionsRouter } from './modules/introductions/routes.ts'
 import { missionsRouter } from './modules/missions/routes.ts'
 import { responsesRouter } from './modules/responses/routes.ts'
 import { questsRouter } from './modules/quests/routes.ts'
+import { reviewsRouter } from './modules/reviews/routes.ts'
 import { storeRouter } from './modules/store/routes.ts'
 import { studentsRouter } from './modules/students/routes.ts'
 import { teachersRouter } from './modules/teachers/routes.ts'
@@ -53,6 +54,7 @@ export function createApp() {
   app.use('/api/students', studentsRouter)
   app.use('/api/students', storeRouter)
   app.use('/api/students', questsRouter)
+  app.use('/api/students', reviewsRouter)
   app.use('/api/teachers', teachersRouter)
   app.use('/api/evaluations', evaluationsRouter)
   app.use('/api/responses', responsesRouter)

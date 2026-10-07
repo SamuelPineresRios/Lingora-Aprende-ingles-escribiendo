@@ -263,12 +263,24 @@ export const saved_words = pgTable(
       .references(() => word_lookups.id, { onDelete: 'cascade' }),
     /** Frase donde la encontró; ayuda a recordar el sentido en contexto. */
     context: text('context'),
+    /** Escalón del repaso espaciado (0..4): 1, 3, 7 y 21 días. */
+    review_stage: integer('review_stage').notNull().default(0),
+    /**
+     * Cuándo toca repasarla; null cuando ya está dominada. Las filas que ya
+     * existían quedan pendientes de repaso (`now()`), que es lo deseable.
+     */
+    review_due_at: timestamp('review_due_at', { withTimezone: true }).defaultNow(),
+    reviewed_at: timestamp('reviewed_at', { withTimezone: true }),
+    /** Veces que se falló al repasarla. */
+    review_lapses: integer('review_lapses').notNull().default(0),
     created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [
     // Guardar dos veces la misma palabra no crea dos entradas.
     uniqueIndex('saved_words_student_word_key').on(t.student_id, t.word_lookup_id),
     index('saved_words_student_idx').on(t.student_id, t.created_at),
+    // El repaso busca por alumno las que tocan hoy.
+    index('saved_words_review_idx').on(t.student_id, t.review_due_at),
   ],
 )
 
