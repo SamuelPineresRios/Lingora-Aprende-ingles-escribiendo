@@ -12,6 +12,7 @@ import {
   getDailyActivity,
   getGlobalRanking,
   getStudentProgress,
+  getWeeklyLeague,
   useStreakShield,
   type RankingMetric,
   getSessionSummary,
@@ -113,6 +114,19 @@ studentsRouter.get('/ranking', requireAuth, async (req, res) => {
   const limit = readRankingLimit(req.query.limit)
 
   res.json(await getGlobalRanking(metric, session.userId, limit))
+})
+
+/**
+ * Liga semanal: el bracket de 15 del alumno por XP de la semana en curso,
+ * con las zonas de ascenso y descenso.
+ */
+studentsRouter.get('/:id/league', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+
+  if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
+
+  res.json(await getWeeklyLeague(studentId, req.query.tz))
 })
 
 /**

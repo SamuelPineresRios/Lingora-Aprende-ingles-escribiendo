@@ -1,17 +1,20 @@
 /**
- * Ranking global: todos los alumnos registrados, por XP, misiones o tiempo.
+ * Ranking: liga semanal (por defecto) y ranking global.
  *
- * Las estadísticas son las de toda la app (lo hecho en cualquier misión). La
- * lista muestra el top y, si el alumno queda fuera, su propia posición aparte.
+ * La liga agrupa a los alumnos en brackets de 15 por XP de la semana en curso,
+ * con ascensos y descensos; el global ordena a todos los registrados por XP,
+ * misiones o tiempo de toda la app.
  */
 import { useEffect, useMemo, useState } from 'react'
-import { Crown, Loader2, Trophy } from 'lucide-react'
+import { Crown, Flame, Loader2, TrendingDown, TrendingUp, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
 
+type Mode = 'league' | 'global'
 type RankingMetric = 'xp' | 'missions' | 'time'
+type LeagueZone = 'promotion' | 'safe' | 'relegation'
 
 interface RankingEntry {
   position: number
@@ -20,6 +23,24 @@ interface RankingEntry {
   xp: number
   missions: number
   seconds: number
+}
+
+interface LeagueEntry {
+  position: number
+  student_id: string
+  name: string
+  week_xp: number
+  zone: LeagueZone
+}
+
+interface WeeklyLeague {
+  starts_at: string
+  ends_at: string
+  bracket: { index: number; total: number }
+  size: number
+  zones: { promote: number; relegate: number }
+  entries: LeagueEntry[]
+  my_zone: LeagueZone | null
 }
 
 const XP_FMT = new Intl.NumberFormat('es')
@@ -33,6 +54,13 @@ function formatTime(seconds: number): string {
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
   return minutes ? `${hours} h ${minutes} min` : `${hours} h`
+}
+
+/** Fechas legibles de la semana: "6 oct – 12 oct". */
+function formatRange(startsAt: string, endsAt: string): string {
+  const format = (key: string) =>
+    new Intl.DateTimeFormat('es', { day: 'numeric', month: 'short' }).format(new Date(`${key}T12:00:00Z`))
+  return `${format(startsAt)} – ${format(endsAt)}`
 }
 
 interface MetricConfig {
@@ -56,16 +84,8 @@ const POSITION_STYLE: Record<number, string> = {
   3: 'text-coral',
 }
 
-/** Una fila del ranking; la propia se resalta. */
-function RankingRow({
-  entry,
-  metric,
-  isMe,
-}: {
-  entry: RankingEntry
-  metric: MetricConfig
-  isMe: boolean
-}) {
+/** Una fila del ranking global; la propia se resalta. */
+function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: MetricConfig; isMe: boolean }) {
   return (
     <li
       className={cn(
@@ -105,16 +125,86 @@ function RankingRow({
   )
 }
 
+/** Una fila de la liga: zona a la izquierda, XP de la semana a la derecha. */
+function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
+  const zona =
+    entry.zone === 'promotion'
+      ? { icon: TrendingUp, className: 'text-emerald' }
+      : entry.zone === 'relegation'
+        ? { icon: TrendingDown, className: 'text-coral' }
+        : { icon: null, className: 'text-slate-600' }
+  const ZoneIcon = zona.icon
+
+  return (
+    <li
+      className={cn(
+        'flex items-center gap-4 rounded-2xl border px-5 py-4 transition-colors',
+        isMe ? 'border-cyan/40 bg-cyan/10' : 'border-white/10 bg-black/20 hover:border-white/20',
+      )}
+    >
+      <span className="flex w-8 shrink-0 items-center justify-center gap-1 font-body text-xl font-black text-slate-400">
+        {entry.position}
+        {ZoneIcon && <ZoneIcon className={cn('h-3.5 w-3.5', zona.className)} />}
+      </span>
+
+      <div className="min-w-0 flex-1">
+        <p className="flex items-center gap-2 text-sm text-white truncate">
+          {entry.name}
+          {isMe && (
+            <span className="text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
+              tú
+            </span>
+          )}
+        </p>
+      </div>
+
+      <span className={cn('shrink-0 font-body text-lg font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
+        {XP_FMT.format(entry.week_xp)} XP
+      </span>
+    </li>
+  )
+}
+
 export default function RankingPage() {
   const { user } = useAuth()
+  const [mode, setMode] = useState<Mode>('league')
   const [metric, setMetric] = useState<RankingMetric>('xp')
   const [entries, setEntries] = useState<RankingEntry[]>([])
   const [you, setYou] = useState<RankingEntry | null>(null)
   const [total, setTotal] = useState(0)
+  const [league, setLeague] = useState<WeeklyLeague | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
+  // Liga semanal: solo se pide cuando la pestaña está activa.
   useEffect(() => {
+    if (mode !== 'league' || !user?.id) return
+    let cancelled = false
+
+    const load = async () => {
+      setLoading(true)
+      setError('')
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+        const res = await fetch(`/api/students/${user.id}/league?tz=${encodeURIComponent(tz)}`)
+        if (!res.ok) throw new Error('No se pudo cargar la liga.')
+        const data = await readJson<WeeklyLeague>(res)
+        if (!cancelled) setLeague(data)
+      } catch (err) {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'No se pudo cargar la liga.')
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    void load()
+    return () => {
+      cancelled = true
+    }
+  }, [mode, user?.id])
+
+  useEffect(() => {
+    if (mode !== 'global') return
     let cancelled = false
 
     const load = async () => {
@@ -139,10 +229,9 @@ export default function RankingPage() {
     return () => {
       cancelled = true
     }
-  }, [metric])
+  }, [mode, metric])
 
   const activeMetric = useMemo(() => METRICS.find(item => item.id === metric) ?? METRICS[0], [metric])
-  const youInTop = you ? entries.some(entry => entry.student_id === you.student_id) : false
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
@@ -155,30 +244,35 @@ export default function RankingPage() {
               RANKING
             </h1>
             <p className="text-[11px] text-slate-500 uppercase tracking-widest mt-2">
-              Todos los alumnos · {activeMetric.hint}
+              {mode === 'league'
+                ? 'Liga semanal · tu grupo de 15 por XP de la semana'
+                : `Todos los alumnos · ${activeMetric.hint}`}
             </p>
           </div>
-          {total > 0 && (
+          {mode === 'global' && total > 0 && (
             <span className="text-[11px] text-slate-500 uppercase tracking-widest">
               {total} {total === 1 ? 'alumno' : 'alumnos'}
             </span>
           )}
         </header>
 
-        {/* Métrica */}
+        {/* Pestañas: liga o global */}
         <div className="flex flex-wrap items-center gap-2">
-          {METRICS.map(item => (
+          {([
+            { id: 'league', label: 'Liga semanal', icon: Flame },
+            { id: 'global', label: 'Global', icon: Trophy },
+          ] as const).map(tab => (
             <button
-              key={item.id}
-              onClick={() => setMetric(item.id)}
+              key={tab.id}
+              onClick={() => setMode(tab.id)}
               className={cn(
-                'px-4 py-2 rounded-lg border text-[11px] uppercase tracking-widest transition-colors',
-                item.id === metric
+                'flex items-center gap-1.5 rounded-lg border px-4 py-2 text-[11px] uppercase tracking-widest transition-colors',
+                tab.id === mode
                   ? 'border-cyan/50 bg-cyan/10 text-cyan'
                   : 'border-white/10 text-slate-400 hover:border-white/30 hover:text-white',
               )}
             >
-              {item.label}
+              <tab.icon className="h-3.5 w-3.5" /> {tab.label}
             </button>
           ))}
         </div>
@@ -191,35 +285,86 @@ export default function RankingPage() {
 
         {!loading && error && <p className="text-coral text-sm">{error}</p>}
 
-        {!loading && !error && entries.length === 0 && (
-          <div className="text-center py-20 border-2 border-dashed border-white/5 rounded-2xl space-y-3">
-            <Trophy className="h-8 w-8 text-slate-600 mx-auto" />
-            <p className="text-slate-400 text-xs uppercase tracking-widest">Todavía no hay actividad</p>
-            <p className="text-[11px] text-slate-600">Completa una misión para estrenar el ranking.</p>
-          </div>
-        )}
+        {/* Liga semanal */}
+        {!loading && !error && mode === 'league' && league && (
+          <>
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/30 px-5 py-4">
+              <div>
+                <p className="text-sm text-white">
+                  Liga {league.bracket.index + 1} de {league.bracket.total}
+                </p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">
+                  Semana {formatRange(league.starts_at, league.ends_at)}
+                </p>
+              </div>
+              <div className="flex items-center gap-4 text-[10px] uppercase tracking-widest">
+                <span className="flex items-center gap-1.5 text-emerald">
+                  <TrendingUp className="h-3.5 w-3.5" /> {league.zones.promote} ascienden
+                </span>
+                {league.zones.relegate > 0 && (
+                  <span className="flex items-center gap-1.5 text-coral">
+                    <TrendingDown className="h-3.5 w-3.5" /> {league.zones.relegate} descienden
+                  </span>
+                )}
+              </div>
+            </div>
 
-        {!loading && !error && entries.length > 0 && (
-          <ol className="space-y-2">
-            {entries.map(entry => (
-              <RankingRow
-                key={entry.student_id}
-                entry={entry}
-                metric={activeMetric}
-                isMe={entry.student_id === user?.id}
-              />
-            ))}
-          </ol>
-        )}
-
-        {/* Fuera del top: su posición, con el mismo formato de fila */}
-        {!loading && !error && you && !youInTop && (
-          <div className="space-y-3 pt-2">
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest">Tu posición</p>
             <ol className="space-y-2">
-              <RankingRow entry={you} metric={activeMetric} isMe />
+              {league.entries.map(entry => (
+                <LeagueRow key={entry.student_id} entry={entry} isMe={entry.student_id === user?.id} />
+              ))}
             </ol>
-          </div>
+          </>
+        )}
+
+        {/* Ranking global */}
+        {!loading && !error && mode === 'global' && (
+          <>
+            <div className="flex flex-wrap items-center gap-2">
+              {METRICS.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => setMetric(item.id)}
+                  className={cn(
+                    'px-4 py-2 rounded-lg border text-[11px] uppercase tracking-widest transition-colors',
+                    item.id === metric
+                      ? 'border-cyan/50 bg-cyan/10 text-cyan'
+                      : 'border-white/10 text-slate-400 hover:border-white/30 hover:text-white',
+                  )}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {entries.length === 0 ? (
+              <div className="text-center py-20 border-2 border-dashed border-white/5 rounded-2xl space-y-3">
+                <Trophy className="h-8 w-8 text-slate-600 mx-auto" />
+                <p className="text-slate-400 text-xs uppercase tracking-widest">Todavía no hay actividad</p>
+                <p className="text-[11px] text-slate-600">Completa una misión para estrenar el ranking.</p>
+              </div>
+            ) : (
+              <ol className="space-y-2">
+                {entries.map(entry => (
+                  <RankingRow
+                    key={entry.student_id}
+                    entry={entry}
+                    metric={activeMetric}
+                    isMe={entry.student_id === user?.id}
+                  />
+                ))}
+              </ol>
+            )}
+
+            {you && !entries.some(entry => entry.student_id === you.student_id) && (
+              <div className="space-y-3 pt-2">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest">Tu posición</p>
+                <ol className="space-y-2">
+                  <RankingRow entry={you} metric={activeMetric} isMe />
+                </ol>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

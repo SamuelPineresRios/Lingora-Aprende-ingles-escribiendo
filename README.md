@@ -200,6 +200,9 @@ Operaciones agrupadas por módulo (`backend/src/modules/*/routes.ts`).
 | missions | `GET /api/missions` · `GET /api/missions/:id` · `POST /:id/submit` · `POST /:id/mark-completed` |
 | introductions | `GET /api/missions/:id/introduction` (genera si falta) · `POST /:id/introduction/regenerate` (docentes) |
 | vocabulary | `GET /api/missions/:id/vocabulary` (genera las 5 palabras si faltan) · `POST /:id/vocabulary/regenerate` (docentes) |
+| retos y racha | `GET /api/students/:id/quests` (tres retos del día, cofre y reto semanal) · `POST /:id/quests/:questId/claim` · `POST /:id/streak/use-shield` |
+| tienda | `GET /api/students/:id/store` · `POST /:id/store/purchase` · `POST /:id/store/equip` (marcos, títulos, temas y escudos) |
+| liga | `GET /api/students/:id/league` (bracket semanal de 15 por XP de la semana, con ascensos y descensos) |
 | students | `GET /api/students/groups` · `POST /join-group` · `GET /:id/weekly-stats` · `GET /:id/skills` · `GET /:id/activity` · `GET /:id/session-summary` |
 | teachers | `GET /api/teachers/groups` · `POST /groups/create` · `GET /groups/:id` · `GET /groups/:id/students` · `GET/POST /groups/:id/assign-mission` · `GET /students/:id/profile` |
 | evaluations | `GET /api/evaluations/:id` |

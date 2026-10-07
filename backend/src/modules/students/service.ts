@@ -18,7 +18,8 @@ import {
 } from '../../db/schema.ts'
 import { levelProgress, streakFromDays, type LevelProgress } from '../../lib/xp.ts'
 import { HttpError } from '../../utils/http-error.ts'
-import { minusDays, safeTimeZone, todayKeyIn } from '../../lib/date-keys.ts'
+import { minusDays, mondayKeyOf, safeTimeZone, todayKeyIn } from '../../lib/date-keys.ts'
+import { LEAGUE_SIZE, leagueZones, zoneAt, type LeagueZone } from '../../lib/league.ts'
 import { getWeekStart } from '../../utils/week.ts'
 
 /** Grupos del alumno con sus misiones asignadas y el estado de cada una. */
@@ -645,5 +646,83 @@ export async function getStudentSkills(studentId: string): Promise<StudentSkills
     writing: toScore(row?.writing),
     speed: toScore(row?.speed),
     top_structures: topStructures,
+  }
+}
+
+export interface LeagueEntry {
+  /** Posición dentro de la liga (1-based). */
+  position: number
+  student_id: string
+  name: string
+  week_xp: number
+  zone: LeagueZone
+}
+
+export interface WeeklyLeague {
+  /** Lunes de la semana en curso (zona del alumno) y domingo. */
+  starts_at: string
+  ends_at: string
+  /** Índice de la liga (0-based) y cuántas hay en total. */
+  bracket: { index: number; total: number }
+  size: number
+  /** Cuántos ascienden y cuántos descienden en esta liga. */
+  zones: { promote: number; relegate: number }
+  entries: LeagueEntry[]
+  /** Zona de quien consulta, para el resumen. */
+  my_zone: LeagueZone | null
+}
+
+/**
+ * Liga semanal del alumno: su bracket de 15 por XP de la semana en curso.
+ *
+ * Se devuelve solo la liga propia (como en cualquier app de este tipo): no
+ * tiene sentido exponer los brackets de los demás.
+ */
+export async function getWeeklyLeague(studentId: string, timezone?: unknown): Promise<WeeklyLeague> {
+  const tz = safeTimeZone(timezone)
+  const day = tz
+    ? sql`((${responses.submitted_at} AT TIME ZONE ${tz}::text)::date)`
+    : sql`(${responses.submitted_at}::date)`
+
+  const weekStartKey = mondayKeyOf(todayKeyIn(tz))
+  const weekEndKey = minusDays(weekStartKey, -6)
+
+  const rows = await db
+    .select({
+      student_id: users.id,
+      name: users.full_name,
+      week_xp: sql<number>`coalesce(sum(${evaluations.xp_awarded}) filter (where ${day} >= ${weekStartKey}::date), 0)::int`,
+    })
+    .from(users)
+    .leftJoin(responses, eq(responses.student_id, users.id))
+    .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
+    .where(eq(users.role, 'student'))
+    .groupBy(users.id, users.full_name)
+    .orderBy(
+      desc(sql`coalesce(sum(${evaluations.xp_awarded}) filter (where ${day} >= ${weekStartKey}::date), 0)::int`),
+      asc(users.full_name),
+    )
+
+  const total = Math.max(1, Math.ceil(rows.length / LEAGUE_SIZE))
+  const myIndex = Math.max(0, rows.findIndex(row => row.student_id === studentId))
+  const bracketIndex = Math.floor(myIndex / LEAGUE_SIZE)
+  const bracket = rows.slice(bracketIndex * LEAGUE_SIZE, (bracketIndex + 1) * LEAGUE_SIZE)
+
+  const entries: LeagueEntry[] = bracket.map((row, index) => ({
+    position: index + 1,
+    student_id: row.student_id,
+    name: row.name ?? 'Alumno',
+    week_xp: row.week_xp,
+    zone: zoneAt(index + 1, bracket.length),
+  }))
+
+  return {
+    starts_at: weekStartKey,
+    ends_at: weekEndKey,
+    bracket: { index: bracketIndex, total },
+    size: entries.length,
+    zones: leagueZones(entries.length),
+    entries,
+    my_zone: entries.find(entry => entry.student_id === studentId)?.zone ?? null,
   }
 }
