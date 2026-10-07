@@ -5,13 +5,13 @@ import { Router } from 'express'
 import type { Request } from 'express'
 import { ownsResource } from '../../lib/authorization.ts'
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
+import { getSeasonProgress } from '../season/service.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { queryInt, routeParam } from '../../utils/route-params.ts'
 import {
   getDailyActivity,
   getGlobalRanking,
   getStudentProgress,
-  getStudentSeason,
   type RankingMetric,
   getSessionSummary,
   getStudentSkills,
@@ -137,7 +137,7 @@ studentsRouter.get('/:id/season', requireAuth, async (req, res) => {
 
   if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
 
-  res.json(await getStudentSeason(studentId))
+  res.json(await getSeasonProgress(studentId))
 })
 
 /**

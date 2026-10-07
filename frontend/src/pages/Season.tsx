@@ -7,6 +7,7 @@
  * el backend, aquí solo se pinta.
  */
 import { createElement, useEffect, useMemo, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Coins, Lock, Medal, Store } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Canvas3DBackground } from '@/components/Canvas3DBackground'
@@ -324,9 +325,12 @@ export default function SeasonPage() {
                 <span className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-white">
                   <Medal className="h-4 w-4 text-cyan" /> Pase de temporada
                 </span>
-                <span className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-slate-600">
-                  <Store className="h-4 w-4" /> Tienda · próximamente
-                </span>
+                <Link
+                  to="/store"
+                  className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-amber hover:opacity-80 transition-opacity"
+                >
+                  <Store className="h-4 w-4" /> Gastar monedas en la tienda
+                </Link>
               </div>
             </>
           )}

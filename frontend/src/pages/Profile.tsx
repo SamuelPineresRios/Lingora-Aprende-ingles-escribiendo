@@ -12,6 +12,7 @@ import { readJson } from '@/lib/api'
 import { avatarUrl } from '@/lib/avatar'
 import { cn } from '@/lib/utils'
 import { activeFrame, badgeIcon, unlockedBadges, type SeasonProgress } from '@/lib/season'
+import { equippedItem, type StoreView } from '@/lib/store'
 
 interface Mission { id:string; title:string; description:string|null; cefr_level:string; status:string }
 
@@ -61,6 +62,8 @@ export default function ProfilePage() {
   const { progress } = useProgress(user?.id)
   /** Pase de temporada: marco activo, insignias y monedas. */
   const [season, setSeason] = useState<SeasonProgress | null>(null)
+  /** Tienda: lo equipado (marco, título y tema) pisa lo del pase. */
+  const [shop, setShop] = useState<StoreView | null>(null)
   const [missions, setMissions] = useState<Mission[]>([])
   const [skills, setSkills] = useState<StudentSkills | null>(null)
   const [, setLoading] = useState(true)
@@ -84,7 +87,27 @@ export default function ProfilePage() {
     }
   }, [user?.id])
 
-  const frame = activeFrame(season)
+  // La tienda se carga aparte; si falla, el perfil no depende de ella.
+  useEffect(() => {
+    if (!user?.id) return
+    let cancelled = false
+
+    fetch(`/api/students/${user.id}/store`)
+      .then(readJson<StoreView>)
+      .then(data => {
+        if (!cancelled && data) setShop(data)
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [user?.id])
+
+  // Marco: el equipado en la tienda o, si no, el mejor del pase.
+  const frameColors = equippedItem(shop, 'frame')?.colors ?? activeFrame(season)?.colors ?? null
+  const title = equippedItem(shop, 'title')
+  const theme = equippedItem(shop, 'theme')?.accent ?? null
   const badges = unlockedBadges(season)
 
   const saveName = async () => {
@@ -170,9 +193,9 @@ export default function ProfilePage() {
                  <div
                    className={cn(
                      'w-32 h-32 rounded-full transition-colors',
-                     frame ? 'p-[3px]' : 'border-2 border-dashed border-cyan/30 p-1 group-hover:border-cyan',
+                     frameColors ? 'p-[3px]' : 'border-2 border-dashed border-cyan/30 p-1 group-hover:border-cyan',
                    )}
-                   style={frame ? { backgroundImage: `linear-gradient(135deg, ${frame.colors[0]}, ${frame.colors[1]})` } : undefined}
+                   style={frameColors ? { backgroundImage: `linear-gradient(135deg, ${frameColors[0]}, ${frameColors[1]})` } : undefined}
                  >
                     <div className="relative w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
                        <img src={avatarUrl(user?.full_name || 'Letoura')} alt="" className="h-full w-full" />
@@ -203,6 +226,14 @@ export default function ProfilePage() {
                     setIsEditing(true)
                   }}>
                     {user?.full_name || 'Usuario'}
+                    {title && (
+                      <span
+                        className="rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-widest"
+                        style={{ borderColor: theme ?? 'rgba(139,92,246,0.5)', color: theme ?? '#a78bfa' }}
+                      >
+                        {title.text}
+                      </span>
+                    )}
                     <Edit2 className="w-3 h-3 opacity-0 group-hover:opacity-50" />
                   </h2>
               )}
@@ -219,7 +250,7 @@ export default function ProfilePage() {
                 </span>
                 {badges.map(badge => {
                   const Icon = badgeIcon(badge.id)
-                  return <Icon key={badge.id} className="h-4 w-4 text-violet" />
+                  return <Icon key={badge.id} className="h-4 w-4" style={{ color: theme ?? '#a78bfa' }} />
                 })}
               </Link>
 

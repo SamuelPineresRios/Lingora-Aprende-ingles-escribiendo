@@ -18,6 +18,7 @@ import { evaluationsRouter } from './modules/evaluations/routes.ts'
 import { introductionsRouter } from './modules/introductions/routes.ts'
 import { missionsRouter } from './modules/missions/routes.ts'
 import { responsesRouter } from './modules/responses/routes.ts'
+import { storeRouter } from './modules/store/routes.ts'
 import { studentsRouter } from './modules/students/routes.ts'
 import { teachersRouter } from './modules/teachers/routes.ts'
 import { ttsRouter } from './modules/tts/routes.ts'
@@ -49,6 +50,7 @@ export function createApp() {
   app.use('/api/missions', introductionsRouter)
   app.use('/api/missions', vocabularyRouter)
   app.use('/api/students', studentsRouter)
+  app.use('/api/students', storeRouter)
   app.use('/api/teachers', teachersRouter)
   app.use('/api/evaluations', evaluationsRouter)
   app.use('/api/responses', responsesRouter)

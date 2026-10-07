@@ -331,3 +331,82 @@ export const narrative_states = pgTable(
     index('narrative_states_student_idx').on(t.student_id, t.state),
   ],
 )
+
+/**
+ * Libro de monedas: cada movimiento (ganadas por retos, gastadas en la tienda)
+ * queda registrado. El saldo es la suma de este libro más las monedas que el
+ * pase de temporada da por casillas alcanzadas.
+ */
+export const coin_ledger = pgTable(
+  'coin_ledger',
+  {
+    id: text('id').primaryKey(),
+    student_id: text('student_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    /** Positivo gana, negativo gasta. */
+    amount: integer('amount').notNull(),
+    /** `quest` (reto), `shop` (compra) o `shield` (escudo de racha). */
+    reason: text('reason').notNull(),
+    /** Referencia del movimiento: id del reto o del artículo. */
+    ref: text('ref'),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('coin_ledger_student_idx').on(t.student_id)],
+)
+
+/** Compras no consumibles: una por alumno y artículo. */
+export const purchases = pgTable(
+  'purchases',
+  {
+    id: text('id').primaryKey(),
+    student_id: text('student_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    item_id: text('item_id').notNull(),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('purchases_student_item_key').on(t.student_id, t.item_id)],
+)
+
+/** Lo que el alumno lleva puesto: marco, título y tema del perfil. */
+export const student_loadout = pgTable('student_loadout', {
+  student_id: text('student_id')
+    .primaryKey()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  frame_id: text('frame_id'),
+  title_id: text('title_id'),
+  theme_id: text('theme_id'),
+  updated_at: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
+/** Escudos de racha: `used_for_day` (YYYY-MM-DD) es el día que salvaron. */
+export const streak_shields = pgTable(
+  'streak_shields',
+  {
+    id: text('id').primaryKey(),
+    student_id: text('student_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    used_for_day: text('used_for_day'),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('streak_shields_student_idx').on(t.student_id)],
+)
+
+/** Recompensas de misiones diarias y reto semanal ya reclamadas. */
+export const quest_claims = pgTable(
+  'quest_claims',
+  {
+    id: text('id').primaryKey(),
+    student_id: text('student_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    quest_id: text('quest_id').notNull(),
+    /** `YYYY-MM-DD` (día) o `YYYY-Www` (semana ISO) en la zona del alumno. */
+    period_key: text('period_key').notNull(),
+    coins: integer('coins').notNull(),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('quest_claims_student_quest_period_key').on(t.student_id, t.quest_id, t.period_key)],
+)
