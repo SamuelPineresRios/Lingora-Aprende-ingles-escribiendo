@@ -358,57 +358,69 @@ export interface RankingEntry {
  * toda la app), no solo lo hecho dentro del grupo: es lo que pide la frase
  * «quién ha hecho más». Solo lo ve un miembro del grupo o un docente.
  */
-export async function getGroupRanking(
-  groupId: string,
+/**
+ * Ranking global de alumnos: todos los estudiantes registrados, ordenados por
+ * XP, misiones o tiempo acumulados en toda la app.
+ *
+ * Devuelve el top `limit` y, además, la entrada de quien consulta (`you`) con
+ * su posición real, aunque quede fuera del top: así la página siempre puede
+ * mostrar «tu posición» sin traerse la tabla entera.
+ */
+export async function getGlobalRanking(
   metric: RankingMetric,
-  requester: { userId: string; role: 'student' | 'teacher' },
-): Promise<{ metric: RankingMetric; entries: RankingEntry[] }> {
-  const [group] = await db.select({ id: groups.id }).from(groups).where(eq(groups.id, groupId)).limit(1)
-  if (!group) throw new HttpError(404, 'Group not found')
-
-  if (requester.role !== 'teacher') {
-    const [membership] = await db
-      .select({ id: group_members.id })
-      .from(group_members)
-      .where(and(eq(group_members.group_id, groupId), eq(group_members.student_id, requester.userId)))
-      .limit(1)
-    if (!membership) throw new HttpError(403, 'Forbidden')
-  }
-
+  requesterId: string,
+  limit = 100,
+): Promise<{ metric: RankingMetric; total: number; entries: RankingEntry[]; you: RankingEntry | null }> {
   const xpExpr = sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`
   const missionsExpr = sql<number>`count(distinct case when ${responses.status} = 'completed' then ${responses.mission_id} end)::int`
   const secondsExpr = sql<number>`coalesce(sum(${responses.time_taken_seconds}), 0)::int`
+  const orderExpr = metric === 'missions' ? missionsExpr : metric === 'time' ? secondsExpr : xpExpr
 
-  const rows = await db
+  // La posición se calcula con una función de ventana sobre las estadísticas
+  // agrupadas; los empates comparten posición y se desempatan por XP y nombre.
+  const ranking = db
     .select({
-      student_id: group_members.student_id,
+      student_id: users.id,
       name: users.full_name,
-      xp: xpExpr,
-      missions: missionsExpr,
-      seconds: secondsExpr,
+      // Los campos calculados necesitan alias: la subconsulta de Drizzle los exige.
+      xp: sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`.as('xp'),
+      missions: sql<number>`count(distinct case when ${responses.status} = 'completed' then ${responses.mission_id} end)::int`.as('missions'),
+      seconds: sql<number>`coalesce(sum(${responses.time_taken_seconds}), 0)::int`.as('seconds'),
+      position: sql<number>`rank() over (order by ${orderExpr} desc, ${xpExpr} desc, ${users.full_name} asc)::int`.as('position'),
     })
-    .from(group_members)
-    .innerJoin(users, eq(users.id, group_members.student_id))
-    .leftJoin(responses, eq(responses.student_id, group_members.student_id))
+    .from(users)
+    .leftJoin(responses, eq(responses.student_id, users.id))
     .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
-    .where(eq(group_members.group_id, groupId))
-    .groupBy(group_members.student_id, users.full_name)
-    .orderBy(
-      desc(metric === 'missions' ? missionsExpr : metric === 'time' ? secondsExpr : xpExpr),
-      desc(xpExpr),
-      asc(users.full_name),
-    )
+    .where(eq(users.role, 'student'))
+    .groupBy(users.id, users.full_name)
+    .as('ranking')
+
+  const rows = await db.select().from(ranking).orderBy(asc(ranking.position)).limit(limit)
+  const [totalRow] = await db.select({ count: sql<number>`count(*)::int` }).from(ranking)
+
+  const toEntry = (row: typeof rows[number]): RankingEntry => ({
+    position: row.position,
+    student_id: row.student_id,
+    name: row.name ?? 'Alumno',
+    xp: row.xp,
+    missions: row.missions,
+    seconds: row.seconds,
+  })
+
+  const entries = rows.map(toEntry)
+
+  // Si ya está en el top se reutiliza su fila; si no, se consulta solo la suya
+  // (la subconsulta se filtra por id, así no se trae la tabla entera).
+  const enTop = entries.find(entry => entry.student_id === requesterId)
+  const [mineRow] = enTop
+    ? []
+    : await db.select().from(ranking).where(eq(ranking.student_id, requesterId)).limit(1)
 
   return {
     metric,
-    entries: rows.map((row, index) => ({
-      position: index + 1,
-      student_id: row.student_id,
-      name: row.name ?? 'Alumno',
-      xp: row.xp,
-      missions: row.missions,
-      seconds: row.seconds,
-    })),
+    total: totalRow?.count ?? 0,
+    entries,
+    you: enTop ?? (mineRow ? toEntry(mineRow) : null),
   }
 }
 

@@ -9,7 +9,7 @@ import { HttpError } from '../../utils/http-error.ts'
 import { queryInt, routeParam } from '../../utils/route-params.ts'
 import {
   getDailyActivity,
-  getGroupRanking,
+  getGlobalRanking,
   getStudentProgress,
   type RankingMetric,
   getSessionSummary,
@@ -93,16 +93,24 @@ function readRankingMetric(value: unknown): RankingMetric {
   return value === 'missions' || value === 'time' ? value : 'xp'
 }
 
-/**
- * Ranking del grupo: quién ha hecho más según la métrica (xp, misiones o
- * tiempo). Solo lo ve un miembro del grupo o un docente.
- */
-studentsRouter.get('/groups/:id/ranking', requireAuth, async (req, res) => {
-  const session = sessionOf(req)
-  const groupId = routeParam(req, 'id')
-  const metric = readRankingMetric(req.query.metric)
+/** Tamaño del ranking: 25 por defecto y como mucho 200 para no traer la tabla entera. */
+function readRankingLimit(value: unknown): number {
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed) || parsed <= 0) return 25
+  return Math.min(Math.floor(parsed), 200)
+}
 
-  res.json(await getGroupRanking(groupId, metric, { userId: session.userId, role: session.role }))
+/**
+ * Ranking global: quién ha hecho más entre todos los alumnos registrados,
+ * según la métrica (xp, misiones o tiempo). Incluye la posición de quien
+ * consulta aunque quede fuera del top.
+ */
+studentsRouter.get('/ranking', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const metric = readRankingMetric(req.query.metric)
+  const limit = readRankingLimit(req.query.limit)
+
+  res.json(await getGlobalRanking(metric, session.userId, limit))
 })
 
 /**
