@@ -6,13 +6,14 @@
  * El texto se revela palabra a palabra y cada frase se puede escuchar.
  */
 import { type RefObject, useCallback, useEffect, useRef, useState } from 'react'
-import { Pause, Play, RotateCcw, Volume2, X, Languages, SkipForward, Loader2 } from 'lucide-react'
+import { Pause, Play, RotateCcw, Volume2, Waves, X, Languages, SkipForward, Loader2 } from 'lucide-react'
 import { resolveAvatar, type IntroductionCharacter, type MissionIntroduction } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { TypewriterMessage } from './TypewriterMessage'
 import { InteractiveWords } from './InteractiveWords'
 import { MissionBackdrop } from './MissionBackdrop'
 import { characterAvatarUrl, studentAvatarUrl } from '@/lib/avatar'
+import { ambienceEnabled, setAmbienceEnabled, useAmbience } from '@/lib/ambience'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { warmWords } from '@/lib/word-cache'
@@ -192,6 +193,14 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
   /** Boca de cada personaje: el bucle de animación le escribe el nivel. */
   const mouthARef = useRef<HTMLSpanElement | null>(null)
   const mouthBRef = useRef<HTMLSpanElement | null>(null)
+
+  const backdrop = resolveBackdrop(
+    introduction.backdrop,
+    `${introduction.scene_title} ${introduction.scene_description}`,
+  )
+  /** Ambiente de la escena (sintetizado): se recuerda entre escenas. */
+  const [ambience, setAmbience] = useState(() => ambienceEnabled())
+  useAmbience(backdrop.kind, ambience)
 
   const total = introduction.lines.length
   const line = introduction.lines[Math.min(index, total - 1)]
@@ -436,6 +445,12 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
     else stopVoice()
   }
 
+  const toggleAmbience = () => {
+    const next = !ambience
+    setAmbience(next)
+    setAmbienceEnabled(next)
+  }
+
   const readAloud = () => {
     if (!line) return
     speak(line.text, line.speaker)
@@ -447,10 +462,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
           si la escena es antigua, el respaldo por palabras clave. El velo
           oscuro mantiene el texto legible sobre cualquier escena. */}
       <MissionBackdrop
-        backdrop={resolveBackdrop(
-          introduction.backdrop,
-          `${introduction.scene_title} ${introduction.scene_description}`,
-        )}
+        backdrop={backdrop}
         seed={introduction.scene_title}
         variant="scene"
         className="opacity-80"
@@ -638,6 +650,16 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
               )}
             >
               <Volume2 className="h-3.5 w-3.5" /> Voz {voice ? 'on' : 'off'}
+            </button>
+            <button
+              onClick={toggleAmbience}
+              title="Sonido ambiental del escenario"
+              className={cn(
+                'px-3 py-2 rounded-lg border text-[11px] font-mono uppercase tracking-widest flex items-center gap-1.5 transition-colors',
+                ambience ? 'border-emerald/50 bg-emerald/10 text-emerald' : 'border-white/10 text-slate-300 hover:border-white/30',
+              )}
+            >
+              <Waves className="h-3.5 w-3.5" /> Ambiente {ambience ? 'on' : 'off'}
             </button>
             <button
               onClick={replay}
