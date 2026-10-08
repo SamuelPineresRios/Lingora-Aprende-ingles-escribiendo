@@ -179,6 +179,27 @@
     animation: bounce-gentle 1s ease-in-out infinite;
   }
 
+  /* Lluvia de monedas de la tienda: ambiental en bucle o en cascada al comprar */
+  .coin-fall {
+    animation-name: coin-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .coin-fall-burst {
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+  }
+
+  @keyframes coin-fall {
+    0% { transform: translate3d(0, -12vh, 0) rotate(-20deg); }
+    100% { transform: translate3d(0, 112vh, 0) rotate(340deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .coin-fall { animation: none; opacity: 0 !important; }
+  }
+
   /* ================================
      GAMIFICATION EFFECTS
      ================================ */
