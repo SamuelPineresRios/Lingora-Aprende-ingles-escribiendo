@@ -7,12 +7,13 @@
  */
 import { type RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { Pause, Play, RotateCcw, Volume2, X, Languages, SkipForward, Loader2 } from 'lucide-react'
-import type { IntroductionCharacter, MissionIntroduction } from '@vox/shared'
+import { resolveAvatar, type IntroductionCharacter, type MissionIntroduction } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { TypewriterMessage } from './TypewriterMessage'
 import { InteractiveWords } from './InteractiveWords'
 import { MissionBackdrop } from './MissionBackdrop'
-import { avatarUrl } from '@/lib/avatar'
+import { characterAvatarUrl, studentAvatarUrl } from '@/lib/avatar'
+import { useAuth } from '@/lib/hooks/useAuth'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { warmWords } from '@/lib/word-cache'
 
@@ -82,12 +83,15 @@ interface IntroductionPlayerProps {
 /** Avatar grande de un personaje, resaltado cuando le toca hablar. */
 function CharacterStage({
   character,
+  avatarSrc,
   speaking,
   finished,
   mirrored,
   mouthRef,
 }: {
   character: IntroductionCharacter
+  /** Avatar con el que se dibuja (el del alumno en su propio papel). */
+  avatarSrc: string
   speaking: boolean
   finished: boolean
   /**
@@ -118,7 +122,7 @@ function CharacterStage({
         {/* El sprite voxel-art ya trae el personaje completo y centrado en su
             lienzo cuadrado: se muestra entero, sin marco ni recortes. */}
         <img
-          src={avatarUrl(character.name, character.gender)}
+          src={avatarSrc}
           alt={character.name}
           className={cn('h-full w-full', speaking && theme.glow)}
         />
@@ -158,6 +162,9 @@ function CharacterStage({
 }
 
 export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, onSkipToMission }: IntroductionPlayerProps) {
+  const { user } = useAuth()
+  /** El personaje que interpreta el alumno lleva su avatar personalizado. */
+  const studentAvatar = user ? studentAvatarUrl(resolveAvatar({ id: user.id, avatar: user.avatar })) : null
   const [index, setIndex] = useState(0)
   const [autoPlay, setAutoPlay] = useState(false)
   const [showTranslations, setShowTranslations] = useState(false)
@@ -453,8 +460,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
       {/* Cabecera */}
       <header className="relative z-10 shrink-0 flex items-center justify-between gap-4 px-6 py-4">
         <div className="min-w-0">
-          <span className="text-[10px] text-cyan uppercase tracking-[0.25em] block">Escena narrativa</span>
-          <h2 className="font-body text-xl sm:text-2xl font-bold text-white truncate">{introduction.scene_title}</h2>
+            <h2 className="font-body text-xl sm:text-2xl font-bold text-white truncate">{introduction.scene_title}</h2>
         </div>
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <span className={cn('text-xs px-2 py-1 rounded border font-bold', CEFR_BADGE[cefrLevel] ?? CEFR_BADGE.B1)}>
@@ -490,6 +496,11 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
             <CharacterStage
               key={character.id}
               character={character}
+              avatarSrc={
+                character.played_by === 'student' && studentAvatar
+                  ? studentAvatar
+                  : characterAvatarUrl(character.name, character.gender)
+              }
               speaking={!finished && speaker?.id === character.id}
               finished={finished}
               mirrored={index === 1}

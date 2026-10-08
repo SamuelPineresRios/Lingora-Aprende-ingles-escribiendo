@@ -12,7 +12,7 @@ import { Volume2, VolumeX } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { MissionBackdrop } from '@vox/shared'
 import { MissionBackdrop as MissionBackdropLayer } from './MissionBackdrop'
-import { preloadAvatars, type AvatarGender } from '@/lib/avatar'
+import { preloadAvatar, preloadAvatars, type AvatarGender } from '@/lib/avatar'
 import { playKeySound } from '@/lib/key-sound'
 
 /** Milisegundos que el texto completo se queda en pantalla antes de irse. */
@@ -28,10 +28,12 @@ interface MissionTitleCardProps {
   seed?: string
   /** Personajes de la escena: sus avatares se precargan mientras se lee. */
   characters?: Array<{ name: string; gender?: AvatarGender }>
+  /** Avatar personalizado del alumno (su papel), también se precarga. */
+  studentAvatar?: string | null
   onDone: () => void
 }
 
-export function MissionTitleCard({ title, description, backdrop, seed, characters, onDone }: MissionTitleCardProps) {
+export function MissionTitleCard({ title, description, backdrop, seed, characters, studentAvatar, onDone }: MissionTitleCardProps) {
   /** Sin animación: el texto sale completo desde el principio y la pausa es más corta. */
   const [reduced] = useState(
     () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true,
@@ -55,7 +57,8 @@ export function MissionTitleCard({ title, description, backdrop, seed, character
   // Los avatares se piden ya: al entrar la escena, están en caché.
   useEffect(() => {
     if (characters && characters.length > 0) preloadAvatars(characters)
-  }, [characters])
+    if (studentAvatar) preloadAvatar(studentAvatar)
+  }, [characters, studentAvatar])
 
   const typingDone = typedTitle.length === title.length && typedDescription.length === description.length
 

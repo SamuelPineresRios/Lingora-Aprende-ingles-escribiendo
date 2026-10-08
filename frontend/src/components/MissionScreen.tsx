@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import type { MissionBackdrop as MissionBackdropSpec, MissionIntroduction } from '@vox/shared'
+import { resolveAvatar, type MissionBackdrop as MissionBackdropSpec, type MissionIntroduction } from '@vox/shared'
 import { useNavigate } from 'react-router-dom'
 import { Timer } from './Timer'
 import { TypewriterMessage } from './TypewriterMessage'
@@ -13,7 +13,7 @@ import { StepHintStack, type StepHint } from './StepHintToast'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { readJson } from '@/lib/api'
-import { avatarUrl, type AvatarGender } from '@/lib/avatar'
+import { characterAvatarUrl, studentAvatarUrl } from '@/lib/avatar'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
 import { IntroductionPlayer } from '@/components/IntroductionPlayer'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
@@ -22,15 +22,9 @@ import { getCachedIntroduction, prewarmVocabulary, setCachedIntroduction } from 
 import { ConversationLog } from '@/components/ConversationLog'
 
 
-/** Avatar pequeño del personaje para el chat: el mismo de la escena. */
-function ChatAvatar({ name, gender }: { name: string; gender?: AvatarGender }) {
-  return (
-    <img
-      src={avatarUrl(name, gender)}
-      alt=""
-      className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]"
-    />
-  )
+/** Avatar pequeño del chat: el de la escena para la IA y el tuyo para tu papel. */
+function ChatAvatar({ src }: { src: string }) {
+  return <img src={src} alt="" className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]" />
 }
 
 
@@ -60,6 +54,8 @@ interface Message {
 
 export function MissionScreen({ mission, studentId, groupId }: MissionScreenProps) {
   const { user } = useAuth()
+  /** El avatar del alumno es el suyo en todas las misiones (chat y escena). */
+  const studentAvatar = user ? studentAvatarUrl(resolveAvatar({ id: user.id, avatar: user.avatar })) : null
   const [state, setState] = useState<MissionState>('introduction')
 
   const [missionMode, setMissionMode] = useState<'free' | 'evaluation'>('free')
@@ -524,6 +520,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           backdrop={introduction.backdrop}
           seed={mission.id}
           characters={introduction.characters}
+          studentAvatar={studentAvatar}
           onDone={() => setTitleDoneFor(mission.id)}
         />
       )
@@ -581,6 +578,11 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           {/* Con quién hablas y tu papel */}
           <div className="grid sm:grid-cols-2 gap-3">
             <div className="bg-slate-900/85 border border-cyan/25 rounded-xl p-4 flex items-center gap-3">
+              <img
+                src={characterAvatarUrl(aiCharacter?.name ?? mission.character_name, aiCharacter?.gender)}
+                alt=""
+                className="h-12 w-12 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]"
+              />
               <div>
                 <p className="text-[10px] text-cyan uppercase tracking-widest">Vas a hablar con</p>
                 <p className="text-sm font-bold text-white">{aiCharacter?.name ?? mission.character_name}</p>
@@ -588,6 +590,9 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
               </div>
             </div>
             <div className="bg-slate-900/85 border border-emerald/25 rounded-xl p-4 flex items-center gap-3">
+              {studentAvatar && (
+                <img src={studentAvatar} alt="" className="h-12 w-12 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]" />
+              )}
               <div>
                 <p className="text-[10px] text-emerald uppercase tracking-widest">Tu papel</p>
                 <p className="text-sm font-bold text-white">{studentCharacter?.name ?? 'Tú'}</p>
@@ -730,7 +735,9 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
               
               return (
                   <div key={i} className={cn("flex gap-2 mb-4", isUser ? "flex-row-reverse items-end" : "items-end")}>
-                      {!isUser && <ChatAvatar name={mission.character_name} gender={characterGender} />}
+                      {isUser
+                        ? studentAvatar && <ChatAvatar src={studentAvatar} />
+                        : <ChatAvatar src={characterAvatarUrl(mission.character_name, characterGender)} />}
                       <div className="flex flex-col gap-1">
                           <span className={cn("text-[9px] uppercase tracking-wider opacity-60", isUser ? "text-emerald text-right" : "text-cyan")}>
                               {isUser ? 'YOU' : mission.character_name}
@@ -778,7 +785,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           
           {isThinking && (
               <div className="flex gap-2 items-end animate-pulse">
-                  <ChatAvatar name={mission.character_name} gender={characterGender} />
+                  <ChatAvatar src={characterAvatarUrl(mission.character_name, characterGender)} />
                   <div className="flex flex-col gap-1">
                       <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
                       <div className="bg-cyan/5 border border-cyan/10 text-cyan px-3 py-2 rounded-2xl rounded-tl-none text-xs">
@@ -790,7 +797,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
           {startError && messages.length === 0 && (
               <div className="flex gap-2 items-end">
-                  <ChatAvatar name={mission.character_name} gender={characterGender} />
+                  <ChatAvatar src={characterAvatarUrl(mission.character_name, characterGender)} />
                   <div className="flex flex-col gap-1">
                       <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
                       <div className="bg-coral/10 border border-coral/30 text-red-100 px-4 py-3 rounded-2xl rounded-tl-none text-sm space-y-2 max-w-md">
