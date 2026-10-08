@@ -176,7 +176,7 @@ function Preview({
   onBase: () => void
   onSave: () => void
 }) {
-  const size = compact ? 72 : 210
+  const size = compact ? 88 : 360
   const image = <img src={studentAvatarUrl(avatar)} alt="Tu personaje" className="h-full w-full" />
   const marco = frame ? (
     <FrameRing frameId={frame.id} colors={frame.colors} size={size}>
@@ -365,7 +365,7 @@ export default function AvatarPage() {
           </Link>
         </header>
 
-        <div className="grid min-h-0 flex-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid min-h-0 flex-1 gap-6 lg:grid-cols-[minmax(0,1fr)_460px]">
           {/* Piezas */}
           <div className="flex min-h-0 min-w-0 flex-col">
             {/* Móvil: el skin vive arriba, en el flujo, y no se va al scrollear */}
