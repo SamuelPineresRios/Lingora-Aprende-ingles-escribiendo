@@ -154,16 +154,20 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
       <RankingAvatar entry={entry} />
 
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 text-base text-white truncate">
+        <p className="flex items-center gap-2 text-base text-white">
           {entry.position === 1 && <Crown className="h-4 w-4 text-amber shrink-0" />}
-          {entry.name}
-          <TitleBadge titles={entry.titles} />
+          <span className="truncate">{entry.name}</span>
           {isMe && (
-            <span className="text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
+            <span className="shrink-0 text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
               tú
             </span>
           )}
         </p>
+        {entry.titles.length > 0 && (
+          <p className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            <TitleBadge titles={entry.titles} />
+          </p>
+        )}
         <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-1">
           {XP_FMT.format(entry.xp)} XP · {entry.missions} {entry.missions === 1 ? 'misión' : 'misiones'} ·{' '}
           {formatTime(entry.seconds)}
@@ -202,15 +206,19 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
       <RankingAvatar entry={entry} />
 
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 text-base text-white truncate">
-          {entry.name}
-          <TitleBadge titles={entry.titles} />
+        <p className="flex items-center gap-2 text-base text-white">
+          <span className="truncate">{entry.name}</span>
           {isMe && (
-            <span className="text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
+            <span className="shrink-0 text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
               tú
             </span>
           )}
         </p>
+        {entry.titles.length > 0 && (
+          <p className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            <TitleBadge titles={entry.titles} />
+          </p>
+        )}
       </div>
 
       <span className={cn('shrink-0 font-body text-xl font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
