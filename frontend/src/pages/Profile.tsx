@@ -264,8 +264,8 @@ export default function ProfilePage() {
            </div>
         </div>
 
-        {/* Skills Radar */}
-        <div className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+        {/* Skills Radar: estira a lo alto de la fila para no dejar hueco */}
+        <div className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6 relative overflow-hidden flex h-full flex-col">
             <div className="flex justify-between items-center mb-6">
                <h3 className="text-sm font-bold text-slate-300 uppercase tracking-widest flex items-center gap-2">
                  <Brain className="w-4 h-4 text-purple-400" />
@@ -278,7 +278,7 @@ export default function ProfilePage() {
 
             {hasData ? (
               <>
-                <div className="h-[250px] w-full">
+                <div className="min-h-[250px] w-full flex-1">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
                       <PolarGrid stroke="rgba(255,255,255,0.1)" />
@@ -302,7 +302,7 @@ export default function ProfilePage() {
                 </p>
               </>
             ) : (
-              <div className="h-[250px] flex flex-col items-center justify-center gap-2 text-center">
+              <div className="min-h-[250px] flex flex-1 flex-col items-center justify-center gap-2 text-center">
                 <p className="text-xs text-slate-400 uppercase tracking-widest">Sin métricas todavía</p>
                 <p className="text-[11px] text-slate-500 max-w-xs">
                   Completa una misión y sus notas de vocabulario, gramática, comprensión y velocidad aparecerán aquí.
