@@ -106,13 +106,13 @@ function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } })
 
   if (entry.frame) {
     return (
-      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={44}>
+      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={72}>
         {image}
       </FrameRing>
     )
   }
 
-  return <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
+  return <div className="h-[72px] w-[72px] shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
 }
 
 /** Título equipado, con el mismo aspecto que en el perfil. */
@@ -130,13 +130,13 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
   return (
     <li
       className={cn(
-        'flex items-center gap-4 rounded-2xl border px-5 py-4 transition-colors',
+        'flex items-center gap-5 rounded-2xl border px-6 py-5 transition-colors',
         isMe ? 'border-cyan/40 bg-cyan/10' : 'border-white/10 bg-black/20 hover:border-white/20',
       )}
     >
       <span
         className={cn(
-          'w-8 shrink-0 text-center font-body text-xl font-black',
+          'w-9 shrink-0 text-center font-body text-2xl font-black',
           POSITION_STYLE[entry.position] ?? 'text-slate-600',
         )}
       >
@@ -146,8 +146,8 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
       <RankingAvatar entry={entry} />
 
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 text-sm text-white truncate">
-          {entry.position === 1 && <Crown className="h-3.5 w-3.5 text-amber shrink-0" />}
+        <p className="flex items-center gap-2 text-base text-white truncate">
+          {entry.position === 1 && <Crown className="h-4 w-4 text-amber shrink-0" />}
           {entry.name}
           <TitleBadge title={entry.title} />
           {isMe && (
@@ -162,7 +162,7 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
         </p>
       </div>
 
-      <span className={cn('shrink-0 font-body text-lg font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
+      <span className={cn('shrink-0 font-body text-xl font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
         {metric.value(entry)}
       </span>
     </li>
@@ -182,11 +182,11 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
   return (
     <li
       className={cn(
-        'flex items-center gap-4 rounded-2xl border px-5 py-4 transition-colors',
+        'flex items-center gap-5 rounded-2xl border px-6 py-5 transition-colors',
         isMe ? 'border-cyan/40 bg-cyan/10' : 'border-white/10 bg-black/20 hover:border-white/20',
       )}
     >
-      <span className="flex w-8 shrink-0 items-center justify-center gap-1 font-body text-xl font-black text-slate-400">
+      <span className="flex w-9 shrink-0 items-center justify-center gap-1 font-body text-2xl font-black text-slate-400">
         {entry.position}
         {ZoneIcon && <ZoneIcon className={cn('h-3.5 w-3.5', zona.className)} />}
       </span>
@@ -194,7 +194,7 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
       <RankingAvatar entry={entry} />
 
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 text-sm text-white truncate">
+        <p className="flex items-center gap-2 text-base text-white truncate">
           {entry.name}
           <TitleBadge title={entry.title} />
           {isMe && (
@@ -205,7 +205,7 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
         </p>
       </div>
 
-      <span className={cn('shrink-0 font-body text-lg font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
+      <span className={cn('shrink-0 font-body text-xl font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
         {XP_FMT.format(entry.week_xp)} XP
       </span>
     </li>
