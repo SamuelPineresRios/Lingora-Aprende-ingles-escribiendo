@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { cn, formatDuration } from '@/lib/utils'
 import { 
-  Users, Activity, Target, ChevronDown, ChevronUp, AlertTriangle, Clock, ShieldCheck
+  Users, Activity, Target, ChevronDown, ChevronUp, AlertTriangle, Clock, ShieldCheck, Download
 } from "lucide-react";
 import { readJson } from '@/lib/api'
 
@@ -13,6 +13,10 @@ interface StudentProgress {
   total_missions: number
   writing_time_seconds: number
   avg_comprehensibility: number | null
+  /** Totales de toda la app (no solo del grupo) y última actividad. */
+  xp_total: number
+  last_activity_at: string | null
+  inactive_days: number | null
 }
 
 interface TeacherDashboardProps {
@@ -52,6 +56,7 @@ export function TeacherDashboard({ groupId, onViewStudent }: TeacherDashboardPro
     return sortDir === 'desc' ? -val : val
   })
 
+  const inactivos = students.filter(s => s.inactive_days !== null && s.inactive_days >= 7).length
   const groupAvg = students.filter(s => s.avg_comprehensibility !== null).length > 0
     ? students.reduce((sum, s) => sum + (s.avg_comprehensibility ?? 0), 0) / students.length
     : null
@@ -124,10 +129,23 @@ export function TeacherDashboard({ groupId, onViewStudent }: TeacherDashboardPro
 
       {/* Operative Roster Table */}
       <div className="glass-effect rounded-2xl overflow-hidden border border-slate-700/50">
-        <div className="bg-slate-900/80 px-4 py-3 border-b border-slate-700/80 flex items-center justify-between">
+        <div className="bg-slate-900/80 px-4 py-3 border-b border-slate-700/80 flex flex-wrap items-center justify-between gap-2">
            <div className="flex items-center gap-2">
              <ShieldCheck className="w-4 h-4 text-cyan-500" />
              <h3 className="font-mono text-sm font-bold text-slate-200 tracking-widest">REGISTRO DE OPERADORES</h3>
+           </div>
+           <div className="flex items-center gap-3">
+             {inactivos > 0 && (
+               <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-amber-950/40 text-amber-400 px-2 py-1 rounded border border-amber-900/50">
+                 <Clock className="w-3 h-3" /> {inactivos} SIN PRACTICAR
+               </span>
+             )}
+             <a
+               href={`/api/teachers/groups/${groupId}/report.csv`}
+               className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-widest text-cyan-400 hover:text-cyan-300 bg-cyan-950/30 border border-cyan-500/40 rounded-lg px-3 py-1.5 transition-colors"
+             >
+               <Download className="w-3 h-3" /> Informe CSV
+             </a>
            </div>
         </div>
         
@@ -184,6 +202,11 @@ export function TeacherDashboard({ groupId, onViewStudent }: TeacherDashboardPro
                       {isLow && (
                         <span className="inline-flex items-center gap-1 text-[9px] font-mono bg-red-950/50 text-red-400 px-1.5 py-0.5 rounded border border-red-900/50 whitespace-nowrap">
                           <AlertTriangle className="w-2.5 h-2.5" /> SOPORTE TÁCTICO REQUERIDO
+                        </span>
+                      )}
+                      {student.inactive_days !== null && student.inactive_days >= 7 && (
+                        <span className="inline-flex items-center gap-1 text-[9px] font-mono bg-amber-950/50 text-amber-400 px-1.5 py-0.5 rounded border border-amber-900/50 whitespace-nowrap">
+                          <Clock className="w-2.5 h-2.5" /> INACTIVO {student.inactive_days} D
                         </span>
                       )}
                     </div>

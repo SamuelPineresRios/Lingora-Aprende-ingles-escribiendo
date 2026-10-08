@@ -11,8 +11,10 @@ import { queryString, routeParam } from '../../utils/route-params.ts'
 import {
   createAssignment,
   createGroup,
+  getGroupReport,
   getOwnedGroup,
   getStudentProfile,
+  groupReportToCsv,
   listGroupAssignments,
   listGroupStudents,
   listGroups,
@@ -54,6 +56,29 @@ teachersRouter.get('/groups/:id', requireTeacher, async (req, res) => {
   if (!group) throw new HttpError(404, 'Not found')
 
   res.json(group)
+})
+
+/**
+ * Informe de la clase en CSV: totales por alumno, avance de las asignadas y
+ * actividad. Un clic en el panel y a la hoja de cálculo.
+ */
+teachersRouter.get('/groups/:id/report.csv', requireTeacher, async (req, res) => {
+  const session = sessionOf(req)
+  const groupId = routeParam(req, 'id')
+  const group = await getOwnedGroup(session.userId, groupId)
+  if (!group) throw new HttpError(404, 'Not found')
+
+  const slug =
+    group.name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'grupo'
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+  res.setHeader('Content-Disposition', `attachment; filename="informe-${slug}.csv"`)
+  res.send(groupReportToCsv(await getGroupReport(groupId)))
 })
 
 teachersRouter.get('/groups/:id/students', requireTeacher, async (req, res) => {

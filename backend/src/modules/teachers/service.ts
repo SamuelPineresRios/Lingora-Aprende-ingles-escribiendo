@@ -2,7 +2,7 @@
  * Lógica de dominio de profesores: gestión de grupos, asignación de misiones,
  * panel de alumnos y perfil detallado de un alumno.
  */
-import { and, desc, eq, inArray } from 'drizzle-orm'
+import { and, desc, eq, inArray, sql } from 'drizzle-orm'
 import { randomUUID } from 'node:crypto'
 import { db } from '../../db/client.ts'
 import { UNIQUE_VIOLATION, sqlStateOf } from '../../db/errors.ts'
@@ -152,7 +152,7 @@ export async function listGroupStudents(groupId: string) {
   const studentIds = [...new Set(members.map(member => member.student_id))]
   const missionIds = [...new Set(assignments.map(assignment => assignment.mission_id))]
 
-  const [studentRows, missionRows, responseRows] = await Promise.all([
+  const [studentRows, missionRows, responseRows, globalRows] = await Promise.all([
     studentIds.length
       ? db
           .select({ id: users.id, full_name: users.full_name, email: users.email })
@@ -183,8 +183,24 @@ export async function listGroupStudents(groupId: string) {
             and(eq(responses.group_id, groupId), inArray(responses.student_id, studentIds)),
           )
       : Promise.resolve([]),
+    // Totales globales y última actividad: sirven para el informe y para la
+    // alerta de alumnos inactivos, y no dependen del grupo.
+    studentIds.length
+      ? db
+          .select({
+            student_id: responses.student_id,
+            xp_total: sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`,
+            missions_total: sql<number>`count(distinct case when ${responses.status} = 'completed' then ${responses.mission_id} end)::int`,
+            last_activity_at: sql<string | null>`max(${responses.submitted_at})`,
+          })
+          .from(responses)
+          .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
+          .where(inArray(responses.student_id, studentIds))
+          .groupBy(responses.student_id)
+      : Promise.resolve([]),
   ])
 
+  const globalByStudent = new Map(globalRows.map(row => [row.student_id, row]))
   const studentById = new Map(studentRows.map(user => [user.id, user]))
   const missionById = new Map(missionRows.map(mission => [mission.id, mission]))
 
@@ -250,11 +266,22 @@ export async function listGroupStudents(groupId: string) {
       .map(item => item.comprehensibility_score)
       .filter((score): score is number => score !== null)
 
+    const global = globalByStudent.get(member.student_id)
+    const lastActivity = global?.last_activity_at ? new Date(global.last_activity_at) : null
+
     return {
       student_id: member.student_id,
       full_name: user?.full_name ?? null,
       email: user?.email ?? '',
+      // Del grupo (asignaciones) …
       missions_completed: enrichedAssignments.filter(item => item.status === 'completed').length,
+      // … y globales (toda la app), para el informe del docente.
+      xp_total: global?.xp_total ?? 0,
+      missions_total: global?.missions_total ?? 0,
+      last_activity_at: lastActivity ? lastActivity.toISOString() : null,
+      inactive_days: lastActivity
+        ? Math.max(0, Math.floor((Date.now() - lastActivity.getTime()) / (24 * 60 * 60 * 1000)))
+        : null,
       total_missions: totalMissions,
       writing_time_seconds: enrichedAssignments.reduce(
         (sum, item) => sum + (item.time_taken_seconds ?? 0),
@@ -467,4 +494,137 @@ export async function getStudentProfile(
     recent_responses: recentResponses,
     completed_missions: completedMissions,
   }
+}
+
+export interface GroupReportRow {
+  student_id: string
+  full_name: string | null
+  email: string
+  cefr_level: string
+  xp_total: number
+  missions_total: number
+  assigned_completed: number
+  assigned_total: number
+  seconds: number
+  last_activity_at: string | null
+  inactive_days: number | null
+}
+
+/**
+ * Informe del grupo: una fila por alumno con sus totales globales, el avance
+ * de las misiones asignadas y su última actividad. Es la base del CSV que se
+ * descarga el docente.
+ */
+export async function getGroupReport(groupId: string): Promise<GroupReportRow[]> {
+  const [members, assignments] = await Promise.all([
+    db
+      .select({ student_id: group_members.student_id })
+      .from(group_members)
+      .where(eq(group_members.group_id, groupId)),
+    db.select({ mission_id: mission_assignments.mission_id }).from(mission_assignments).where(eq(mission_assignments.group_id, groupId)),
+  ])
+
+  const studentIds = [...new Set(members.map(member => member.student_id))]
+  if (studentIds.length === 0) return []
+
+  const [studentRows, globalRows, assignedRows] = await Promise.all([
+    db
+      .select({ id: users.id, full_name: users.full_name, email: users.email, cefr_level: users.cefr_level })
+      .from(users)
+      .where(inArray(users.id, studentIds)),
+    db
+      .select({
+        student_id: responses.student_id,
+        xp_total: sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`,
+        missions_total: sql<number>`count(distinct case when ${responses.status} = 'completed' then ${responses.mission_id} end)::int`,
+        seconds: sql<number>`coalesce(sum(${responses.time_taken_seconds}), 0)::int`,
+        last_activity_at: sql<string | null>`max(${responses.submitted_at})`,
+      })
+      .from(responses)
+      .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
+      .where(inArray(responses.student_id, studentIds))
+      .groupBy(responses.student_id),
+    db
+      .select({
+        student_id: responses.student_id,
+        assigned_completed: sql<number>`count(distinct ${responses.mission_id})::int`,
+      })
+      .from(responses)
+      .innerJoin(
+        mission_assignments,
+        and(
+          eq(mission_assignments.group_id, responses.group_id),
+          eq(mission_assignments.mission_id, responses.mission_id),
+        ),
+      )
+      .where(and(eq(responses.group_id, groupId), eq(responses.status, 'completed')))
+      .groupBy(responses.student_id),
+  ])
+
+  const userById = new Map(studentRows.map(user => [user.id, user]))
+  const globalByStudent = new Map(globalRows.map(row => [row.student_id, row]))
+  const assignedByStudent = new Map(assignedRows.map(row => [row.student_id, row.assigned_completed]))
+  const assignedTotal = new Set(assignments.map(assignment => assignment.mission_id)).size
+
+  return studentIds
+    .map(studentId => {
+      const user = userById.get(studentId)
+      const global = globalByStudent.get(studentId)
+      const lastActivity = global?.last_activity_at ? new Date(global.last_activity_at) : null
+
+      return {
+        student_id: studentId,
+        full_name: user?.full_name ?? null,
+        email: user?.email ?? '',
+        cefr_level: user?.cefr_level ?? 'A1',
+        xp_total: global?.xp_total ?? 0,
+        missions_total: global?.missions_total ?? 0,
+        assigned_completed: assignedByStudent.get(studentId) ?? 0,
+        assigned_total: assignedTotal,
+        seconds: global?.seconds ?? 0,
+        last_activity_at: lastActivity ? lastActivity.toISOString() : null,
+        inactive_days: lastActivity
+          ? Math.max(0, Math.floor((Date.now() - lastActivity.getTime()) / (24 * 60 * 60 * 1000)))
+          : null,
+      }
+    })
+    .sort((a, b) => b.xp_total - a.xp_total)
+}
+
+/** Convierte el informe en CSV (con BOM para que Excel respete los acentos). */
+export function groupReportToCsv(rows: GroupReportRow[]): string {
+  const escape = (value: string | number | null): string => {
+    const text = value === null ? '' : String(value)
+    return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text
+  }
+
+  const header = [
+    'Alumno',
+    'Email',
+    'Nivel',
+    'XP total',
+    'Misiones completadas',
+    'Minutos de practica',
+    'Asignadas completadas',
+    'Asignadas totales',
+    'Ultima actividad',
+    'Dias sin practicar',
+  ]
+
+  const lines = rows.map(row =>
+    [
+      escape(row.full_name ?? row.email),
+      escape(row.email),
+      escape(row.cefr_level),
+      escape(row.xp_total),
+      escape(row.missions_total),
+      escape(Math.round(row.seconds / 60)),
+      escape(row.assigned_completed),
+      escape(row.assigned_total),
+      escape(row.last_activity_at ? row.last_activity_at.slice(0, 10) : 'Nunca'),
+      escape(row.inactive_days ?? ''),
+    ].join(','),
+  )
+
+  return `\uFEFF${[header.join(','), ...lines].join('\n')}\n`
 }
