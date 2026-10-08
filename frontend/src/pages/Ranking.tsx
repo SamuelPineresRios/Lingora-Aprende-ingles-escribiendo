@@ -7,8 +7,11 @@
  */
 import { useEffect, useMemo, useState } from 'react'
 import { Crown, Flame, Loader2, TrendingDown, TrendingUp, Trophy } from 'lucide-react'
+import { resolveAvatar, type UserAvatar } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { Canvas3DBackground } from '@/components/Canvas3DBackground'
+import { FrameRing } from '@/components/FrameRing'
+import { studentAvatarUrl } from '@/lib/avatar'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
 
@@ -16,7 +19,14 @@ type Mode = 'league' | 'global'
 type RankingMetric = 'xp' | 'missions' | 'time'
 type LeagueZone = 'promotion' | 'safe' | 'relegation'
 
-interface RankingEntry {
+/** Lo que un alumno lleva puesto y se pinta junto a su nombre. */
+interface Cosmetics {
+  avatar: UserAvatar | null
+  frame: { id: string; colors: [string, string] } | null
+  title: { id: string; text: string } | null
+}
+
+interface RankingEntry extends Cosmetics {
   position: number
   student_id: string
   name: string
@@ -25,7 +35,7 @@ interface RankingEntry {
   seconds: number
 }
 
-interface LeagueEntry {
+interface LeagueEntry extends Cosmetics {
   position: number
   student_id: string
   name: string
@@ -84,6 +94,37 @@ const POSITION_STYLE: Record<number, string> = {
   3: 'text-coral',
 }
 
+/** Avatar del ranking con su marco (tienda o pase), como en el perfil. */
+function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } }) {
+  const image = (
+    <img
+      src={studentAvatarUrl(resolveAvatar({ id: entry.student_id, avatar: entry.avatar }))}
+      alt=""
+      className="h-full w-full"
+    />
+  )
+
+  if (entry.frame) {
+    return (
+      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={44}>
+        {image}
+      </FrameRing>
+    )
+  }
+
+  return <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
+}
+
+/** Título equipado, con el mismo aspecto que en el perfil. */
+function TitleBadge({ title }: { title: { text: string } | null }) {
+  if (!title) return null
+  return (
+    <span className="shrink-0 rounded-full border border-violet/40 px-1.5 py-0.5 text-[9px] uppercase tracking-widest text-violet">
+      {title.text}
+    </span>
+  )
+}
+
 /** Una fila del ranking global; la propia se resalta. */
 function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: MetricConfig; isMe: boolean }) {
   return (
@@ -102,10 +143,13 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
         {entry.position}
       </span>
 
+      <RankingAvatar entry={entry} />
+
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-2 text-sm text-white truncate">
           {entry.position === 1 && <Crown className="h-3.5 w-3.5 text-amber shrink-0" />}
           {entry.name}
+          <TitleBadge title={entry.title} />
           {isMe && (
             <span className="text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
               tú
@@ -147,9 +191,12 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
         {ZoneIcon && <ZoneIcon className={cn('h-3.5 w-3.5', zona.className)} />}
       </span>
 
+      <RankingAvatar entry={entry} />
+
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-2 text-sm text-white truncate">
           {entry.name}
+          <TitleBadge title={entry.title} />
           {isMe && (
             <span className="text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
               tú

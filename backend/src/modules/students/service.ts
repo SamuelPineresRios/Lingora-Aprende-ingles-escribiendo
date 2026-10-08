@@ -2,7 +2,7 @@
  * Lógica de dominio de alumnos: grupos del alumno, unirse a un grupo y
  * agregados de escritura (semanal y de sesión).
  */
-import { and, asc, desc, eq, gte, inArray, isNotNull, isNull, sql } from 'drizzle-orm'
+import { and, asc, desc, eq, gte, inArray, isNotNull, isNull, lte, sql } from 'drizzle-orm'
 import { randomUUID } from 'node:crypto'
 import { db } from '../../db/client.ts'
 import {
@@ -13,6 +13,7 @@ import {
   missions,
   responses,
   streak_shields,
+  student_loadout,
   users,
   weekly_aggregates,
 } from '../../db/schema.ts'
@@ -20,6 +21,9 @@ import { levelProgress, streakFromDays, type LevelProgress } from '../../lib/xp.
 import { HttpError } from '../../utils/http-error.ts'
 import { minusDays, mondayKeyOf, safeTimeZone, todayKeyIn } from '../../lib/date-keys.ts'
 import { LEAGUE_SIZE, leagueZones, zoneAt, type LeagueZone } from '../../lib/league.ts'
+import { SEASON_REWARDS, seasonFor, tierFromXp } from '../../lib/season.ts'
+import { STORE_ITEMS } from '../../lib/store.ts'
+import type { UserAvatar } from '@vox/shared'
 import { getWeekStart } from '../../utils/week.ts'
 
 /** Grupos del alumno con sus misiones asignadas y el estado de cada una. */
@@ -400,13 +404,96 @@ export async function getStudentProgress(
 /** Métricas del ranking de grupo. */
 export type RankingMetric = 'xp' | 'missions' | 'time'
 
-export interface RankingEntry {
+/** Lo que un alumno lleva puesto, para pintarlo junto a su nombre. */
+export interface RankingCosmetics {
+  avatar: UserAvatar | null
+  frame: { id: string; colors: [string, string] } | null
+  title: { id: string; text: string } | null
+}
+
+export interface RankingEntry extends RankingCosmetics {
   position: number
   student_id: string
   name: string
   xp: number
   missions: number
   seconds: number
+}
+
+/**
+ * Resuelve avatar, marco y título de una lista de alumnos.
+ *
+ * El marco sigue la misma regla que el perfil: el equipado en la tienda o, si
+ * no hay, el mejor del pase que tenga desbloqueado (su XP de la temporada en
+ * curso). El título solo existe en la tienda.
+ */
+async function rankingCosmetics(
+  studentIds: string[],
+): Promise<Map<string, Pick<RankingCosmetics, 'frame' | 'title'>>> {
+  const cosmetics = new Map<string, Pick<RankingCosmetics, 'frame' | 'title'>>()
+  if (studentIds.length === 0) return cosmetics
+
+  const current = seasonFor(new Date())
+  const [loadouts, seasonRows] = await Promise.all([
+    db.select().from(student_loadout).where(inArray(student_loadout.student_id, studentIds)),
+    db
+      .select({
+        student_id: responses.student_id,
+        xp: sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`,
+      })
+      .from(responses)
+      .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
+      .where(
+        and(
+          inArray(responses.student_id, studentIds),
+          gte(responses.submitted_at, current.startsAt),
+          lte(responses.submitted_at, current.endsAt),
+        ),
+      )
+      .groupBy(responses.student_id),
+  ])
+
+  const loadoutByStudent = new Map(loadouts.map(loadout => [loadout.student_id, loadout]))
+  const seasonXpByStudent = new Map(seasonRows.map(row => [row.student_id, row.xp]))
+
+  const frameColors = new Map<string, [string, string]>()
+  for (const item of STORE_ITEMS) {
+    if (item.kind === 'frame' && item.colors) frameColors.set(item.id, item.colors)
+  }
+  for (const reward of SEASON_REWARDS) {
+    if (reward.kind === 'frame') frameColors.set(reward.id, reward.colors)
+  }
+
+  const titleText = new Map<string, string>()
+  for (const item of STORE_ITEMS) {
+    if (item.kind === 'title' && item.text) titleText.set(item.id, item.text)
+  }
+
+  for (const studentId of studentIds) {
+    const loadout = loadoutByStudent.get(studentId)
+
+    let frameId = loadout?.frame_id ?? null
+    if (!frameId) {
+      // Marco automático del pase: el último desbloqueado con su XP de temporada.
+      const tier = tierFromXp(seasonXpByStudent.get(studentId) ?? 0)
+      const unlocked = SEASON_REWARDS.filter(
+        (reward): reward is Extract<(typeof SEASON_REWARDS)[number], { kind: 'frame' }> =>
+          reward.kind === 'frame' && reward.tier <= tier,
+      )
+      frameId = unlocked.at(-1)?.id ?? null
+    }
+
+    const titleId = loadout?.title_id ?? null
+    const colors = frameId ? frameColors.get(frameId) : undefined
+    const text = titleId ? titleText.get(titleId) : undefined
+
+    cosmetics.set(studentId, {
+      frame: frameId && colors ? { id: frameId, colors } : null,
+      title: titleId && text ? { id: titleId, text } : null,
+    })
+  }
+
+  return cosmetics
 }
 
 /**
@@ -440,6 +527,7 @@ export async function getGlobalRanking(
     .select({
       student_id: users.id,
       name: users.full_name,
+      avatar: users.avatar,
       // Los campos calculados necesitan alias: la subconsulta de Drizzle los exige.
       xp: sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`.as('xp'),
       missions: sql<number>`count(distinct case when ${responses.status} = 'completed' then ${responses.mission_id} end)::int`.as('missions'),
@@ -460,6 +548,9 @@ export async function getGlobalRanking(
     position: row.position,
     student_id: row.student_id,
     name: row.name ?? 'Alumno',
+    avatar: row.avatar ?? null,
+    frame: null,
+    title: null,
     xp: row.xp,
     missions: row.missions,
     seconds: row.seconds,
@@ -474,11 +565,21 @@ export async function getGlobalRanking(
     ? []
     : await db.select().from(ranking).where(eq(ranking.student_id, requesterId)).limit(1)
 
+  const base = enTop ?? (mineRow ? toEntry(mineRow) : null)
+  const cosmetics = await rankingCosmetics([
+    ...new Set([...entries.map(entry => entry.student_id), ...(base ? [base.student_id] : [])]),
+  ])
+  const decorate = (entry: RankingEntry): RankingEntry => ({
+    ...entry,
+    frame: cosmetics.get(entry.student_id)?.frame ?? null,
+    title: cosmetics.get(entry.student_id)?.title ?? null,
+  })
+
   return {
     metric,
     total: totalRow?.count ?? 0,
-    entries,
-    you: enTop ?? (mineRow ? toEntry(mineRow) : null),
+    entries: entries.map(decorate),
+    you: base ? decorate(base) : null,
   }
 }
 
@@ -649,7 +750,7 @@ export async function getStudentSkills(studentId: string): Promise<StudentSkills
   }
 }
 
-export interface LeagueEntry {
+export interface LeagueEntry extends RankingCosmetics {
   /** Posición dentro de la liga (1-based). */
   position: number
   student_id: string
@@ -691,6 +792,7 @@ export async function getWeeklyLeague(studentId: string, timezone?: unknown): Pr
     .select({
       student_id: users.id,
       name: users.full_name,
+      avatar: users.avatar,
       week_xp: sql<number>`coalesce(sum(${evaluations.xp_awarded}) filter (where ${day} >= ${weekStartKey}::date), 0)::int`,
     })
     .from(users)
@@ -708,10 +810,14 @@ export async function getWeeklyLeague(studentId: string, timezone?: unknown): Pr
   const bracketIndex = Math.floor(myIndex / LEAGUE_SIZE)
   const bracket = rows.slice(bracketIndex * LEAGUE_SIZE, (bracketIndex + 1) * LEAGUE_SIZE)
 
+  const cosmetics = await rankingCosmetics(bracket.map(row => row.student_id))
   const entries: LeagueEntry[] = bracket.map((row, index) => ({
     position: index + 1,
     student_id: row.student_id,
     name: row.name ?? 'Alumno',
+    avatar: row.avatar ?? null,
+    frame: cosmetics.get(row.student_id)?.frame ?? null,
+    title: cosmetics.get(row.student_id)?.title ?? null,
     week_xp: row.week_xp,
     zone: zoneAt(index + 1, bracket.length),
   }))

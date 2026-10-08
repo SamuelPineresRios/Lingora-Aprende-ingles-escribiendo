@@ -10,7 +10,7 @@ import request from 'supertest'
 import { randomUUID } from 'node:crypto'
 import { createApp } from '../src/app.ts'
 import { db } from '../src/db/client.ts'
-import { evaluations, responses } from '../src/db/schema.ts'
+import { evaluations, responses, student_loadout } from '../src/db/schema.ts'
 import { resetDb } from './helpers/db.ts'
 import { createMission, signupActor, type Actor } from './helpers/fixtures.ts'
 
@@ -153,5 +153,56 @@ describe('GET /api/students/ranking', () => {
     expect(res.body.you.student_id).toBe(ana.id)
     expect(res.body.you.position).toBe(2)
     expect(res.body.you.xp).toBe(50)
+  })
+})
+
+describe('cosméticos del ranking', () => {
+  it('cada entrada trae el skin base y, equipados, su marco y su título', async () => {
+    const ana = await signupActor(app, 'student')
+    await db
+      .insert(student_loadout)
+      .values({ student_id: ana.id, frame_id: 'marco-fuego', title_id: 'titulo-constante' })
+
+    const res = await ana.agent.get('/api/students/ranking')
+
+    const [entry] = res.body.entries as Array<{
+      avatar: { seed: string }
+      frame: { id: string; colors: string[] } | null
+      title: { text: string } | null
+    }>
+    expect(entry?.avatar.seed).toBe(ana.id)
+    expect(entry?.frame).toEqual({ id: 'marco-fuego', colors: ['#dc2626', '#f59e0b'] })
+    expect(entry?.title?.text).toBe('Constante')
+  })
+
+  it('sin marco de tienda cae al mejor del pase desbloqueado', async () => {
+    const ana = await signupActor(app, 'student')
+    const mission = await createMission({ cefr_level: 'B1' })
+    // 1600 XP de temporada = casilla 4: marco de bronce.
+    await seedActivity(ana, mission, { xp: 1600, seconds: 300, submittedAt: '2026-10-06T10:00:00Z' })
+
+    const res = await ana.agent.get('/api/students/ranking')
+
+    const [entry] = res.body.entries as Array<{ frame: { id: string; colors: string[] } | null; title: unknown }>
+    expect(entry?.frame).toEqual({ id: 'bronce', colors: ['#92400e', '#f59e0b'] })
+    expect(entry?.title).toBeNull()
+  })
+
+  it('la liga trae los mismos cosméticos', async () => {
+    const ana = await signupActor(app, 'student')
+    await db.insert(student_loadout).values({ student_id: ana.id, frame_id: 'marco-neon', title_id: 'titulo-explorador' })
+    const mission = await createMission({ cefr_level: 'B1' })
+    await seedActivity(ana, mission, { xp: 120, seconds: 300, submittedAt: '2026-10-06T10:00:00Z' })
+
+    const res = await ana.agent.get(`/api/students/${ana.id}/league?tz=UTC`)
+
+    const [entry] = res.body.entries as Array<{
+      avatar: { seed: string }
+      frame: { id: string } | null
+      title: { text: string } | null
+    }>
+    expect(entry?.avatar.seed).toBe(ana.id)
+    expect(entry?.frame?.id).toBe('marco-neon')
+    expect(entry?.title?.text).toBe('Explorador')
   })
 })
