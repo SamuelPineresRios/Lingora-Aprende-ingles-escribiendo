@@ -3,11 +3,13 @@ import { useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal, Store } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { useState } from 'react'
+import { useThemeAccent } from '@/lib/hooks/useStoreView'
+import { useState, type CSSProperties } from 'react'
 
 export function StudentSidebar() {
   const { pathname } = useLocation()
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
+  const accent = useThemeAccent(user?.id)
   const [isOpen, setIsOpen] = useState(false)
 
   const links = [
@@ -89,9 +91,10 @@ export function StudentSidebar() {
                     // limpio, sin la línea. El tinte cian es el del estado activo
                     // de siempre, y va también en las muescas para que la curva
                     // del borde derecho se lea contra el fondo del sidebar.
-                    "z-10 [margin-right:-17px] rounded-l-full rounded-r-none border border-transparent bg-cyan/10 text-cyan before:bg-cyan/10 after:bg-cyan/10"
+                    "z-10 [margin-right:-17px] rounded-l-full rounded-r-none border border-transparent bg-cyan/10 text-cyan before:bg-[var(--muesca,rgba(6,182,212,0.1))] after:bg-[var(--muesca,rgba(6,182,212,0.1))]"
                   : "rounded-lg border border-transparent text-slate-400 hover:text-white hover:bg-white/5 before:bg-transparent after:bg-transparent",
               )}
+              style={isActive && accent ? ({ '--muesca': `${accent}1a`, backgroundColor: `${accent}1a`, color: accent } as CSSProperties) : undefined}
             >
               <link.icon className={cn("w-4 h-4", isActive ? "animate-pulse" : "opacity-70 group-hover:opacity-100")} />
               <span>{link.label}</span>

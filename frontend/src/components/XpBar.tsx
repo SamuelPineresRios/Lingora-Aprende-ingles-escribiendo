@@ -6,6 +6,8 @@
  */
 import { Flame, Target, Timer } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAuth } from '@/lib/hooks/useAuth'
+import { useThemeAccent } from '@/lib/hooks/useStoreView'
 import type { StudentProgress } from '@/lib/hooks/useProgress'
 
 interface XpBarProps {
@@ -23,9 +25,13 @@ function readableTime(seconds: number): string {
 }
 
 export function XpBar({ progress, variant = 'compact', className }: XpBarProps) {
+  const { user } = useAuth()
+  const accent = useThemeAccent(user?.id)
+
   if (!progress) return null
 
   const percent = progress.level_span > 0 ? Math.round((progress.level_xp / progress.level_span) * 100) : 0
+  const fillStyle = accent ? { background: accent, boxShadow: `0 0 10px ${accent}99` } : undefined
 
   if (variant === 'compact') {
     return (
@@ -36,9 +42,14 @@ export function XpBar({ progress, variant = 'compact', className }: XpBarProps) 
         )}
         title={`Nivel ${progress.level} · ${progress.total_xp} XP · faltan ${progress.xp_to_next} XP`}
       >
-        <span className="font-mono text-[10px] uppercase tracking-widest text-cyan">Nv {progress.level}</span>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-cyan" style={accent ? { color: accent } : undefined}>
+          Nv {progress.level}
+        </span>
         <span className="h-1.5 w-14 overflow-hidden rounded-full bg-white/10">
-          <span className="block h-full rounded-full bg-cyan transition-all duration-700" style={{ width: `${percent}%` }} />
+          <span
+            className="block h-full rounded-full bg-cyan transition-all duration-700"
+            style={{ width: `${percent}%`, ...fillStyle }}
+          />
         </span>
         <span className="font-mono text-[10px] text-slate-400">{progress.total_xp} XP</span>
       </div>
@@ -59,7 +70,9 @@ export function XpBar({ progress, variant = 'compact', className }: XpBarProps) 
           <p className="text-3xl font-bold text-white">{progress.level}</p>
         </div>
         <div className="text-right">
-          <p className="font-mono text-sm text-cyan">{progress.total_xp} XP</p>
+          <p className="font-mono text-sm text-cyan" style={accent ? { color: accent } : undefined}>
+            {progress.total_xp} XP
+          </p>
           <p className="text-[10px] uppercase tracking-widest text-slate-500">
             {progress.xp_to_next === 0
               ? 'nivel completo'
@@ -71,7 +84,7 @@ export function XpBar({ progress, variant = 'compact', className }: XpBarProps) 
       <div className="h-2 overflow-hidden rounded-full bg-white/10">
         <div
           className="h-full rounded-full bg-cyan shadow-[0_0_10px_rgba(6,182,212,0.6)] transition-all duration-700"
-          style={{ width: `${percent}%` }}
+          style={{ width: `${percent}%`, ...fillStyle }}
         />
       </div>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type CSSProperties } from 'react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { Link } from 'react-router-dom'
@@ -9,10 +9,11 @@ import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { ActivityHistory } from '@/components/ActivityHistory'
 import { XpBar } from '@/components/XpBar'
 import { useProgress } from '@/lib/hooks/useProgress'
+import { useStoreView, useThemeAccent } from '@/lib/hooks/useStoreView'
 import { readJson } from '@/lib/api'
 import { avatarUrl } from '@/lib/avatar'
 import { activeFrame, badgeIcon, unlockedBadges, type SeasonProgress } from '@/lib/season'
-import { equippedItem, type StoreView } from '@/lib/store'
+import { equippedItem } from '@/lib/store'
 
 interface Mission { id:string; title:string; description:string|null; cefr_level:string; status:string }
 
@@ -62,8 +63,10 @@ export default function ProfilePage() {
   const { progress } = useProgress(user?.id)
   /** Pase de temporada: marco activo, insignias y monedas. */
   const [season, setSeason] = useState<SeasonProgress | null>(null)
-  /** Tienda: lo equipado (marco, título y tema) pisa lo del pase. */
-  const [shop, setShop] = useState<StoreView | null>(null)
+  /** Tienda compartida: lo equipado (marco, título y tema) pisa lo del pase. */
+  const shop = useStoreView(user?.id)
+  /** Acento del tema equipado: tiñe barra de XP, gráfica y detalles del perfil. */
+  const accent = useThemeAccent(user?.id)
   const [missions, setMissions] = useState<Mission[]>([])
   const [skills, setSkills] = useState<StudentSkills | null>(null)
   const [, setLoading] = useState(true)
@@ -87,31 +90,17 @@ export default function ProfilePage() {
     }
   }, [user?.id])
 
-  // La tienda se carga aparte; si falla, el perfil no depende de ella.
-  useEffect(() => {
-    if (!user?.id) return
-    let cancelled = false
-
-    fetch(`/api/students/${user.id}/store`)
-      .then(readJson<StoreView>)
-      .then(data => {
-        if (!cancelled && data) setShop(data)
-      })
-      .catch(() => {})
-
-    return () => {
-      cancelled = true
-    }
-  }, [user?.id])
-
   // Marco: el equipado en la tienda o, si no, el mejor del pase.
   const shopFrame = equippedItem(shop, 'frame')
   const seasonFrame = activeFrame(season)
   const frameId = shopFrame?.id ?? seasonFrame?.id ?? null
   const frameColors = shopFrame?.colors ?? seasonFrame?.colors ?? null
   const title = equippedItem(shop, 'title')
-  const theme = equippedItem(shop, 'theme')?.accent ?? null
   const badges = unlockedBadges(season)
+  /** Variables CSS del tema para los estados hover/focus del perfil. */
+  const themeVars = accent
+    ? ({ '--acento': accent, '--acento-50': `${accent}80`, '--acento-30': `${accent}4d` } as CSSProperties)
+    : undefined
 
   const saveName = async () => {
     setIsEditing(false)
@@ -186,8 +175,11 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8">
         
         {/* Profile Card */}
-        <div className="relative group">
-           <div className="absolute inset-0 bg-gradient-to-br from-cyan/20 via-transparent to-blue-500/20 blur-xl opacity-50 group-hover:opacity-100 transition-opacity" />
+        <div className="relative group" style={themeVars}>
+           <div
+             className="absolute inset-0 bg-gradient-to-br from-cyan/20 via-transparent to-blue-500/20 blur-xl opacity-50 group-hover:opacity-100 transition-opacity"
+             style={accent ? { backgroundImage: `linear-gradient(135deg, ${accent}33, transparent, ${accent}26)` } : undefined}
+           />
            <div className="relative bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
               
@@ -210,8 +202,11 @@ export default function ProfilePage() {
                       </div>
                    </div>
                  )}
-                 <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 border border-cyan shadow-[0_0_10px_cyan]">
-                    <Shield className="w-4 h-4 text-cyan fill-cyan/20" />
+                 <div
+                   className="absolute bottom-0 right-0 bg-black rounded-full p-1 border border-cyan shadow-[0_0_10px_cyan]"
+                   style={accent ? { borderColor: accent, boxShadow: `0 0 10px ${accent}` } : undefined}
+                 >
+                    <Shield className="w-4 h-4 text-cyan fill-cyan/20" style={accent ? { color: accent, fill: `${accent}33` } : undefined} />
                  </div>
               </div>
 
@@ -220,14 +215,14 @@ export default function ProfilePage() {
                       <input 
                         value={editName} 
                         onChange={(e) => setEditName(e.target.value)}
-                        className="bg-black/50 border border-cyan/50 rounded px-2 py-1 text-center w-full focus:outline-none focus:shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+                        className="bg-black/50 border border-[color:var(--acento-50,rgba(6,182,212,0.5))] rounded px-2 py-1 text-center w-full focus:outline-none focus:shadow-[0_0_10px_var(--acento-30,rgba(6,182,212,0.3))]"
                         autoFocus
                         onBlur={saveName}
                         onKeyDown={(e) => e.key === 'Enter' && saveName()}
                       />
                   </div>
               ) : (
-                  <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2 group-hover:text-cyan transition-colors cursor-pointer" onClick={() => {
+                  <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2 group-hover:text-[color:var(--acento,#06b6d4)] transition-colors cursor-pointer" onClick={() => {
                     setEditName(user?.full_name || '')
                     setIsEditing(true)
                   }}>
@@ -235,7 +230,7 @@ export default function ProfilePage() {
                     {title && (
                       <span
                         className="rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-widest"
-                        style={{ borderColor: theme ?? 'rgba(139,92,246,0.5)', color: theme ?? '#a78bfa' }}
+                        style={{ borderColor: accent ?? 'rgba(139,92,246,0.5)', color: accent ?? '#a78bfa' }}
                       >
                         {title.text}
                       </span>
@@ -256,7 +251,7 @@ export default function ProfilePage() {
                 </span>
                 {badges.map(badge => {
                   const Icon = badgeIcon(badge.id)
-                  return <Icon key={badge.id} className="h-4 w-4" style={{ color: theme ?? '#a78bfa' }} />
+                  return <Icon key={badge.id} className="h-4 w-4" style={{ color: accent ?? '#a78bfa' }} />
                 })}
               </Link>
 
@@ -296,9 +291,9 @@ export default function ProfilePage() {
                       <Radar
                         name="Skills"
                         dataKey="A"
-                        stroke="#06b6d4"
+                        stroke={accent ?? '#06b6d4'}
                         strokeWidth={2}
-                        fill="#06b6d4"
+                        fill={accent ?? '#06b6d4'}
                         fillOpacity={0.2}
                       />
                     </RadarChart>
@@ -325,7 +320,7 @@ export default function ProfilePage() {
       {/* Progreso: nivel, XP y racha */}
       <section className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
         <h3 className="text-sm font-bold text-slate-300 uppercase tracking-widest flex items-center gap-2 mb-4">
-          <TrendingUp className="w-4 h-4 text-cyan" />
+          <TrendingUp className="w-4 h-4 text-cyan" style={accent ? { color: accent } : undefined} />
           Progreso
         </h3>
         <XpBar progress={progress} variant="full" />

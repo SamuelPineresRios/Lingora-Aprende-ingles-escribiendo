@@ -24,6 +24,7 @@ import { CoinRain } from '@/components/CoinRain'
 import { FrameRing } from '@/components/FrameRing'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { publishStoreView } from '@/lib/hooks/useStoreView'
 import { STORE_SECTIONS, type StoreItem, type StoreItemKind, type StoreView } from '@/lib/store'
 
 const KIND_ICON: Record<StoreItemKind, LucideIcon> = {
@@ -86,7 +87,10 @@ export default function StorePage() {
         const res = await fetch(`/api/students/${user.id}/store`)
         if (!res.ok) throw new Error('No se pudo cargar la tienda.')
         const data = await readJson<StoreView>(res)
-        if (!cancelled) setView(data)
+        if (!cancelled) {
+          setView(data)
+          publishStoreView(data, user?.id)
+        }
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'No se pudo cargar la tienda.')
       } finally {
@@ -119,8 +123,11 @@ export default function StorePage() {
       })
       const data = await readJson<StoreView & { error?: string }>(res)
       if (!res.ok) throw new Error(data?.error ?? 'La acción no se pudo completar.')
-      if (data) setView(data)
-      if (action === 'purchase') setBurst(Date.now())
+      if (data) {
+        setView(data)
+        publishStoreView(data, user.id)
+        if (action === 'purchase') setBurst(Date.now())
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'La acción no se pudo completar.')
     } finally {
