@@ -86,46 +86,48 @@ function QuestRow({
   const pct = Math.round((quest.progress / quest.target) * 100)
 
   return (
-    <li className="flex items-center gap-4 rounded-xl border border-white/10 bg-black/25 px-4 py-3">
-      <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 truncate text-sm text-white">
-          {quest.label}
+    // Dos niveles: el título manda arriba (ancho completo) y abajo van la
+    // barra, las monedas y el botón; así no se corta nada en el lateral.
+    <li className="space-y-2 rounded-xl border border-white/10 bg-black/25 px-4 py-3">
+      <div className="flex items-center justify-between gap-3">
+        <p className="flex min-w-0 items-center gap-2 text-sm text-white">
+          <span className="truncate">{quest.label}</span>
           {quest.claimed && <Check className="h-3.5 w-3.5 shrink-0 text-emerald" />}
         </p>
-        <div className="mt-2 flex items-center gap-3">
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
-            <div
-              className={cn('h-full rounded-full transition-all duration-500', quest.done ? 'bg-emerald' : 'bg-cyan')}
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <span className="shrink-0 font-mono text-[10px] text-slate-500">
-            {quest.progress}/{quest.target}
-          </span>
-        </div>
+        <span className="flex shrink-0 items-center gap-1 text-[11px] text-amber">
+          <Coins className="h-3.5 w-3.5" /> {quest.coins}
+        </span>
       </div>
 
-      <span className="flex shrink-0 items-center gap-1 text-[11px] text-amber">
-        <Coins className="h-3.5 w-3.5" /> {quest.coins}
-      </span>
+      <div className="flex items-center gap-3">
+        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
+          <div
+            className={cn('h-full rounded-full transition-all duration-500', quest.done ? 'bg-emerald' : 'bg-cyan')}
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <span className="shrink-0 font-mono text-[10px] text-slate-500">
+          {quest.progress}/{quest.target}
+        </span>
 
-      {quest.claimed ? (
-        <span className="shrink-0 rounded-lg border border-emerald/40 px-3 py-2 text-[10px] uppercase tracking-widest text-emerald">
-          Reclamado
-        </span>
-      ) : quest.done ? (
-        <button
-          onClick={() => onClaim(quest.id)}
-          disabled={busy === quest.id}
-          className="shrink-0 rounded-lg bg-cyan px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-black transition-colors hover:bg-cyan-400 disabled:opacity-50"
-        >
-          {busy === quest.id ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Reclamar'}
-        </button>
-      ) : (
-        <span className="shrink-0 rounded-lg border border-white/10 px-3 py-2 text-[10px] uppercase tracking-widest text-slate-600">
-          En curso
-        </span>
-      )}
+        {quest.claimed ? (
+          <span className="shrink-0 rounded-lg border border-emerald/40 px-2.5 py-1.5 text-[10px] uppercase tracking-widest text-emerald">
+            Reclamado
+          </span>
+        ) : quest.done ? (
+          <button
+            onClick={() => onClaim(quest.id)}
+            disabled={busy === quest.id}
+            className="shrink-0 rounded-lg bg-cyan px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-black transition-colors hover:bg-cyan-400 disabled:opacity-50"
+          >
+            {busy === quest.id ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Reclamar'}
+          </button>
+        ) : (
+          <span className="shrink-0 rounded-lg border border-white/10 px-2.5 py-1.5 text-[10px] uppercase tracking-widest text-slate-600">
+            En curso
+          </span>
+        )}
+      </div>
     </li>
   )
 }
@@ -158,7 +160,7 @@ export function DailyQuests() {
       {/* Cofre: se abre con los tres reclamados */}
       <div
         className={cn(
-          'flex items-center gap-4 rounded-xl border px-4 py-3',
+          'space-y-3 rounded-xl border px-4 py-3',
           view.day.chest.claimed
             ? 'border-emerald/30 bg-emerald/5'
             : view.day.chest.ready
@@ -166,22 +168,25 @@ export function DailyQuests() {
               : 'border-white/10 bg-black/20 opacity-60',
         )}
       >
-        <Gift className={cn('h-5 w-5', view.day.chest.ready && !view.day.chest.claimed ? 'text-amber' : 'text-slate-500')} />
-        <div className="min-w-0 flex-1">
-          <p className="text-sm text-white">Cofre del día</p>
-          <p className="text-[11px] text-slate-500">
-            {view.day.chest.claimed
-              ? 'Abierto. Vuelve mañana por otro.'
-              : view.day.chest.ready
-                ? '¡Listo! Reclama tus tres retos y ábrelo.'
-                : 'Se abre al reclamar los tres retos de hoy.'}
-          </p>
+        <div className="flex items-center gap-3">
+          <Gift className={cn('h-5 w-5 shrink-0', view.day.chest.ready && !view.day.chest.claimed ? 'text-amber' : 'text-slate-500')} />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm text-white">Cofre del día</p>
+            <p className="text-[11px] text-slate-500">
+              {view.day.chest.claimed
+                ? 'Abierto. Vuelve mañana por otro.'
+                : view.day.chest.ready
+                  ? '¡Listo! Ábrelo y llévate las monedas.'
+                  : 'Se abre al reclamar los tres retos de hoy.'}
+            </p>
+          </div>
+          <span className="flex shrink-0 items-center gap-1 text-[11px] text-amber">
+            <Coins className="h-3.5 w-3.5" /> {view.day.chest.coins}
+          </span>
         </div>
-        <span className="flex shrink-0 items-center gap-1 text-[11px] text-amber">
-          <Coins className="h-3.5 w-3.5" /> {view.day.chest.coins}
-        </span>
+
         {view.day.chest.claimed ? (
-          <span className="shrink-0 rounded-lg border border-emerald/40 px-3 py-2 text-[10px] uppercase tracking-widest text-emerald">
+          <span className="block rounded-lg border border-emerald/40 py-2 text-center text-[10px] uppercase tracking-widest text-emerald">
             Abierto
           </span>
         ) : (
@@ -189,7 +194,7 @@ export function DailyQuests() {
             onClick={() => claim('cofre-diario')}
             disabled={!view.day.chest.ready || busy === 'cofre-diario'}
             className={cn(
-              'shrink-0 rounded-lg px-3 py-2 text-[10px] font-bold uppercase tracking-widest transition-colors',
+              'w-full rounded-lg py-2 text-[10px] font-bold uppercase tracking-widest transition-colors',
               view.day.chest.ready
                 ? 'bg-amber text-black hover:bg-amber-light'
                 : 'border border-white/10 text-slate-600 cursor-not-allowed',

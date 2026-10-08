@@ -146,11 +146,6 @@ export default function MissionsPage() {
         </div>
       </div>
 
-      {/* Racha, retos y repaso: lo primero que se ve al entrar */}
-      <StreakBanner />
-      <DailyQuests />
-      <ReviewSession />
-
       {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
         <div className="min-w-0">
@@ -307,8 +302,13 @@ export default function MissionsPage() {
       
         </div>
         
-        {/* Sidebar - Right Position */}
-        <MissionSimulationAside />
+        {/* Lateral: racha, retos y repaso, para no tapar las misiones */}
+        <div className="space-y-6">
+          <StreakBanner />
+          <DailyQuests />
+          <ReviewSession />
+          <MissionSimulationAside />
+        </div>
       </div>
       
     
