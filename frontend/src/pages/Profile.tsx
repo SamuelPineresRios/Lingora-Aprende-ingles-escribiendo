@@ -158,7 +158,7 @@ export default function ProfilePage() {
       {/* Main Content */}
       <div className="relative z-10 min-h-screen p-8 font-mono max-w-6xl mx-auto space-y-8 animate-fade-in pt-16">
       {/* Header / Agent ID Card */}
-      <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-[380px_1fr] gap-8">
         
         {/* Profile Card */}
         <div className="relative group" style={themeVars}>
@@ -166,13 +166,13 @@ export default function ProfilePage() {
              className="absolute inset-0 bg-gradient-to-br from-cyan/20 via-transparent to-blue-500/20 blur-xl opacity-50 group-hover:opacity-100 transition-opacity"
              style={accent ? { backgroundImage: `linear-gradient(135deg, ${accent}33, transparent, ${accent}26)` } : undefined}
            />
-           <div className="relative bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center overflow-hidden">
+           <div className="relative bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
               
               <div className="relative mb-4">
                  {/* Con marco (tienda o pase), el anillo animado lo pinta FrameRing; sin él, el punteado */}
                  {frameId && frameColors ? (
-                   <FrameRing frameId={frameId} colors={frameColors} size={128}>
+                   <FrameRing frameId={frameId} colors={frameColors} size={288}>
                       <img src={avatar} alt="" className="h-full w-full" />
                       <Link
                         to="/avatar"
@@ -183,7 +183,7 @@ export default function ProfilePage() {
                       </Link>
                    </FrameRing>
                  ) : (
-                   <div className="w-32 h-32 rounded-full border-2 border-dashed border-cyan/30 p-1 transition-colors group-hover:border-cyan">
+                   <div className="h-72 w-72 rounded-full border-2 border-dashed border-cyan/30 p-1 transition-colors group-hover:border-cyan">
                       <div className="relative w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
                          <img src={avatar} alt="" className="h-full w-full" />
                          <Link
