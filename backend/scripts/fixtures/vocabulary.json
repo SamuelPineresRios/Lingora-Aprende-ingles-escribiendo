@@ -873,5 +873,1755 @@
         "example_translation": "El supermercado está abierto."
       }
     ]
+  },
+  {
+    "mission_id": "m-101",
+    "words": [
+      {
+        "word": "receipt",
+        "translation": "recibo",
+        "example": "Keep the receipt, please.",
+        "example_translation": "Guarda el recibo, por favor."
+      },
+      {
+        "word": "change",
+        "translation": "cambiar",
+        "example": "Can I change this jacket?",
+        "example_translation": "¿Puedo cambiar esta chaqueta?"
+      },
+      {
+        "word": "small",
+        "translation": "pequeño",
+        "example": "This size is too small.",
+        "example_translation": "Esta talla es demasiado pequeña."
+      },
+      {
+        "word": "yesterday",
+        "translation": "ayer",
+        "example": "I bought it yesterday.",
+        "example_translation": "Lo compré ayer."
+      },
+      {
+        "word": "refund",
+        "translation": "reembolso",
+        "example": "I would like a refund.",
+        "example_translation": "Quisiera un reembolso."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-102",
+    "words": [
+      {
+        "word": "appointment",
+        "translation": "cita",
+        "example": "I have an appointment on Thursday.",
+        "example_translation": "Tengo una cita el jueves."
+      },
+      {
+        "word": "tooth",
+        "translation": "muela",
+        "example": "This tooth hurts a lot.",
+        "example_translation": "Esta muela duele mucho."
+      },
+      {
+        "word": "hurt",
+        "translation": "doler",
+        "example": "It hurts when I eat.",
+        "example_translation": "Duele cuando como."
+      },
+      {
+        "word": "Thursday",
+        "translation": "jueves",
+        "example": "Thursday at five works for me.",
+        "example_translation": "El jueves a las cinco me viene bien."
+      },
+      {
+        "word": "dentist",
+        "translation": "dentista",
+        "example": "The dentist is very kind.",
+        "example_translation": "El dentista es muy amable."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-103",
+    "words": [
+      {
+        "word": "book",
+        "translation": "reservar",
+        "example": "I want to book a room.",
+        "example_translation": "Quiero reservar una habitación."
+      },
+      {
+        "word": "double room",
+        "translation": "habitación doble",
+        "example": "A double room for two nights.",
+        "example_translation": "Una habitación doble para dos noches."
+      },
+      {
+        "word": "view",
+        "translation": "vistas",
+        "example": "The room has a sea view.",
+        "example_translation": "La habitación tiene vistas al mar."
+      },
+      {
+        "word": "include",
+        "translation": "incluir",
+        "example": "Does the price include breakfast?",
+        "example_translation": "¿El precio incluye el desayuno?"
+      },
+      {
+        "word": "weekend",
+        "translation": "fin de semana",
+        "example": "We travel this weekend.",
+        "example_translation": "Viajamos este fin de semana."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-104",
+    "words": [
+      {
+        "word": "line",
+        "translation": "línea",
+        "example": "Take the green line.",
+        "example_translation": "Toma la línea verde."
+      },
+      {
+        "word": "stop",
+        "translation": "parada",
+        "example": "It is four stops from here.",
+        "example_translation": "Está a cuatro paradas de aquí."
+      },
+      {
+        "word": "change",
+        "translation": "hacer transbordo",
+        "example": "You change at Central Station.",
+        "example_translation": "Haces transbordo en Central Station."
+      },
+      {
+        "word": "ticket",
+        "translation": "billete",
+        "example": "The same ticket is fine.",
+        "example_translation": "El mismo billete sirve."
+      },
+      {
+        "word": "platform",
+        "translation": "andén",
+        "example": "The train leaves from platform three.",
+        "example_translation": "El tren sale del andén tres."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-105",
+    "words": [
+      {
+        "word": "tickets",
+        "translation": "entradas",
+        "example": "I want two concert tickets.",
+        "example_translation": "Quiero dos entradas para el concierto."
+      },
+      {
+        "word": "seat",
+        "translation": "asiento",
+        "example": "My seat is near the stage.",
+        "example_translation": "Mi asiento está cerca del escenario."
+      },
+      {
+        "word": "balcony",
+        "translation": "balcón",
+        "example": "The balcony is cheaper.",
+        "example_translation": "El balcón es más barato."
+      },
+      {
+        "word": "concert",
+        "translation": "concierto",
+        "example": "The concert starts at nine.",
+        "example_translation": "El concierto empieza a las nueve."
+      },
+      {
+        "word": "stage",
+        "translation": "escenario",
+        "example": "The band is on the stage.",
+        "example_translation": "La banda está en el escenario."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-106",
+    "words": [
+      {
+        "word": "plans",
+        "translation": "planes",
+        "example": "Do you have plans for the weekend?",
+        "example_translation": "¿Tienes planes para el fin de semana?"
+      },
+      {
+        "word": "beach",
+        "translation": "playa",
+        "example": "We can go to the beach.",
+        "example_translation": "Podemos ir a la playa."
+      },
+      {
+        "word": "sunny",
+        "translation": "soleado",
+        "example": "If it is sunny, we go.",
+        "example_translation": "Si está soleado, vamos."
+      },
+      {
+        "word": "breakfast",
+        "translation": "desayunar",
+        "example": "Let us have breakfast first.",
+        "example_translation": "Desayunemos primero."
+      },
+      {
+        "word": "agree",
+        "translation": "quedar de acuerdo",
+        "example": "We agree on the plan.",
+        "example_translation": "Quedamos de acuerdo con el plan."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-107",
+    "words": [
+      {
+        "word": "order",
+        "translation": "pedido",
+        "example": "My order was two weeks ago.",
+        "example_translation": "Mi pedido era de hace dos semanas."
+      },
+      {
+        "word": "arrive",
+        "translation": "llegar",
+        "example": "The package did not arrive.",
+        "example_translation": "El paquete no llegó."
+      },
+      {
+        "word": "late",
+        "translation": "tarde",
+        "example": "The delivery is very late.",
+        "example_translation": "La entrega llega muy tarde."
+      },
+      {
+        "word": "refund",
+        "translation": "reembolso",
+        "example": "I want a refund, please.",
+        "example_translation": "Quiero un reembolso, por favor."
+      },
+      {
+        "word": "number",
+        "translation": "número",
+        "example": "Write your order number here.",
+        "example_translation": "Escribe tu número de pedido aquí."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-108",
+    "words": [
+      {
+        "word": "course",
+        "translation": "curso",
+        "example": "The cooking course is fun.",
+        "example_translation": "El curso de cocina es divertido."
+      },
+      {
+        "word": "apron",
+        "translation": "delantal",
+        "example": "You do not need an apron.",
+        "example_translation": "No necesitas delantal."
+      },
+      {
+        "word": "book",
+        "translation": "reservar",
+        "example": "I want to book a place.",
+        "example_translation": "Quiero reservar una plaza."
+      },
+      {
+        "word": "start",
+        "translation": "empezar",
+        "example": "The class starts at six.",
+        "example_translation": "La clase empieza a las seis."
+      },
+      {
+        "word": "expensive",
+        "translation": "caro",
+        "example": "The course is not expensive.",
+        "example_translation": "El curso no es caro."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-109",
+    "words": [
+      {
+        "word": "account",
+        "translation": "cuenta",
+        "example": "I want to open a bank account.",
+        "example_translation": "Quiero abrir una cuenta bancaria."
+      },
+      {
+        "word": "documents",
+        "translation": "documentos",
+        "example": "Bring your documents tomorrow.",
+        "example_translation": "Trae tus documentos mañana."
+      },
+      {
+        "word": "card",
+        "translation": "tarjeta",
+        "example": "The card arrives in a week.",
+        "example_translation": "La tarjeta llega en una semana."
+      },
+      {
+        "word": "signature",
+        "translation": "firma",
+        "example": "Write your signature here.",
+        "example_translation": "Escribe tu firma aquí."
+      },
+      {
+        "word": "app",
+        "translation": "aplicación",
+        "example": "You can use the app today.",
+        "example_translation": "Puedes usar la aplicación hoy."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-110",
+    "words": [
+      {
+        "word": "order",
+        "translation": "pedir",
+        "example": "I want to order a pizza.",
+        "example_translation": "Quiero pedir una pizza."
+      },
+      {
+        "word": "delivery",
+        "translation": "entrega",
+        "example": "The delivery takes thirty minutes.",
+        "example_translation": "La entrega tarda treinta minutos."
+      },
+      {
+        "word": "address",
+        "translation": "dirección",
+        "example": "My address is Green street, number five.",
+        "example_translation": "Mi dirección es calle Green, número cinco."
+      },
+      {
+        "word": "salad",
+        "translation": "ensalada",
+        "example": "A salad with tomatoes, please.",
+        "example_translation": "Una ensalada con tomate, por favor."
+      },
+      {
+        "word": "minutes",
+        "translation": "minutos",
+        "example": "It arrives in twenty minutes.",
+        "example_translation": "Llega en veinte minutos."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-111",
+    "words": [
+      {
+        "word": "miss",
+        "translation": "perder",
+        "example": "I missed my flight this morning.",
+        "example_translation": "Perdí mi vuelo esta mañana."
+      },
+      {
+        "word": "flight",
+        "translation": "vuelo",
+        "example": "The next flight is at four.",
+        "example_translation": "El próximo vuelo es a las cuatro."
+      },
+      {
+        "word": "fee",
+        "translation": "tasa",
+        "example": "The change fee is thirty euros.",
+        "example_translation": "La tasa de cambio es treinta euros."
+      },
+      {
+        "word": "another",
+        "translation": "otro",
+        "example": "Is there another flight today?",
+        "example_translation": "¿Hay otro vuelo hoy?"
+      },
+      {
+        "word": "late",
+        "translation": "tarde",
+        "example": "The taxi arrived late.",
+        "example_translation": "El taxi llegó tarde."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-112",
+    "words": [
+      {
+        "word": "fever",
+        "translation": "fiebre",
+        "example": "I have a fever today.",
+        "example_translation": "Hoy tengo fiebre."
+      },
+      {
+        "word": "soup",
+        "translation": "sopa",
+        "example": "The soup is hot and good.",
+        "example_translation": "La sopa está caliente y buena."
+      },
+      {
+        "word": "rest",
+        "translation": "descansar",
+        "example": "You need to rest.",
+        "example_translation": "Necesitas descansar."
+      },
+      {
+        "word": "ill",
+        "translation": "enfermo",
+        "example": "He is ill this week.",
+        "example_translation": "Está enfermo esta semana."
+      },
+      {
+        "word": "better",
+        "translation": "mejor",
+        "example": "I feel better today.",
+        "example_translation": "Hoy me siento mejor."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-113",
+    "words": [
+      {
+        "word": "nephew",
+        "translation": "sobrino",
+        "example": "My nephew is eight years old.",
+        "example_translation": "Mi sobrino tiene ocho años."
+      },
+      {
+        "word": "present",
+        "translation": "regalo",
+        "example": "This present is for my nephew.",
+        "example_translation": "Este regalo es para mi sobrino."
+      },
+      {
+        "word": "birthday",
+        "translation": "cumpleaños",
+        "example": "His birthday is on Friday.",
+        "example_translation": "Su cumpleaños es el viernes."
+      },
+      {
+        "word": "wrapped",
+        "translation": "envuelto",
+        "example": "Can you leave it wrapped?",
+        "example_translation": "¿Puede dejarlo envuelto?"
+      },
+      {
+        "word": "popular",
+        "translation": "popular",
+        "example": "This toy is very popular.",
+        "example_translation": "Este juguete es muy popular."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-114",
+    "words": [
+      {
+        "word": "rent",
+        "translation": "alquilar",
+        "example": "We rent a car in summer.",
+        "example_translation": "Alquilamos un coche en verano."
+      },
+      {
+        "word": "insurance",
+        "translation": "seguro",
+        "example": "Full insurance is safer.",
+        "example_translation": "El seguro completo es más seguro."
+      },
+      {
+        "word": "petrol",
+        "translation": "gasolina",
+        "example": "Return the car with petrol.",
+        "example_translation": "Devuelve el coche con gasolina."
+      },
+      {
+        "word": "return",
+        "translation": "devolver",
+        "example": "I return the car on Sunday.",
+        "example_translation": "Devuelvo el coche el domingo."
+      },
+      {
+        "word": "drive",
+        "translation": "conducir",
+        "example": "I drive to the mountains.",
+        "example_translation": "Conduzco a la montaña."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-115",
+    "words": [
+      {
+        "word": "password",
+        "translation": "contraseña",
+        "example": "The password is on the card.",
+        "example_translation": "La contraseña está en la tarjeta."
+      },
+      {
+        "word": "free",
+        "translation": "gratis",
+        "example": "The wifi is free here.",
+        "example_translation": "El wifi es gratis aquí."
+      },
+      {
+        "word": "connect",
+        "translation": "conectar",
+        "example": "I cannot connect my phone.",
+        "example_translation": "No puedo conectar mi teléfono."
+      },
+      {
+        "word": "guests",
+        "translation": "huéspedes",
+        "example": "All guests have free wifi.",
+        "example_translation": "Todos los huéspedes tienen wifi gratis."
+      },
+      {
+        "word": "works",
+        "translation": "funciona",
+        "example": "It works in the rooms.",
+        "example_translation": "Funciona en las habitaciones."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-116",
+    "words": [
+      {
+        "word": "broken",
+        "translation": "roto",
+        "example": "The washing machine is broken.",
+        "example_translation": "La lavadora está rota."
+      },
+      {
+        "word": "boiler",
+        "translation": "caldera",
+        "example": "The boiler does not work.",
+        "example_translation": "La caldera no funciona."
+      },
+      {
+        "word": "technician",
+        "translation": "técnico",
+        "example": "The technician arrives at five.",
+        "example_translation": "El técnico llega a las cinco."
+      },
+      {
+        "word": "repair",
+        "translation": "reparación",
+        "example": "The repair is not expensive.",
+        "example_translation": "La reparación no es cara."
+      },
+      {
+        "word": "hot water",
+        "translation": "agua caliente",
+        "example": "We have no hot water today.",
+        "example_translation": "Hoy no tenemos agua caliente."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-117",
+    "words": [
+      {
+        "word": "experience",
+        "translation": "experiencia",
+        "example": "I have some experience in a shop.",
+        "example_translation": "Tengo algo de experiencia en una tienda."
+      },
+      {
+        "word": "summer",
+        "translation": "verano",
+        "example": "I work in summer.",
+        "example_translation": "Trabajo en verano."
+      },
+      {
+        "word": "start",
+        "translation": "empezar",
+        "example": "I can start in July.",
+        "example_translation": "Puedo empezar en julio."
+      },
+      {
+        "word": "tasks",
+        "translation": "tareas",
+        "example": "The tasks are easy.",
+        "example_translation": "Las tareas son fáciles."
+      },
+      {
+        "word": "shift",
+        "translation": "turno",
+        "example": "My shift is in the morning.",
+        "example_translation": "Mi turno es por la mañana."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-118",
+    "words": [
+      {
+        "word": "cough",
+        "translation": "tos",
+        "example": "I have a bad cough.",
+        "example_translation": "Tengo mucha tos."
+      },
+      {
+        "word": "syrup",
+        "translation": "jarabe",
+        "example": "This syrup is for the cough.",
+        "example_translation": "Este jarabe es para la tos."
+      },
+      {
+        "word": "spoon",
+        "translation": "cucharada",
+        "example": "Take two spoons a day.",
+        "example_translation": "Toma dos cucharadas al día."
+      },
+      {
+        "word": "sleepy",
+        "translation": "somnoliento",
+        "example": "The medicine makes me sleepy.",
+        "example_translation": "La medicina me da sueño."
+      },
+      {
+        "word": "worse",
+        "translation": "peor",
+        "example": "The cough is worse at night.",
+        "example_translation": "La tos empeora por la noche."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-119",
+    "words": [
+      {
+        "word": "class",
+        "translation": "clase",
+        "example": "The spinning class is fun.",
+        "example_translation": "La clase de spinning es divertida."
+      },
+      {
+        "word": "free",
+        "translation": "gratis",
+        "example": "The first class is free.",
+        "example_translation": "La primera clase es gratis."
+      },
+      {
+        "word": "locker",
+        "translation": "taquilla",
+        "example": "Leave your bag in the locker.",
+        "example_translation": "Deja la bolsa en la taquilla."
+      },
+      {
+        "word": "try",
+        "translation": "probar",
+        "example": "I want to try spinning.",
+        "example_translation": "Quiero probar spinning."
+      },
+      {
+        "word": "bring",
+        "translation": "traer",
+        "example": "Bring a bottle of water.",
+        "example_translation": "Trae una botella de agua."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-120",
+    "words": [
+      {
+        "word": "haircut",
+        "translation": "corte de pelo",
+        "example": "I need a haircut before the wedding.",
+        "example_translation": "Necesito un corte de pelo antes de la boda."
+      },
+      {
+        "word": "appointment",
+        "translation": "cita",
+        "example": "My appointment is at eleven.",
+        "example_translation": "Mi cita es a las once."
+      },
+      {
+        "word": "short",
+        "translation": "corto",
+        "example": "Short on the sides, please.",
+        "example_translation": "Corto en los lados, por favor."
+      },
+      {
+        "word": "wedding",
+        "translation": "boda",
+        "example": "The wedding is on Sunday.",
+        "example_translation": "La boda es el domingo."
+      },
+      {
+        "word": "wash",
+        "translation": "lavado",
+        "example": "The price includes the wash.",
+        "example_translation": "El precio incluye el lavado."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-121",
+    "words": [
+      {
+        "word": "library",
+        "translation": "biblioteca",
+        "example": "The library closes at eight.",
+        "example_translation": "La biblioteca cierra a las ocho."
+      },
+      {
+        "word": "return",
+        "translation": "devolver",
+        "example": "I return the books today.",
+        "example_translation": "Devuelvo los libros hoy."
+      },
+      {
+        "word": "late",
+        "translation": "con retraso",
+        "example": "The books are one week late.",
+        "example_translation": "Los libros llegan una semana tarde."
+      },
+      {
+        "word": "fine",
+        "translation": "multa",
+        "example": "The fine is three euros.",
+        "example_translation": "La multa es de tres euros."
+      },
+      {
+        "word": "borrow",
+        "translation": "pedir prestado",
+        "example": "Can I borrow this book?",
+        "example_translation": "¿Puedo pedir prestado este libro?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-122",
+    "words": [
+      {
+        "word": "barbecue",
+        "translation": "barbacoa",
+        "example": "We have a barbecue in the park.",
+        "example_translation": "Hacemos una barbacoa en el parque."
+      },
+      {
+        "word": "bring",
+        "translation": "traer",
+        "example": "I bring the bread.",
+        "example_translation": "Yo traigo el pan."
+      },
+      {
+        "word": "drinks",
+        "translation": "bebidas",
+        "example": "We need cold drinks.",
+        "example_translation": "Necesitamos bebidas frías."
+      },
+      {
+        "word": "reserve",
+        "translation": "reservar",
+        "example": "I will reserve a table.",
+        "example_translation": "Reservaré una mesa."
+      },
+      {
+        "word": "plates",
+        "translation": "platos",
+        "example": "Do not forget the plates.",
+        "example_translation": "No olvides los platos."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-123",
+    "words": [
+      {
+        "word": "gate",
+        "translation": "puerta",
+        "example": "The gate changed to C twenty.",
+        "example_translation": "La puerta cambió a la C veinte."
+      },
+      {
+        "word": "terminal",
+        "translation": "terminal",
+        "example": "Terminal two is far from here.",
+        "example_translation": "La terminal dos está lejos de aquí."
+      },
+      {
+        "word": "boarding",
+        "translation": "embarque",
+        "example": "Boarding starts at half past six.",
+        "example_translation": "El embarque empieza a las seis y media."
+      },
+      {
+        "word": "shuttle bus",
+        "translation": "autobús lanzadera",
+        "example": "Take the shuttle bus.",
+        "example_translation": "Toma el autobús lanzadera."
+      },
+      {
+        "word": "last call",
+        "translation": "última llamada",
+        "example": "Listen for the last call.",
+        "example_translation": "Escucha la última llamada."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-124",
+    "words": [
+      {
+        "word": "shelf",
+        "translation": "estantería",
+        "example": "The shelf is next to the window.",
+        "example_translation": "La estantería está junto a la ventana."
+      },
+      {
+        "word": "size",
+        "translation": "tamaño",
+        "example": "What size do you need?",
+        "example_translation": "¿Qué tamaño necesitas?"
+      },
+      {
+        "word": "deliver",
+        "translation": "entregar",
+        "example": "We deliver on Fridays.",
+        "example_translation": "Entregamos los viernes."
+      },
+      {
+        "word": "assembly",
+        "translation": "montaje",
+        "example": "Assembly costs ten euros.",
+        "example_translation": "El montaje cuesta diez euros."
+      },
+      {
+        "word": "measure",
+        "translation": "medir",
+        "example": "Measure the wall first.",
+        "example_translation": "Mide la pared primero."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-125",
+    "words": [
+      {
+        "word": "damage",
+        "translation": "daño",
+        "example": "The damage is on the door.",
+        "example_translation": "El daño está en la puerta."
+      },
+      {
+        "word": "scratched",
+        "translation": "rayado",
+        "example": "My car is scratched.",
+        "example_translation": "Mi coche está rayado."
+      },
+      {
+        "word": "car park",
+        "translation": "aparcamiento",
+        "example": "It happened in the car park.",
+        "example_translation": "Pasó en el aparcamiento."
+      },
+      {
+        "word": "repair",
+        "translation": "reparación",
+        "example": "The repair takes four days.",
+        "example_translation": "La reparación tarda cuatro días."
+      },
+      {
+        "word": "policy",
+        "translation": "póliza",
+        "example": "Write your policy number here.",
+        "example_translation": "Escribe tu número de póliza aquí."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-126",
+    "words": [
+      {
+        "word": "rent",
+        "translation": "alquiler",
+        "example": "The rent goes up in May.",
+        "example_translation": "El alquiler sube en mayo."
+      },
+      {
+        "word": "increase",
+        "translation": "aumento",
+        "example": "The increase is five percent.",
+        "example_translation": "El aumento es del cinco por ciento."
+      },
+      {
+        "word": "agree",
+        "translation": "acordar",
+        "example": "We agree on a small increase.",
+        "example_translation": "Acordamos un aumento pequeño."
+      },
+      {
+        "word": "instead",
+        "translation": "en su lugar",
+        "example": "Four percent instead of eight.",
+        "example_translation": "Cuatro por ciento en lugar de ocho."
+      },
+      {
+        "word": "in writing",
+        "translation": "por escrito",
+        "example": "Please confirm it in writing.",
+        "example_translation": "Confírmalo por escrito, por favor."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-127",
+    "words": [
+      {
+        "word": "deadline",
+        "translation": "fecha límite",
+        "example": "The deadline is on Friday.",
+        "example_translation": "La fecha límite es el viernes."
+      },
+      {
+        "word": "behind schedule",
+        "translation": "con retraso",
+        "example": "We are behind schedule.",
+        "example_translation": "Vamos con retraso."
+      },
+      {
+        "word": "suggest",
+        "translation": "proponer",
+        "example": "I suggest a new date.",
+        "example_translation": "Propongo una fecha nueva."
+      },
+      {
+        "word": "realistic",
+        "translation": "realista",
+        "example": "The new plan is realistic.",
+        "example_translation": "El plan nuevo es realista."
+      },
+      {
+        "word": "copy in",
+        "translation": "copiar en",
+        "example": "Please copy me in the email.",
+        "example_translation": "Cópiame en el correo, por favor."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-128",
+    "words": [
+      {
+        "word": "experience",
+        "translation": "experiencia",
+        "example": "I have two years of experience.",
+        "example_translation": "Tengo dos años de experiencia."
+      },
+      {
+        "word": "skills",
+        "translation": "habilidades",
+        "example": "My main skills are organisation and teamwork.",
+        "example_translation": "Mis principales habilidades son organización y trabajo en equipo."
+      },
+      {
+        "word": "under pressure",
+        "translation": "bajo presión",
+        "example": "I work well under pressure.",
+        "example_translation": "Trabajo bien bajo presión."
+      },
+      {
+        "word": "grow",
+        "translation": "crecer",
+        "example": "I want to grow in this company.",
+        "example_translation": "Quiero crecer en esta empresa."
+      },
+      {
+        "word": "teamwork",
+        "translation": "trabajo en equipo",
+        "example": "Teamwork is important here.",
+        "example_translation": "El trabajo en equipo es importante aquí."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-129",
+    "words": [
+      {
+        "word": "bill",
+        "translation": "factura",
+        "example": "The bill is double this month.",
+        "example_translation": "La factura es el doble este mes."
+      },
+      {
+        "word": "charge",
+        "translation": "cargo",
+        "example": "There is an extra charge.",
+        "example_translation": "Hay un cargo extra."
+      },
+      {
+        "word": "review",
+        "translation": "revisión",
+        "example": "I want a review of the bill.",
+        "example_translation": "Quiero una revisión de la factura."
+      },
+      {
+        "word": "error",
+        "translation": "error",
+        "example": "It looks like a system error.",
+        "example_translation": "Parece un error del sistema."
+      },
+      {
+        "word": "claim",
+        "translation": "reclamación",
+        "example": "I will open a claim.",
+        "example_translation": "Voy a abrir una reclamación."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-130",
+    "words": [
+      {
+        "word": "delayed",
+        "translation": "retrasado",
+        "example": "The flight was delayed for hours.",
+        "example_translation": "El vuelo estuvo retrasado horas."
+      },
+      {
+        "word": "compensation",
+        "translation": "compensación",
+        "example": "Passengers can claim compensation.",
+        "example_translation": "Los pasajeros pueden reclamar compensación."
+      },
+      {
+        "word": "connection",
+        "translation": "conexión",
+        "example": "I missed my connection in Paris.",
+        "example_translation": "Perdí mi conexión en París."
+      },
+      {
+        "word": "entitled",
+        "translation": "con derecho",
+        "example": "You are entitled to a refund.",
+        "example_translation": "Tiene derecho a un reembolso."
+      },
+      {
+        "word": "form",
+        "translation": "formulario",
+        "example": "Fill in this form, please.",
+        "example_translation": "Rellena este formulario, por favor."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-131",
+    "words": [
+      {
+        "word": "routine",
+        "translation": "rutina",
+        "example": "My routine starts at seven.",
+        "example_translation": "Mi rutina empieza a las siete."
+      },
+      {
+        "word": "sleep",
+        "translation": "dormir",
+        "example": "I need to sleep more hours.",
+        "example_translation": "Necesito dormir más horas."
+      },
+      {
+        "word": "sessions",
+        "translation": "sesiones",
+        "example": "Three short sessions a week.",
+        "example_translation": "Tres sesiones cortas por semana."
+      },
+      {
+        "word": "vegetables",
+        "translation": "verduras",
+        "example": "Eat more vegetables.",
+        "example_translation": "Come más verduras."
+      },
+      {
+        "word": "progress",
+        "translation": "progreso",
+        "example": "We check your progress in two weeks.",
+        "example_translation": "Revisamos tu progreso en dos semanas."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-132",
+    "words": [
+      {
+        "word": "agree",
+        "translation": "estar de acuerdo",
+        "example": "We finally agree on the dates.",
+        "example_translation": "Por fin estamos de acuerdo con las fechas."
+      },
+      {
+        "word": "budget",
+        "translation": "presupuesto",
+        "example": "My budget is three hundred euros.",
+        "example_translation": "Mi presupuesto es de trescientos euros."
+      },
+      {
+        "word": "vote",
+        "translation": "votar",
+        "example": "We vote on Friday.",
+        "example_translation": "Votamos el viernes."
+      },
+      {
+        "word": "destination",
+        "translation": "destino",
+        "example": "The destination is still open.",
+        "example_translation": "El destino sigue sin decidir."
+      },
+      {
+        "word": "share",
+        "translation": "compartir",
+        "example": "I share the prices in the group.",
+        "example_translation": "Comparto los precios en el grupo."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-133",
+    "words": [
+      {
+        "word": "faulty",
+        "translation": "defectuoso",
+        "example": "The headphones are faulty.",
+        "example_translation": "Los auriculares están defectuosos."
+      },
+      {
+        "word": "refund",
+        "translation": "reembolso",
+        "example": "I want a full refund.",
+        "example_translation": "Quiero un reembolso completo."
+      },
+      {
+        "word": "voucher",
+        "translation": "vale",
+        "example": "They offered a voucher, not money.",
+        "example_translation": "Ofrecieron un vale, no dinero."
+      },
+      {
+        "word": "receipt",
+        "translation": "recibo",
+        "example": "Here is the receipt of the purchase.",
+        "example_translation": "Aquí está el recibo de la compra."
+      },
+      {
+        "word": "right",
+        "translation": "derecho",
+        "example": "You have the right to a refund.",
+        "example_translation": "Tienes derecho a un reembolso."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-134",
+    "words": [
+      {
+        "word": "stress",
+        "translation": "estrés",
+        "example": "Stress affects my sleep.",
+        "example_translation": "El estrés afecta a mi sueño."
+      },
+      {
+        "word": "symptoms",
+        "translation": "síntomas",
+        "example": "My symptoms started in May.",
+        "example_translation": "Mis síntomas empezaron en mayo."
+      },
+      {
+        "word": "habits",
+        "translation": "hábitos",
+        "example": "We change your habits first.",
+        "example_translation": "Cambiamos primero tus hábitos."
+      },
+      {
+        "word": "appointment",
+        "translation": "cita",
+        "example": "I have another appointment in ten days.",
+        "example_translation": "Tengo otra cita en diez días."
+      },
+      {
+        "word": "screens",
+        "translation": "pantallas",
+        "example": "Avoid screens before bed.",
+        "example_translation": "Evita las pantallas antes de dormir."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-135",
+    "words": [
+      {
+        "word": "proposal",
+        "translation": "propuesta",
+        "example": "My proposal has three parts.",
+        "example_translation": "Mi propuesta tiene tres partes."
+      },
+      {
+        "word": "survey",
+        "translation": "encuesta",
+        "example": "The survey shows clear results.",
+        "example_translation": "La encuesta muestra resultados claros."
+      },
+      {
+        "word": "recycle",
+        "translation": "reciclar",
+        "example": "We want to recycle more paper.",
+        "example_translation": "Queremos reciclar más papel."
+      },
+      {
+        "word": "cost",
+        "translation": "costar",
+        "example": "It would cost two hundred euros.",
+        "example_translation": "Costaría doscientos euros."
+      },
+      {
+        "word": "volunteers",
+        "translation": "voluntarios",
+        "example": "Volunteers check the bins.",
+        "example_translation": "Los voluntarios revisan las papeleras."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-136",
+    "words": [
+      {
+        "word": "misunderstanding",
+        "translation": "malentendido",
+        "example": "It was a big misunderstanding.",
+        "example_translation": "Fue un gran malentendido."
+      },
+      {
+        "word": "left out",
+        "translation": "excluido",
+        "example": "I felt left out of the group.",
+        "example_translation": "Me sentí excluido del grupo."
+      },
+      {
+        "word": "honest",
+        "translation": "sincero",
+        "example": "To be honest, I was angry.",
+        "example_translation": "Sinceramente, estaba enfadado."
+      },
+      {
+        "word": "careless",
+        "translation": "descuidado",
+        "example": "I have been careless lately.",
+        "example_translation": "He sido descuidado últimamente."
+      },
+      {
+        "word": "count on",
+        "translation": "contar con",
+        "example": "You can count on me.",
+        "example_translation": "Puedes contar conmigo."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-137",
+    "words": [
+      {
+        "word": "renew",
+        "translation": "renovar",
+        "example": "I want to renew the contract.",
+        "example_translation": "Quiero renovar el contrato."
+      },
+      {
+        "word": "materials",
+        "translation": "materiales",
+        "example": "I pay half of the materials.",
+        "example_translation": "Pago la mitad de los materiales."
+      },
+      {
+        "word": "tap",
+        "translation": "grifo",
+        "example": "The kitchen tap is broken.",
+        "example_translation": "El grifo de la cocina está roto."
+      },
+      {
+        "word": "sign",
+        "translation": "firmar",
+        "example": "We sign on Monday.",
+        "example_translation": "Firmamos el lunes."
+      },
+      {
+        "word": "approve",
+        "translation": "aprobar",
+        "example": "Send the numbers to approve.",
+        "example_translation": "Envía los números para aprobar."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-138",
+    "words": [
+      {
+        "word": "charge",
+        "translation": "cobro",
+        "example": "There is a duplicate charge.",
+        "example_translation": "Hay un cobro duplicado."
+      },
+      {
+        "word": "dispute",
+        "translation": "disputa",
+        "example": "We open a dispute with the shop.",
+        "example_translation": "Abrimos una disputa con la tienda."
+      },
+      {
+        "word": "refund",
+        "translation": "devolución",
+        "example": "The refund takes ten days.",
+        "example_translation": "La devolución tarda diez días."
+      },
+      {
+        "word": "working days",
+        "translation": "días laborables",
+        "example": "It arrives in five working days.",
+        "example_translation": "Llega en cinco días laborables."
+      },
+      {
+        "word": "case number",
+        "translation": "número de expediente",
+        "example": "Note the case number.",
+        "example_translation": "Anota el número de expediente."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-139",
+    "words": [
+      {
+        "word": "requirement",
+        "translation": "requisito",
+        "example": "The main requirement is B1 level.",
+        "example_translation": "El requisito principal es el nivel B1."
+      },
+      {
+        "word": "certificate",
+        "translation": "certificado",
+        "example": "I have a B1 certificate.",
+        "example_translation": "Tengo un certificado B1."
+      },
+      {
+        "word": "level test",
+        "translation": "prueba de nivel",
+        "example": "The level test takes forty minutes.",
+        "example_translation": "La prueba de nivel dura cuarenta minutos."
+      },
+      {
+        "word": "valid",
+        "translation": "válido",
+        "example": "The result is valid for a year.",
+        "example_translation": "El resultado vale un año."
+      },
+      {
+        "word": "reserve",
+        "translation": "reservar",
+        "example": "I reserve a place on Thursday.",
+        "example_translation": "Reservo una plaza el jueves."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-140",
+    "words": [
+      {
+        "word": "career",
+        "translation": "carrera",
+        "example": "I am considering a career in health.",
+        "example_translation": "Considero una carrera en salud."
+      },
+      {
+        "word": "advice",
+        "translation": "consejo",
+        "example": "Thank you for the advice.",
+        "example_translation": "Gracias por el consejo."
+      },
+      {
+        "word": "worried",
+        "translation": "preocupado",
+        "example": "I am worried about the exams.",
+        "example_translation": "Estoy preocupado por los exámenes."
+      },
+      {
+        "word": "introductory",
+        "translation": "introductorio",
+        "example": "I take an introductory course.",
+        "example_translation": "Hago un curso introductorio."
+      },
+      {
+        "word": "decide",
+        "translation": "decidir",
+        "example": "I need time to decide.",
+        "example_translation": "Necesito tiempo para decidir."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-141",
+    "words": [
+      {
+        "word": "hours",
+        "translation": "horas",
+        "example": "I want more hours per week.",
+        "example_translation": "Quiero más horas por semana."
+      },
+      {
+        "word": "full-time",
+        "translation": "jornada completa",
+        "example": "I am looking for a full-time contract.",
+        "example_translation": "Busco un contrato a jornada completa."
+      },
+      {
+        "word": "sales",
+        "translation": "ventas",
+        "example": "My sales grew this quarter.",
+        "example_translation": "Mis ventas crecieron este trimestre."
+      },
+      {
+        "word": "review",
+        "translation": "revisar",
+        "example": "We review the numbers in a month.",
+        "example_translation": "Revisamos los números en un mes."
+      },
+      {
+        "word": "raise",
+        "translation": "aumento",
+        "example": "I would also like a small raise.",
+        "example_translation": "También quisiera un pequeño aumento."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-142",
+    "words": [
+      {
+        "word": "flatmate",
+        "translation": "compañero de piso",
+        "example": "My flatmate is very tidy.",
+        "example_translation": "Mi compañero de piso es muy ordenado."
+      },
+      {
+        "word": "turns",
+        "translation": "turnos",
+        "example": "We clean in turns.",
+        "example_translation": "Limpiamos por turnos."
+      },
+      {
+        "word": "loud",
+        "translation": "alto",
+        "example": "Do not play loud music at night.",
+        "example_translation": "No pongas música alta de noche."
+      },
+      {
+        "word": "guests",
+        "translation": "visitas",
+        "example": "Tell me before guests come.",
+        "example_translation": "Avísame antes de que vengan visitas."
+      },
+      {
+        "word": "fair",
+        "translation": "justo",
+        "example": "That seems fair to me.",
+        "example_translation": "Eso me parece justo."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-143",
+    "words": [
+      {
+        "word": "shifts",
+        "translation": "turnos",
+        "example": "The shifts change every week.",
+        "example_translation": "Los turnos cambian cada semana."
+      },
+      {
+        "word": "rota",
+        "translation": "cuadrante",
+        "example": "The rota is on the wall.",
+        "example_translation": "El cuadrante está en la pared."
+      },
+      {
+        "word": "training",
+        "translation": "formación",
+        "example": "The training lasts one week.",
+        "example_translation": "La formación dura una semana."
+      },
+      {
+        "word": "available",
+        "translation": "disponible",
+        "example": "I am available at nights.",
+        "example_translation": "Estoy disponible por las noches."
+      },
+      {
+        "word": "start",
+        "translation": "empezar",
+        "example": "I can start on Monday.",
+        "example_translation": "Puedo empezar el lunes."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-144",
+    "words": [
+      {
+        "word": "neighbours",
+        "translation": "vecinos",
+        "example": "The neighbours meet on Thursday.",
+        "example_translation": "Los vecinos se reúnen el jueves."
+      },
+      {
+        "word": "council",
+        "translation": "ayuntamiento",
+        "example": "We ask the council for more bins.",
+        "example_translation": "Pedimos más contenedores al ayuntamiento."
+      },
+      {
+        "word": "signatures",
+        "translation": "firmas",
+        "example": "We need one hundred signatures.",
+        "example_translation": "Necesitamos cien firmas."
+      },
+      {
+        "word": "recycling",
+        "translation": "reciclaje",
+        "example": "Recycling works with good bins.",
+        "example_translation": "El reciclaje funciona con buenos contenedores."
+      },
+      {
+        "word": "proposal",
+        "translation": "propuesta",
+        "example": "The proposal is simple and cheap.",
+        "example_translation": "La propuesta es simple y barata."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-145",
+    "words": [
+      {
+        "word": "weakness",
+        "translation": "debilidad",
+        "example": "I explain a real weakness.",
+        "example_translation": "Explico una debilidad real."
+      },
+      {
+        "word": "strength",
+        "translation": "fortaleza",
+        "example": "My main strength is listening.",
+        "example_translation": "Mi principal fortaleza es escuchar."
+      },
+      {
+        "word": "feedback",
+        "translation": "comentarios",
+        "example": "Your feedback helps a lot.",
+        "example_translation": "Tus comentarios ayudan mucho."
+      },
+      {
+        "word": "simulation",
+        "translation": "simulación",
+        "example": "We do a full simulation on Monday.",
+        "example_translation": "Hacemos una simulación completa el lunes."
+      },
+      {
+        "word": "pause",
+        "translation": "pausa",
+        "example": "Pause before you answer.",
+        "example_translation": "Haz una pausa antes de responder."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-146",
+    "words": [
+      {
+        "word": "fine",
+        "translation": "multa",
+        "example": "The fine is sixty euros.",
+        "example_translation": "La multa es de sesenta euros."
+      },
+      {
+        "word": "valid",
+        "translation": "válido",
+        "example": "My ticket is still valid.",
+        "example_translation": "Mi billete sigue siendo válido."
+      },
+      {
+        "word": "proof",
+        "translation": "prueba",
+        "example": "I have a photo as proof.",
+        "example_translation": "Tengo una foto como prueba."
+      },
+      {
+        "word": "appeal",
+        "translation": "reclamación",
+        "example": "I present an appeal today.",
+        "example_translation": "Presento una reclamación hoy."
+      },
+      {
+        "word": "reference",
+        "translation": "referencia",
+        "example": "Write the reference number here.",
+        "example_translation": "Escribe el número de referencia aquí."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-147",
+    "words": [
+      {
+        "word": "compare",
+        "translation": "comparar",
+        "example": "I compare the two models.",
+        "example_translation": "Comparo los dos modelos."
+      },
+      {
+        "word": "memory",
+        "translation": "memoria",
+        "example": "This laptop has more memory.",
+        "example_translation": "Este portátil tiene más memoria."
+      },
+      {
+        "word": "battery",
+        "translation": "batería",
+        "example": "The battery lasts eight hours.",
+        "example_translation": "La batería dura ocho horas."
+      },
+      {
+        "word": "processor",
+        "translation": "procesador",
+        "example": "The processor is fast enough.",
+        "example_translation": "El procesador es suficientemente rápido."
+      },
+      {
+        "word": "cheaper",
+        "translation": "más barato",
+        "example": "The second one is cheaper.",
+        "example_translation": "El segundo es más barato."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-148",
+    "words": [
+      {
+        "word": "noise",
+        "translation": "ruido",
+        "example": "The noise starts at midnight.",
+        "example_translation": "El ruido empieza a medianoche."
+      },
+      {
+        "word": "loud",
+        "translation": "fuerte",
+        "example": "The music is too loud.",
+        "example_translation": "La música está demasiado fuerte."
+      },
+      {
+        "word": "realise",
+        "translation": "darse cuenta",
+        "example": "I did not realise the time.",
+        "example_translation": "No me di cuenta de la hora."
+      },
+      {
+        "word": "bother",
+        "translation": "molestar",
+        "example": "The noise bothers my family.",
+        "example_translation": "El ruido molesta a mi familia."
+      },
+      {
+        "word": "lower",
+        "translation": "bajar",
+        "example": "Could you lower the volume?",
+        "example_translation": "¿Podrías bajar el volumen?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-149",
+    "words": [
+      {
+        "word": "volunteer",
+        "translation": "voluntario",
+        "example": "She is a volunteer at the centre.",
+        "example_translation": "Ella es voluntaria en el centro."
+      },
+      {
+        "word": "available",
+        "translation": "disponible",
+        "example": "I am available on Tuesdays.",
+        "example_translation": "Estoy disponible los martes."
+      },
+      {
+        "word": "training",
+        "translation": "formación",
+        "example": "The training is very short.",
+        "example_translation": "La formación es muy corta."
+      },
+      {
+        "word": "tasks",
+        "translation": "tareas",
+        "example": "My tasks are simple.",
+        "example_translation": "Mis tareas son sencillas."
+      },
+      {
+        "word": "community",
+        "translation": "comunidad",
+        "example": "The community helps every week.",
+        "example_translation": "La comunidad ayuda cada semana."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-150",
+    "words": [
+      {
+        "word": "complaint",
+        "translation": "queja",
+        "example": "I have a complaint about the soup.",
+        "example_translation": "Tengo una queja sobre la sopa."
+      },
+      {
+        "word": "cold",
+        "translation": "frío",
+        "example": "The food arrived cold.",
+        "example_translation": "La comida llegó fría."
+      },
+      {
+        "word": "bill",
+        "translation": "cuenta",
+        "example": "Take the soup off the bill.",
+        "example_translation": "Quita la sopa de la cuenta."
+      },
+      {
+        "word": "on the house",
+        "translation": "de la casa",
+        "example": "The dessert is on the house.",
+        "example_translation": "El postre es de la casa."
+      },
+      {
+        "word": "solve",
+        "translation": "resolver",
+        "example": "They solved it quickly.",
+        "example_translation": "Lo resolvieron rápido."
+      }
+    ]
   }
 ]
