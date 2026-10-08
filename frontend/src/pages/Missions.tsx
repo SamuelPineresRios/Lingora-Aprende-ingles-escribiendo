@@ -5,7 +5,7 @@ import { getCefrLabel } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { DailyQuests } from '@/components/QuestBoard'
-import { StreakBanner } from '@/components/StreakBanner'
+import { StreakNotice } from '@/components/StreakNotice'
 import { ReviewSession } from '@/components/ReviewSession'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
@@ -137,7 +137,8 @@ export default function MissionsPage() {
           </div>}
         </div>
         <div className="flex flex-col items-end gap-2">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-3">
+             <StreakNotice />
              <button onClick={logout} className="text-[10px] uppercase tracking-wider text-slate/50 hover:text-coral transition-colors px-2 py-1">Disconnect</button>
           </div>
           <div className="flex gap-1">
@@ -302,16 +303,17 @@ export default function MissionsPage() {
       
         </div>
         
-        {/* Lateral: racha, retos y repaso, para no tapar las misiones */}
+        {/* Lateral: simulador */}
         <div className="space-y-6">
-          <StreakBanner />
-          <DailyQuests />
-          <ReviewSession />
           <MissionSimulationAside />
         </div>
       </div>
-      
-    
+
+      {/* Debajo de las misiones y el simulador: retos y repaso */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+        <DailyQuests />
+        <ReviewSession />
+      </div>
 
       </div>
     </div>
