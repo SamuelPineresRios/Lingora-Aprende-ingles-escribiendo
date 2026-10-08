@@ -6,23 +6,40 @@
  * cayendo en cascada y al comprar cae una ráfaga.
  */
 import { useEffect, useState } from 'react'
-import { Check, Coins, Loader2, Lock, Shield, ShoppingBag } from 'lucide-react'
+import {
+  Check,
+  Coins,
+  Loader2,
+  Lock,
+  Palette,
+  Shield,
+  ShoppingBag,
+  Sparkles,
+  Tag,
+  type LucideIcon,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { avatarUrl } from '@/lib/avatar'
 import { CoinRain } from '@/components/CoinRain'
+import { FrameRing } from '@/components/FrameRing'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { STORE_SECTIONS, type StoreItem, type StoreView } from '@/lib/store'
+import { STORE_SECTIONS, type StoreItem, type StoreItemKind, type StoreView } from '@/lib/store'
 
-/** Visual del artículo: marco, título, tema o escudo. */
-function ItemVisual({ item }: { item: StoreItem }) {
+const KIND_ICON: Record<StoreItemKind, LucideIcon> = {
+  frame: Sparkles,
+  title: Tag,
+  theme: Palette,
+  shield: Shield,
+}
+
+/** Visual del artículo: marco (con tu avatar dentro), título, tema o escudo. */
+function ItemVisual({ item, avatar }: { item: StoreItem; avatar: string }) {
   if (item.kind === 'frame' && item.colors) {
     return (
-      <span
-        className="h-12 w-12 shrink-0 rounded-full p-[4px]"
-        style={{ backgroundImage: `linear-gradient(135deg, ${item.colors[0]}, ${item.colors[1]})` }}
-      >
-        <span className="block h-full w-full rounded-full bg-slate-950" />
-      </span>
+      <FrameRing frameId={item.id} colors={item.colors} size={56}>
+        <img src={avatar} alt="" className="h-full w-full" />
+      </FrameRing>
     )
   }
   if (item.kind === 'title') {
@@ -56,6 +73,7 @@ export default function StorePage() {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState<string | null>(null)
   const [burst, setBurst] = useState(0)
+  const avatar = avatarUrl(user?.full_name || 'Letoura')
 
   useEffect(() => {
     if (!user?.id) return
@@ -153,33 +171,45 @@ export default function StorePage() {
         {!loading && error && <p className="text-coral text-sm">{error}</p>}
 
         {!loading && view && (
-          <div className="space-y-10">
-            {STORE_SECTIONS.map(section => {
+          <div className="space-y-8">
+            {STORE_SECTIONS.map((section, index) => {
               const items = view.items.filter(item => item.kind === section.kind)
               if (items.length === 0) return null
+              const Icon = KIND_ICON[section.kind]
               return (
-                <section key={section.kind} className="space-y-3">
-                  <div className="flex items-center gap-3">
+                <section
+                  key={section.kind}
+                  className="animate-fade-in-up space-y-4 rounded-3xl border border-white/10 bg-black/25 p-4 sm:p-5"
+                  style={{ animationDelay: `${index * 90}ms`, animationFillMode: 'backwards' }}
+                >
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                      <Icon className="h-4 w-4 text-cyan" />
+                    </span>
                     <h2 className="text-sm font-bold uppercase tracking-widest text-slate-300">{section.title}</h2>
+                    <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-slate-500">
+                      {items.length}
+                    </span>
                     <span className="h-px flex-1 bg-white/10" />
                     <span className="text-[10px] uppercase tracking-widest text-slate-600">{section.hint}</span>
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-2">
-                    {items.map(item => {
+                    {items.map((item, itemIndex) => {
                       const canAfford = view.balance >= item.price
                       return (
                         <article
                           key={item.id}
                           data-item={item.id}
                           className={cn(
-                            'flex items-center gap-4 rounded-2xl border px-4 py-4 transition-colors',
+                            'animate-fade-in-up flex items-center gap-4 rounded-2xl border px-4 py-4 transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5',
                             item.equipped
                               ? 'border-cyan/50 bg-cyan/[0.07] shadow-[0_0_25px_rgba(34,211,238,0.08)]'
                               : 'border-white/10 bg-black/30 hover:border-white/25 hover:bg-black/40',
                           )}
+                          style={{ animationDelay: `${index * 90 + itemIndex * 55}ms`, animationFillMode: 'backwards' }}
                         >
-                          <ItemVisual item={item} />
+                          <ItemVisual item={item} avatar={avatar} />
                           <div className="min-w-0 flex-1">
                             <p className="truncate text-sm text-white">{item.label}</p>
                             <p className="mt-0.5 text-[11px] text-slate-500">{item.description}</p>

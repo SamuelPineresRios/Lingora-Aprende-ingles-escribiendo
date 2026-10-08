@@ -196,8 +196,51 @@
     100% { transform: translate3d(0, 112vh, 0) rotate(340deg); }
   }
 
+  /* Marcos de tienda y pase: el aro gira, el neón late y hay destellos en órbita */
+  .frame-spin { animation: frame-spin 6s linear infinite; }
+
+  .frame-spin-reverse { animation: frame-spin 8s linear infinite reverse; }
+
+  .frame-glow { animation: frame-glow 3.2s ease-in-out infinite; }
+
+  /* Para formas con clip-path: el resplandor sigue la silueta con drop-shadow */
+  .frame-glow-drop {
+    animation: frame-glow-drop 3.2s ease-in-out infinite, frame-breathe 4.5s ease-in-out infinite;
+  }
+
+  .frame-breathe { animation: frame-breathe 4.5s ease-in-out infinite; }
+
+  .frame-twinkle { animation: frame-twinkle 2.4s ease-in-out infinite; }
+
+  @keyframes frame-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes frame-glow {
+    0%, 100% { box-shadow: 0 0 8px var(--glow-a), 0 0 18px var(--glow-b); }
+    50% { box-shadow: 0 0 16px var(--glow-a), 0 0 36px var(--glow-b); }
+  }
+
+  @keyframes frame-glow-drop {
+    0%, 100% { filter: drop-shadow(0 0 5px var(--glow-a)) drop-shadow(0 0 14px var(--glow-b)); }
+    50% { filter: drop-shadow(0 0 10px var(--glow-a)) drop-shadow(0 0 26px var(--glow-b)); }
+  }
+
+  @keyframes frame-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  @keyframes frame-twinkle {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .coin-fall { animation: none; opacity: 0 !important; }
+    .frame-spin, .frame-spin-reverse, .frame-glow, .frame-glow-drop, .frame-breathe, .frame-twinkle {
+      animation: none;
+    }
   }
 
   /* ================================

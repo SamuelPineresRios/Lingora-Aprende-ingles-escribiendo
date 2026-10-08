@@ -4,13 +4,13 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } fro
 import { Link } from 'react-router-dom'
 import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp, Coins } from 'lucide-react'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
+import { FrameRing } from '@/components/FrameRing'
 import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { ActivityHistory } from '@/components/ActivityHistory'
 import { XpBar } from '@/components/XpBar'
 import { useProgress } from '@/lib/hooks/useProgress'
 import { readJson } from '@/lib/api'
 import { avatarUrl } from '@/lib/avatar'
-import { cn } from '@/lib/utils'
 import { activeFrame, badgeIcon, unlockedBadges, type SeasonProgress } from '@/lib/season'
 import { equippedItem, type StoreView } from '@/lib/store'
 
@@ -105,7 +105,10 @@ export default function ProfilePage() {
   }, [user?.id])
 
   // Marco: el equipado en la tienda o, si no, el mejor del pase.
-  const frameColors = equippedItem(shop, 'frame')?.colors ?? activeFrame(season)?.colors ?? null
+  const shopFrame = equippedItem(shop, 'frame')
+  const seasonFrame = activeFrame(season)
+  const frameId = shopFrame?.id ?? seasonFrame?.id ?? null
+  const frameColors = shopFrame?.colors ?? seasonFrame?.colors ?? null
   const title = equippedItem(shop, 'title')
   const theme = equippedItem(shop, 'theme')?.accent ?? null
   const badges = unlockedBadges(season)
@@ -189,21 +192,24 @@ export default function ProfilePage() {
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
               
               <div className="relative mb-4">
-                 {/* Con marco del pase, el anillo lleva sus colores; sin él, el punteado */}
-                 <div
-                   className={cn(
-                     'w-32 h-32 rounded-full transition-colors',
-                     frameColors ? 'p-[3px]' : 'border-2 border-dashed border-cyan/30 p-1 group-hover:border-cyan',
-                   )}
-                   style={frameColors ? { backgroundImage: `linear-gradient(135deg, ${frameColors[0]}, ${frameColors[1]})` } : undefined}
-                 >
-                    <div className="relative w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
-                       <img src={avatarUrl(user?.full_name || 'Letoura')} alt="" className="h-full w-full" />
-                       <button className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                          <Camera className="w-6 h-6 text-white" />
-                       </button>
-                    </div>
-                 </div>
+                 {/* Con marco (tienda o pase), el anillo animado lo pinta FrameRing; sin él, el punteado */}
+                 {frameId && frameColors ? (
+                   <FrameRing frameId={frameId} colors={frameColors} size={128}>
+                      <img src={avatarUrl(user?.full_name || 'Letoura')} alt="" className="h-full w-full" />
+                      <button className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                         <Camera className="w-6 h-6 text-white" />
+                      </button>
+                   </FrameRing>
+                 ) : (
+                   <div className="w-32 h-32 rounded-full border-2 border-dashed border-cyan/30 p-1 transition-colors group-hover:border-cyan">
+                      <div className="relative w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
+                         <img src={avatarUrl(user?.full_name || 'Letoura')} alt="" className="h-full w-full" />
+                         <button className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                            <Camera className="w-6 h-6 text-white" />
+                         </button>
+                      </div>
+                   </div>
+                 )}
                  <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 border border-cyan shadow-[0_0_10px_cyan]">
                     <Shield className="w-4 h-4 text-cyan fill-cyan/20" />
                  </div>
