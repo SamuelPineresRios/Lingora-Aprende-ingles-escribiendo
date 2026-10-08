@@ -12,11 +12,12 @@ import { db } from '../../db/client.ts'
 import { coin_ledger, purchases, streak_shields, student_loadout } from '../../db/schema.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { getCoinBalance } from '../season/service.ts'
-import { STORE_ITEMS, findStoreItem, type StoreItem } from '../../lib/store.ts'
+import { MAX_TITLES, STORE_ITEMS, findStoreItem, type StoreItem } from '../../lib/store.ts'
 
 export interface StoreLoadout {
   frame_id: string | null
-  title_id: string | null
+  /** Títulos equipados (hasta `MAX_TITLES`). */
+  title_ids: string[]
   theme_id: string | null
 }
 
@@ -46,7 +47,7 @@ async function findLoadout(studentId: string): Promise<StoreLoadout> {
 
   return {
     frame_id: row?.frame_id ?? null,
-    title_id: row?.title_id ?? null,
+    title_ids: row?.title_ids ?? [],
     theme_id: row?.theme_id ?? null,
   }
 }
@@ -61,7 +62,7 @@ export async function getStudentStore(studentId: string): Promise<StoreView> {
   ])
 
   const owned = new Set(ownedRows.map(row => row.item_id))
-  const equipped = new Set([loadout.frame_id, loadout.title_id, loadout.theme_id].filter(Boolean))
+  const equipped = new Set([loadout.frame_id, ...loadout.title_ids, loadout.theme_id].filter(Boolean))
 
   return {
     balance,
@@ -127,7 +128,13 @@ export async function purchaseItem(studentId: string, rawItemId: unknown): Promi
   return getStudentStore(studentId)
 }
 
-/** Se pone un artículo comprado (marco, título o tema). */
+/**
+ * Se pone (o se quita) un artículo comprado.
+ *
+ * Marcos y temas son únicos: equipar reemplaza. Los títulos son acumulables:
+ * equipar alterna su presencia en la lista, con un tope para que el perfil no
+ * se sature.
+ */
 export async function equipItem(studentId: string, rawItemId: unknown): Promise<StoreView> {
   const itemId = typeof rawItemId === 'string' ? rawItemId : ''
   const item = findStoreItem(itemId)
@@ -141,12 +148,19 @@ export async function equipItem(studentId: string, rawItemId: unknown): Promise<
     .limit(1)
   if (!owned) throw new HttpError(403, 'No tienes ese artículo')
 
-  const patch =
-    item.kind === 'frame'
-      ? { frame_id: item.id }
-      : item.kind === 'title'
-        ? { title_id: item.id }
-        : { theme_id: item.id }
+  let patch: Record<string, unknown>
+  if (item.kind === 'title') {
+    const loadout = await findLoadout(studentId)
+    const titleIds = loadout.title_ids.includes(item.id)
+      ? loadout.title_ids.filter(id => id !== item.id)
+      : [...loadout.title_ids, item.id]
+    if (titleIds.length > MAX_TITLES) {
+      throw new HttpError(400, `Puedes llevar hasta ${MAX_TITLES} títulos a la vez`)
+    }
+    patch = { title_ids: titleIds }
+  } else {
+    patch = item.kind === 'frame' ? { frame_id: item.id } : { theme_id: item.id }
+  }
 
   await db
     .insert(student_loadout)

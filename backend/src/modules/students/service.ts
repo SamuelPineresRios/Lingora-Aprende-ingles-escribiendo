@@ -408,7 +408,8 @@ export type RankingMetric = 'xp' | 'missions' | 'time'
 export interface RankingCosmetics {
   avatar: UserAvatar | null
   frame: { id: string; colors: [string, string] } | null
-  title: { id: string; text: string } | null
+  /** Títulos equipados, en el orden en que se pusieron. */
+  titles: Array<{ id: string; text: string }>
 }
 
 export interface RankingEntry extends RankingCosmetics {
@@ -429,8 +430,8 @@ export interface RankingEntry extends RankingCosmetics {
  */
 async function rankingCosmetics(
   studentIds: string[],
-): Promise<Map<string, Pick<RankingCosmetics, 'frame' | 'title'>>> {
-  const cosmetics = new Map<string, Pick<RankingCosmetics, 'frame' | 'title'>>()
+): Promise<Map<string, Pick<RankingCosmetics, 'frame' | 'titles'>>> {
+  const cosmetics = new Map<string, Pick<RankingCosmetics, 'frame' | 'titles'>>()
   if (studentIds.length === 0) return cosmetics
 
   const current = seasonFor(new Date())
@@ -483,13 +484,15 @@ async function rankingCosmetics(
       frameId = unlocked.at(-1)?.id ?? null
     }
 
-    const titleId = loadout?.title_id ?? null
     const colors = frameId ? frameColors.get(frameId) : undefined
-    const text = titleId ? titleText.get(titleId) : undefined
+    const titles = (loadout?.title_ids ?? []).flatMap(id => {
+      const text = titleText.get(id)
+      return text ? [{ id, text }] : []
+    })
 
     cosmetics.set(studentId, {
       frame: frameId && colors ? { id: frameId, colors } : null,
-      title: titleId && text ? { id: titleId, text } : null,
+      titles,
     })
   }
 
@@ -550,7 +553,7 @@ export async function getGlobalRanking(
     name: row.name ?? 'Alumno',
     avatar: row.avatar ?? null,
     frame: null,
-    title: null,
+    titles: [],
     xp: row.xp,
     missions: row.missions,
     seconds: row.seconds,
@@ -572,7 +575,7 @@ export async function getGlobalRanking(
   const decorate = (entry: RankingEntry): RankingEntry => ({
     ...entry,
     frame: cosmetics.get(entry.student_id)?.frame ?? null,
-    title: cosmetics.get(entry.student_id)?.title ?? null,
+    titles: cosmetics.get(entry.student_id)?.titles ?? [],
   })
 
   return {
@@ -817,7 +820,7 @@ export async function getWeeklyLeague(studentId: string, timezone?: unknown): Pr
     name: row.name ?? 'Alumno',
     avatar: row.avatar ?? null,
     frame: cosmetics.get(row.student_id)?.frame ?? null,
-    title: cosmetics.get(row.student_id)?.title ?? null,
+    titles: cosmetics.get(row.student_id)?.titles ?? [],
     week_xp: row.week_xp,
     zone: zoneAt(index + 1, bracket.length),
   }))

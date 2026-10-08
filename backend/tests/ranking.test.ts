@@ -161,18 +161,18 @@ describe('cosméticos del ranking', () => {
     const ana = await signupActor(app, 'student')
     await db
       .insert(student_loadout)
-      .values({ student_id: ana.id, frame_id: 'marco-fuego', title_id: 'titulo-constante' })
+      .values({ student_id: ana.id, frame_id: 'marco-fuego', title_ids: ['titulo-constante'] })
 
     const res = await ana.agent.get('/api/students/ranking')
 
     const [entry] = res.body.entries as Array<{
       avatar: { seed: string }
       frame: { id: string; colors: string[] } | null
-      title: { text: string } | null
+      titles: Array<{ id: string; text: string }>
     }>
     expect(entry?.avatar.seed).toBe(ana.id)
     expect(entry?.frame).toEqual({ id: 'marco-fuego', colors: ['#dc2626', '#f59e0b'] })
-    expect(entry?.title?.text).toBe('Constante')
+    expect(entry?.titles).toEqual([{ id: 'titulo-constante', text: 'Constante' }])
   })
 
   it('sin marco de tienda cae al mejor del pase desbloqueado', async () => {
@@ -183,14 +183,14 @@ describe('cosméticos del ranking', () => {
 
     const res = await ana.agent.get('/api/students/ranking')
 
-    const [entry] = res.body.entries as Array<{ frame: { id: string; colors: string[] } | null; title: unknown }>
+    const [entry] = res.body.entries as Array<{ frame: { id: string; colors: string[] } | null; titles: unknown[] }>
     expect(entry?.frame).toEqual({ id: 'bronce', colors: ['#92400e', '#f59e0b'] })
-    expect(entry?.title).toBeNull()
+    expect(entry?.titles).toEqual([])
   })
 
   it('la liga trae los mismos cosméticos', async () => {
     const ana = await signupActor(app, 'student')
-    await db.insert(student_loadout).values({ student_id: ana.id, frame_id: 'marco-neon', title_id: 'titulo-explorador' })
+    await db.insert(student_loadout).values({ student_id: ana.id, frame_id: 'marco-neon', title_ids: ['titulo-explorador'] })
     const mission = await createMission({ cefr_level: 'B1' })
     await seedActivity(ana, mission, { xp: 120, seconds: 300, submittedAt: '2026-10-06T10:00:00Z' })
 
@@ -199,10 +199,10 @@ describe('cosméticos del ranking', () => {
     const [entry] = res.body.entries as Array<{
       avatar: { seed: string }
       frame: { id: string } | null
-      title: { text: string } | null
+      titles: Array<{ id: string; text: string }>
     }>
     expect(entry?.avatar.seed).toBe(ana.id)
     expect(entry?.frame?.id).toBe('marco-neon')
-    expect(entry?.title?.text).toBe('Explorador')
+    expect(entry?.titles).toEqual([{ id: 'titulo-explorador', text: 'Explorador' }])
   })
 })

@@ -389,7 +389,8 @@ export const student_loadout = pgTable('student_loadout', {
     .primaryKey()
     .references(() => users.id, { onDelete: 'cascade' }),
   frame_id: text('frame_id'),
-  title_id: text('title_id'),
+  /** Títulos equipados a la vez (hasta `MAX_TITLES`). */
+  title_ids: jsonb('title_ids').$type<string[]>(),
   theme_id: text('theme_id'),
   updated_at: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })

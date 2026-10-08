@@ -15,7 +15,7 @@ import { readJson } from '@/lib/api'
 import { resolveAvatar } from '@vox/shared'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { activeFrame, badgeIcon, unlockedBadges } from '@/lib/season'
-import { equippedItem } from '@/lib/store'
+import { equippedItem, equippedTitles } from '@/lib/store'
 
 interface Mission { id:string; title:string; description:string|null; cefr_level:string; status:string }
 
@@ -81,7 +81,7 @@ export default function ProfilePage() {
   const frameId = shopFrame?.id ?? seasonFrame?.id ?? null
   const frameColors = shopFrame?.colors ?? seasonFrame?.colors ?? null
   const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
-  const title = equippedItem(shop, 'title')
+  const titles = equippedTitles(shop)
   const badges = unlockedBadges(season)
   /** Variables CSS del tema para los estados hover/focus del perfil. */
   const themeVars = accent
@@ -216,19 +216,20 @@ export default function ProfilePage() {
                       />
                   </div>
               ) : (
-                  <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2 group-hover:text-[color:var(--acento,#06b6d4)] transition-colors cursor-pointer" onClick={() => {
+                  <h2 className="text-xl font-bold text-white mb-1 flex flex-wrap items-center justify-center gap-2 group-hover:text-[color:var(--acento,#06b6d4)] transition-colors cursor-pointer" onClick={() => {
                     setEditName(user?.full_name || '')
                     setIsEditing(true)
                   }}>
                     {user?.full_name || 'Usuario'}
-                    {title && (
+                    {titles.map(title => (
                       <span
+                        key={title.id}
                         className="rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-widest"
                         style={{ borderColor: accent ?? 'rgba(139,92,246,0.5)', color: accent ?? '#a78bfa' }}
                       >
                         {title.text}
                       </span>
-                    )}
+                    ))}
                     <Edit2 className="w-3 h-3 opacity-0 group-hover:opacity-50" />
                   </h2>
               )}

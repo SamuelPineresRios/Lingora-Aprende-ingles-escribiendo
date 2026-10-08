@@ -23,7 +23,8 @@ type LeagueZone = 'promotion' | 'safe' | 'relegation'
 interface Cosmetics {
   avatar: UserAvatar | null
   frame: { id: string; colors: [string, string] } | null
-  title: { id: string; text: string } | null
+  /** Títulos equipados, en su orden. */
+  titles: Array<{ id: string; text: string }>
 }
 
 interface RankingEntry extends Cosmetics {
@@ -115,13 +116,20 @@ function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } })
   return <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
 }
 
-/** Título equipado, con el mismo aspecto que en el perfil. */
-function TitleBadge({ title }: { title: { text: string } | null }) {
-  if (!title) return null
+/** Títulos equipados, con el mismo aspecto que en el perfil. */
+function TitleBadge({ titles }: { titles: Array<{ id: string; text: string }> }) {
+  if (titles.length === 0) return null
   return (
-    <span className="shrink-0 rounded-full border border-violet/40 px-1.5 py-0.5 text-[9px] uppercase tracking-widest text-violet">
-      {title.text}
-    </span>
+    <>
+      {titles.map(title => (
+        <span
+          key={title.id}
+          className="shrink-0 rounded-full border border-violet/40 px-1.5 py-0.5 text-[9px] uppercase tracking-widest text-violet"
+        >
+          {title.text}
+        </span>
+      ))}
+    </>
   )
 }
 
@@ -149,7 +157,7 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
         <p className="flex items-center gap-2 text-base text-white truncate">
           {entry.position === 1 && <Crown className="h-4 w-4 text-amber shrink-0" />}
           {entry.name}
-          <TitleBadge title={entry.title} />
+          <TitleBadge titles={entry.titles} />
           {isMe && (
             <span className="text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
               tú
@@ -196,7 +204,7 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-2 text-base text-white truncate">
           {entry.name}
-          <TitleBadge title={entry.title} />
+          <TitleBadge titles={entry.titles} />
           {isMe && (
             <span className="text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
               tú

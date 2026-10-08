@@ -7,6 +7,9 @@
  */
 export type StoreItemKind = 'frame' | 'title' | 'theme' | 'shield'
 
+/** Títulos que se pueden llevar puestos a la vez. */
+export const MAX_TITLES = 3
+
 export interface StoreItem {
   id: string
   kind: StoreItemKind
@@ -170,6 +173,70 @@ export const STORE_ITEMS: StoreItem[] = [
     description: 'Dos idiomas y subiendo.',
     price: 250,
     text: 'Políglota',
+  },
+  {
+    id: 'titulo-madrugador',
+    kind: 'title',
+    label: 'Título: Madrugador',
+    description: 'Antes que todos.',
+    price: 150,
+    text: 'Madrugador',
+  },
+  {
+    id: 'titulo-filosofo',
+    kind: 'title',
+    label: 'Título: Filósofo',
+    description: 'Piensa antes de escribir.',
+    price: 200,
+    text: 'Filósofo',
+  },
+  {
+    id: 'titulo-velocista',
+    kind: 'title',
+    label: 'Título: Velocista',
+    description: 'Rápido y claro.',
+    price: 200,
+    text: 'Velocista',
+  },
+  {
+    id: 'titulo-perfeccionista',
+    kind: 'title',
+    label: 'Título: Perfeccionista',
+    description: 'Cada coma en su sitio.',
+    price: 250,
+    text: 'Perfeccionista',
+  },
+  {
+    id: 'titulo-narrador',
+    kind: 'title',
+    label: 'Título: Narrador',
+    description: 'Cuenta todo con detalle.',
+    price: 200,
+    text: 'Narrador',
+  },
+  {
+    id: 'titulo-diplomatico',
+    kind: 'title',
+    label: 'Título: Diplomático',
+    description: 'Suena bien en cualquier sala.',
+    price: 250,
+    text: 'Diplomático',
+  },
+  {
+    id: 'titulo-cientifico',
+    kind: 'title',
+    label: 'Título: Científico',
+    description: 'Precisión de laboratorio.',
+    price: 250,
+    text: 'Científico',
+  },
+  {
+    id: 'titulo-sonador',
+    kind: 'title',
+    label: 'Título: Soñador',
+    description: 'Escribe con la cabeza en las nubes.',
+    price: 150,
+    text: 'Soñador',
   },
   // Temas del perfil
   { id: 'tema-cian', kind: 'theme', label: 'Tema cian', description: 'El clásico.', price: 200, accent: '#06b6d4' },

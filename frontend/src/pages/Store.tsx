@@ -249,6 +249,19 @@ export default function StorePage() {
                                   <Lock className="mx-auto h-3 w-3" />
                                 )}
                               </button>
+                            ) : item.kind === 'title' && item.owned ? (
+                              <button
+                                onClick={() => act('equip', item.id)}
+                                disabled={busy === item.id}
+                                className={cn(
+                                  'rounded-xl border px-3.5 py-2 text-[10px] uppercase tracking-widest transition-colors',
+                                  item.equipped
+                                    ? 'border-white/20 text-slate-300 hover:border-coral/50 hover:text-coral'
+                                    : 'border-cyan/40 text-cyan hover:bg-cyan/10',
+                                )}
+                              >
+                                {item.equipped ? 'Quitar' : 'Equipar'}
+                              </button>
                             ) : item.equipped ? (
                               <span className="flex items-center gap-1 rounded-xl border border-cyan/40 px-3.5 py-2 text-[10px] uppercase tracking-widest text-cyan">
                                 <Check className="h-3 w-3" /> Puesto

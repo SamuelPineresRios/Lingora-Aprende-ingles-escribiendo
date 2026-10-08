@@ -10,7 +10,7 @@ import request from 'supertest'
 import { randomUUID } from 'node:crypto'
 import { createApp } from '../src/app.ts'
 import { db } from '../src/db/client.ts'
-import { evaluations, responses } from '../src/db/schema.ts'
+import { coin_ledger, evaluations, responses } from '../src/db/schema.ts'
 import { coinsForXp, TIER_XP } from '../src/lib/season.ts'
 import { resetDb } from './helpers/db.ts'
 import { createMission, signupActor, type Actor } from './helpers/fixtures.ts'
@@ -76,7 +76,7 @@ describe('GET /api/students/:id/store', () => {
     expect(res.status).toBe(200)
     expect(res.body.balance).toBe(coins)
     expect(res.body.shields).toBe(0)
-    expect(res.body.loadout).toEqual({ frame_id: null, title_id: null, theme_id: null })
+    expect(res.body.loadout).toEqual({ frame_id: null, title_ids: [], theme_id: null })
     expect(res.body.items.length).toBeGreaterThanOrEqual(12)
     expect(res.body.items.every((item: { owned: boolean; equipped: boolean }) => !item.owned && !item.equipped)).toBe(true)
   })
@@ -146,14 +146,58 @@ describe('POST /api/students/:id/store/equip', () => {
       .send({ item_id: 'titulo-explorador' })
 
     expect(equipado.status).toBe(200)
-    expect(equipado.body.loadout.title_id).toBe('titulo-explorador')
+    expect(equipado.body.loadout.title_ids).toEqual(['titulo-explorador'])
     const titulo = equipado.body.items.find((item: { id: string }) => item.id === 'titulo-explorador')
     expect(titulo.equipped).toBe(true)
+
+    // Volver a equipar el mismo título lo quita (son acumulables y alternan).
+    const quitado = await student.agent
+      .post(`/api/students/${student.id}/store/equip`)
+      .send({ item_id: 'titulo-explorador' })
+    expect(quitado.body.loadout.title_ids).toEqual([])
 
     await student.agent.post(`/api/students/${student.id}/store/purchase`).send({ item_id: 'escudo-racha' })
     const escudo = await student.agent
       .post(`/api/students/${student.id}/store/equip`)
       .send({ item_id: 'escudo-racha' })
     expect(escudo.status).toBe(400)
+  })
+
+  it('acumula hasta 3 títulos y el cuarto se rechaza', async () => {
+    const { student } = await richStudent(app)
+    await db.insert(coin_ledger).values({
+      id: randomUUID(),
+      student_id: student.id,
+      amount: 1000,
+      reason: 'quest',
+      ref: 'test',
+    })
+
+    const titulos = ['titulo-constante', 'titulo-explorador', 'titulo-madrugador', 'titulo-noctambulo']
+    for (const itemId of titulos) {
+      await student.agent.post(`/api/students/${student.id}/store/purchase`).send({ item_id: itemId })
+    }
+
+    await student.agent.post(`/api/students/${student.id}/store/equip`).send({ item_id: titulos[0] })
+    await student.agent.post(`/api/students/${student.id}/store/equip`).send({ item_id: titulos[1] })
+    const tres = await student.agent
+      .post(`/api/students/${student.id}/store/equip`)
+      .send({ item_id: titulos[2] })
+
+    expect(tres.body.loadout.title_ids).toEqual(['titulo-constante', 'titulo-explorador', 'titulo-madrugador'])
+    expect(tres.body.items.filter((item: { kind: string; equipped: boolean }) => item.kind === 'title' && item.equipped)).toHaveLength(3)
+
+    const cuarto = await student.agent
+      .post(`/api/students/${student.id}/store/equip`)
+      .send({ item_id: titulos[3] })
+    expect(cuarto.status).toBe(400)
+    expect(cuarto.body.error).toContain('3 títulos')
+
+    // Al quitar uno, entra el cuarto.
+    await student.agent.post(`/api/students/${student.id}/store/equip`).send({ item_id: titulos[0] })
+    const entra = await student.agent
+      .post(`/api/students/${student.id}/store/equip`)
+      .send({ item_id: titulos[3] })
+    expect(entra.body.loadout.title_ids).toEqual(['titulo-explorador', 'titulo-madrugador', 'titulo-noctambulo'])
   })
 })
