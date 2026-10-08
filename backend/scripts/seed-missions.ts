@@ -1,23 +1,35 @@
 /**
- * Siembra las misiones desde `scripts/fixtures/missions.json`.
+ * Siembra las misiones y su contenido desde `scripts/fixtures/`.
  *
  *   npm run missions:seed -w @vox/backend
+ *   npm run missions:seed -w @vox/backend -- --no-prewarm
  *
- * Es idempotente: inserta las que faltan y actualiza las existentes por id,
- * así que sirve tanto para levantar el proyecto desde cero como para
- * restaurar el contenido si se pierde la base de datos.
+ * Es idempotente: inserta lo que falta y actualiza lo existente, así que sirve
+ * tanto para levantar el proyecto desde cero como para restaurar el contenido
+ * si se pierde la base de datos.
  *
- * El JSON es la copia versionada del contenido (las misiones se generan con
- * `missions:generate`, pero esa generación no es determinista).
+ * - `missions.json` es el catálogo de misiones (se generan con
+ *   `missions:generate`, pero esa generación no es determinista).
+ * - `introductions.json` y `vocabulary.json` son contenido escrito a mano
+ *   (determinista): escena narrativa y palabras clave que siembran directo,
+ *   sin modelo, para que el alumno las cargue al instante.
+ *
+ * Lo que no venga en fixture se precalienta con el modelo al final (se omite
+ * con `--no-prewarm`).
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import type { CefrLevel } from '@vox/shared'
+import { randomUUID } from 'node:crypto'
+import { eq } from 'drizzle-orm'
+import type { CefrLevel, IntroductionCharacter, IntroductionLine, MissionBackdrop } from '@vox/shared'
 import { db, sql } from '../src/db/client.ts'
-import { missions } from '../src/db/schema.ts'
+import { mission_introductions, mission_vocabulary, missions } from '../src/db/schema.ts'
 import { prewarmMissingContent } from './lib/prewarm-content.ts'
 
-const FIXTURE = path.join(import.meta.dirname, 'fixtures', 'missions.json')
+const FIXTURES = path.join(import.meta.dirname, 'fixtures')
+const MISSION_FIXTURE = path.join(FIXTURES, 'missions.json')
+const INTRO_FIXTURE = path.join(FIXTURES, 'introductions.json')
+const VOCAB_FIXTURE = path.join(FIXTURES, 'vocabulary.json')
 
 interface MissionFixture {
   id: string
@@ -32,11 +44,81 @@ interface MissionFixture {
   base_duration_seconds: number | null
 }
 
-async function main() {
-  const rows = JSON.parse(fs.readFileSync(FIXTURE, 'utf-8')) as MissionFixture[]
+interface IntroFixture {
+  mission_id: string
+  scene_title: string
+  scene_description: string
+  characters: IntroductionCharacter[]
+  lines: IntroductionLine[]
+  useful_expressions: string[]
+  backdrop: MissionBackdrop | null
+}
 
-  if (!Array.isArray(rows) || rows.length === 0) {
-    throw new Error(`El fichero ${FIXTURE} no contiene misiones`)
+interface VocabFixture {
+  mission_id: string
+  words: Array<{ word: string; translation: string; example: string; example_translation: string }>
+}
+
+function readFixture<T>(file: string): T[] {
+  if (!fs.existsSync(file)) return []
+  const rows = JSON.parse(fs.readFileSync(file, 'utf-8')) as T[]
+  if (!Array.isArray(rows)) throw new Error(`El fichero ${file} no contiene una lista`)
+  return rows
+}
+
+/** Sembrado de fixtures: crea o pisa por `mission_id` (idempotente). */
+async function seedIntro(intro: IntroFixture): Promise<'created' | 'updated'> {
+  const [existing] = await db
+    .select({ id: mission_introductions.id })
+    .from(mission_introductions)
+    .where(eq(mission_introductions.mission_id, intro.mission_id))
+    .limit(1)
+
+  const values = {
+    mission_id: intro.mission_id,
+    scene_title: intro.scene_title,
+    scene_description: intro.scene_description,
+    characters: intro.characters,
+    lines: intro.lines,
+    useful_expressions: intro.useful_expressions,
+    backdrop: intro.backdrop,
+    generated_by: 'fixture',
+    version: 1,
+    is_published: true,
+    updated_at: new Date(),
+  }
+
+  if (existing) {
+    await db.update(mission_introductions).set(values).where(eq(mission_introductions.id, existing.id))
+    return 'updated'
+  }
+
+  await db.insert(mission_introductions).values({ id: randomUUID(), ...values })
+  return 'created'
+}
+
+async function seedVocabulary(vocab: VocabFixture): Promise<void> {
+  await db
+    .insert(mission_vocabulary)
+    .values({
+      id: randomUUID(),
+      mission_id: vocab.mission_id,
+      words: vocab.words,
+      generated_by: 'fixture',
+      version: 1,
+      updated_at: new Date(),
+    })
+    .onConflictDoUpdate({
+      target: mission_vocabulary.mission_id,
+      set: { words: vocab.words, generated_by: 'fixture', updated_at: new Date() },
+    })
+}
+
+async function main() {
+  const rows = readFixture<MissionFixture>(MISSION_FIXTURE)
+
+  if (rows.length === 0) {
+    throw new Error(`El fichero ${MISSION_FIXTURE} no contiene misiones`)
   }
 
   for (const row of rows) {
@@ -65,9 +147,18 @@ async function main() {
   console.log(`${rows.length} misiones sembradas:`)
   for (const [level, count] of [...counts].sort()) console.log(`  ${level}: ${count}`)
 
-  // El contenido generado (escena y vocabulario) se cachea en la base de
-  // datos: precalentarlo aquí evita que el primer alumno espere. Con
-  // `--no-prewarm` se omite (p. ej. si el proveedor de IA está caído).
+  // Contenido escrito a mano: escena narrativa y palabras clave (y con ellas
+  // el emparejamiento). Se siembra directo, sin modelo.
+  const intros = readFixture<IntroFixture>(INTRO_FIXTURE)
+  for (const intro of intros) await seedIntro(intro)
+  if (intros.length > 0) console.log(`${intros.length} escenas sembradas desde fixture`)
+
+  const vocab = readFixture<VocabFixture>(VOCAB_FIXTURE)
+  for (const entry of vocab) await seedVocabulary(entry)
+  if (vocab.length > 0) console.log(`${vocab.length} vocabularios sembrados desde fixture (con emparejamiento)`)
+
+  // Lo que siga faltando (misiones generadas que aún no tienen contenido) se
+  // precalienta con el modelo. Con `--no-prewarm` se omite.
   if (!process.argv.includes('--no-prewarm')) {
     console.log('\nPrecalentando escena y vocabulario de lo que falte…')
     await prewarmMissingContent()

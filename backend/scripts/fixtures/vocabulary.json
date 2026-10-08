@@ -1,0 +1,877 @@
+[
+  {
+    "mission_id": "m-076",
+    "words": [
+      {
+        "word": "coffee",
+        "translation": "café",
+        "example": "I drink coffee in the morning.",
+        "example_translation": "Bebo café por la mañana."
+      },
+      {
+        "word": "milk",
+        "translation": "leche",
+        "example": "I like coffee with milk.",
+        "example_translation": "Me gusta el café con leche."
+      },
+      {
+        "word": "large",
+        "translation": "grande",
+        "example": "One large cup, please.",
+        "example_translation": "Una taza grande, por favor."
+      },
+      {
+        "word": "please",
+        "translation": "por favor",
+        "example": "Two coffees, please.",
+        "example_translation": "Dos cafés, por favor."
+      },
+      {
+        "word": "cup",
+        "translation": "taza",
+        "example": "The cup is hot.",
+        "example_translation": "La taza está caliente."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-077",
+    "words": [
+      {
+        "word": "fruit",
+        "translation": "fruta",
+        "example": "I buy fruit at the market.",
+        "example_translation": "Compro fruta en el mercado."
+      },
+      {
+        "word": "apple",
+        "translation": "manzana",
+        "example": "This apple is red and sweet.",
+        "example_translation": "Esta manzana es roja y dulce."
+      },
+      {
+        "word": "kilo",
+        "translation": "kilo",
+        "example": "One kilo of apples, please.",
+        "example_translation": "Un kilo de manzanas, por favor."
+      },
+      {
+        "word": "buy",
+        "translation": "comprar",
+        "example": "I want to buy bananas.",
+        "example_translation": "Quiero comprar plátanos."
+      },
+      {
+        "word": "cheap",
+        "translation": "barato",
+        "example": "The oranges are cheap today.",
+        "example_translation": "Las naranjas están baratas hoy."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-078",
+    "words": [
+      {
+        "word": "room",
+        "translation": "habitación",
+        "example": "My room is on the third floor.",
+        "example_translation": "Mi habitación está en la tercera planta."
+      },
+      {
+        "word": "key",
+        "translation": "llave",
+        "example": "This is the key of room 305.",
+        "example_translation": "Esta es la llave de la habitación 305."
+      },
+      {
+        "word": "breakfast",
+        "translation": "desayuno",
+        "example": "Breakfast is from seven to ten.",
+        "example_translation": "El desayuno es de siete a diez."
+      },
+      {
+        "word": "night",
+        "translation": "noche",
+        "example": "We stay two nights.",
+        "example_translation": "Nos quedamos dos noches."
+      },
+      {
+        "word": "name",
+        "translation": "nombre",
+        "example": "My name is Laura.",
+        "example_translation": "Mi nombre es Laura."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-079",
+    "words": [
+      {
+        "word": "chicken",
+        "translation": "pollo",
+        "example": "I want chicken with salad.",
+        "example_translation": "Quiero pollo con ensalada."
+      },
+      {
+        "word": "salad",
+        "translation": "ensalada",
+        "example": "The salad is very fresh.",
+        "example_translation": "La ensalada está muy fresca."
+      },
+      {
+        "word": "water",
+        "translation": "agua",
+        "example": "A glass of water, please.",
+        "example_translation": "Un vaso de agua, por favor."
+      },
+      {
+        "word": "rice",
+        "translation": "arroz",
+        "example": "I like rice with chicken.",
+        "example_translation": "Me gusta el arroz con pollo."
+      },
+      {
+        "word": "order",
+        "translation": "pedir",
+        "example": "Are you ready to order?",
+        "example_translation": "¿Estás listo para pedir?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-080",
+    "words": [
+      {
+        "word": "T-shirt",
+        "translation": "camiseta",
+        "example": "This T-shirt is very soft.",
+        "example_translation": "Esta camiseta es muy suave."
+      },
+      {
+        "word": "size",
+        "translation": "talla",
+        "example": "What size do you need?",
+        "example_translation": "¿Qué talla necesitas?"
+      },
+      {
+        "word": "blue",
+        "translation": "azul",
+        "example": "I want a blue T-shirt.",
+        "example_translation": "Quiero una camiseta azul."
+      },
+      {
+        "word": "try on",
+        "translation": "probarse",
+        "example": "Can I try on this shirt?",
+        "example_translation": "¿Puedo probarme esta camisa?"
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What is the price?",
+        "example_translation": "¿Cuál es el precio?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-081",
+    "words": [
+      {
+        "word": "bus stop",
+        "translation": "parada del bus",
+        "example": "The bus stop is next to the bank.",
+        "example_translation": "La parada del bus está al lado del banco."
+      },
+      {
+        "word": "next to",
+        "translation": "al lado de",
+        "example": "The shop is next to the park.",
+        "example_translation": "La tienda está al lado del parque."
+      },
+      {
+        "word": "bank",
+        "translation": "banco",
+        "example": "I need to go to the bank.",
+        "example_translation": "Necesito ir al banco."
+      },
+      {
+        "word": "minute",
+        "translation": "minuto",
+        "example": "It is two minutes from here.",
+        "example_translation": "Está a dos minutos de aquí."
+      },
+      {
+        "word": "corner",
+        "translation": "esquina",
+        "example": "Wait at the corner, please.",
+        "example_translation": "Espera en la esquina, por favor."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-082",
+    "words": [
+      {
+        "word": "headache",
+        "translation": "dolor de cabeza",
+        "example": "I have a headache today.",
+        "example_translation": "Hoy me duele la cabeza."
+      },
+      {
+        "word": "medicine",
+        "translation": "medicina",
+        "example": "Take the medicine after lunch.",
+        "example_translation": "Toma la medicina después de comer."
+      },
+      {
+        "word": "twice",
+        "translation": "dos veces",
+        "example": "Take it twice a day.",
+        "example_translation": "Tómalo dos veces al día."
+      },
+      {
+        "word": "pain",
+        "translation": "dolor",
+        "example": "The pain is here.",
+        "example_translation": "El dolor está aquí."
+      },
+      {
+        "word": "rest",
+        "translation": "descansar",
+        "example": "You need to rest today.",
+        "example_translation": "Necesitas descansar hoy."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-083",
+    "words": [
+      {
+        "word": "cinema",
+        "translation": "cine",
+        "example": "We go to the cinema on Saturday.",
+        "example_translation": "Vamos al cine el sábado."
+      },
+      {
+        "word": "Saturday",
+        "translation": "sábado",
+        "example": "Saturday is my free day.",
+        "example_translation": "El sábado es mi día libre."
+      },
+      {
+        "word": "free",
+        "translation": "libre",
+        "example": "Are you free tonight?",
+        "example_translation": "¿Estás libre esta noche?"
+      },
+      {
+        "word": "meet",
+        "translation": "quedar",
+        "example": "We can meet at eight.",
+        "example_translation": "Podemos quedar a las ocho."
+      },
+      {
+        "word": "film",
+        "translation": "película",
+        "example": "The film starts at eight.",
+        "example_translation": "La película empieza a las ocho."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-084",
+    "words": [
+      {
+        "word": "ticket",
+        "translation": "billete",
+        "example": "I need a ticket to Brighton.",
+        "example_translation": "Necesito un billete a Brighton."
+      },
+      {
+        "word": "platform",
+        "translation": "andén",
+        "example": "The train leaves from platform four.",
+        "example_translation": "El tren sale del andén cuatro."
+      },
+      {
+        "word": "return",
+        "translation": "ida y vuelta",
+        "example": "A return ticket, please.",
+        "example_translation": "Un billete de ida y vuelta, por favor."
+      },
+      {
+        "word": "train",
+        "translation": "tren",
+        "example": "The train is very fast.",
+        "example_translation": "El tren es muy rápido."
+      },
+      {
+        "word": "station",
+        "translation": "estación",
+        "example": "The station is in the centre.",
+        "example_translation": "La estación está en el centro."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-085",
+    "words": [
+      {
+        "word": "new",
+        "translation": "nuevo",
+        "example": "This is my new school.",
+        "example_translation": "Esta es mi escuela nueva."
+      },
+      {
+        "word": "teacher",
+        "translation": "profesor",
+        "example": "The teacher is very kind.",
+        "example_translation": "El profesor es muy amable."
+      },
+      {
+        "word": "class",
+        "translation": "clase",
+        "example": "The class starts at nine.",
+        "example_translation": "La clase empieza a las nueve."
+      },
+      {
+        "word": "first",
+        "translation": "primero",
+        "example": "Today is my first day.",
+        "example_translation": "Hoy es mi primer día."
+      },
+      {
+        "word": "friend",
+        "translation": "amigo",
+        "example": "Maya is my new friend.",
+        "example_translation": "Maya es mi nueva amiga."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-086",
+    "words": [
+      {
+        "word": "passport",
+        "translation": "pasaporte",
+        "example": "Show your passport, please.",
+        "example_translation": "Muestra tu pasaporte, por favor."
+      },
+      {
+        "word": "bag",
+        "translation": "maleta",
+        "example": "My bag is very heavy.",
+        "example_translation": "Mi maleta pesa mucho."
+      },
+      {
+        "word": "gate",
+        "translation": "puerta",
+        "example": "The gate is B12.",
+        "example_translation": "La puerta es la B12."
+      },
+      {
+        "word": "flight",
+        "translation": "vuelo",
+        "example": "My flight is at ten.",
+        "example_translation": "Mi vuelo es a las diez."
+      },
+      {
+        "word": "airport",
+        "translation": "aeropuerto",
+        "example": "The airport is very big.",
+        "example_translation": "El aeropuerto es muy grande."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-087",
+    "words": [
+      {
+        "word": "bill",
+        "translation": "cuenta",
+        "example": "The bill, please.",
+        "example_translation": "La cuenta, por favor."
+      },
+      {
+        "word": "dessert",
+        "translation": "postre",
+        "example": "I want ice cream for dessert.",
+        "example_translation": "Quiero helado de postre."
+      },
+      {
+        "word": "cash",
+        "translation": "efectivo",
+        "example": "I pay in cash.",
+        "example_translation": "Pago en efectivo."
+      },
+      {
+        "word": "card",
+        "translation": "tarjeta",
+        "example": "Can I pay by card?",
+        "example_translation": "¿Puedo pagar con tarjeta?"
+      },
+      {
+        "word": "delicious",
+        "translation": "delicioso",
+        "example": "The soup was delicious.",
+        "example_translation": "La sopa estaba deliciosa."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-088",
+    "words": [
+      {
+        "word": "bike",
+        "translation": "bici",
+        "example": "This bike is red.",
+        "example_translation": "Esta bici es roja."
+      },
+      {
+        "word": "rent",
+        "translation": "alquilar",
+        "example": "I want to rent a bike for a day.",
+        "example_translation": "Quiero alquilar una bici por un día."
+      },
+      {
+        "word": "helmet",
+        "translation": "casco",
+        "example": "Always wear a helmet.",
+        "example_translation": "Lleva siempre casco."
+      },
+      {
+        "word": "day",
+        "translation": "día",
+        "example": "It costs ten dollars a day.",
+        "example_translation": "Cuesta diez dólares al día."
+      },
+      {
+        "word": "lock",
+        "translation": "candado",
+        "example": "Use the lock at night.",
+        "example_translation": "Usa el candado por la noche."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-089",
+    "words": [
+      {
+        "word": "weather",
+        "translation": "tiempo",
+        "example": "The weather is nice today.",
+        "example_translation": "El tiempo es agradable hoy."
+      },
+      {
+        "word": "sunny",
+        "translation": "soleado",
+        "example": "It is sunny this morning.",
+        "example_translation": "Está soleado esta mañana."
+      },
+      {
+        "word": "rain",
+        "translation": "llover",
+        "example": "It will rain tomorrow.",
+        "example_translation": "Mañana va a llover."
+      },
+      {
+        "word": "umbrella",
+        "translation": "paraguas",
+        "example": "Take your umbrella.",
+        "example_translation": "Lleva tu paraguas."
+      },
+      {
+        "word": "cold",
+        "translation": "frío",
+        "example": "In winter it is very cold.",
+        "example_translation": "En invierno hace mucho frío."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-090",
+    "words": [
+      {
+        "word": "phone",
+        "translation": "teléfono",
+        "example": "My phone is old.",
+        "example_translation": "Mi teléfono es viejo."
+      },
+      {
+        "word": "cheap",
+        "translation": "barato",
+        "example": "This phone is cheap.",
+        "example_translation": "Este teléfono es barato."
+      },
+      {
+        "word": "easy",
+        "translation": "fácil",
+        "example": "The phone is very easy.",
+        "example_translation": "El teléfono es muy fácil."
+      },
+      {
+        "word": "euro",
+        "translation": "euro",
+        "example": "It costs ninety euros.",
+        "example_translation": "Cuesta noventa euros."
+      },
+      {
+        "word": "camera",
+        "translation": "cámara",
+        "example": "The camera is good.",
+        "example_translation": "La cámara es buena."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-091",
+    "words": [
+      {
+        "word": "hour",
+        "translation": "hora",
+        "example": "The trip is one hour.",
+        "example_translation": "El viaje dura una hora."
+      },
+      {
+        "word": "half past",
+        "translation": "y media",
+        "example": "The train leaves at half past three.",
+        "example_translation": "El tren sale a las tres y media."
+      },
+      {
+        "word": "trip",
+        "translation": "viaje",
+        "example": "The trip is very short.",
+        "example_translation": "El viaje es muy corto."
+      },
+      {
+        "word": "next",
+        "translation": "próximo",
+        "example": "The next train is at four.",
+        "example_translation": "El próximo tren es a las cuatro."
+      },
+      {
+        "word": "wait",
+        "translation": "esperar",
+        "example": "We wait for the train here.",
+        "example_translation": "Esperamos el tren aquí."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-092",
+    "words": [
+      {
+        "word": "dinner",
+        "translation": "cena",
+        "example": "Dinner is at nine.",
+        "example_translation": "La cena es a las nueve."
+      },
+      {
+        "word": "Friday",
+        "translation": "viernes",
+        "example": "See you on Friday.",
+        "example_translation": "Nos vemos el viernes."
+      },
+      {
+        "word": "house",
+        "translation": "casa",
+        "example": "My house is near the park.",
+        "example_translation": "Mi casa está cerca del parque."
+      },
+      {
+        "word": "bring",
+        "translation": "llevar",
+        "example": "Bring a dessert, please.",
+        "example_translation": "Trae un postre, por favor."
+      },
+      {
+        "word": "free",
+        "translation": "libre",
+        "example": "Are you free on Friday?",
+        "example_translation": "¿Estás libre el viernes?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-093",
+    "words": [
+      {
+        "word": "throat",
+        "translation": "garganta",
+        "example": "My throat hurts.",
+        "example_translation": "Me duele la garganta."
+      },
+      {
+        "word": "tablets",
+        "translation": "pastillas",
+        "example": "Take two tablets a day.",
+        "example_translation": "Toma dos pastillas al día."
+      },
+      {
+        "word": "take",
+        "translation": "tomar",
+        "example": "Take the medicine after dinner.",
+        "example_translation": "Toma la medicina después de cenar."
+      },
+      {
+        "word": "hours",
+        "translation": "horas",
+        "example": "One tablet every eight hours.",
+        "example_translation": "Una pastilla cada ocho horas."
+      },
+      {
+        "word": "pain",
+        "translation": "dolor",
+        "example": "This is good for the pain.",
+        "example_translation": "Esto es bueno para el dolor."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-094",
+    "words": [
+      {
+        "word": "toilet",
+        "translation": "baño",
+        "example": "The toilet is upstairs.",
+        "example_translation": "El baño está arriba."
+      },
+      {
+        "word": "floor",
+        "translation": "planta",
+        "example": "The shop is on the first floor.",
+        "example_translation": "La tienda está en la primera planta."
+      },
+      {
+        "word": "lift",
+        "translation": "ascensor",
+        "example": "Take the lift to the third floor.",
+        "example_translation": "Toma el ascensor a la tercera planta."
+      },
+      {
+        "word": "behind",
+        "translation": "detrás",
+        "example": "The lift is behind you.",
+        "example_translation": "El ascensor está detrás de ti."
+      },
+      {
+        "word": "map",
+        "translation": "mapa",
+        "example": "Look at the map of the mall.",
+        "example_translation": "Mira el mapa del centro comercial."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-095",
+    "words": [
+      {
+        "word": "flowers",
+        "translation": "flores",
+        "example": "I buy flowers for my mother.",
+        "example_translation": "Compro flores para mi madre."
+      },
+      {
+        "word": "roses",
+        "translation": "rosas",
+        "example": "The red roses are beautiful.",
+        "example_translation": "Las rosas rojas son preciosas."
+      },
+      {
+        "word": "mother",
+        "translation": "madre",
+        "example": "Today is my mother birthday.",
+        "example_translation": "Hoy es el cumpleaños de mi madre."
+      },
+      {
+        "word": "beautiful",
+        "translation": "preciosa",
+        "example": "What a beautiful bouquet!",
+        "example_translation": "¡Qué ramo tan precioso!"
+      },
+      {
+        "word": "gift",
+        "translation": "regalo",
+        "example": "This is a gift for my mother.",
+        "example_translation": "Este es un regalo para mi madre."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-096",
+    "words": [
+      {
+        "word": "gym",
+        "translation": "gimnasio",
+        "example": "The gym opens at seven.",
+        "example_translation": "El gimnasio abre a las siete."
+      },
+      {
+        "word": "month",
+        "translation": "mes",
+        "example": "It costs thirty euros a month.",
+        "example_translation": "Cuesta treinta euros al mes."
+      },
+      {
+        "word": "pool",
+        "translation": "piscina",
+        "example": "The pool is closed today.",
+        "example_translation": "La piscina está cerrada hoy."
+      },
+      {
+        "word": "class",
+        "translation": "clase",
+        "example": "There are classes in the morning.",
+        "example_translation": "Hay clases por la mañana."
+      },
+      {
+        "word": "join",
+        "translation": "apuntarse",
+        "example": "I want to join the gym.",
+        "example_translation": "Quiero apuntarme al gimnasio."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-097",
+    "words": [
+      {
+        "word": "suitcase",
+        "translation": "maleta",
+        "example": "My suitcase is very heavy.",
+        "example_translation": "Mi maleta pesa mucho."
+      },
+      {
+        "word": "heavy",
+        "translation": "pesado",
+        "example": "This bag is heavy.",
+        "example_translation": "Esta bolsa es pesada."
+      },
+      {
+        "word": "carry",
+        "translation": "llevar",
+        "example": "Can you carry my bag?",
+        "example_translation": "¿Puedes llevar mi bolsa?"
+      },
+      {
+        "word": "stairs",
+        "translation": "escaleras",
+        "example": "The stairs are over there.",
+        "example_translation": "Las escaleras están allí."
+      },
+      {
+        "word": "help",
+        "translation": "ayudar",
+        "example": "Can you help me, please?",
+        "example_translation": "¿Puedes ayudarme, por favor?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-098",
+    "words": [
+      {
+        "word": "brother",
+        "translation": "hermano",
+        "example": "My brother is ten years old.",
+        "example_translation": "Mi hermano tiene diez años."
+      },
+      {
+        "word": "sisters",
+        "translation": "hermanas",
+        "example": "I have two sisters.",
+        "example_translation": "Tengo dos hermanas."
+      },
+      {
+        "word": "parents",
+        "translation": "padres",
+        "example": "I live with my parents.",
+        "example_translation": "Vivo con mis padres."
+      },
+      {
+        "word": "family",
+        "translation": "familia",
+        "example": "My family is small.",
+        "example_translation": "Mi familia es pequeña."
+      },
+      {
+        "word": "live",
+        "translation": "vivir",
+        "example": "I live in a small flat.",
+        "example_translation": "Vivo en un piso pequeño."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-099",
+    "words": [
+      {
+        "word": "table",
+        "translation": "mesa",
+        "example": "A table for four, please.",
+        "example_translation": "Una mesa para cuatro, por favor."
+      },
+      {
+        "word": "reservation",
+        "translation": "reserva",
+        "example": "I have a reservation at nine.",
+        "example_translation": "Tengo una reserva a las nueve."
+      },
+      {
+        "word": "name",
+        "translation": "nombre",
+        "example": "What is your name?",
+        "example_translation": "¿Cuál es su nombre?"
+      },
+      {
+        "word": "evening",
+        "translation": "noche",
+        "example": "Good evening!",
+        "example_translation": "¡Buenas noches!"
+      },
+      {
+        "word": "four",
+        "translation": "cuatro",
+        "example": "We are four people.",
+        "example_translation": "Somos cuatro personas."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-100",
+    "words": [
+      {
+        "word": "bag",
+        "translation": "bolsa",
+        "example": "I need a big bag.",
+        "example_translation": "Necesito una bolsa grande."
+      },
+      {
+        "word": "pay",
+        "translation": "pagar",
+        "example": "Can I pay by card?",
+        "example_translation": "¿Puedo pagar con tarjeta?"
+      },
+      {
+        "word": "card",
+        "translation": "tarjeta",
+        "example": "I pay with my card.",
+        "example_translation": "Pago con mi tarjeta."
+      },
+      {
+        "word": "euros",
+        "translation": "euros",
+        "example": "It is twelve euros.",
+        "example_translation": "Son doce euros."
+      },
+      {
+        "word": "supermarket",
+        "translation": "supermercado",
+        "example": "The supermarket is open.",
+        "example_translation": "El supermercado está abierto."
+      }
+    ]
+  }
+]

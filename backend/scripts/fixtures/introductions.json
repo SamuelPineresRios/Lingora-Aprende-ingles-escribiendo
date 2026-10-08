@@ -1,0 +1,1926 @@
+[
+  {
+    "mission_id": "m-076",
+    "scene_title": "La cafetería de la esquina",
+    "scene_description": "Una cafetería pequeña y luminosa. Huele a café recién hecho y suena música suave mientras el camarero sonríe detrás del mostrador.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Barista",
+        "role": "Barista",
+        "emoji": "☕",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Customer",
+        "role": "Cliente con prisa",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good morning! What can I get you?",
+        "translation": "¡Buenos días! ¿Qué te pongo?"
+      },
+      {
+        "speaker": "B",
+        "text": "A coffee, please. To go.",
+        "translation": "Un café, por favor. Para llevar."
+      },
+      {
+        "speaker": "A",
+        "text": "Small or large?",
+        "translation": "¿Pequeño o grande?"
+      },
+      {
+        "speaker": "B",
+        "text": "Large, please. With milk.",
+        "translation": "Grande, por favor. Con leche."
+      },
+      {
+        "speaker": "A",
+        "text": "That's three dollars.",
+        "translation": "Son tres dólares."
+      },
+      {
+        "speaker": "B",
+        "text": "Here you go. Thank you!",
+        "translation": "Aquí tienes. ¡Gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "A coffee, please",
+      "To go, please",
+      "With milk",
+      "How much is it?"
+    ],
+    "backdrop": {
+      "kind": "restaurant",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#8a5a33",
+        "#f3e5d0",
+        "#e07a5f"
+      ],
+      "props": [
+        "counter",
+        "cups",
+        "plants"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-077",
+    "scene_title": "El puesto de fruta",
+    "scene_description": "Un mercado de barrio lleno de puestos de colores. Tu puesto tiene cajas de manzanas, plátanos y naranjas muy frescas.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Fruit Vendor",
+        "role": "Vendedor de fruta",
+        "emoji": "🍎",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Shopper",
+        "role": "Comprador del barrio",
+        "emoji": "🧺",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello! The apples are very fresh today.",
+        "translation": "¡Hola! Las manzanas están muy frescas hoy."
+      },
+      {
+        "speaker": "B",
+        "text": "How much are they?",
+        "translation": "¿Cuánto cuestan?"
+      },
+      {
+        "speaker": "A",
+        "text": "Two dollars a kilo.",
+        "translation": "Dos dólares el kilo."
+      },
+      {
+        "speaker": "B",
+        "text": "I want one kilo, please.",
+        "translation": "Quiero un kilo, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "Anything else?",
+        "translation": "¿Algo más?"
+      },
+      {
+        "speaker": "B",
+        "text": "No, thank you. That's all.",
+        "translation": "No, gracias. Eso es todo."
+      }
+    ],
+    "useful_expressions": [
+      "How much are they?",
+      "One kilo, please",
+      "Anything else?",
+      "That's all, thank you"
+    ],
+    "backdrop": {
+      "kind": "shop",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#f4a261",
+        "#e9c46a",
+        "#2a9d8f"
+      ],
+      "props": [
+        "crates",
+        "awning",
+        "scales"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-078",
+    "scene_title": "Recepción del hotel",
+    "scene_description": "Un vestíbulo tranquilo con sofás, plantas y una alfombra roja. El mostrador de recepción tiene una campanilla dorada.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Receptionist",
+        "role": "Recepcionista",
+        "emoji": "🛎️",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Guest",
+        "role": "Huésped con maleta",
+        "emoji": "🧳",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good evening! Do you have a reservation?",
+        "translation": "¡Buenas tardes! ¿Tiene una reserva?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, my name is Laura.",
+        "translation": "Sí, mi nombre es Laura."
+      },
+      {
+        "speaker": "A",
+        "text": "Room 305. Here is your key.",
+        "translation": "Habitación 305. Aquí tiene su llave."
+      },
+      {
+        "speaker": "B",
+        "text": "What time is breakfast?",
+        "translation": "¿A qué hora es el desayuno?"
+      },
+      {
+        "speaker": "A",
+        "text": "From seven to ten.",
+        "translation": "De siete a diez."
+      },
+      {
+        "speaker": "B",
+        "text": "Perfect, thank you.",
+        "translation": "Perfecto, gracias."
+      }
+    ],
+    "useful_expressions": [
+      "I have a reservation",
+      "What time is breakfast?",
+      "Here is my passport",
+      "Thank you very much"
+    ],
+    "backdrop": {
+      "kind": "hotel",
+      "style": "flat",
+      "light": "sunset",
+      "palette": [
+        "#6d597a",
+        "#f2cc8f",
+        "#e07a5f"
+      ],
+      "props": [
+        "desk",
+        "plants",
+        "luggage"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-079",
+    "scene_title": "Mesa para uno",
+    "scene_description": "Un restaurante familiar con manteles a cuadros y luz cálida. Se escuchan platos y conversaciones tranquilas.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Waiter",
+        "role": "Camarero",
+        "emoji": "🍽️",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Customer",
+        "role": "Cliente con hambre",
+        "emoji": "🧑‍🦱",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good afternoon! Are you ready to order?",
+        "translation": "¡Buenas tardes! ¿Listo para pedir?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes. I want the chicken, please.",
+        "translation": "Sí. Quiero el pollo, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "With rice or salad?",
+        "translation": "¿Con arroz o ensalada?"
+      },
+      {
+        "speaker": "B",
+        "text": "With salad, please.",
+        "translation": "Con ensalada, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "And to drink?",
+        "translation": "¿Y para beber?"
+      },
+      {
+        "speaker": "B",
+        "text": "Water, please. No dessert.",
+        "translation": "Agua, por favor. Sin postre."
+      }
+    ],
+    "useful_expressions": [
+      "I want the chicken, please",
+      "With salad",
+      "Water, please",
+      "No dessert, thank you"
+    ],
+    "backdrop": {
+      "kind": "restaurant",
+      "style": "flat",
+      "light": "sunset",
+      "palette": [
+        "#bc6c25",
+        "#fefae0",
+        "#606c38"
+      ],
+      "props": [
+        "tables",
+        "menu",
+        "plants"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-080",
+    "scene_title": "La tienda de ropa",
+    "scene_description": "Una tienda ordenada con estanterías de colores y espejos grandes. Hay camisetas dobladas sobre una mesa de madera.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Shop Assistant",
+        "role": "Dependienta",
+        "emoji": "👚",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Customer",
+        "role": "Cliente buscando ropa",
+        "emoji": "🛍️",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hi! Can I help you?",
+        "translation": "¡Hola! ¿Puedo ayudarte?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, I like this blue T-shirt.",
+        "translation": "Sí, me gusta esta camiseta azul."
+      },
+      {
+        "speaker": "A",
+        "text": "What size are you?",
+        "translation": "¿Qué talla usas?"
+      },
+      {
+        "speaker": "B",
+        "text": "Medium, please.",
+        "translation": "Mediana, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "Here you go. The fitting room is there.",
+        "translation": "Aquí tienes. El probador está allí."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you!",
+        "translation": "¡Gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "I like this T-shirt",
+      "What size is it?",
+      "Can I try it on?",
+      "Do you have it in blue?"
+    ],
+    "backdrop": {
+      "kind": "shop",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#457b9d",
+        "#f1faee",
+        "#e63946"
+      ],
+      "props": [
+        "shelves",
+        "mirror",
+        "clothes"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-081",
+    "scene_title": "En la esquina del centro",
+    "scene_description": "Una calle concurrida con coches y bicicletas. Hay un banco, una farmacia y un semáforo en la esquina.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Local",
+        "role": "Vecina del barrio",
+        "emoji": "👩",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Traveller",
+        "role": "Visitante perdido",
+        "emoji": "🎒",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Excuse me, where is the bus stop?",
+        "translation": "Disculpe, ¿dónde está la parada del bus?"
+      },
+      {
+        "speaker": "B",
+        "text": "It's next to the bank.",
+        "translation": "Está al lado del banco."
+      },
+      {
+        "speaker": "A",
+        "text": "Is it far?",
+        "translation": "¿Está lejos?"
+      },
+      {
+        "speaker": "B",
+        "text": "No, two minutes walking.",
+        "translation": "No, dos minutos caminando."
+      },
+      {
+        "speaker": "A",
+        "text": "Thank you very much!",
+        "translation": "¡Muchas gracias!"
+      },
+      {
+        "speaker": "B",
+        "text": "You're welcome.",
+        "translation": "De nada."
+      }
+    ],
+    "useful_expressions": [
+      "Is the bus stop near here?",
+      "Two minutes walking",
+      "You're welcome"
+    ],
+    "backdrop": {
+      "kind": "street",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#90caf9",
+        "#cfd8dc",
+        "#ff8a65"
+      ],
+      "props": [
+        "skyline",
+        "traffic light",
+        "shops"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-082",
+    "scene_title": "La consulta",
+    "scene_description": "Una consulta tranquila con estanterías de libros, una camilla y un reloj de pared. Huele a limpio.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Doctor",
+        "role": "Médico de cabecera",
+        "emoji": "🩺",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Patient",
+        "role": "Paciente con dolor",
+        "emoji": "🤕",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good morning. How do you feel?",
+        "translation": "Buenos días. ¿Cómo te sientes?"
+      },
+      {
+        "speaker": "B",
+        "text": "I have a headache.",
+        "translation": "Me duele la cabeza."
+      },
+      {
+        "speaker": "A",
+        "text": "When did it start?",
+        "translation": "¿Cuándo empezó?"
+      },
+      {
+        "speaker": "B",
+        "text": "Last night.",
+        "translation": "Anoche."
+      },
+      {
+        "speaker": "A",
+        "text": "Take this medicine twice a day.",
+        "translation": "Toma esta medicina dos veces al día."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you, doctor.",
+        "translation": "Gracias, doctor."
+      }
+    ],
+    "useful_expressions": [
+      "I have a headache",
+      "It started last night",
+      "Twice a day",
+      "Thank you, doctor"
+    ],
+    "backdrop": {
+      "kind": "health",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#a8dadc",
+        "#f1faee",
+        "#e63946"
+      ],
+      "props": [
+        "desk",
+        "books",
+        "clock"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-083",
+    "scene_title": "Llamada desde el salón",
+    "scene_description": "Un salón acogedor al atardecer con un sofá, una lámpara encendida y la luz dorada entrando por la ventana.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Friend",
+        "role": "Amigo",
+        "emoji": "📞",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Caller",
+        "role": "Amiga con plan",
+        "emoji": "🛋️",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello? It's me, Sam.",
+        "translation": "¿Hola? Soy yo, Sam."
+      },
+      {
+        "speaker": "B",
+        "text": "Hi Sam! How are you?",
+        "translation": "¡Hola Sam! ¿Cómo estás?"
+      },
+      {
+        "speaker": "A",
+        "text": "Good! Do you want to go to the cinema?",
+        "translation": "¡Bien! ¿Quieres ir al cine?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes! What time?",
+        "translation": "¡Sí! ¿A qué hora?"
+      },
+      {
+        "speaker": "A",
+        "text": "At eight, on Saturday.",
+        "translation": "A las ocho, el sábado."
+      },
+      {
+        "speaker": "B",
+        "text": "Perfect, see you there.",
+        "translation": "Perfecto, nos vemos allí."
+      }
+    ],
+    "useful_expressions": [
+      "Do you want to go to the cinema?",
+      "What time?",
+      "See you there",
+      "Are you free on Saturday?"
+    ],
+    "backdrop": {
+      "kind": "home",
+      "style": "flat",
+      "light": "sunset",
+      "palette": [
+        "#e29578",
+        "#ffddd2",
+        "#006d77"
+      ],
+      "props": [
+        "sofa",
+        "lamp",
+        "window"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-084",
+    "scene_title": "Taquilla de la estación",
+    "scene_description": "Una estación grande con paneles de salidas y gente con prisas. En la taquilla hay un cristal y un micrófono.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Ticket Clerk",
+        "role": "Taquillero",
+        "emoji": "🎫",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Traveller",
+        "role": "Viajero con mochila",
+        "emoji": "🚉",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello! Where do you want to go?",
+        "translation": "¡Hola! ¿A dónde quieres ir?"
+      },
+      {
+        "speaker": "B",
+        "text": "One ticket to Brighton, please.",
+        "translation": "Un billete a Brighton, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "Single or return?",
+        "translation": "¿Ida o ida y vuelta?"
+      },
+      {
+        "speaker": "B",
+        "text": "Return, please.",
+        "translation": "Ida y vuelta, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "That's twenty pounds. Platform 4.",
+        "translation": "Son veinte libras. Andén 4."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you!",
+        "translation": "¡Gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "One ticket to Brighton, please",
+      "Single or return?",
+      "Which platform?",
+      "What time does it leave?"
+    ],
+    "backdrop": {
+      "kind": "transport",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#577590",
+        "#f9f9f9",
+        "#f94144"
+      ],
+      "props": [
+        "departures board",
+        "benches",
+        "tickets"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-085",
+    "scene_title": "El aula nueva",
+    "scene_description": "Un aula luminosa con mesas pequeñas, un proyector y un mapa de Inglaterra en la pared. Falta poco para empezar.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Classmate",
+        "role": "Compañera de clase",
+        "emoji": "📚",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Student",
+        "role": "Alumno nuevo",
+        "emoji": "🎓",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hi! Are you new here?",
+        "translation": "¡Hola! ¿Eres nuevo aquí?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, today is my first day.",
+        "translation": "Sí, hoy es mi primer día."
+      },
+      {
+        "speaker": "A",
+        "text": "I'm Maya. Nice to meet you.",
+        "translation": "Soy Maya. Encantada."
+      },
+      {
+        "speaker": "B",
+        "text": "Nice to meet you too. I'm Diego.",
+        "translation": "Encantado. Soy Diego."
+      },
+      {
+        "speaker": "A",
+        "text": "Do you like this class?",
+        "translation": "¿Te gusta esta clase?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, the teacher is very kind.",
+        "translation": "Sí, el profesor es muy amable."
+      }
+    ],
+    "useful_expressions": [
+      "I'm Diego, nice to meet you",
+      "This is my first day",
+      "Do you like this class?",
+      "See you later"
+    ],
+    "backdrop": {
+      "kind": "campus",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#8ecae6",
+        "#fefae0",
+        "#fb8500"
+      ],
+      "props": [
+        "desks",
+        "projector",
+        "map"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-086",
+    "scene_title": "Mostrador de facturación",
+    "scene_description": "Un aeropuerto amplio con pantallas de vuelos y cintas de equipaje. En el mostrador hay una balanza y un lector de pasaportes.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Check-in Agent",
+        "role": "Agente de facturación",
+        "emoji": "🛫",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Passenger",
+        "role": "Pasajero con maleta",
+        "emoji": "🧳",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good morning! Your passport, please.",
+        "translation": "¡Buenos días! Su pasaporte, por favor."
+      },
+      {
+        "speaker": "B",
+        "text": "Here it is.",
+        "translation": "Aquí está."
+      },
+      {
+        "speaker": "A",
+        "text": "How many bags?",
+        "translation": "¿Cuántas maletas?"
+      },
+      {
+        "speaker": "B",
+        "text": "One bag, please.",
+        "translation": "Una maleta, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "Your gate is B12. Have a good flight!",
+        "translation": "Su puerta es B12. ¡Buen viaje!"
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you very much.",
+        "translation": "Muchas gracias."
+      }
+    ],
+    "useful_expressions": [
+      "Here is my passport",
+      "One bag, please",
+      "Which gate is it?",
+      "Have a good flight"
+    ],
+    "backdrop": {
+      "kind": "transport",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#adb5bd",
+        "#e9ecef",
+        "#0077b6"
+      ],
+      "props": [
+        "screens",
+        "belt",
+        "scales"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-087",
+    "scene_title": "La cuenta de la noche",
+    "scene_description": "Un restaurante íntimo con velas en las mesas y vistas a la calle. La luz es cálida y hay poco ruido.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Waiter",
+        "role": "Camarero",
+        "emoji": "💳",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Diner",
+        "role": "Cliente cenando",
+        "emoji": "🍷",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Did you enjoy the meal?",
+        "translation": "¿Disfrutaste la comida?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, it was delicious.",
+        "translation": "Sí, estaba deliciosa."
+      },
+      {
+        "speaker": "A",
+        "text": "Do you want dessert?",
+        "translation": "¿Quieres postre?"
+      },
+      {
+        "speaker": "B",
+        "text": "No, thank you. The bill, please.",
+        "translation": "No, gracias. La cuenta, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "Cash or card?",
+        "translation": "¿Efectivo o tarjeta?"
+      },
+      {
+        "speaker": "B",
+        "text": "Card, please.",
+        "translation": "Tarjeta, por favor."
+      }
+    ],
+    "useful_expressions": [
+      "The bill, please",
+      "It was delicious",
+      "Can I pay by card?",
+      "Keep the change"
+    ],
+    "backdrop": {
+      "kind": "restaurant",
+      "style": "flat",
+      "light": "night",
+      "palette": [
+        "#3d405b",
+        "#f4f1de",
+        "#e07a5f"
+      ],
+      "props": [
+        "candles",
+        "tables",
+        "windows"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-088",
+    "scene_title": "Alquiler de bicis",
+    "scene_description": "Una tienda pequeña llena de bicicletas, cascos y mapas de rutas. Fuera hace sol y hay un carril bici.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Rental Clerk",
+        "role": "Empleado del alquiler",
+        "emoji": "🚲",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Rider",
+        "role": "Turista en bici",
+        "emoji": "🧢",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello! Do you want to rent a bike?",
+        "translation": "¡Hola! ¿Quieres alquilar una bici?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, how much is it?",
+        "translation": "Sí, ¿cuánto cuesta?"
+      },
+      {
+        "speaker": "A",
+        "text": "Ten dollars a day.",
+        "translation": "Diez dólares al día."
+      },
+      {
+        "speaker": "B",
+        "text": "Great. I need a helmet too.",
+        "translation": "Genial. También necesito un casco."
+      },
+      {
+        "speaker": "A",
+        "text": "Of course. Here is the key.",
+        "translation": "Claro. Aquí está la llave."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you!",
+        "translation": "¡Gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "I want to rent a bike",
+      "How much is it per day?",
+      "I need a helmet",
+      "Here is the key"
+    ],
+    "backdrop": {
+      "kind": "services",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#90be6d",
+        "#f9c74f",
+        "#277da1"
+      ],
+      "props": [
+        "bikes",
+        "helmet",
+        "map"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-089",
+    "scene_title": "En la puerta del edificio",
+    "scene_description": "La entrada de un edificio de barrio con buzones, una rampa y macetas. El cielo está despejado.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Neighbor",
+        "role": "Vecino",
+        "emoji": "🗞️",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Neighbour",
+        "role": "Vecina del tercero",
+        "emoji": "🌤️",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hi! Nice weather today, right?",
+        "translation": "¡Hola! Buen tiempo hoy, ¿verdad?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, it's sunny and warm.",
+        "translation": "Sí, está soleado y cálido."
+      },
+      {
+        "speaker": "A",
+        "text": "Tomorrow it will rain.",
+        "translation": "Mañana va a llover."
+      },
+      {
+        "speaker": "B",
+        "text": "Really? I need my umbrella.",
+        "translation": "¿De verdad? Necesito mi paraguas."
+      },
+      {
+        "speaker": "A",
+        "text": "Take a coat too.",
+        "translation": "Lleva también un abrigo."
+      },
+      {
+        "speaker": "B",
+        "text": "Thanks for the advice!",
+        "translation": "¡Gracias por el consejo!"
+      }
+    ],
+    "useful_expressions": [
+      "Nice weather today",
+      "It's sunny and warm",
+      "Tomorrow it will rain",
+      "Thanks for the advice"
+    ],
+    "backdrop": {
+      "kind": "street",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#48cae4",
+        "#caf0f8",
+        "#ffb703"
+      ],
+      "props": [
+        "mailboxes",
+        "plants",
+        "door"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-090",
+    "scene_title": "La tienda de móviles",
+    "scene_description": "Una tienda moderna con luces blancas y móviles de todos los tamaños. Suena música tranquila.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Salesperson",
+        "role": "Vendedora",
+        "emoji": "📱",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Customer",
+        "role": "Cliente poco técnico",
+        "emoji": "🧓",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good morning! Can I help you?",
+        "translation": "¡Buenos días! ¿Puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, I need a simple phone.",
+        "translation": "Sí, necesito un teléfono sencillo."
+      },
+      {
+        "speaker": "A",
+        "text": "This one is cheap and easy.",
+        "translation": "Este es barato y fácil."
+      },
+      {
+        "speaker": "B",
+        "text": "How much is it?",
+        "translation": "¿Cuánto cuesta?"
+      },
+      {
+        "speaker": "A",
+        "text": "Ninety euros.",
+        "translation": "Noventa euros."
+      },
+      {
+        "speaker": "B",
+        "text": "OK, I'll take it.",
+        "translation": "Vale, me lo llevo."
+      }
+    ],
+    "useful_expressions": [
+      "I need a simple phone",
+      "How much is it?",
+      "I'll take it",
+      "Is it easy to use?"
+    ],
+    "backdrop": {
+      "kind": "shop",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#dee2e6",
+        "#f8f9fa",
+        "#3a86ff"
+      ],
+      "props": [
+        "phones",
+        "tables",
+        "signs"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-091",
+    "scene_title": "El panel de salidas",
+    "scene_description": "Una estación luminosa con un gran panel de salidas y andenes numerados. Hay viajeros consultando el móvil.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Clerk",
+        "role": "Empleado de estación",
+        "emoji": "🕒",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Traveller",
+        "role": "Viajera con prisa",
+        "emoji": "⏱️",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Excuse me, what time is the next train?",
+        "translation": "Disculpe, ¿a qué hora es el próximo tren?"
+      },
+      {
+        "speaker": "B",
+        "text": "At half past three.",
+        "translation": "A las tres y media."
+      },
+      {
+        "speaker": "A",
+        "text": "To Oxford?",
+        "translation": "¿A Oxford?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, platform two.",
+        "translation": "Sí, andén dos."
+      },
+      {
+        "speaker": "A",
+        "text": "How long is the trip?",
+        "translation": "¿Cuánto dura el viaje?"
+      },
+      {
+        "speaker": "B",
+        "text": "About one hour.",
+        "translation": "Alrededor de una hora."
+      }
+    ],
+    "useful_expressions": [
+      "What time is the next train?",
+      "How long is the trip?",
+      "Which platform?",
+      "About one hour"
+    ],
+    "backdrop": {
+      "kind": "transport",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#495057",
+        "#f1f3f5",
+        "#0d6efd"
+      ],
+      "props": [
+        "departures board",
+        "platforms",
+        "clocks"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-092",
+    "scene_title": "Invitación a cenar",
+    "scene_description": "Una cocina cálida al atardecer con una mesa de madera, frutas en un bol y una ventana abierta.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Friend",
+        "role": "Amiga de siempre",
+        "emoji": "🍝",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Host",
+        "role": "Anfitrión de la cena",
+        "emoji": "🍽️",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hi! Are you free on Friday?",
+        "translation": "¡Hola! ¿Estás libre el viernes?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, why?",
+        "translation": "Sí, ¿por qué?"
+      },
+      {
+        "speaker": "A",
+        "text": "Do you want to have dinner at my house?",
+        "translation": "¿Quieres cenar en mi casa?"
+      },
+      {
+        "speaker": "B",
+        "text": "I'd love to! What can I bring?",
+        "translation": "¡Me encantaría! ¿Qué puedo llevar?"
+      },
+      {
+        "speaker": "A",
+        "text": "Just bring a dessert.",
+        "translation": "Solo trae un postre."
+      },
+      {
+        "speaker": "B",
+        "text": "Perfect, see you on Friday.",
+        "translation": "Perfecto, nos vemos el viernes."
+      }
+    ],
+    "useful_expressions": [
+      "I'd love to",
+      "What can I bring?",
+      "Dinner at my house",
+      "See you on Friday"
+    ],
+    "backdrop": {
+      "kind": "home",
+      "style": "flat",
+      "light": "sunset",
+      "palette": [
+        "#d4a373",
+        "#faedcd",
+        "#ccd5ae"
+      ],
+      "props": [
+        "table",
+        "window",
+        "fruit"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-093",
+    "scene_title": "La farmacia",
+    "scene_description": "Una farmacia pequeña con estanterías blancas, cajas de colores y una cruz verde en la puerta.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Pharmacist",
+        "role": "Farmacéutico",
+        "emoji": "💊",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Patient",
+        "role": "Cliente con dolor",
+        "emoji": "😷",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good afternoon! How can I help you?",
+        "translation": "¡Buenas tardes! ¿En qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "I need something for a sore throat.",
+        "translation": "Necesito algo para el dolor de garganta."
+      },
+      {
+        "speaker": "A",
+        "text": "These tablets are good.",
+        "translation": "Estas pastillas son buenas."
+      },
+      {
+        "speaker": "B",
+        "text": "How do I take them?",
+        "translation": "¿Cómo las tomo?"
+      },
+      {
+        "speaker": "A",
+        "text": "One every eight hours.",
+        "translation": "Una cada ocho horas."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you!",
+        "translation": "¡Gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "Something for a sore throat",
+      "How do I take it?",
+      "Every eight hours",
+      "Thank you very much"
+    ],
+    "backdrop": {
+      "kind": "health",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#a8dadc",
+        "#ffffff",
+        "#2a9d8f"
+      ],
+      "props": [
+        "shelves",
+        "counter",
+        "cross"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-094",
+    "scene_title": "El centro comercial",
+    "scene_description": "Un centro comercial amplio con tiendas brillantes, escaleras mecánicas y un gran mapa de plantas.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Info Assistant",
+        "role": "Atención al cliente",
+        "emoji": "🛗",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Shopper",
+        "role": "Visitante con bolsas",
+        "emoji": "🛍️",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello! Do you need help?",
+        "translation": "¡Hola! ¿Necesitas ayuda?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, where is the toilet?",
+        "translation": "Sí, ¿dónde está el baño?"
+      },
+      {
+        "speaker": "A",
+        "text": "On the second floor, next to the lifts.",
+        "translation": "En la segunda planta, al lado de los ascensores."
+      },
+      {
+        "speaker": "B",
+        "text": "Is there a lift here?",
+        "translation": "¿Hay un ascensor aquí?"
+      },
+      {
+        "speaker": "A",
+        "text": "Yes, behind you.",
+        "translation": "Sí, detrás de ti."
+      },
+      {
+        "speaker": "B",
+        "text": "Thanks a lot!",
+        "translation": "¡Muchas gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "Where is the toilet?",
+      "On the second floor",
+      "Next to the lifts",
+      "Thanks a lot"
+    ],
+    "backdrop": {
+      "kind": "shop",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#ced4da",
+        "#f8f9fa",
+        "#7209b7"
+      ],
+      "props": [
+        "escalators",
+        "stores",
+        "map"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-095",
+    "scene_title": "La floristería",
+    "scene_description": "Una floristería pequeña y colorida con cubos de rosas, tulipanes y girasoles. Suena música suave.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Florist",
+        "role": "Florista",
+        "emoji": "💐",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Customer",
+        "role": "Cliente buscando un regalo",
+        "emoji": "🎁",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good morning! What are you looking for?",
+        "translation": "¡Buenos días! ¿Qué buscas?"
+      },
+      {
+        "speaker": "B",
+        "text": "Some flowers for my mother.",
+        "translation": "Unas flores para mi madre."
+      },
+      {
+        "speaker": "A",
+        "text": "These red roses are beautiful.",
+        "translation": "Estas rosas rojas son preciosas."
+      },
+      {
+        "speaker": "B",
+        "text": "How much are they?",
+        "translation": "¿Cuánto cuestan?"
+      },
+      {
+        "speaker": "A",
+        "text": "Fifteen dollars.",
+        "translation": "Quince dólares."
+      },
+      {
+        "speaker": "B",
+        "text": "I'll take them, please.",
+        "translation": "Me las llevo, por favor."
+      }
+    ],
+    "useful_expressions": [
+      "Flowers for my mother",
+      "How much are they?",
+      "I'll take them",
+      "They are beautiful"
+    ],
+    "backdrop": {
+      "kind": "shop",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#ff8fab",
+        "#ffe5ec",
+        "#588157"
+      ],
+      "props": [
+        "flowers",
+        "buckets",
+        "ribbons"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-096",
+    "scene_title": "Recepción del gimnasio",
+    "scene_description": "Un gimnasio luminoso con máquinas modernas, espejos y una sala de clases al fondo.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Instructor",
+        "role": "Instructor",
+        "emoji": "🏋️",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Visitor",
+        "role": "Vecino que quiere entrenar",
+        "emoji": "🏃",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hi! Are you interested in the gym?",
+        "translation": "¡Hola! ¿Te interesa el gimnasio?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, how much is it per month?",
+        "translation": "Sí, ¿cuánto es al mes?"
+      },
+      {
+        "speaker": "A",
+        "text": "Thirty euros. It opens at seven.",
+        "translation": "Treinta euros. Abre a las siete."
+      },
+      {
+        "speaker": "B",
+        "text": "Is there a swimming pool?",
+        "translation": "¿Hay piscina?"
+      },
+      {
+        "speaker": "A",
+        "text": "No, but there are classes.",
+        "translation": "No, pero hay clases."
+      },
+      {
+        "speaker": "B",
+        "text": "Great, I want to join.",
+        "translation": "Genial, quiero apuntarme."
+      }
+    ],
+    "useful_expressions": [
+      "How much is it per month?",
+      "Is there a swimming pool?",
+      "I want to join",
+      "It opens at seven"
+    ],
+    "backdrop": {
+      "kind": "gym",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#457b9d",
+        "#a8dadc",
+        "#e63946"
+      ],
+      "props": [
+        "machines",
+        "mirrors",
+        "weights"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-097",
+    "scene_title": "Escaleras de la estación",
+    "scene_description": "Unas escaleras anchas en la estación con mucha gente pasando. Hay ascensor al fondo, pero está lejos.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Traveller",
+        "role": "Viajero amable",
+        "emoji": "🧳",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Passenger",
+        "role": "Pasajera cargada",
+        "emoji": "💪",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Excuse me, can you help me?",
+        "translation": "Disculpe, ¿puede ayudarme?"
+      },
+      {
+        "speaker": "B",
+        "text": "Of course. What's the problem?",
+        "translation": "Claro. ¿Cuál es el problema?"
+      },
+      {
+        "speaker": "A",
+        "text": "This suitcase is very heavy.",
+        "translation": "Esta maleta pesa mucho."
+      },
+      {
+        "speaker": "B",
+        "text": "I can carry it to the stairs.",
+        "translation": "Puedo llevarla a las escaleras."
+      },
+      {
+        "speaker": "A",
+        "text": "Thank you so much!",
+        "translation": "¡Muchísimas gracias!"
+      },
+      {
+        "speaker": "B",
+        "text": "No problem.",
+        "translation": "No hay problema."
+      }
+    ],
+    "useful_expressions": [
+      "Can you help me?",
+      "What's the problem?",
+      "It is very heavy",
+      "Thank you so much"
+    ],
+    "backdrop": {
+      "kind": "transport",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#adb5bd",
+        "#dee2e6",
+        "#f77f00"
+      ],
+      "props": [
+        "stairs",
+        "crowd",
+        "signs"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-098",
+    "scene_title": "Café y familia",
+    "scene_description": "Una cafetería tranquila con plantas y mesas pequeñas. Suena jazz suave y las tazas humean.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "New Friend",
+        "role": "Amiga nueva",
+        "emoji": "👭",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Guest",
+        "role": "Recién conocido",
+        "emoji": "☕",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Do you have brothers or sisters?",
+        "translation": "¿Tienes hermanos o hermanas?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, one brother and two sisters.",
+        "translation": "Sí, un hermano y dos hermanas."
+      },
+      {
+        "speaker": "A",
+        "text": "Do you live with your family?",
+        "translation": "¿Vives con tu familia?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, with my parents.",
+        "translation": "Sí, con mis padres."
+      },
+      {
+        "speaker": "A",
+        "text": "What does your father do?",
+        "translation": "¿A qué se dedica tu padre?"
+      },
+      {
+        "speaker": "B",
+        "text": "He is a cook.",
+        "translation": "Es cocinero."
+      }
+    ],
+    "useful_expressions": [
+      "I have one brother",
+      "I live with my parents",
+      "What does your father do?",
+      "He is a cook"
+    ],
+    "backdrop": {
+      "kind": "restaurant",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#b08968",
+        "#ede0d4",
+        "#7f5539"
+      ],
+      "props": [
+        "tables",
+        "plants",
+        "cups"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-099",
+    "scene_title": "Llamada al restaurante",
+    "scene_description": "Un salón en penumbra con una lámpara encendida. La llamada suena dos veces antes de que contesten.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Host",
+        "role": "Encargado del restaurante",
+        "emoji": "🍽️",
+        "gender": "male",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Caller",
+        "role": "Cliente que reserva",
+        "emoji": "📞",
+        "gender": "female",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good evening, Bella Restaurant.",
+        "translation": "Buenas noches, Restaurante Bella."
+      },
+      {
+        "speaker": "B",
+        "text": "Hello, I want a table for four.",
+        "translation": "Hola, quiero una mesa para cuatro."
+      },
+      {
+        "speaker": "A",
+        "text": "What day, please?",
+        "translation": "¿Qué día, por favor?"
+      },
+      {
+        "speaker": "B",
+        "text": "Friday at nine.",
+        "translation": "Viernes a las nueve."
+      },
+      {
+        "speaker": "A",
+        "text": "What's your name?",
+        "translation": "¿Su nombre?"
+      },
+      {
+        "speaker": "B",
+        "text": "Maria Lopez. Thank you!",
+        "translation": "María López. ¡Gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "A table for four, please",
+      "Friday at nine",
+      "My name is Maria",
+      "Thank you, see you Friday"
+    ],
+    "backdrop": {
+      "kind": "restaurant",
+      "style": "flat",
+      "light": "night",
+      "palette": [
+        "#2b2d42",
+        "#edf2f4",
+        "#ef233c"
+      ],
+      "props": [
+        "phone",
+        "tables",
+        "candles"
+      ]
+    },
+    "generated_by": "fixture"
+  },
+  {
+    "mission_id": "m-100",
+    "scene_title": "La caja del supermercado",
+    "scene_description": "Un supermercado de barrio con cajas numeradas, revistas y una cinta transportadora.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Cashier",
+        "role": "Cajera",
+        "emoji": "🛒",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Customer",
+        "role": "Cliente con la compra",
+        "emoji": "🥦",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello! Do you have a bag?",
+        "translation": "¡Hola! ¿Tienes bolsa?"
+      },
+      {
+        "speaker": "B",
+        "text": "No, I need one, please.",
+        "translation": "No, necesito una, por favor."
+      },
+      {
+        "speaker": "A",
+        "text": "That's twelve euros fifty.",
+        "translation": "Son doce euros con cincuenta."
+      },
+      {
+        "speaker": "B",
+        "text": "Can I pay by card?",
+        "translation": "¿Puedo pagar con tarjeta?"
+      },
+      {
+        "speaker": "A",
+        "text": "Yes, of course.",
+        "translation": "Sí, claro."
+      },
+      {
+        "speaker": "B",
+        "text": "Here you go. Thanks!",
+        "translation": "Aquí tienes. ¡Gracias!"
+      }
+    ],
+    "useful_expressions": [
+      "I need a bag, please",
+      "Can I pay by card?",
+      "How much is it?",
+      "Here you go"
+    ],
+    "backdrop": {
+      "kind": "shop",
+      "style": "flat",
+      "light": "day",
+      "palette": [
+        "#e9ecef",
+        "#f8f9fa",
+        "#2a9d8f"
+      ],
+      "props": [
+        "checkout",
+        "trolley",
+        "magazines"
+      ]
+    },
+    "generated_by": "fixture"
+  }
+]
