@@ -182,6 +182,65 @@ const DESIGNS: Record<string, Design> = {
     spin: 5,
     tight: true,
   },
+  'marco-dragon-dorado': {
+    band: ([a, b]) => `conic-gradient(from 0deg, #451a03, ${a}, #78350f, ${b}, #451a03)`,
+    spin: 9,
+    overlay: {
+      background: ([a, b]) => `repeating-conic-gradient(from 0deg, ${b} 0deg 9deg, ${a}00 9deg 18deg)`,
+      spin: -14,
+      opacity: 0.85,
+    },
+    sparks: [{ duration: 7, delay: '0.4s', dot: 'h-1 w-1 bg-yellow-200/90' }],
+  },
+  'marco-perla': {
+    band: () => 'conic-gradient(from 0deg, #f8fafc, #fbcfe8, #bae6fd, #f8fafc)',
+    spin: 16,
+    tight: true,
+    overlay: {
+      background: () =>
+        'linear-gradient(120deg, rgba(255, 255, 255, 0.55), transparent 50%, rgba(255, 255, 255, 0.3))',
+      spin: 8,
+      opacity: 0.5,
+    },
+    sparks: [{ duration: 11, dot: 'h-1 w-1 bg-pink-100' }],
+  },
+  'marco-topacio': {
+    band: ([a, b]) => `conic-gradient(from 0deg, #451a03, ${a}, #b45309, ${b}, #451a03)`,
+    spin: 13,
+    tight: true,
+    overlay: { background: ([a, b]) => facetas(a, b), spin: -6, opacity: 0.9 },
+  },
+  'marco-aurora': {
+    band: () => 'conic-gradient(from 0deg, #052e16, #34d399, #0ea5e9, #a78bfa, #052e16)',
+    spin: 15,
+    overlay: {
+      background: () =>
+        'linear-gradient(100deg, transparent 10%, rgba(167, 139, 250, 0.55) 45%, transparent 80%)',
+      spin: -8,
+      opacity: 0.7,
+    },
+  },
+  'marco-eclipse': {
+    band: () =>
+      'conic-gradient(from 0deg, #05070d 0 62%, #f97316 74%, #fde68a 80%, #f97316 86%, #05070d 100%)',
+    spin: 6,
+    tight: true,
+    rings: [{ inset: 0, className: 'border border-orange-500/20' }],
+  },
+  'marco-estelar': {
+    band: () => 'conic-gradient(from 0deg, #1e1b4b, #312e81, #1e1b4b)',
+    spin: 12,
+    tight: true,
+    overlay: {
+      background: () => 'repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.95) 0deg 0.8deg, transparent 0.8deg 18deg)',
+      spin: -3,
+      opacity: 0.8,
+    },
+    sparks: [
+      { duration: 9, dot: 'h-1 w-1 bg-indigo-200' },
+      { duration: 13, delay: '1.2s', dot: 'h-0.5 w-0.5 bg-white/90' },
+    ],
+  },
 }
 
 /** Diseño para ids desconocidos: aro pulido con los colores que lleguen. */

@@ -8,6 +8,8 @@
 import { useEffect, useState } from 'react'
 import {
   Check,
+  ChevronLeft,
+  ChevronRight,
   Coins,
   Loader2,
   Lock,
@@ -27,6 +29,9 @@ import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { publishStoreView } from '@/lib/hooks/useStoreView'
 import { STORE_SECTIONS, type StoreItem, type StoreItemKind, type StoreView } from '@/lib/store'
+
+/** Marcos por página: dos columnas por cuatro filas. */
+const FRAMES_PER_PAGE = 8
 
 const KIND_ICON: Record<StoreItemKind, LucideIcon> = {
   frame: Sparkles,
@@ -75,6 +80,8 @@ export default function StorePage() {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState<string | null>(null)
   const [burst, setBurst] = useState(0)
+  /** Página del catálogo de marcos (el resto de secciones entra entera). */
+  const [framePage, setFramePage] = useState(0)
   const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
 
   useEffect(() => {
@@ -181,9 +188,18 @@ export default function StorePage() {
         {!loading && view && (
           <div className="space-y-8">
             {STORE_SECTIONS.map((section, index) => {
-              const items = view.items.filter(item => item.kind === section.kind)
-              if (items.length === 0) return null
+              const allItems = view.items.filter(item => item.kind === section.kind)
+              if (allItems.length === 0) return null
               const Icon = KIND_ICON[section.kind]
+
+              // Los marcos se paginan; las demás secciones caben enteras.
+              const paginada = section.kind === 'frame' && allItems.length > FRAMES_PER_PAGE
+              const pageCount = Math.max(1, Math.ceil(allItems.length / FRAMES_PER_PAGE))
+              const page = Math.min(framePage, pageCount - 1)
+              const items = paginada
+                ? allItems.slice(page * FRAMES_PER_PAGE, (page + 1) * FRAMES_PER_PAGE)
+                : allItems
+
               return (
                 <section
                   key={section.kind}
@@ -196,10 +212,35 @@ export default function StorePage() {
                     </span>
                     <h2 className="text-sm font-bold uppercase tracking-widest text-slate-300">{section.title}</h2>
                     <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-slate-500">
-                      {items.length}
+                      {allItems.length}
                     </span>
                     <span className="h-px flex-1 bg-white/10" />
                     <span className="text-[10px] uppercase tracking-widest text-slate-600">{section.hint}</span>
+                    {paginada && (
+                      <span className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => setFramePage(current => Math.max(0, current - 1))}
+                          disabled={page === 0}
+                          aria-label="Marcos anteriores"
+                          className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-white/30 disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </button>
+                        <span className="min-w-10 text-center font-mono text-[10px] uppercase tracking-widest text-slate-500">
+                          {page + 1}/{pageCount}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setFramePage(current => Math.min(pageCount - 1, current + 1))}
+                          disabled={page === pageCount - 1}
+                          aria-label="Marcos siguientes"
+                          className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-white/30 disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </span>
+                    )}
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-2">
