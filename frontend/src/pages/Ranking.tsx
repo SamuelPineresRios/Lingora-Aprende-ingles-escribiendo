@@ -106,13 +106,13 @@ function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } })
 
   if (entry.frame) {
     return (
-      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={72}>
+      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={88}>
         {image}
       </FrameRing>
     )
   }
 
-  return <div className="h-[72px] w-[72px] shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
+  return <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
 }
 
 /** Título equipado, con el mismo aspecto que en el perfil. */
