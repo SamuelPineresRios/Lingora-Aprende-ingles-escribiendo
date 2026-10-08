@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
+import type { UserAvatar } from '@vox/shared'
 import { readJson } from '@/lib/api'
 
 export interface AuthUser {
@@ -14,6 +15,8 @@ export interface AuthUser {
   email: string
   role: 'student' | 'teacher'
   full_name: string | null
+  /** Skin voxel-art del alumno (los docentes van a null). */
+  avatar: UserAvatar | null
   cefr_level: string | null
 }
 

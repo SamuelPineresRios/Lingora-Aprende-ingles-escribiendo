@@ -15,6 +15,7 @@ import Profile from '@/pages/Profile'
 import Ranking from '@/pages/Ranking'
 import Season from '@/pages/Season'
 import Store from '@/pages/Store'
+import Avatar from '@/pages/Avatar'
 import SessionSummary from '@/pages/SessionSummary'
 import Signup from '@/pages/Signup'
 import Words from '@/pages/Words'
@@ -51,6 +52,7 @@ export function App() {
             <Route path="/ranking" element={<Ranking />} />
             <Route path="/season" element={<Season />} />
             <Route path="/store" element={<Store />} />
+          <Route path="/avatar" element={<Avatar />} />
           </Route>
 
           <Route element={<ProtectedRoute teacherOnly />}>

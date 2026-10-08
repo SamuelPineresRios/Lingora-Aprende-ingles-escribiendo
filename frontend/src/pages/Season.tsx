@@ -14,7 +14,9 @@ import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { WeeklyQuests } from '@/components/QuestBoard'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { avatarUrl } from '@/lib/avatar'
+import { publishSeasonProgress } from '@/lib/hooks/useSeasonProgress'
+import { resolveAvatar, type UserAvatar } from '@vox/shared'
+import { studentAvatarUrl } from '@/lib/avatar'
 import {
   badgeIcon,
   seasonRange,
@@ -74,11 +76,11 @@ function RewardIcon({ reward, size = 'h-10 w-10' }: { reward: SeasonReward; size
 function FeaturedReward({
   reward,
   unlocked,
-  avatarSeed,
+  avatar,
 }: {
   reward: SeasonReward
   unlocked: boolean
-  avatarSeed: string
+  avatar: UserAvatar
 }) {
   const estado = unlocked ? 'Desbloqueada' : `Se desbloquea en la casilla ${reward.tier}`
 
@@ -105,7 +107,7 @@ function FeaturedReward({
               style={{ backgroundImage: `linear-gradient(135deg, ${reward.colors[0]}, ${reward.colors[1]})` }}
             >
               <div className="rounded-full bg-slate-950 p-1">
-                <img src={avatarUrl(avatarSeed)} alt="" className="h-44 w-44 sm:h-52 sm:w-52" />
+                <img src={studentAvatarUrl(avatar)} alt="" className="h-44 w-44 sm:h-52 sm:w-52" />
               </div>
             </div>
           </div>
@@ -161,7 +163,10 @@ export default function SeasonPage() {
         const res = await fetch(`/api/students/${user.id}/season`)
         if (!res.ok) throw new Error('No se pudo cargar el pase.')
         const data = await readJson<SeasonProgress>(res)
-        if (!cancelled) setProgress(data)
+        if (!cancelled) {
+          setProgress(data)
+          publishSeasonProgress(data, user.id)
+        }
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'No se pudo cargar el pase.')
       } finally {
@@ -260,7 +265,7 @@ export default function SeasonPage() {
               <FeaturedReward
                 reward={featured}
                 unlocked={featured.unlocked}
-                avatarSeed={user?.full_name ?? 'Letoura'}
+                avatar={resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null })}
               />
 
               {/* Filtros por tipo de recompensa */}

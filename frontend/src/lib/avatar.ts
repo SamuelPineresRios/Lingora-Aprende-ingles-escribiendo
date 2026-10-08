@@ -1,16 +1,18 @@
 /**
- * Avatar de un personaje: voxel-art animado de DiceBear (licencia CC0).
+ * URLs de avatar (voxel-art de DiceBear, licencia CC0).
+ *
+ * Dos caminos: `studentAvatarUrl` pinta el personaje personalizable del
+ * alumno (cada pieza fija, así el look no baila) y `characterAvatarUrl` pinta
+ * los personajes de misión, que no se personalizan: mismo seed y presets por
+ * género para que la escena y el chat dibujen al mismo con la misma URL.
  *
  * `tags=animation` activa el parpadeo y la respiración por CSS (respetan
  * `prefers-reduced-motion`) y el alfa `00` del fondo deja el lienzo
  * transparente: el estilo trae por defecto un fondo lila que chocaría con la
- * escena oscura. El mismo seed da siempre el mismo personaje, así que la
- * escena narrativa y el chat dibujan al mismo con la misma URL.
- *
- * El estilo no tiene un parámetro de género: cuando se conoce (lo decide el
- * modelo al escribir la escena), se acotan los peinados, la barba y la ropa
- * para que el personaje se lea acorde al nombre.
+ * escena oscura.
  */
+import type { UserAvatar } from '@vox/shared'
+
 export type AvatarGender = 'male' | 'female'
 
 /** Pelo corto, algo de barba y sin vestidos. */
@@ -25,31 +27,76 @@ const FEMALE_LOOK =
   '&beardProbability=0' +
   '&outfitVariant=dress,jacket,hoodie,plain,stripes,coat,overalls,checker&outfitProbability=100'
 
-export function avatarUrl(name: string, gender?: AvatarGender): string {
-  const base = `https://api.dicebear.com/10.x/voxel-art/svg?seed=${encodeURIComponent(name)}&tags=animation&flip=horizontal&backgroundColor=00000000`
+function avatarEndpoint(seed: string): string {
+  return `https://api.dicebear.com/10.x/voxel-art/svg?seed=${encodeURIComponent(seed)}&tags=animation&flip=horizontal&backgroundColor=00000000`
+}
+
+/** Personaje de misión (no personalizable): nombre + preset de género. */
+export function characterAvatarUrl(name: string, gender?: AvatarGender): string {
+  const base = avatarEndpoint(name)
   if (gender === 'male') return `${base}&${MALE_LOOK}`
   if (gender === 'female') return `${base}&${FEMALE_LOOK}`
   return base
 }
 
+/**
+ * Personaje del alumno: todas las piezas van fijas. Las opcionales que no se
+ * eligen se apagan con probabilidad 0 para que no aparezcan por sorpresa.
+ */
+export function studentAvatarUrl(avatar: UserAvatar): string {
+  const params = new URLSearchParams({
+    seed: avatar.seed,
+    tags: 'animation',
+    flip: 'horizontal',
+    backgroundColor: '00000000',
+    topVariant: avatar.top,
+    topProbability: '100',
+    hairColor: avatar.topColor,
+    skinColor: avatar.skinColor,
+    outfitVariant: avatar.outfit,
+    outfitProbability: '100',
+    shirtColor: avatar.shirtColor,
+    jacketColor: avatar.jacketColor,
+    pantsColor: avatar.pantsColor,
+    shoesColor: avatar.shoesColor,
+    hatColor: avatar.hatColor,
+    eyesVariant: avatar.eyes,
+    eyesProbability: '100',
+    eyebrowsVariant: avatar.eyebrows,
+    eyebrowsProbability: '100',
+    mouthVariant: avatar.mouth,
+    mouthProbability: '100',
+    noseVariant: avatar.nose,
+    noseProbability: '100',
+    cheeksProbability: avatar.cheeks ? '100' : '0',
+    glassesProbability: avatar.glasses ? '100' : '0',
+    beardProbability: avatar.beard ? '100' : '0',
+  })
+
+  if (avatar.cheeks) params.set('cheeksVariant', avatar.cheeks)
+  if (avatar.glasses) params.set('glassesVariant', avatar.glasses)
+  if (avatar.beard) params.set('beardVariant', avatar.beard)
+
+  return `https://api.dicebear.com/10.x/voxel-art/svg?${params.toString()}`
+}
+
 /** Avatares ya pedidos: pedir dos veces la misma URL no aporta nada. */
 const preloaded = new Set<string>()
 
+/** Precalienta una URL concreta (por ejemplo, el personaje del alumno). */
+export function preloadAvatar(url: string): void {
+  if (typeof window === 'undefined' || preloaded.has(url)) return
+  preloaded.add(url)
+  const image = new Image()
+  image.src = url
+  void image.decode?.().catch(() => {})
+}
+
 /**
- * Precalienta los avatares mientras se ve la cabecera de la misión: cuando la
+ * Precalienta los avatares de misión mientras se ve la cabecera: cuando la
  * escena entra, las imágenes ya están en la caché del navegador (DiceBear
  * responde con `max-age` de un año) y no aparecen vacías un instante.
  */
 export function preloadAvatars(people: Array<{ name: string; gender?: AvatarGender }>): void {
-  if (typeof window === 'undefined') return
-
-  for (const person of people) {
-    const url = avatarUrl(person.name, person.gender)
-    if (preloaded.has(url)) continue
-    preloaded.add(url)
-
-    const image = new Image()
-    image.src = url
-    void image.decode?.().catch(() => {})
-  }
+  for (const person of people) preloadAvatar(characterAvatarUrl(person.name, person.gender))
 }

@@ -19,7 +19,8 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { avatarUrl } from '@/lib/avatar'
+import { resolveAvatar } from '@vox/shared'
+import { studentAvatarUrl } from '@/lib/avatar'
 import { CoinRain } from '@/components/CoinRain'
 import { FrameRing } from '@/components/FrameRing'
 import { readJson } from '@/lib/api'
@@ -74,7 +75,7 @@ export default function StorePage() {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState<string | null>(null)
   const [burst, setBurst] = useState(0)
-  const avatar = avatarUrl(user?.full_name || 'Letoura')
+  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
 
   useEffect(() => {
     if (!user?.id) return

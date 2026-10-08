@@ -4,7 +4,9 @@
 import { Router } from 'express'
 import type { Request } from 'express'
 import { ownsResource } from '../../lib/authorization.ts'
+import { normalizeAvatar } from '../../lib/avatar.ts'
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
+import { updateUserAvatar } from '../auth/service.ts'
 import { getSeasonProgress } from '../season/service.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { queryInt, routeParam } from '../../utils/route-params.ts'
@@ -58,6 +60,21 @@ studentsRouter.post('/join-group', requireAuth, async (req, res) => {
   }
 
   res.status(201).json(result)
+})
+
+/** El alumno personaliza su personaje; nadie más puede tocar el de otro. */
+studentsRouter.patch('/:id/avatar', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+
+  if (!ownsResource(session, studentId)) throw new HttpError(403, 'Forbidden')
+
+  const avatar = normalizeAvatar(req.body)
+  const user = await updateUserAvatar(studentId, avatar)
+
+  if (!user) throw new HttpError(404, 'Alumno no encontrado')
+
+  res.json({ user })
 })
 
 studentsRouter.get('/:id/weekly-stats', requireAuth, async (req, res) => {

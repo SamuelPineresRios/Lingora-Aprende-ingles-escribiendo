@@ -20,7 +20,7 @@ import {
   timestamp,
   uniqueIndex,
 } from 'drizzle-orm/pg-core'
-import type { CefrLevel, IntroductionCharacter, IntroductionLine, MissionBackdrop, UserRole } from '@vox/shared'
+import type { CefrLevel, IntroductionCharacter, IntroductionLine, MissionBackdrop, UserAvatar, UserRole } from '@vox/shared'
 
 /** Estados por los que pasa una respuesta de misión. */
 export type ResponseStatus = 'submitted' | 'in_progress' | 'completed' | 'paused'
@@ -33,6 +33,8 @@ export const users = pgTable(
     password_hash: text('password_hash').notNull(),
     role: text('role').notNull().$type<UserRole>(),
     full_name: text('full_name'),
+    /** Skin voxel-art ya resuelto (se fija al registrarse) y personalizable. */
+    avatar: jsonb('avatar').$type<UserAvatar | null>(),
     cefr_level: text('cefr_level').$type<CefrLevel | null>(),
     language_preference: text('language_preference').notNull().default('es'),
     created_at: timestamp('created_at', { withTimezone: true })

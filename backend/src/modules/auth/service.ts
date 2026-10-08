@@ -10,7 +10,7 @@ import { randomUUID } from 'node:crypto'
 import { db } from '../../db/client.ts'
 import { UNIQUE_VIOLATION, sqlStateOf } from '../../db/errors.ts'
 import { users } from '../../db/schema.ts'
-import type { CefrLevel, UserRole } from '@vox/shared'
+import { baseAvatar, type CefrLevel, type UserAvatar, type UserRole } from '@vox/shared'
 import { HttpError } from '../../utils/http-error.ts'
 
 const BCRYPT_ROUNDS = 12
@@ -21,6 +21,7 @@ const publicColumns = {
   email: users.email,
   role: users.role,
   full_name: users.full_name,
+  avatar: users.avatar,
   cefr_level: users.cefr_level,
 } as const
 
@@ -38,6 +39,7 @@ export type PublicUser = {
   email: string
   role: UserRole
   full_name: string | null
+  avatar: UserAvatar | null
   cefr_level: CefrLevel | null
 }
 
@@ -81,15 +83,20 @@ export async function findPublicUserById(id: string): Promise<PublicUser | null>
 export async function registerUser(input: SignupInput): Promise<PublicUser> {
   const password_hash = await bcrypt.hash(input.password, BCRYPT_ROUNDS)
 
+  // El skin base se fija con el id: el personaje no cambia al renombrar y lo
+  // que no se fija aquí lo sortearía el seed en cada render.
+  const id = randomUUID()
+
   try {
     const [user] = await db
       .insert(users)
       .values({
-        id: randomUUID(),
+        id,
         email: input.email,
         password_hash,
         role: input.role,
         full_name: input.full_name,
+        avatar: input.role === 'student' ? baseAvatar(id) : null,
         cefr_level: input.role === 'student' ? (input.cefr_level ?? 'B1') : null,
         language_preference: 'es',
         created_at: new Date(),
@@ -110,6 +117,16 @@ export async function updateFullName(id: string, fullName: string): Promise<Publ
   const [user] = await db
     .update(users)
     .set({ full_name: fullName })
+    .where(eq(users.id, id))
+    .returning(publicColumns)
+
+  return user ?? null
+}
+
+export async function updateUserAvatar(id: string, avatar: UserAvatar): Promise<PublicUser | null> {
+  const [user] = await db
+    .update(users)
+    .set({ avatar })
     .where(eq(users.id, id))
     .returning(publicColumns)
 

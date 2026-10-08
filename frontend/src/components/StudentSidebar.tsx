@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal, Store } from 'lucide-react'
+import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal, Store, Brush } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useThemeAccent } from '@/lib/hooks/useStoreView'
 import { useState, type CSSProperties } from 'react'
@@ -19,6 +19,7 @@ export function StudentSidebar() {
     { href: '/season', label: 'PASE', icon: Medal },
     { href: '/store', label: 'TIENDA', icon: Store },
     { href: '/groups', label: 'GRUPOS', icon: Users },
+    { href: '/avatar', label: 'AVATAR', icon: Brush },
     { href: '/profile', label: 'PERFIL', icon: User },
   ]
 

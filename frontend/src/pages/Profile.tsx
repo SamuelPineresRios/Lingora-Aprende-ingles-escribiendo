@@ -10,9 +10,11 @@ import { ActivityHistory } from '@/components/ActivityHistory'
 import { XpBar } from '@/components/XpBar'
 import { useProgress } from '@/lib/hooks/useProgress'
 import { useStoreView, useThemeAccent } from '@/lib/hooks/useStoreView'
+import { useSeasonProgress } from '@/lib/hooks/useSeasonProgress'
 import { readJson } from '@/lib/api'
-import { avatarUrl } from '@/lib/avatar'
-import { activeFrame, badgeIcon, unlockedBadges, type SeasonProgress } from '@/lib/season'
+import { resolveAvatar } from '@vox/shared'
+import { studentAvatarUrl } from '@/lib/avatar'
+import { activeFrame, badgeIcon, unlockedBadges } from '@/lib/season'
 import { equippedItem } from '@/lib/store'
 
 interface Mission { id:string; title:string; description:string|null; cefr_level:string; status:string }
@@ -61,8 +63,8 @@ function statusFor(overall: number | null): string {
 export default function ProfilePage() {
   const { user, refetch } = useAuth()
   const { progress } = useProgress(user?.id)
-  /** Pase de temporada: marco activo, insignias y monedas. */
-  const [season, setSeason] = useState<SeasonProgress | null>(null)
+  /** Pase de temporada compartido: marco activo, insignias y monedas. */
+  const season = useSeasonProgress(user?.id)
   /** Tienda compartida: lo equipado (marco, título y tema) pisa lo del pase. */
   const shop = useStoreView(user?.id)
   /** Acento del tema equipado: tiñe barra de XP, gráfica y detalles del perfil. */
@@ -73,28 +75,12 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState('')
 
-  // El pase se carga aparte: si falla, el perfil sigue funcionando sin él.
-  useEffect(() => {
-    if (!user?.id) return
-    let cancelled = false
-
-    fetch(`/api/students/${user.id}/season`)
-      .then(readJson<SeasonProgress>)
-      .then(data => {
-        if (!cancelled && data) setSeason(data)
-      })
-      .catch(() => {})
-
-    return () => {
-      cancelled = true
-    }
-  }, [user?.id])
-
   // Marco: el equipado en la tienda o, si no, el mejor del pase.
   const shopFrame = equippedItem(shop, 'frame')
   const seasonFrame = activeFrame(season)
   const frameId = shopFrame?.id ?? seasonFrame?.id ?? null
   const frameColors = shopFrame?.colors ?? seasonFrame?.colors ?? null
+  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
   const title = equippedItem(shop, 'title')
   const badges = unlockedBadges(season)
   /** Variables CSS del tema para los estados hover/focus del perfil. */
@@ -187,18 +173,26 @@ export default function ProfilePage() {
                  {/* Con marco (tienda o pase), el anillo animado lo pinta FrameRing; sin él, el punteado */}
                  {frameId && frameColors ? (
                    <FrameRing frameId={frameId} colors={frameColors} size={128}>
-                      <img src={avatarUrl(user?.full_name || 'Letoura')} alt="" className="h-full w-full" />
-                      <button className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                      <img src={avatar} alt="" className="h-full w-full" />
+                      <Link
+                        to="/avatar"
+                        title="Personalizar avatar"
+                        className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      >
                          <Camera className="w-6 h-6 text-white" />
-                      </button>
+                      </Link>
                    </FrameRing>
                  ) : (
                    <div className="w-32 h-32 rounded-full border-2 border-dashed border-cyan/30 p-1 transition-colors group-hover:border-cyan">
                       <div className="relative w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
-                         <img src={avatarUrl(user?.full_name || 'Letoura')} alt="" className="h-full w-full" />
-                         <button className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                            <Camera className="w-6 h-6 text-white" />
-                         </button>
+                         <img src={avatar} alt="" className="h-full w-full" />
+                         <Link
+                        to="/avatar"
+                        title="Personalizar avatar"
+                        className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      >
+                         <Camera className="w-6 h-6 text-white" />
+                      </Link>
                       </div>
                    </div>
                  )}
