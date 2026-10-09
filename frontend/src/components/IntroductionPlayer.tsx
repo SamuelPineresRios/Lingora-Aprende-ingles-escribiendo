@@ -474,7 +474,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
           para que nada se corte ni tape la escena. */}
       <header className="relative z-10 shrink-0 px-4 py-3 sm:px-6 sm:py-4">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <h2 className="min-w-0 flex-1 truncate font-body text-xl font-bold text-white sm:text-2xl">
+          <h2 className="hidden min-w-0 flex-1 truncate font-body text-xl font-bold text-white sm:block sm:text-2xl">
             {introduction.scene_title}
           </h2>
           <span className={cn('shrink-0 rounded border px-2 py-1 text-xs font-bold', CEFR_BADGE[cefrLevel] ?? CEFR_BADGE.B1)}>
@@ -497,8 +497,9 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
         </div>
       </header>
 
-      {/* Escenario + personajes */}
-      <div className="relative z-10 shrink-0 px-6">
+      {/* Escenario + personajes. En móvil se oculta el texto: la escena gana
+          espacio y el diálogo se lee sin ruido. */}
+      <div className="relative z-10 hidden shrink-0 px-6 sm:block">
         <p className="text-[13px] sm:text-[15px] text-cyan-50/90 leading-relaxed border-l-2 border-cyan/40 pl-3">
           {introduction.scene_description}
         </p>

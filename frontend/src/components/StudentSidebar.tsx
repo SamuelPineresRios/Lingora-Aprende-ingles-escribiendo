@@ -108,8 +108,9 @@ export function StudentSidebar() {
           )
         })}
 
-        {/* Tu personaje completo, abajo del menú y pegado al divisor de la sesión */}
-        <div className="mt-auto flex justify-center pb-0.5">
+        {/* Tu personaje completo, abajo del menú y pegado al divisor de la sesión.
+            En móvil no se muestra: el cajón se queda con el menú y la sesión. */}
+        <div className="mt-auto hidden justify-center pb-0.5 lg:flex">
           <img src={avatar} alt="Tu avatar" className="h-52 w-52" />
         </div>
       </nav>
