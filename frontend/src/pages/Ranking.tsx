@@ -5,6 +5,7 @@
  * con ascensos y descensos; el global ordena a todos los registrados por XP,
  * misiones o tiempo de toda la app.
  */
+import { ModuleBackdrop } from '@/components/ModuleBackdrop'
 import { useEffect, useMemo, useState } from 'react'
 import { Crown, Flame, Loader2, TrendingDown, TrendingUp, Trophy } from 'lucide-react'
 import { resolveAvatar, type UserAvatar } from '@vox/shared'
@@ -297,6 +298,7 @@ export default function RankingPage() {
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
+      <ModuleBackdrop />
 
       <div className="relative z-10 min-h-screen p-8 font-mono max-w-4xl mx-auto space-y-8 animate-fade-in pt-16 lg:pt-8">
         <header className="flex flex-wrap items-end justify-between gap-4">

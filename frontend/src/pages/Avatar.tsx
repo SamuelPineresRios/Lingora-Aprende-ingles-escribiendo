@@ -7,6 +7,7 @@
  * el contexto. El registro guarda un skin base y aquí solo se pisa lo que se
  * toca; al guardar, la sesión se refresca y el avatar cambia en toda la app.
  */
+import { ModuleBackdrop } from '@/components/ModuleBackdrop'
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Check, Dices, Loader2, Palette, RotateCcw, Scissors, Shirt, Smile } from 'lucide-react'
@@ -347,6 +348,7 @@ export default function AvatarPage() {
 
   return (
     <div className="relative h-[calc(100dvh-4rem)] w-full overflow-hidden bg-black/90 lg:h-dvh">
+      <ModuleBackdrop />
       <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col gap-5 p-5 pt-6 font-mono animate-fade-in lg:p-8">
         <header className="flex shrink-0 flex-wrap items-end justify-between gap-4">
           <div>

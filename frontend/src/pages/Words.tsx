@@ -4,6 +4,7 @@
  * La lista ya llega con la ficha completa (traducción, formas verbales y
  * ejemplos), así que el detalle se pinta sin pedir nada más.
  */
+import { ModuleBackdrop } from '@/components/ModuleBackdrop'
 import { useEffect, useMemo, useState } from 'react'
 import { BookMarked, Loader2, Search, Trash2, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -111,6 +112,7 @@ export default function Words() {
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
+      <ModuleBackdrop />
 
       {/* Contenido */}
       <div className="relative z-10 min-h-screen p-8 font-mono max-w-6xl mx-auto space-y-8 animate-fade-in pt-16 lg:pt-8">

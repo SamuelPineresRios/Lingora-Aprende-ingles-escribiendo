@@ -3,7 +3,7 @@ import { useAuth } from '@/lib/hooks/useAuth'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { Link } from 'react-router-dom'
 import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp, Coins } from 'lucide-react'
-import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
+import { ModuleBackdrop } from '@/components/ModuleBackdrop'
 import { FrameRing } from '@/components/FrameRing'
 import { ActivityHistory } from '@/components/ActivityHistory'
 import { XpBar } from '@/components/XpBar'
@@ -151,7 +151,7 @@ export default function ProfilePage() {
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
-      <ResponsiveBackgroundSprites />
+      <ModuleBackdrop />
 
       {/* Main Content */}
       <div className="relative z-10 min-h-screen p-8 font-mono max-w-6xl mx-auto space-y-8 animate-fade-in pt-16">
