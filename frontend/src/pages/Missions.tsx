@@ -17,7 +17,7 @@ import type { MissionBackdrop as MissionBackdropSpec } from '@vox/shared'
 interface Mission { id:string; title:string; description:string|null; scene_context?:string|null; cefr_level:string; base_duration_seconds:number; status:string; backdrop?:MissionBackdropSpec|null }
 const LEVEL_COLORS: Record<string,string> = { A1:'text-emerald border-emerald/40', A2:'text-cyan border-cyan/40', B1:'text-amber border-amber/40', B2:'text-violet border-violet/40', C1:'text-coral border-coral/40' }
 const LEVEL_BG: Record<string,string> = { A1:'bg-emerald/10', A2:'bg-cyan/10', B1:'bg-amber/10', B2:'bg-violet/10', C1:'bg-coral/10' }
-const STATUS = { not_started:{label:'',color:''}, in_progress:{label:'IN PROGRESS',color:'text-amber animate-pulse'}, completed:{label:'COMPLETED',color:'text-emerald'}, paused:{label:'RETRY',color:'text-slate-light'} }
+const STATUS = { not_started:{label:'',color:''}, in_progress:{label:'IN PROGRESS',color:'text-amber animate-pulse'}, completed:{label:'COMPLETED',color:'text-cyan-light'}, paused:{label:'RETRY',color:'text-slate-light'} }
 
 export default function MissionsPage() {
   const { user, logout } = useAuth()
@@ -222,7 +222,7 @@ export default function MissionsPage() {
                     {/* Sello de misión completada, centrado sobre el contenido */}
                     {m.status === 'completed' && (
                       <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
-                        <span className="-rotate-6 rounded-lg border border-emerald/50 bg-slate-950/70 px-3 py-1 font-mono text-[12px] font-bold uppercase tracking-[0.3em] text-emerald shadow-[0_0_25px_-8px_rgba(16,185,129,0.9)] backdrop-blur-sm">
+                        <span className="rounded-lg border border-cyan-light/50 bg-slate-950/70 px-3 py-1 font-poppins text-[12px] font-bold uppercase tracking-[0.3em] text-cyan-light shadow-[0_0_25px_-8px_rgba(103,232,249,0.9)] backdrop-blur-sm">
                           Completadas
                         </span>
                       </div>

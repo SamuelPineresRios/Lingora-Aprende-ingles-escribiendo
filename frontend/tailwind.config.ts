@@ -8,6 +8,7 @@ const config: Config = {
     extend: {
       fontFamily: { 
         display: ["'Sora'","sans-serif"], 
+        poppins: ["'Poppins'","sans-serif"], 
         body: ["'DM Sans'","sans-serif"], 
         reading: ["'Literata'","Georgia","serif"], 
         mono: ["'JetBrains Mono'","monospace"],
