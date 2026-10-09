@@ -199,8 +199,8 @@ export default function SeasonPage() {
   }, [progress, featuredTier])
 
   const header = (
-    <header className="flex flex-wrap items-start justify-between gap-4">
-      <div>
+    <header className="flex items-start justify-between gap-3 sm:gap-4">
+      <div className="min-w-0 flex-1">
         <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-cyan">Pase · Temporada {progress?.season.number ?? 1}</p>
         <h1 className="font-display text-3xl sm:text-4xl font-semibold text-white mt-1">
           {featured ? featured.label : 'Pase de temporada'}
@@ -208,14 +208,19 @@ export default function SeasonPage() {
         <p className="text-[11px] font-mono uppercase tracking-widest text-slate-500 mt-2">
           {progress ? `${seasonRange(progress)} · quedan ${progress.season.days_left} días` : 'Temporada en curso'}
         </p>
+        {/* En móvil las insignias van aquí, bajo las fechas, para dejar la esquina libre */}
+        <p className="mt-1.5 text-[10px] font-mono uppercase tracking-widest text-slate-500 sm:hidden">
+          {badges.length} {badges.length === 1 ? 'insignia' : 'insignias'} desbloqueadas
+        </p>
       </div>
 
-      <div className="flex flex-col items-end gap-2">
-        <div className="rounded-2xl border border-amber/30 bg-amber/5 px-5 py-3 text-right">
+      {/* La bolsa de monedas vive siempre en la esquina superior derecha */}
+      <div className="flex shrink-0 flex-col items-end gap-2">
+        <div className="rounded-2xl border border-amber/30 bg-amber/5 px-3.5 py-2 text-right sm:px-5 sm:py-3">
           <p className="text-[9px] font-mono uppercase tracking-[0.25em] text-amber/80">Monedas</p>
-          <p className="font-body text-3xl font-black text-amber">{progress?.coins ?? 0}</p>
+          <p className="font-body text-2xl font-black text-amber sm:text-3xl">{progress?.coins ?? 0}</p>
         </div>
-        <p className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+        <p className="hidden text-[10px] font-mono uppercase tracking-widest text-slate-500 sm:block">
           {badges.length} {badges.length === 1 ? 'insignia' : 'insignias'} desbloqueadas
         </p>
       </div>

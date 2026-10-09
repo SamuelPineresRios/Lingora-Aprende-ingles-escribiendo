@@ -177,7 +177,7 @@ function Preview({
   onBase: () => void
   onSave: () => void
 }) {
-  const size = compact ? 88 : 360
+  const size = compact ? 104 : 360
   const image = <img src={studentAvatarUrl(avatar)} alt="Tu personaje" className="h-full w-full" />
   const marco = frame ? (
     <FrameRing frameId={frame.id} colors={frame.colors} size={size}>
@@ -225,7 +225,7 @@ function Preview({
 
   if (compact) {
     return (
-      <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/70 p-3 backdrop-blur-xl">
+      <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/70 p-3 backdrop-blur-xl sm:gap-4">
         <div className="shrink-0">{marco}</div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm text-white">{name}</p>
