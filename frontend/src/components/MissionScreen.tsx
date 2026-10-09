@@ -22,11 +22,43 @@ import { getCachedIntroduction, prewarmVocabulary, setCachedIntroduction } from 
 import { ConversationLog } from '@/components/ConversationLog'
 
 
-/** Avatar pequeño del chat: el de la escena para la IA y el tuyo para tu papel. */
-function ChatAvatar({ src }: { src: string }) {
-  return <img src={src} alt="" className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]" />
+/**
+ * Personaje en escena: busto grande, sin marco, apagado cuando no le toca
+ * hablar. El de la derecha se pinta en espejo para mirar al de la izquierda.
+ */
+function SceneFigure({
+  src,
+  name,
+  role,
+  speaking,
+  mirrored = false,
+  glow,
+}: {
+  src: string
+  name: string
+  role?: string
+  speaking: boolean
+  mirrored?: boolean
+  glow: string
+}) {
+  return (
+    <div className={cn('flex flex-col items-center justify-end transition-all duration-500', speaking ? 'scale-100' : 'scale-95')}>
+      <div
+        className={cn(
+          'relative aspect-square w-[min(34vw,12rem,26vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
+          mirrored && '-scale-x-100',
+          !speaking && 'opacity-45 grayscale',
+        )}
+      >
+        <img src={src} alt={name} className={cn('h-full w-full', speaking && glow)} />
+      </div>
+      <div className="mt-1 text-center">
+        <p className={cn('text-sm font-bold transition-colors', speaking ? 'text-white' : 'text-slate-400')}>{name}</p>
+        {role && <p className="text-[10px] text-slate-500">{role}</p>}
+      </div>
+    </div>
+  )
 }
-
 
 interface Mission {
   id: string; title: string; objective: string; scene_context: string
@@ -659,191 +691,185 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   }
 
   const usedPhrases = messages.filter(message => message.role === 'user')
-  /** Género del personaje que interpreta la IA, para que el avatar del chat coincida. */
+  /** Género del personaje que interpreta la IA, para que el avatar coincida. */
   const characterGender = introduction?.characters.find(character => character.played_by === 'ai')?.gender
+  const studentCharacter = introduction?.characters.find(character => character.played_by === 'student')
+  /** Último turno de cada lado: la conversación se lee como una escena. */
+  const lastAssistant = [...messages].reverse().find(message => message.role === 'assistant')
+  const lastUser = [...messages].reverse().find(message => message.role === 'user')
+  const assistantSpeaking = isThinking || isLastMessageTyping
 
   return (
-    <div className="h-screen flex flex-col w-full px-4 pt-4 pb-4 relative overflow-hidden">
-      {/* Fondo ambientado de la misión, muy tenue: aquí mandan los mensajes y
-          la conversación, así que va más apagado que en la escena. */}
+    <div className="h-screen flex flex-col w-full relative overflow-hidden font-body">
+      {/* Fondo de la misión, más presente que antes: ahora la conversación es la escena. */}
       <MissionBackdrop
         backdrop={resolveBackdrop(mission.backdrop, `${mission.title} ${mission.scene_context}`)}
         seed={mission.id}
         variant="scene"
-        className="opacity-20"
+        className="opacity-60"
       />
-      <div className="absolute inset-0 bg-slate-950/65" />
+      <div className="absolute inset-0 bg-slate-950/60" />
+
       <div className="relative z-10 grid flex-1 min-h-0 lg:grid-cols-[minmax(0,1fr)_320px] gap-4 lg:gap-6">
-        {/* Columna izquierda: chat de la misión */}
+        {/* Columna izquierda: escena conversacional */}
         <div className="flex flex-col min-h-0">
-      <div className="px-4 shrink-0 space-y-2">
-        <div className="flex items-center gap-3 py-2">
-          <button onClick={() => navigate(-1)} className="text-slate-light hover:text-foreground transition-colors">←</button>
-          <div className="flex-1 text-center font-body text-cyan text-xs uppercase tracking-widest">{mission.title}</div>
-          <div className="flex gap-2 items-center">
-            <XpBar progress={progress} className="hidden sm:flex" />
-            <button onClick={handleCompleteMission} className="text-xs text-emerald hover:text-emerald-400 border border-emerald/50 px-2 py-1 rounded bg-emerald/10 uppercase tracking-wide">
-               Complete
-            </button>
-          </div>
-        </div>
-        
-        {/* Mission Objective Card */}
-        <div className="bg-gradient-to-r from-cyan-950/40 to-slate-900/40 p-3 rounded-lg border border-cyan/30 space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-[0.7rem] md:text-[0.75rem] text-cyan-300 font-bold uppercase tracking-widest">🎯 Objetivo</span>
-            {missionMode === 'evaluation' && (
-              <Timer key={timerKey} durationSeconds={timerDuration} onTimeout={() => setTimedOut(true)} />
-            )}
-          </div>
-          <p className="text-[0.8rem] md:text-sm text-cyan-50 leading-snug line-clamp-3">{mission.objective}</p>
-        </div>
-        
-        {/* Mission Progress Bar & Status */}
-        <div className="relative pt-1">
-            <div className="flex justify-between items-center mb-2">
-                <span className="text-[0.7rem] md:text-[0.75rem] text-slate-400 font-body uppercase tracking-widest">
-                    Progreso
-                </span>
-                <span className={cn(
-                    "text-[0.8rem] md:text-sm font-bold font-body",
-                    missionProgress >= 100 ? "text-emerald animate-pulse" : "text-cyan"
-                )}>
-                    {missionProgress}%
-                </span>
+          {/* Cabecera: volver, título, objetivo, progreso */}
+          <header className="px-4 pt-4 shrink-0 space-y-2">
+            <div className="flex items-center gap-3 py-1">
+              <button onClick={() => navigate(-1)} className="text-slate-light hover:text-foreground transition-colors">←</button>
+              <div className="flex-1 text-center font-body text-cyan text-xs uppercase tracking-widest">{mission.title}</div>
+              <div className="flex gap-2 items-center">
+                <XpBar progress={progress} className="hidden sm:flex" />
+                <button onClick={handleCompleteMission} className="text-xs text-emerald hover:text-emerald-400 border border-emerald/50 px-2 py-1 rounded bg-emerald/10 uppercase tracking-wide">
+                  Complete
+                </button>
+              </div>
             </div>
-            <div className="overflow-hidden h-2 md:h-2.5 mb-2 text-xs flex rounded bg-slate-800 border border-slate-700/50">
-                <div 
-                    style={{ width: `${missionProgress}%` }}
-                    className={cn(
-                        "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-700 ease-out",
-                        missionProgress >= 100 ? "bg-emerald shadow-[0_0_10px_rgba(16,185,129,0.5)]" : "bg-cyan shadow-[0_0_5px_rgba(6,182,212,0.5)]"
+
+            <div className="bg-gradient-to-r from-cyan-950/60 to-slate-900/60 backdrop-blur-sm p-3 rounded-lg border border-cyan/30 space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[0.7rem] md:text-[0.75rem] text-cyan-300 font-bold uppercase tracking-widest">🎯 Objetivo</span>
+                {missionMode === 'evaluation' && (
+                  <Timer key={timerKey} durationSeconds={timerDuration} onTimeout={() => setTimedOut(true)} />
+                )}
+              </div>
+              <p className="text-[0.8rem] md:text-sm text-cyan-50 leading-snug line-clamp-2">{mission.objective}</p>
+            </div>
+
+            <div className="relative">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-[0.7rem] md:text-[0.75rem] text-slate-400 font-body uppercase tracking-widest">Progreso</span>
+                <span className={cn('text-[0.8rem] md:text-sm font-bold font-body', missionProgress >= 100 ? 'text-emerald animate-pulse' : 'text-cyan')}>
+                  {missionProgress}%
+                </span>
+              </div>
+              <div className="overflow-hidden h-2 text-xs flex rounded bg-slate-800 border border-slate-700/50">
+                <div
+                  style={{ width: `${missionProgress}%` }}
+                  className={cn(
+                    'flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-700 ease-out',
+                    missionProgress >= 100 ? 'bg-emerald shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-cyan shadow-[0_0_5px_rgba(6,182,212,0.5)]',
+                  )}
+                />
+              </div>
+              {missionMode === 'evaluation' && <HeartMeter hearts={hearts} total={TOTAL_HEARTS} />}
+            </div>
+          </header>
+
+          {/* Escenario: la IA a la izquierda, tu personaje a la derecha */}
+          <div className="flex-1 min-h-0 flex items-end justify-center px-2 pb-1">
+            <div className="grid w-full max-w-3xl grid-cols-2 gap-2 sm:gap-12 items-end justify-items-center">
+              <SceneFigure
+                src={characterAvatarUrl(mission.character_name, characterGender)}
+                name={mission.character_name}
+                role={introduction?.characters.find(character => character.played_by === 'ai')?.role ?? 'Lo interpreta la IA'}
+                speaking={assistantSpeaking || (!lastUser && messages.length > 0)}
+                glow="drop-shadow-[0_0_26px_rgba(6,182,212,0.5)]"
+              />
+              {studentAvatar && (
+                <SceneFigure
+                  src={studentAvatar}
+                  name={studentCharacter?.name ?? 'Tú'}
+                  role={studentCharacter?.role ?? 'Tu papel'}
+                  speaking={!!lastUser && !assistantSpeaking}
+                  mirrored
+                  glow="drop-shadow-[0_0_26px_rgba(16,185,129,0.5)]"
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Diálogo: sin cajas, sobre la escena, como en la narrativa */}
+          <div className="shrink-0 px-4 pb-2">
+            <div className="mx-auto w-full max-w-3xl space-y-3">
+              {lastAssistant && (
+                <div className="min-h-[86px]">
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-cyan">{mission.character_name}</p>
+                  <p className="mt-1 font-reading text-xl sm:text-2xl leading-relaxed font-medium tracking-[0.01em] text-cyan-50 drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)]">
+                    {isLastMessageTyping ? (
+                      <TypewriterMessage text={lastAssistant.content} isActive speed={30} onComplete={() => setIsLastMessageTyping(false)} />
+                    ) : (
+                      <InteractiveWords text={lastAssistant.content} context={lastAssistant.content} />
                     )}
-                ></div>
+                  </p>
+                </div>
+              )}
+
+              {isThinking && (
+                <p className="text-[11px] font-mono uppercase tracking-widest text-cyan/70 animate-pulse">
+                  {mission.character_name} escribiendo…
+                </p>
+              )}
+
+              {lastUser && (
+                <div className="text-right">
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-emerald">
+                    TÚ
+                    {lastUser.rating && <span className="ml-2 text-amber-400">{'★'.repeat(lastUser.rating)}</span>}
+                  </p>
+                  <p className="mt-1 text-base sm:text-lg leading-relaxed text-emerald-100 drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)]">
+                    {lastUser.content}
+                  </p>
+                  {lastUser.feedback && (
+                    <div className="mt-2 flex flex-col items-end gap-1 animate-in fade-in slide-in-from-top-1">
+                      <span className="text-[10px] uppercase font-bold text-amber tracking-widest">AI Coach</span>
+                      <p className="max-w-xl text-left text-xs text-amber/90 bg-amber/10 px-3 py-2 rounded-lg border border-amber/15 backdrop-blur-sm">
+                        {lastUser.feedback}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {messages.length === 0 && !isThinking && !startError && (
+                <p className="text-center text-[11px] font-mono uppercase tracking-widest text-slate-500 animate-pulse">
+                  Preparando la escena…
+                </p>
+              )}
+
+              {startError && messages.length === 0 && (
+                <div className="mx-auto max-w-md rounded-xl border border-coral/30 bg-coral/10 px-4 py-3 text-center text-sm text-red-100 space-y-2">
+                  <p>{startError}</p>
+                  <button
+                    onClick={() => startMission(missionMode)}
+                    className="text-[11px] font-mono uppercase tracking-widest border border-coral/40 rounded-lg px-3 py-1.5 text-red-100 hover:bg-coral/10 transition-colors"
+                  >
+                    Reintentar
+                  </button>
+                </div>
+              )}
             </div>
-            {missionMode === 'evaluation' && <HeartMeter hearts={hearts} total={TOTAL_HEARTS} />}
+          </div>
+
+          {/* Entrada */}
+          <div className="mission-screen-input shrink-0 px-4 pb-4">
+            <div className={cn('relative rounded-xl border transition-all duration-200 bg-white/5 border-white/10 flex items-end gap-2 p-2 backdrop-blur-sm', currentInput.trim() && 'border-cyan/40 bg-cyan/5')}>
+              <textarea
+                ref={textareaRef}
+                value={currentInput}
+                onChange={e => setCurrentInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={timedOut ? 'Mission time ended. Finish up!' : 'Type your message...'}
+                disabled={state === 'submitting' || isThinking}
+                rows={1}
+                className="flex-1 bg-transparent resize-none p-2 text-foreground placeholder:text-slate/40 focus:outline-none font-body text-sm leading-relaxed disabled:opacity-50 max-h-32"
+              />
+              <button
+                onClick={handleSendMessage}
+                disabled={!currentInput.trim() || state === 'submitting' || isThinking}
+                className={cn('p-2 rounded-lg transition-all duration-200 active:scale-95 shrink-0', currentInput.trim() ? 'bg-cyan text-black hover:bg-cyan-400' : 'bg-white/10 text-slate-500 cursor-not-allowed')}
+              >
+                <span className="text-xs font-bold uppercase">Send</span>
+              </button>
+            </div>
+            <p className="text-center text-[10px] text-slate/30 mt-1.5 font-body pb-safe">Enter to send • Shift+Enter for new line</p>
+          </div>
         </div>
-      </div>
 
-      {/* Chat Area */}
-      <div className="mission-screen-messages px-4 py-2 space-y-4 scrollbar-hide" ref={scrollRef}>
-          {/* Messages */}
-          {messages.map((msg, i) => {
-              const isUser = msg.role === 'user'
-              const isLastMessage = i === messages.length - 1
-              const isLastAssistantMessageTyping = isLastMessage && !isUser && isLastMessageTyping
-              
-              return (
-                  <div key={i} className={cn("flex gap-2 mb-4", isUser ? "flex-row-reverse items-end" : "items-end")}>
-                      {isUser
-                        ? studentAvatar && <ChatAvatar src={studentAvatar} />
-                        : <ChatAvatar src={characterAvatarUrl(mission.character_name, characterGender)} />}
-                      <div className="flex flex-col gap-1">
-                          <span className={cn("text-[9px] uppercase tracking-wider opacity-60", isUser ? "text-emerald text-right" : "text-cyan")}>
-                              {isUser ? 'YOU' : mission.character_name}
-                              {isUser && msg.rating && (
-                                  <span className="text-amber-400 ml-2">{'★'.repeat(msg.rating)}</span>
-                              )}
-                          </span>
-                          <div className={cn(
-                              "max-w-[85%] p-3 text-sm leading-relaxed rounded-2xl",
-                              isUser 
-                                ? "bg-emerald/10 border border-emerald/20 text-emerald-50 rounded-tr-none shadow-[0_0_10px_-5px_rgba(16,185,129,0.2)]" 
-                                : "bg-cyan/10 border border-cyan/20 text-cyan-50 rounded-tl-none shadow-[0_0_10px_-5px_rgba(6,182,212,0.2)]"
-                          )}>
-                              {isUser ? (
-                                  msg.content
-                              ) : msg.role === 'system' ? (
-                                  msg.content
-                              ) : isLastAssistantMessageTyping ? (
-                                  <TypewriterMessage
-                                      text={msg.content}
-                                      isActive
-                                      speed={30}
-                                      onComplete={() => setIsLastMessageTyping(false)}
-                                  />
-                              ) : (
-                                  <InteractiveWords text={msg.content} context={msg.content} />
-                              )}
-                          </div>
-
-                          {/* Coach Feedback for this turn - moved to bottom of user message */}
-                          {isUser && msg.feedback && (
-                             <div className="mt-1 mr-1 max-w-full text-right flex flex-col items-end gap-1 animate-in fade-in slide-in-from-top-1">
-                            <div className="text-[10px] uppercase font-bold text-amber tracking-widest flex items-center gap-1">
-                                <span>AI Coach</span>
-                            </div>
-                            <div className="text-xs text-amber/80 bg-amber/5 px-3 py-2 rounded-lg rounded-tr-none border border-amber/10 backdrop-blur-sm">
-                                {msg.feedback}
-                            </div>
-                         </div>
-                          )}
-                      </div>
-                  </div>
-              )
-          })}
-          
-          {isThinking && (
-              <div className="flex gap-2 items-end animate-pulse">
-                  <ChatAvatar src={characterAvatarUrl(mission.character_name, characterGender)} />
-                  <div className="flex flex-col gap-1">
-                      <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
-                      <div className="bg-cyan/5 border border-cyan/10 text-cyan px-3 py-2 rounded-2xl rounded-tl-none text-xs">
-                          escribiendo…
-                      </div>
-                  </div>
-              </div>
-          )}
-
-          {startError && messages.length === 0 && (
-              <div className="flex gap-2 items-end">
-                  <ChatAvatar src={characterAvatarUrl(mission.character_name, characterGender)} />
-                  <div className="flex flex-col gap-1">
-                      <span className="text-[9px] uppercase tracking-wider opacity-60 text-cyan">{mission.character_name}</span>
-                      <div className="bg-coral/10 border border-coral/30 text-red-100 px-4 py-3 rounded-2xl rounded-tl-none text-sm space-y-2 max-w-md">
-                          <p>{startError}</p>
-                          <button
-                              onClick={() => startMission(missionMode)}
-                              className="text-[11px] font-mono uppercase tracking-widest border border-coral/40 rounded-lg px-3 py-1.5 text-red-100 hover:bg-coral/10 transition-colors"
-                          >
-                              Reintentar
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          )}
-      </div>
-
-      {/* Input Area */}
-      <div className="mission-screen-input px-4 pt-2">
-        <div className={cn('relative rounded-xl border transition-all duration-200 bg-white/5 border-white/10 flex items-end gap-2 p-2', currentInput.trim() && 'border-cyan/40 bg-cyan/5')}>
-          <textarea 
-             ref={textareaRef} 
-             value={currentInput} 
-             onChange={e => setCurrentInput(e.target.value)} 
-             onKeyDown={handleKeyDown} 
-             placeholder={timedOut ? "Mission time ended. Finish up!" : "Type your message..."}
-             disabled={state === 'submitting' || isThinking} 
-             rows={1} 
-             className="flex-1 bg-transparent resize-none p-2 text-foreground placeholder:text-slate/40 focus:outline-none font-body text-sm leading-relaxed disabled:opacity-50 max-h-32" 
-          />
-          <button 
-             onClick={handleSendMessage} 
-             disabled={!currentInput.trim() || state === 'submitting' || isThinking} 
-             className={cn('p-2 rounded-lg transition-all duration-200 active:scale-95 shrink-0', currentInput.trim() ? 'bg-cyan text-black hover:bg-cyan-400' : 'bg-white/10 text-slate-500 cursor-not-allowed')}
-          >
-             <span className="text-xs font-bold uppercase">Send</span>
-          </button>
-        </div>
-        <p className="text-center text-[10px] text-slate/30 mt-2 font-body pb-safe">Enter to send • Shift+Enter for new line</p>
-        </div>
-      </div>
-
-      {/* Columna derecha: registro de frases y correcciones (sólo escritorio;
-          en móvil se oculta para dejar todo el ancho al chat) */}
-      <aside className="hidden lg:block lg:min-h-0">
-        <ConversationLog entries={usedPhrases} />
-      </aside>
+        {/* Columna derecha: tus frases y correcciones (sólo escritorio) */}
+        <aside className="hidden lg:block lg:min-h-0 lg:pt-4 lg:pr-4">
+          <ConversationLog entries={usedPhrases} />
+        </aside>
       </div>
 
       {/* Generando el reporte: la evaluación tarda unos segundos */}
