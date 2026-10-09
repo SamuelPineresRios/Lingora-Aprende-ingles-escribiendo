@@ -95,15 +95,13 @@ export function StudentSidebar() {
                 "before:pointer-events-none before:absolute before:-top-5 before:right-0 before:h-5 before:w-5 before:rounded-bl-full before:content-[''] before:transition-colors before:duration-300",
                 "after:pointer-events-none after:absolute after:-bottom-5 after:right-0 after:h-5 after:w-5 after:rounded-tl-full after:content-[''] after:transition-colors after:duration-300",
                 isActive
-                  ? // Píldora sólida, como el «Dashboard» de la referencia: se
-                    // pega al borde derecho (17 px = 16 del padding del nav + 1
-                    // del borde del sidebar) y las muescas curvas de las
-                    // pseudoclases la funden con ese borde. El color es el
-                    // acento del tema (cian por defecto) con texto oscuro.
-                    "z-10 [margin-right:-17px] rounded-l-full rounded-r-none shadow-[0_10px_30px_-12px_rgba(0,0,0,0.9)] before:bg-[var(--muesca,#67e8f9)] after:bg-[var(--muesca,#67e8f9)]"
+                  ? // Como en la referencia: el activo no pinta fondo (queda
+                    // transparente, se ve el sidebar tal cual) y se distingue
+                    // por el color del acento del tema.
+                    "z-10 rounded-xl bg-transparent font-semibold before:bg-transparent after:bg-transparent"
                   : "rounded-xl text-slate-400 hover:text-white hover:bg-white/5 before:bg-transparent after:bg-transparent",
               )}
-              style={isActive ? ({ '--muesca': accent ?? '#67e8f9', backgroundColor: accent ?? '#67e8f9', color: '#0f172a' } as CSSProperties) : undefined}
+              style={isActive ? ({ color: accent ?? '#67e8f9', backgroundColor: 'transparent' } as CSSProperties) : undefined}
             >
               <link.icon className={cn("h-4 w-4", isActive ? '' : 'opacity-70 group-hover:opacity-100')} />
               <span>{link.label}</span>
