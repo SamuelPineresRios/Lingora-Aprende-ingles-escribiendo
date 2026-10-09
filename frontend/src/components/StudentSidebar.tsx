@@ -2,9 +2,13 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { resolveAvatar } from '@vox/shared'
 import { cn } from '@/lib/utils'
+import { FrameRing } from '@/components/FrameRing'
 import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal, Store, Brush } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { useThemeAccent } from '@/lib/hooks/useStoreView'
+import { useStoreView, useThemeAccent } from '@/lib/hooks/useStoreView'
+import { useSeasonProgress } from '@/lib/hooks/useSeasonProgress'
+import { activeFrame } from '@/lib/season'
+import { equippedItem } from '@/lib/store'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { useState, type CSSProperties } from 'react'
 
@@ -12,9 +16,12 @@ export function StudentSidebar() {
   const { pathname } = useLocation()
   const { user, logout } = useAuth()
   const accent = useThemeAccent(user?.id)
+  const shop = useStoreView(user?.id)
+  const season = useSeasonProgress(user?.id)
   const [isOpen, setIsOpen] = useState(false)
 
-  // Tu personaje completo, sin marco, para el hueco del menú.
+  // Tu personaje completo con el marco equipado (tienda o pase), para el hueco del menú.
+  const frame = equippedItem(shop, 'frame') ?? activeFrame(season)
   const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
 
   const links = [
@@ -108,10 +115,17 @@ export function StudentSidebar() {
           )
         })}
 
-        {/* Tu personaje completo, abajo del menú y pegado al divisor de la sesión.
-            En móvil no se muestra: el cajón se queda con el menú y la sesión. */}
+        {/* Tu personaje completo, con su marco, abajo del menú y pegado al
+            divisor de la sesión. En móvil no se muestra: el cajón se queda con
+            el menú y la sesión. */}
         <div className="mt-auto hidden justify-center pb-0.5 lg:flex">
-          <img src={avatar} alt="Tu avatar" className="h-52 w-52" />
+          {frame ? (
+            <FrameRing frameId={frame.id} colors={frame.colors as [string, string]} size={160}>
+              <img src={avatar} alt="Tu avatar" className="h-full w-full" />
+            </FrameRing>
+          ) : (
+            <img src={avatar} alt="Tu avatar" className="h-40 w-40" />
+          )}
         </div>
       </nav>
 
