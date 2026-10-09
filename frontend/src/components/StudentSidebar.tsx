@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+import { resolveAvatar } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal, Store, Brush } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useThemeAccent } from '@/lib/hooks/useStoreView'
+import { studentAvatarUrl } from '@/lib/avatar'
 import { useState, type CSSProperties } from 'react'
 
 export function StudentSidebar() {
@@ -11,6 +13,9 @@ export function StudentSidebar() {
   const { user, logout } = useAuth()
   const accent = useThemeAccent(user?.id)
   const [isOpen, setIsOpen] = useState(false)
+
+  // Tu personaje completo, sin marco, para el hueco del menú.
+  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
 
   const links = [
     { href: '/missions', label: 'MISIONES', icon: Radio },
@@ -65,7 +70,7 @@ export function StudentSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-4 flex flex-col gap-2 min-h-0">
         <div className="text-[10px] text-slate-500 font-mono uppercase tracking-widest px-4 mb-2 lg:mt-0 mt-16">Menu principal</div>
         {links.map((link) => {
           const isActive = pathname.startsWith(link.href)
@@ -102,6 +107,11 @@ export function StudentSidebar() {
             </Link>
           )
         })}
+
+        {/* Tu personaje completo, abajo del menú y pegado al divisor de la sesión */}
+        <div className="mt-auto flex justify-center pb-0.5">
+          <img src={avatar} alt="Tu avatar" className="h-52 w-52" />
+        </div>
       </nav>
 
       {/* User Status / Logout */}
