@@ -57,7 +57,7 @@ export function ModuleTransitionLayer() {
 
   const [visible, setVisible] = useState(false)
   const [phase, setPhase] = useState<Phase>('idle')
-  const [label, setLabel] = useState('Letoura')
+  const [label, setLabel] = useState('LT')
   const [destinationLabel, setDestinationLabel] = useState('')
 
   const pendingPathRef = useRef<string | null>(null)
@@ -127,7 +127,7 @@ export function ModuleTransitionLayer() {
 
       pendingPathRef.current = targetPath
       fromPathRef.current = normalizePath(pathname)
-      setLabel('Letoura')
+      setLabel('LT')
       setDestinationLabel(getNavigationLabel(targetPath))
       setVisible(true)
       setPhase('closing')
