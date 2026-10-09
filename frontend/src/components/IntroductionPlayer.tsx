@@ -115,7 +115,7 @@ function CharacterStage({
           // pantallas altas se permite crecer más.
           // Sin marco: el sprite va suelto sobre la escena y la sombra es un
           // `drop-shadow`, que sigue su silueta en vez de dibujar una caja.
-          'relative aspect-square w-[min(42vw,11rem,36vh)] sm:w-[min(29vw,25rem,38vh)] [@media(min-height:840px)]:sm:w-[min(29vw,25rem,42vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
+          'relative aspect-square w-[min(38vw,9.5rem,24vh)] sm:w-[min(29vw,25rem,38vh)] [@media(min-height:840px)]:sm:w-[min(29vw,25rem,42vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
           mirrored && '-scale-x-100',
           !speaking && 'opacity-55 grayscale',
         )}
@@ -149,11 +149,12 @@ function CharacterStage({
         )}
       </div>
 
-      <div className="mt-2 text-center">
-        <p className={cn('text-base font-bold transition-colors', speaking ? 'text-white' : 'text-slate-400')}>
+      <div className="mt-1.5 text-center sm:mt-2">
+        <p className={cn('text-sm font-bold transition-colors sm:text-base', speaking ? 'text-white' : 'text-slate-400')}>
           {character.name}
         </p>
-        <p className="text-[11px] text-slate-500">{character.role}</p>
+        {/* En móvil el cargo se oculta: con tres líneas la etiqueta se enredaba */}
+        <p className="hidden text-[11px] text-slate-500 sm:block">{character.role}</p>
         <p className={cn('text-[9px] font-mono uppercase tracking-widest mt-0.5', speaking ? theme.label : 'text-slate-600')}>
           {finished ? '—' : speaking ? '● hablando' : character.played_by === 'ai' ? 'lo interpreta la IA' : 'tu papel'}
         </p>
@@ -457,7 +458,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
   }
 
   return (
-    <div className="h-screen w-full flex flex-col bg-slate-950 font-body relative overflow-hidden">
+    <div className="flex h-[calc(100dvh-4rem)] w-full flex-col bg-slate-950 font-body relative overflow-y-auto overscroll-contain lg:h-dvh lg:overflow-hidden">
       {/* Fondo ambientado según la misión: la dirección de arte generada o,
           si la escena es antigua, el respaldo por palabras clave. El velo
           oscuro mantiene el texto legible sobre cualquier escena. */}
@@ -469,27 +470,30 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
       />
       <div className="absolute inset-0 bg-slate-950/65" />
 
-      {/* Cabecera */}
-      <header className="relative z-10 shrink-0 flex items-center justify-between gap-4 px-6 py-4">
-        <div className="min-w-0">
-            <h2 className="font-body text-xl sm:text-2xl font-bold text-white truncate">{introduction.scene_title}</h2>
-        </div>
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <span className={cn('text-xs px-2 py-1 rounded border font-bold', CEFR_BADGE[cefrLevel] ?? CEFR_BADGE.B1)}>
+      {/* Cabecera: en móvil el título va arriba y los saltos en su propia fila,
+          para que nada se corte ni tape la escena. */}
+      <header className="relative z-10 shrink-0 px-4 py-3 sm:px-6 sm:py-4">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h2 className="min-w-0 flex-1 truncate font-body text-xl font-bold text-white sm:text-2xl">
+            {introduction.scene_title}
+          </h2>
+          <span className={cn('shrink-0 rounded border px-2 py-1 text-xs font-bold', CEFR_BADGE[cefrLevel] ?? CEFR_BADGE.B1)}>
             {cefrLevel}
           </span>
-          <button
-            onClick={onSkip}
-            className="text-slate-400 hover:text-white text-[11px] font-mono uppercase tracking-widest flex items-center gap-1 whitespace-nowrap"
-          >
-            <X className="h-4 w-4" /> Saltar escena
-          </button>
-          <button
-            onClick={onSkipToMission}
-            className="flex items-center gap-1 whitespace-nowrap rounded-lg border border-cyan/40 bg-cyan/10 px-2.5 py-1.5 text-[11px] font-mono uppercase tracking-widest text-cyan transition-colors hover:bg-cyan/20"
-          >
-            <SkipForward className="h-3.5 w-3.5" /> Saltar a la misión
-          </button>
+          <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto sm:gap-3">
+            <button
+              onClick={onSkip}
+              className="flex items-center gap-1 whitespace-nowrap text-[10px] font-mono uppercase tracking-widest text-slate-400 transition-colors hover:text-white sm:text-[11px]"
+            >
+              <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Saltar escena
+            </button>
+            <button
+              onClick={onSkipToMission}
+              className="flex items-center gap-1 whitespace-nowrap rounded-lg border border-cyan/40 bg-cyan/10 px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-widest text-cyan transition-colors hover:bg-cyan/20 sm:text-[11px]"
+            >
+              <SkipForward className="h-3.5 w-3.5" /> Saltar a la misión
+            </button>
+          </div>
         </div>
       </header>
 
@@ -502,7 +506,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
 
       {/* Personajes: centrados verticalmente en el escenario, por encima de la
           burbuja (que vive en su propio bloque al pie). */}
-      <div className="relative z-10 flex-1 min-h-0 flex items-center justify-center px-1 sm:px-6 py-4">
+      <div className="relative z-10 flex-1 min-h-[140px] flex items-center justify-center px-1 py-2 sm:min-h-0 sm:px-6 sm:py-4">
         <div className="grid w-full grid-cols-2 gap-1 sm:gap-16 items-end justify-items-center">
           {introduction.characters.map((character, index) => (
             <CharacterStage
@@ -531,8 +535,10 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
           )}
         >
           {/* Sin caja: solo el texto del rol, sobre la escena. El alto mínimo
-              evita que la escena salte al cambiar de frase. */}
-          <div className="relative min-h-[132px] flex flex-col justify-center px-2 py-4 sm:px-4">
+              evita que la escena salte al cambiar de frase; en móvil el bloque
+              se contiene (máx. 46% de la pantalla) con scroll si la frase es
+              muy larga, para no pisar a los personajes. */}
+          <div className="relative flex max-h-[46dvh] min-h-[92px] flex-col justify-center overflow-y-auto px-2 py-3 scrollbar-none sm:max-h-none sm:min-h-[132px] sm:overflow-visible sm:px-4 sm:py-4">
             {line && !finished && (
               <>
                 <div className="flex items-center justify-between gap-3 mb-2">
@@ -559,7 +565,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
                   </div>
                 </div>
 
-                <p className={cn('font-reading text-xl sm:text-2xl leading-relaxed font-medium tracking-[0.01em] drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)]', speaker ? ROLE_THEME[speaker.id].text : 'text-slate-100')}>
+                <p className={cn('font-reading text-lg leading-relaxed font-medium tracking-[0.01em] drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)] sm:text-2xl', speaker ? ROLE_THEME[speaker.id].text : 'text-slate-100')}>
                   {lineComplete ? (
                     <InteractiveWords text={line.text} context={line.text} />
                   ) : (
@@ -568,7 +574,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
                 </p>
 
                 {showTranslations && lineComplete && (
-                  <p className="font-reading mt-3 text-[15px] italic text-emerald-200/90 drop-shadow-[0_2px_10px_rgba(2,6,23,0.95)] animate-in fade-in duration-500">
+                  <p className="font-reading mt-2 text-[13px] italic text-emerald-200/90 drop-shadow-[0_2px_10px_rgba(2,6,23,0.95)] animate-in fade-in duration-500 sm:mt-3 sm:text-[15px]">
                     {line.translation}
                   </p>
                 )}

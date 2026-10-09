@@ -8,7 +8,7 @@ export function StudentLayout() {
       <div className="w-full lg:w-64 fixed top-0 z-30">
         <StudentSidebar />
       </div>
-      <main className="flex-1 lg:ml-64 mt-16 md:mt-0 lg:mt-0 relative z-10 w-full overflow-x-hidden">
+      <main className="flex-1 lg:ml-64 mt-16 lg:mt-0 relative z-10 w-full overflow-x-hidden">
         <Outlet />
       </main>
     </div>

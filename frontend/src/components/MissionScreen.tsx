@@ -700,7 +700,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const assistantSpeaking = isThinking || isLastMessageTyping
 
   return (
-    <div className="h-screen flex flex-col w-full relative overflow-hidden font-body">
+    <div className="flex h-[calc(100dvh-4rem)] w-full flex-col relative overflow-y-auto overscroll-contain font-body lg:h-dvh lg:overflow-hidden">
       {/* Fondo de la misión, más presente que antes: ahora la conversación es la escena. */}
       <MissionBackdrop
         backdrop={resolveBackdrop(mission.backdrop, `${mission.title} ${mission.scene_context}`)}
@@ -714,7 +714,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
         {/* Columna izquierda: escena conversacional */}
         <div className="flex flex-col min-h-0">
           {/* Cabecera: volver, título, objetivo, progreso */}
-          <header className="px-4 pt-4 shrink-0 space-y-2">
+          <header className="px-4 pt-5 shrink-0 space-y-2 sm:pt-4">
             <div className="flex items-center gap-3 py-1">
               <button onClick={() => navigate(-1)} className="text-slate-light hover:text-foreground transition-colors">←</button>
               <div className="flex-1 text-center font-body text-cyan text-xs uppercase tracking-widest">{mission.title}</div>
