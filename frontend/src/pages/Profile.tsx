@@ -2,7 +2,7 @@ import { useState, useEffect, type CSSProperties } from 'react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { Link } from 'react-router-dom'
-import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp, Coins } from 'lucide-react'
+import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp, Coins, ChevronLeft, ChevronRight } from 'lucide-react'
 import { ModuleBackdrop } from '@/components/ModuleBackdrop'
 import { FrameRing } from '@/components/FrameRing'
 import { ActivityHistory } from '@/components/ActivityHistory'
@@ -82,6 +82,8 @@ export default function ProfilePage() {
   const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
   const titles = equippedTitles(shop)
   const badges = unlockedBadges(season)
+  /** Registro de misiones: 5 por página. */
+  const [missionPage, setMissionPage] = useState(0)
   /** Variables CSS del tema para los estados hover/focus del perfil. */
   const themeVars = accent
     ? ({ '--acento': accent, '--acento-50': `${accent}80`, '--acento-30': `${accent}4d` } as CSSProperties)
@@ -149,6 +151,14 @@ export default function ProfilePage() {
   const overall = measured.length ? Math.round(measured.reduce((sum, value) => sum + value, 0) / measured.length) : null
   const hasData = Boolean(skills && skills.evaluated_responses > 0)
 
+  const MISSIONS_PER_PAGE = 5
+  const missionPages = Math.max(1, Math.ceil(completedMissions.length / MISSIONS_PER_PAGE))
+  const currentMissionPage = Math.min(missionPage, missionPages - 1)
+  const visibleMissions = completedMissions.slice(
+    currentMissionPage * MISSIONS_PER_PAGE,
+    (currentMissionPage + 1) * MISSIONS_PER_PAGE,
+  )
+
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
       <ModuleBackdrop />
@@ -214,22 +224,30 @@ export default function ProfilePage() {
                       />
                   </div>
               ) : (
-                  <h2 className="text-xl font-bold text-white mb-1 flex flex-wrap items-center justify-center gap-2 group-hover:text-[color:var(--acento,#06b6d4)] transition-colors cursor-pointer" onClick={() => {
+                  <>
+                  <h2 className="text-xl font-bold text-white flex items-center justify-center gap-2 group-hover:text-[color:var(--acento,#06b6d4)] transition-colors cursor-pointer" onClick={() => {
                     setEditName(user?.full_name || '')
                     setIsEditing(true)
                   }}>
                     {user?.full_name || 'Usuario'}
-                    {titles.map(title => (
-                      <span
-                        key={title.id}
-                        className="rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-widest"
-                        style={{ borderColor: accent ?? 'rgba(139,92,246,0.5)', color: accent ?? '#a78bfa' }}
-                      >
-                        {title.text}
-                      </span>
-                    ))}
                     <Edit2 className="w-3 h-3 opacity-0 group-hover:opacity-50" />
                   </h2>
+
+                  {/* Títulos equipados: en su propia fila, debajo del nombre */}
+                  {titles.length > 0 && (
+                    <div className="mb-1 mt-1.5 flex flex-wrap items-center justify-center gap-1.5">
+                      {titles.map(title => (
+                        <span
+                          key={title.id}
+                          className="rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-widest"
+                          style={{ borderColor: accent ?? 'rgba(139,92,246,0.5)', color: accent ?? '#a78bfa' }}
+                        >
+                          {title.text}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  </>
               )}
               
               <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">Level {user?.cefr_level || 'N/A'} Operative</p>
@@ -337,7 +355,7 @@ export default function ProfilePage() {
                       <p className="text-slate-500 text-xs uppercase">No completed operations logged.</p>
                    </div>
                ) : (
-                   completedMissions.map((mission) => (
+                   visibleMissions.map((mission) => (
                        <div key={mission.id} className="flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-xl hover:border-emerald-500/30 transition-colors group">
                            <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 group-hover:scale-110 transition-transform">
                               <CheckCircle2 className="w-5 h-5 text-emerald-500" />
@@ -351,6 +369,32 @@ export default function ProfilePage() {
                            </div>
                        </div>
                    ))
+               )}
+
+               {completedMissions.length > MISSIONS_PER_PAGE && (
+                 <div className="flex items-center justify-between pt-1">
+                   <button
+                     type="button"
+                     onClick={() => setMissionPage(page => Math.max(0, page - 1))}
+                     disabled={currentMissionPage === 0}
+                     aria-label="Misiones anteriores"
+                     className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-white/30 disabled:cursor-not-allowed disabled:opacity-30"
+                   >
+                     <ChevronLeft className="h-4 w-4" />
+                   </button>
+                   <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
+                     {currentMissionPage + 1}/{missionPages} · {completedMissions.length} misiones
+                   </span>
+                   <button
+                     type="button"
+                     onClick={() => setMissionPage(page => Math.min(missionPages - 1, page + 1))}
+                     disabled={currentMissionPage === missionPages - 1}
+                     aria-label="Misiones siguientes"
+                     className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:border-white/30 disabled:cursor-not-allowed disabled:opacity-30"
+                   >
+                     <ChevronRight className="h-4 w-4" />
+                   </button>
+                 </div>
                )}
             </div>
          </div>
