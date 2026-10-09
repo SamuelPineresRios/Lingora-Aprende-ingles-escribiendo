@@ -25,14 +25,14 @@ export function StudentSidebar() {
   const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null }))
 
   const links = [
-    { href: '/missions', label: 'MISIONES', icon: Radio },
-    { href: '/words', label: 'VOCABULARIO', icon: BookMarked },
-    { href: '/ranking', label: 'RANKING', icon: Trophy },
-    { href: '/season', label: 'PASE', icon: Medal },
-    { href: '/store', label: 'TIENDA', icon: Store },
-    { href: '/groups', label: 'GRUPOS', icon: Users },
-    { href: '/avatar', label: 'AVATAR', icon: Brush },
-    { href: '/profile', label: 'PERFIL', icon: User },
+    { href: '/missions', label: 'Misiones', icon: Radio },
+    { href: '/words', label: 'Vocabulario', icon: BookMarked },
+    { href: '/ranking', label: 'Ranking', icon: Trophy },
+    { href: '/season', label: 'Pase', icon: Medal },
+    { href: '/store', label: 'Tienda', icon: Store },
+    { href: '/groups', label: 'Grupos', icon: Users },
+    { href: '/avatar', label: 'Avatar', icon: Brush },
+    { href: '/profile', label: 'Perfil', icon: User },
   ]
 
   return (
@@ -78,7 +78,7 @@ export function StudentSidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 p-4 flex flex-col gap-2 min-h-0">
-        <div className="text-[10px] text-slate-500 font-mono uppercase tracking-widest px-4 mb-2 lg:mt-0 mt-16">Menu principal</div>
+        <div className="px-4 mb-1 font-poppins text-lg font-semibold text-white/90 lg:mt-0 mt-16">Menú principal</div>
         {links.map((link) => {
           const isActive = pathname.startsWith(link.href)
           return (
@@ -87,7 +87,7 @@ export function StudentSidebar() {
               to={link.href}
               onClick={() => setIsOpen(false)}
               className={cn(
-                "group relative flex items-center gap-3 px-4 py-3 text-xs font-mono tracking-wide transition-colors duration-300",
+                "group relative flex items-center gap-3 px-4 py-3.5 font-poppins text-[15px] font-medium tracking-normal transition-colors duration-300",
                 // Muescas: dos cuartos de círculo del color del contenido, uno
                 // encima y otro debajo del extremo derecho del activo. Están
                 // siempre en el DOM (transparentes si el módulo no lo está) para
@@ -95,21 +95,17 @@ export function StudentSidebar() {
                 "before:pointer-events-none before:absolute before:-top-5 before:right-0 before:h-5 before:w-5 before:rounded-bl-full before:content-[''] before:transition-colors before:duration-300",
                 "after:pointer-events-none after:absolute after:-bottom-5 after:right-0 after:h-5 after:w-5 after:rounded-tl-full after:content-[''] after:transition-colors after:duration-300",
                 isActive
-                  ? // El fondo del contenido se cuela en el sidebar: franja del
-                    // color del área de contenido (slate-950, el que ya usan las
-                    // páginas), sin borde visible, pegada al borde derecho y con
-                    // las muescas curvas que dibujan las pseudoclases.
-                    // 17 px = los 16 del padding del nav + el 1 del `border-r`
-                    // del sidebar: la franja los cubre y su borde derecho queda
-                    // limpio, sin la línea. El tinte cian es el del estado activo
-                    // de siempre, y va también en las muescas para que la curva
-                    // del borde derecho se lea contra el fondo del sidebar.
-                    "z-10 [margin-right:-17px] rounded-l-full rounded-r-none border border-transparent bg-cyan/10 text-cyan before:bg-[var(--muesca,rgba(6,182,212,0.1))] after:bg-[var(--muesca,rgba(6,182,212,0.1))]"
-                  : "rounded-lg border border-transparent text-slate-400 hover:text-white hover:bg-white/5 before:bg-transparent after:bg-transparent",
+                  ? // Píldora sólida, como el «Dashboard» de la referencia: se
+                    // pega al borde derecho (17 px = 16 del padding del nav + 1
+                    // del borde del sidebar) y las muescas curvas de las
+                    // pseudoclases la funden con ese borde. El color es el
+                    // acento del tema (cian por defecto) con texto oscuro.
+                    "z-10 [margin-right:-17px] rounded-l-full rounded-r-none shadow-[0_10px_30px_-12px_rgba(0,0,0,0.9)] before:bg-[var(--muesca,#67e8f9)] after:bg-[var(--muesca,#67e8f9)]"
+                  : "rounded-xl text-slate-400 hover:text-white hover:bg-white/5 before:bg-transparent after:bg-transparent",
               )}
-              style={isActive && accent ? ({ '--muesca': `${accent}1a`, backgroundColor: `${accent}1a`, color: accent } as CSSProperties) : undefined}
+              style={isActive ? ({ '--muesca': accent ?? '#67e8f9', backgroundColor: accent ?? '#67e8f9', color: '#0f172a' } as CSSProperties) : undefined}
             >
-              <link.icon className={cn("w-4 h-4", isActive ? "animate-pulse" : "opacity-70 group-hover:opacity-100")} />
+              <link.icon className={cn("h-4 w-4", isActive ? '' : 'opacity-70 group-hover:opacity-100')} />
               <span>{link.label}</span>
             </Link>
           )
@@ -133,7 +129,7 @@ export function StudentSidebar() {
       <div className="p-4 border-t border-white/10 bg-black/20">
         <button 
           onClick={logout}
-          className="w-full flex items-center gap-3 px-4 py-3 text-xs font-mono text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-lg transition-colors group"
+          className="w-full flex items-center gap-3 px-4 py-3 font-poppins text-sm font-medium text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-xl transition-colors group"
         >
           <LogOut className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span>Cerrar sesion</span>
