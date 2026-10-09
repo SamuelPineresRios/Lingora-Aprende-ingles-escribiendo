@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { Users, Clock, AlertCircle, PlayCircle, Trophy, Target, Award, ShieldAlert, Cpu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
-import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { readJson } from '@/lib/api'
 
 export default function StudentGroupsPage() {
@@ -32,7 +31,6 @@ export default function StudentGroupsPage() {
   if (loading) {
     return (
       <div className="flex h-[80vh] items-center justify-center relative">
-        <Canvas3DBackground />
         <ResponsiveBackgroundSprites />
         <div className="flex flex-col items-center gap-4 relative z-10">
           <div className="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin"></div>
@@ -44,7 +42,6 @@ export default function StudentGroupsPage() {
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
-      <Canvas3DBackground className="opacity-60" />
       <ResponsiveBackgroundSprites />
 
       {/* Main Content */}

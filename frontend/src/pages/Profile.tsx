@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp, Coins } from 'lucide-react'
 import { ResponsiveBackgroundSprites } from '@/components/ResponsiveBackgroundSprites'
 import { FrameRing } from '@/components/FrameRing'
-import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { ActivityHistory } from '@/components/ActivityHistory'
 import { XpBar } from '@/components/XpBar'
 import { useProgress } from '@/lib/hooks/useProgress'
@@ -152,7 +151,6 @@ export default function ProfilePage() {
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
-      <Canvas3DBackground className="opacity-60" />
       <ResponsiveBackgroundSprites />
 
       {/* Main Content */}

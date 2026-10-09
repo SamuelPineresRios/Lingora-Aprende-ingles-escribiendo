@@ -9,7 +9,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { Crown, Flame, Loader2, TrendingDown, TrendingUp, Trophy } from 'lucide-react'
 import { resolveAvatar, type UserAvatar } from '@vox/shared'
 import { cn } from '@/lib/utils'
-import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { FrameRing } from '@/components/FrameRing'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { readJson } from '@/lib/api'
@@ -298,7 +297,6 @@ export default function RankingPage() {
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
-      <Canvas3DBackground className="opacity-60" />
 
       <div className="relative z-10 min-h-screen p-8 font-mono max-w-4xl mx-auto space-y-8 animate-fade-in pt-16 lg:pt-8">
         <header className="flex flex-wrap items-end justify-between gap-4">

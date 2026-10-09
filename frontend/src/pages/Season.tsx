@@ -10,7 +10,6 @@ import { createElement, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Coins, Lock, Medal, Store } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Canvas3DBackground } from '@/components/Canvas3DBackground'
 import { WeeklyQuests } from '@/components/QuestBoard'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
@@ -224,7 +223,6 @@ export default function SeasonPage() {
 
   return (
     <div className="relative min-h-[100vh] w-full bg-black/90">
-      <Canvas3DBackground className="opacity-60" />
 
       <div className="relative z-10 min-h-screen px-6 py-8 font-mono lg:px-10 animate-fade-in pt-16 lg:pt-8">
         <div className="mx-auto max-w-6xl space-y-6">
