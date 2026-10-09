@@ -29,7 +29,7 @@ function GrammarToast({
     <div
       role="status"
       className={cn(
-        'w-80 rounded-xl border border-amber-500/40 bg-slate-900/95 p-3.5 shadow-[0_0_25px_rgba(0,0,0,0.6)] backdrop-blur-sm',
+        'w-[min(20rem,calc(100vw-2rem))] rounded-xl border border-amber-500/40 bg-slate-900/95 p-3.5 shadow-[0_0_25px_rgba(0,0,0,0.6)] backdrop-blur-sm',
         'animate-in slide-in-from-right-5 fade-in duration-300',
       )}
     >

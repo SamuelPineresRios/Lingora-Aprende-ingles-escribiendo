@@ -45,7 +45,7 @@ function SceneFigure({
     <div className={cn('flex flex-col items-center justify-end transition-all duration-500', speaking ? 'scale-100' : 'scale-95')}>
       <div
         className={cn(
-          'relative aspect-square w-[min(34vw,12rem,26vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
+          'relative aspect-square w-[min(40vw,12rem,25vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
           mirrored && '-scale-x-100',
           !speaking && 'opacity-45 grayscale',
         )}

@@ -115,7 +115,7 @@ export default function Words() {
       <ModuleBackdrop />
 
       {/* Contenido */}
-      <div className="relative z-10 min-h-screen p-8 font-mono max-w-6xl mx-auto space-y-8 animate-fade-in pt-16 lg:pt-8">
+      <div className="relative z-10 min-h-screen p-4 font-mono max-w-6xl mx-auto sm:p-8 space-y-8 animate-fade-in pt-16 lg:pt-8">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="font-body text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">

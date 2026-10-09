@@ -25,7 +25,7 @@ function StepHintToast({ hint, onDismiss }: { hint: StepHint; onDismiss: (id: st
   return (
     <div
       role="status"
-      className="pointer-events-auto flex w-72 items-start gap-2 rounded-xl border border-cyan/35 bg-slate-900/95 p-3 shadow-[0_0_25px_rgba(0,0,0,0.55)] backdrop-blur-sm animate-in slide-in-from-right-5 fade-in duration-300"
+      className="pointer-events-auto flex w-[min(18rem,calc(100vw-2rem))] items-start gap-2 rounded-xl border border-cyan/35 bg-slate-900/95 p-3 shadow-[0_0_25px_rgba(0,0,0,0.55)] backdrop-blur-sm animate-in slide-in-from-right-5 fade-in duration-300"
     >
       <span className="text-base leading-none">🧭</span>
       <div className="min-w-0 flex-1">

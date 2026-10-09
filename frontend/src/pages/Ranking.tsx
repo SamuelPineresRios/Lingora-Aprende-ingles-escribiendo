@@ -138,7 +138,7 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
   return (
     <li
       className={cn(
-        'flex items-center gap-5 rounded-2xl border px-6 py-5 transition-colors',
+        'flex items-center gap-4 rounded-2xl border px-4 py-4 transition-colors sm:gap-5 sm:px-6 sm:py-5',
         isMe ? 'border-cyan/40 bg-cyan/10' : 'border-white/10 bg-black/20 hover:border-white/20',
       )}
     >
@@ -194,7 +194,7 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
   return (
     <li
       className={cn(
-        'flex items-center gap-5 rounded-2xl border px-6 py-5 transition-colors',
+        'flex items-center gap-4 rounded-2xl border px-4 py-4 transition-colors sm:gap-5 sm:px-6 sm:py-5',
         isMe ? 'border-cyan/40 bg-cyan/10' : 'border-white/10 bg-black/20 hover:border-white/20',
       )}
     >
@@ -300,7 +300,7 @@ export default function RankingPage() {
     <div className="relative min-h-[100vh] w-full bg-black/90">
       <ModuleBackdrop />
 
-      <div className="relative z-10 min-h-screen p-8 font-mono max-w-4xl mx-auto space-y-8 animate-fade-in pt-16 lg:pt-8">
+      <div className="relative z-10 min-h-screen p-4 font-mono max-w-4xl mx-auto sm:p-8 space-y-8 animate-fade-in pt-16 lg:pt-8">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="font-body text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">

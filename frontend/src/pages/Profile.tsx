@@ -164,7 +164,7 @@ export default function ProfilePage() {
       <ModuleBackdrop />
 
       {/* Main Content */}
-      <div className="relative z-10 min-h-screen p-8 font-mono max-w-6xl mx-auto space-y-8 animate-fade-in pt-16">
+      <div className="relative z-10 min-h-screen p-4 font-mono max-w-6xl mx-auto sm:p-8 space-y-8 animate-fade-in pt-16">
       {/* Header / Agent ID Card */}
       <div className="grid grid-cols-1 md:grid-cols-[380px_1fr] gap-8">
         

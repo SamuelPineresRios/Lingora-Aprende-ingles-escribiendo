@@ -148,7 +148,7 @@ export default function StorePage() {
       <CoinRain />
       {burst > 0 && <CoinRain key={burst} variant="burst" />}
 
-      <div className="relative z-10 min-h-screen p-8 font-mono max-w-5xl mx-auto space-y-10 animate-fade-in pt-16 lg:pt-8">
+      <div className="relative z-10 min-h-screen p-4 pt-16 font-mono max-w-5xl mx-auto space-y-8 animate-fade-in sm:p-8 sm:pt-16 lg:pt-8">
         <header className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <h1 className="font-body text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">
@@ -159,15 +159,15 @@ export default function StorePage() {
             </p>
           </div>
 
-          <div className="flex items-stretch gap-3">
-            <div className="flex items-center gap-3 rounded-2xl border border-amber/30 bg-gradient-to-br from-amber/15 via-amber/5 to-transparent px-5 py-3">
+          <div className="flex items-stretch gap-2 sm:gap-3">
+            <div className="flex items-center gap-2.5 rounded-2xl border border-amber/30 bg-gradient-to-br from-amber/15 via-amber/5 to-transparent px-4 py-2.5 sm:gap-3 sm:px-5 sm:py-3">
               <Coins className="h-6 w-6 text-amber" />
               <div>
                 <p className="text-[9px] uppercase tracking-[0.2em] text-amber/70">Monedas</p>
                 <p className="text-2xl font-bold leading-none text-amber">{view ? view.balance : '—'}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-emerald/25 bg-emerald/5 px-5 py-3">
+            <div className="flex items-center gap-2.5 rounded-2xl border border-emerald/25 bg-emerald/5 px-4 py-2.5 sm:gap-3 sm:px-5 sm:py-3">
               <Shield className="h-5 w-5 text-emerald" />
               <div>
                 <p className="text-[9px] uppercase tracking-[0.2em] text-emerald/70">Escudos</p>
@@ -214,10 +214,10 @@ export default function StorePage() {
                     <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-slate-500">
                       {allItems.length}
                     </span>
-                    <span className="h-px flex-1 bg-white/10" />
-                    <span className="text-[10px] uppercase tracking-widest text-slate-600">{section.hint}</span>
+                    <span className="hidden h-px flex-1 bg-white/10 sm:block" />
+                    <span className="hidden text-[10px] uppercase tracking-widest text-slate-600 sm:block">{section.hint}</span>
                     {paginada && (
-                      <span className="flex items-center gap-1">
+                      <span className="ml-auto flex items-center gap-1">
                         <button
                           type="button"
                           onClick={() => setFramePage(current => Math.max(0, current - 1))}
@@ -251,7 +251,7 @@ export default function StorePage() {
                           key={item.id}
                           data-item={item.id}
                           className={cn(
-                            'animate-fade-in-up flex items-center gap-4 rounded-2xl border px-4 py-4 transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5',
+                            'animate-fade-in-up flex flex-wrap items-center gap-3 rounded-2xl border px-4 py-4 transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5 sm:gap-4',
                             item.equipped
                               ? 'border-cyan/50 bg-cyan/[0.07] shadow-[0_0_25px_rgba(34,211,238,0.08)]'
                               : 'border-white/10 bg-black/30 hover:border-white/25 hover:bg-black/40',
@@ -260,13 +260,14 @@ export default function StorePage() {
                         >
                           <ItemVisual item={item} avatar={avatar} />
                           <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm text-white">{item.label}</p>
-                            <p className="mt-0.5 text-[11px] text-slate-500">{item.description}</p>
+                            <p className="truncate text-[15px] text-white sm:text-sm">{item.label}</p>
+                            <p className="mt-0.5 text-xs text-slate-500 sm:text-[11px]">{item.description}</p>
                           </div>
 
-                          <div className="flex shrink-0 flex-col items-end gap-2">
+                          {/* En móvil la acción baja a su propia fila, a todo lo ancho */}
+                          <div className="flex w-full shrink-0 items-center justify-between gap-2 pt-1 sm:w-auto sm:flex-col sm:items-end sm:gap-2 sm:pt-0">
                             {!item.consumable && !item.owned && (
-                              <span className="flex items-center gap-1 text-[10px] uppercase tracking-widest text-amber">
+                              <span className="flex items-center gap-1 text-xs uppercase tracking-widest text-amber sm:text-[10px]">
                                 <Coins className="h-3 w-3" /> {item.price}
                               </span>
                             )}
@@ -276,7 +277,7 @@ export default function StorePage() {
                                 onClick={() => act('purchase', item.id)}
                                 disabled={!canAfford || busy === item.id}
                                 className={cn(
-                                  'rounded-xl border px-3.5 py-2 text-[10px] uppercase tracking-widest transition-colors',
+                                  'whitespace-nowrap rounded-xl border px-4 py-2.5 text-xs uppercase tracking-widest transition-colors sm:px-3.5 sm:py-2 sm:text-[10px]',
                                   canAfford
                                     ? 'border-amber/50 bg-amber/10 text-amber hover:bg-amber/20'
                                     : 'cursor-not-allowed border-white/10 text-slate-600',
@@ -295,7 +296,7 @@ export default function StorePage() {
                                 onClick={() => act('equip', item.id)}
                                 disabled={busy === item.id}
                                 className={cn(
-                                  'rounded-xl border px-3.5 py-2 text-[10px] uppercase tracking-widest transition-colors',
+                                  'whitespace-nowrap rounded-xl border px-4 py-2.5 text-xs uppercase tracking-widest transition-colors sm:px-3.5 sm:py-2 sm:text-[10px]',
                                   item.equipped
                                     ? 'border-white/20 text-slate-300 hover:border-coral/50 hover:text-coral'
                                     : 'border-cyan/40 text-cyan hover:bg-cyan/10',
@@ -304,14 +305,14 @@ export default function StorePage() {
                                 {item.equipped ? 'Quitar' : 'Equipar'}
                               </button>
                             ) : item.equipped ? (
-                              <span className="flex items-center gap-1 rounded-xl border border-cyan/40 px-3.5 py-2 text-[10px] uppercase tracking-widest text-cyan">
+                              <span className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-cyan/40 px-4 py-2.5 text-xs uppercase tracking-widest text-cyan sm:px-3.5 sm:py-2 sm:text-[10px]">
                                 <Check className="h-3 w-3" /> Puesto
                               </span>
                             ) : item.owned ? (
                               <button
                                 onClick={() => act('equip', item.id)}
                                 disabled={busy === item.id}
-                                className="rounded-xl border border-cyan/40 px-3.5 py-2 text-[10px] uppercase tracking-widest text-cyan transition-colors hover:bg-cyan/10"
+                                className="whitespace-nowrap rounded-xl border border-cyan/40 px-4 py-2.5 text-xs uppercase tracking-widest text-cyan transition-colors hover:bg-cyan/10 sm:px-3.5 sm:py-2 sm:text-[10px]"
                               >
                                 Equipar
                               </button>
@@ -320,7 +321,7 @@ export default function StorePage() {
                                 onClick={() => act('purchase', item.id)}
                                 disabled={!canAfford || busy === item.id}
                                 className={cn(
-                                  'rounded-xl border px-3.5 py-2 text-[10px] uppercase tracking-widest transition-colors',
+                                  'whitespace-nowrap rounded-xl border px-4 py-2.5 text-xs uppercase tracking-widest transition-colors sm:px-3.5 sm:py-2 sm:text-[10px]',
                                   canAfford
                                     ? 'border-amber/50 bg-amber/10 text-amber hover:bg-amber/20'
                                     : 'cursor-not-allowed border-white/10 text-slate-600',

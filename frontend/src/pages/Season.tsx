@@ -226,7 +226,7 @@ export default function SeasonPage() {
     <div className="relative min-h-[100vh] w-full bg-black/90">
       <ModuleBackdrop />
 
-      <div className="relative z-10 min-h-screen px-6 py-8 font-mono lg:px-10 animate-fade-in pt-16 lg:pt-8">
+      <div className="relative z-10 min-h-screen px-4 py-6 font-mono sm:px-6 sm:py-8 lg:px-10 animate-fade-in pt-16 lg:pt-8">
         <div className="mx-auto max-w-6xl space-y-6">
           {loading && (
             <div className="flex items-center justify-center py-24 text-slate-500 gap-2 text-xs uppercase tracking-widest">
@@ -319,7 +319,7 @@ export default function SeasonPage() {
                         <p className="line-clamp-2 text-[10px] leading-tight text-slate-300">{reward.label}</p>
                       </div>
                       {selected && (
-                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-cyan px-2 py-0.5 text-[8px] font-bold uppercase tracking-widest text-black">
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-cyan px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-black sm:text-[8px]">
                           Ahora
                         </span>
                       )}
