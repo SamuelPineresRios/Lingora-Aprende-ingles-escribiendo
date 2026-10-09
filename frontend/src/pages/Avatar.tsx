@@ -307,7 +307,7 @@ export default function AvatarPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  const avatar = draft ?? resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null })
+  const avatar = draft ?? resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null })
   const equipped = equippedItem(shop, 'frame') ?? activeFrame(season)
   const frame: Frame = equipped ? { id: equipped.id, colors: equipped.colors as [string, string] } : null
   const name = user?.full_name ?? 'Tu personaje'
@@ -342,7 +342,7 @@ export default function AvatarPage() {
     saving,
     error,
     onRandom: () => setDraft(baseAvatar(randomAvatarSeed())),
-    onBase: () => setDraft(baseAvatar(user?.id ?? 'letoura')),
+    onBase: () => setDraft(baseAvatar(user?.id ?? 'lingora')),
     onSave: save,
   }
 

@@ -1,4 +1,4 @@
-# Seguridad de Letoura
+# Seguridad de Lingora
 
 Documento único de referencia.
 

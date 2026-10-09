@@ -1,6 +1,6 @@
 # Vocabulario: palabras interactivas, fichas y calentado
 
-Documento de implementación de la funcionalidad de vocabulario de Letoura:
+Documento de implementación de la funcionalidad de vocabulario de Lingora:
 traducir una palabra con solo pasar el cursor, guardarla y repasarla después.
 
 Está pensado para que otro desarrollador entienda **qué hay, dónde está y por

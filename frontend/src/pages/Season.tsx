@@ -270,7 +270,7 @@ export default function SeasonPage() {
               <FeaturedReward
                 reward={featured}
                 unlocked={featured.unlocked}
-                avatar={resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null })}
+                avatar={resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null })}
               />
 
               {/* Filtros por tipo de recompensa */}

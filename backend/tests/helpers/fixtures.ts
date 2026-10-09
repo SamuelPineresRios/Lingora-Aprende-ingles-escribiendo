@@ -63,7 +63,7 @@ export async function createMission(
 export async function createGroup(app: Express, teacher: Actor, name = 'Grupo Prueba') {
   const response = await teacher.agent
     .post('/api/teachers/groups/create')
-    .send({ name, institution_name: 'Colegio Letoura', parental_consent_confirmed: true })
+    .send({ name, institution_name: 'Colegio Lingora', parental_consent_confirmed: true })
 
   if (response.status !== 201) {
     throw new Error(`createGroup falló: ${response.status} ${JSON.stringify(response.body)}`)

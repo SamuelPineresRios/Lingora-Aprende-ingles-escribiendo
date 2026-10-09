@@ -1,4 +1,4 @@
-# Letoura
+# Lingora
 
 Plataforma de aprendizaje de inglés donde **escribir es el único camino para avanzar**.
 Estudiantes completan misiones de conversación escritas, reciben evaluación de un LLM y

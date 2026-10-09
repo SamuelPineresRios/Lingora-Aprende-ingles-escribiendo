@@ -8,7 +8,7 @@
 > y `frontend/src/`.
 
 ## Overview
-This document details the implementation of two critical features for the Letoura platform:
+This document details the implementation of two critical features for the Lingora platform:
 1. **Persistent Session Management** - Users remain logged in across browser sessions
 2. **Mobile Optimization** - Background sprites are disabled on mobile devices to improve performance
 

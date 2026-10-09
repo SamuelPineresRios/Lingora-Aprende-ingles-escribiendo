@@ -12,7 +12,7 @@ import { resetDb } from './helpers/db.ts'
 const app = createApp()
 
 const VALID_STUDENT = {
-  email: 'alumno@letoura.test',
+  email: 'alumno@lingora.test',
   password: 'contrasena-segura',
   full_name: 'Alumno de Prueba',
   role: 'student',
@@ -38,7 +38,7 @@ describe('POST /api/auth/signup', () => {
 
     expect(res.status).toBe(201)
     expect(res.body.user).toMatchObject({
-      email: 'alumno@letoura.test',
+      email: 'alumno@lingora.test',
       role: 'student',
       full_name: 'Alumno de Prueba',
       cefr_level: 'A2',
@@ -57,17 +57,17 @@ describe('POST /api/auth/signup', () => {
   it('normaliza el email a minúsculas y sin espacios', async () => {
     const res = await request(app)
       .post('/api/auth/signup')
-      .send({ ...VALID_STUDENT, email: '  Alumno@Letoura.Test  ' })
+      .send({ ...VALID_STUDENT, email: '  Alumno@Lingora.Test  ' })
 
     expect(res.status).toBe(201)
-    expect(res.body.user.email).toBe('alumno@letoura.test')
+    expect(res.body.user.email).toBe('alumno@lingora.test')
   })
 
   it('rechaza un email duplicado con 409', async () => {
     await request(app).post('/api/auth/signup').send(VALID_STUDENT)
     const res = await request(app)
       .post('/api/auth/signup')
-      .send({ ...VALID_STUDENT, email: 'ALUMNO@LETOURA.TEST' })
+      .send({ ...VALID_STUDENT, email: 'ALUMNO@LINGORA.TEST' })
 
     expect(res.status).toBe(409)
     expect(res.body).toEqual({ error: 'Ya existe una cuenta con este email' })
@@ -136,7 +136,7 @@ describe('POST /api/auth/login', () => {
       .send({ email: VALID_STUDENT.email, password: VALID_STUDENT.password })
 
     expect(res.status).toBe(200)
-    expect(res.body.user.email).toBe('alumno@letoura.test')
+    expect(res.body.user.email).toBe('alumno@lingora.test')
     expect(res.body.user).not.toHaveProperty('password_hash')
     expect(sessionCookie(res)).toContain('HttpOnly')
   })
@@ -146,7 +146,7 @@ describe('POST /api/auth/login', () => {
 
     const res = await request(app)
       .post('/api/auth/login')
-      .send({ email: '  ALUMNO@Letoura.test ', password: VALID_STUDENT.password })
+      .send({ email: '  ALUMNO@Lingora.test ', password: VALID_STUDENT.password })
 
     expect(res.status).toBe(200)
   })
@@ -172,7 +172,7 @@ describe('POST /api/auth/login', () => {
   })
 
   it('exige email y contraseña', async () => {
-    const res = await request(app).post('/api/auth/login').send({ email: 'alumno@letoura.test' })
+    const res = await request(app).post('/api/auth/login').send({ email: 'alumno@lingora.test' })
 
     expect(res.status).toBe(400)
     expect(res.body).toEqual({ error: 'Email y contraseña requeridos' })
@@ -203,7 +203,7 @@ describe('GET /api/auth/me', () => {
 
     expect(res.status).toBe(200)
     expect(res.body.user).toMatchObject({
-      email: 'alumno@letoura.test',
+      email: 'alumno@lingora.test',
       role: 'student',
       cefr_level: 'A2',
     })

@@ -106,8 +106,8 @@ function activeProvider(): ProviderConfig {
       headers: {
         Authorization: `Bearer ${env.aiApiKey}`,
         // OpenRouter agradece saber quién llama; en otros proveedores no molesta.
-        'HTTP-Referer': 'https://letoura.app',
-        'X-Title': 'Letoura',
+        'HTTP-Referer': 'https://lingora.app',
+        'X-Title': 'Lingora',
       },
       defaultModel: env.aiModel,
     }

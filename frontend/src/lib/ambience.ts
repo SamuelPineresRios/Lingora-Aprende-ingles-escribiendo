@@ -15,7 +15,7 @@ import type { BackdropKind } from '@vox/shared'
  * Preferencia del alumno, guardada fuera del ciclo de React para que escena a
  * escena (y en futuras pantallas) suene igual hasta que la cambie.
  */
-const PREFERENCE_KEY = 'letoura:ambience'
+const PREFERENCE_KEY = 'lingora:ambience'
 
 export function ambienceEnabled(): boolean {
   if (typeof window === 'undefined') return false

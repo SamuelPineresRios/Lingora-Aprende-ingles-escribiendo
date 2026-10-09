@@ -1,5 +1,5 @@
 /**
- * Esquema PostgreSQL (Drizzle) de Letoura.
+ * Esquema PostgreSQL (Drizzle) de Lingora.
  *
  * Única fuente de verdad de la persistencia: ya no hay colecciones en JSON.
  * Las propiedades usan snake_case a propósito: es el nombre de columna real y

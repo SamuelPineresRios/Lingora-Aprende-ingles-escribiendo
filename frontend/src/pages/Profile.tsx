@@ -79,7 +79,7 @@ export default function ProfilePage() {
   const seasonFrame = activeFrame(season)
   const frameId = shopFrame?.id ?? seasonFrame?.id ?? null
   const frameColors = shopFrame?.colors ?? seasonFrame?.colors ?? null
-  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
+  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null }))
   const titles = equippedTitles(shop)
   const badges = unlockedBadges(season)
   /** Registro de misiones: 5 por página. */

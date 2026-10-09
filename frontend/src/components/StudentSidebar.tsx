@@ -22,7 +22,7 @@ export function StudentSidebar() {
 
   // Tu personaje completo con el marco equipado (tienda o pase), para el hueco del menú.
   const frame = equippedItem(shop, 'frame') ?? activeFrame(season)
-  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
+  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null }))
 
   const links = [
     { href: '/missions', label: 'MISIONES', icon: Radio },
@@ -40,9 +40,9 @@ export function StudentSidebar() {
       {/* Mobile Top Bar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-16 border-b border-white/10 bg-black/80 backdrop-blur-xl z-50 flex items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          <img src="/Letoura_logo.png" alt="" className="h-8 w-8 object-contain" />
+          <img src="/Lingora_logo.png" alt="" className="h-8 w-8 object-contain" />
           <div>
-            <h1 className="font-display font-bold text-lg tracking-wider text-white">Letoura</h1>
+            <h1 className="font-display font-bold text-lg tracking-wider text-white">Lingora</h1>
           </div>
         </div>
         <button 
@@ -69,9 +69,9 @@ export function StudentSidebar() {
         {/* Brand - hidden on mobile since it's in top bar */}
         <div className="p-6 border-b border-white/10 hidden lg:block">
         <div className="flex items-center gap-3">
-          <img src="/Letoura_logo.png" alt="" className="h-8 w-8 object-contain" />
+          <img src="/Lingora_logo.png" alt="" className="h-8 w-8 object-contain" />
           <div>
-            <h1 className="font-display font-bold text-lg tracking-wider text-white">Letoura</h1>
+            <h1 className="font-display font-bold text-lg tracking-wider text-white">Lingora</h1>
           </div>
         </div>
       </div>

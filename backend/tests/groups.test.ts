@@ -46,7 +46,7 @@ describe('POST /api/teachers/groups/create', () => {
 
     const res = await teacher.agent
       .post('/api/teachers/groups/create')
-      .send({ name: '  4º B  ', institution_name: 'Colegio Letoura', parental_consent_confirmed: true })
+      .send({ name: '  4º B  ', institution_name: 'Colegio Lingora', parental_consent_confirmed: true })
 
     expect(res.status).toBe(201)
     expect(res.body.name).toBe('4º B')

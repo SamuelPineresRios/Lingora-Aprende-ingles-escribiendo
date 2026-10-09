@@ -82,7 +82,7 @@ export default function StorePage() {
   const [burst, setBurst] = useState(0)
   /** Página del catálogo de marcos (el resto de secciones entra entera). */
   const [framePage, setFramePage] = useState(0)
-  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'letoura', avatar: user?.avatar ?? null }))
+  const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null }))
 
   useEffect(() => {
     if (!user?.id) return

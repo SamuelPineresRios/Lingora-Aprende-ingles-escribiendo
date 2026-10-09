@@ -142,8 +142,8 @@ export default function GroupDetailPage() {
               
               <button 
                 onClick={() => {
-                  const text = `Sistema Letoura: Te han asignado al escuadrón. Código de acceso: ${group.access_code}`
-                  if (navigator.share) navigator.share({ title: 'Únete a Letoura', text })
+                  const text = `Sistema Lingora: Te han asignado al escuadrón. Código de acceso: ${group.access_code}`
+                  if (navigator.share) navigator.share({ title: 'Únete a Lingora', text })
                   else copyCode()
                 }} 
                 className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-950/30 transition-all active:scale-95 flex-shrink-0"
