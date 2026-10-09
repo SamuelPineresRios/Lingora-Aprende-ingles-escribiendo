@@ -10,7 +10,7 @@ import { useSeasonProgress } from '@/lib/hooks/useSeasonProgress'
 import { activeFrame } from '@/lib/season'
 import { equippedItem } from '@/lib/store'
 import { studentAvatarUrl } from '@/lib/avatar'
-import { useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 
 export function StudentSidebar() {
   const { pathname } = useLocation()
@@ -19,6 +19,42 @@ export function StudentSidebar() {
   const shop = useStoreView(user?.id)
   const season = useSeasonProgress(user?.id)
   const [isOpen, setIsOpen] = useState(false)
+  /** Hueco que se recorta en el fondo del sidebar para el módulo activo. */
+  const asideRef = useRef<HTMLElement | null>(null)
+  const activeRef = useRef<HTMLAnchorElement | null>(null)
+  const [hole, setHole] = useState<{ w: number; h: number; top: number; pill: number } | null>(null)
+
+  /**
+   * Mide la posición del ítem activo para recortar el fondo justo ahí: la
+   * franja del módulo activo queda sin el tinte del sidebar y se ve el fondo
+   * real de la página, como si el sidebar no estuviera pintado en esa zona.
+   */
+  useEffect(() => {
+    const measure = () => {
+      const aside = asideRef.current
+      const link = activeRef.current
+      if (!aside || !link) {
+        setHole(null)
+        return
+      }
+      const a = aside.getBoundingClientRect()
+      const l = link.getBoundingClientRect()
+      setHole({ w: Math.round(a.width), h: Math.round(a.height), top: Math.round(l.top - a.top), pill: Math.round(l.height) })
+    }
+
+    measure()
+    window.addEventListener('resize', measure)
+    document.fonts?.ready.then(measure).catch(() => {})
+    return () => window.removeEventListener('resize', measure)
+  }, [pathname, isOpen])
+
+  // Máscara SVG con el hueco: rectángulo completo menos una píldora pegada al
+  // borde derecho (mismo truco que las muescas, pero de verdad transparente).
+  const maskUrl = hole && hole.pill > 0
+    ? `url("data:image/svg+xml,${encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${hole.w} ${hole.h}' preserveAspectRatio='none'><path fill='black' fill-rule='evenodd' d='M0 0H${hole.w}V${hole.h}H0Z M${hole.w + 4} ${hole.top}H${hole.pill / 2}A${hole.pill / 2} ${hole.pill / 2} 0 0 0 ${hole.pill / 2} ${hole.top + hole.pill}H${hole.w + 4}Z'/></svg>`,
+      )}")`
+    : undefined
 
   // Tu personaje completo con el marco equipado (tienda o pase), para el hueco del menú.
   const frame = equippedItem(shop, 'frame') ?? activeFrame(season)
@@ -62,12 +98,33 @@ export function StudentSidebar() {
       )}
 
       {/* Sidebar */}
-      <aside className={cn(
-        "fixed left-0 top-0 h-screen w-64 border-r border-white/10 bg-black/90 lg:bg-black/40 backdrop-blur-xl flex flex-col z-50 transition-transform duration-300 ease-in-out",
-        isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-      )}>
+      <aside
+        ref={asideRef}
+        className={cn(
+          "fixed left-0 top-0 h-screen w-64 flex flex-col z-50 transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        )}
+      >
+        {/* Fondo del sidebar con el hueco del activo: la máscara deja al
+            descubierto la página justo en la franja del módulo activo. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 border-r border-white/10 bg-black/90 backdrop-blur-xl lg:bg-black/40"
+          style={
+            maskUrl
+              ? ({
+                  maskImage: maskUrl,
+                  WebkitMaskImage: maskUrl,
+                  maskSize: '100% 100%',
+                  WebkitMaskSize: '100% 100%',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskRepeat: 'no-repeat',
+                } as CSSProperties)
+              : undefined
+          }
+        />
         {/* Brand - hidden on mobile since it's in top bar */}
-        <div className="p-6 border-b border-white/10 hidden lg:block">
+        <div className="relative z-10 p-6 border-b border-white/10 hidden lg:block">
         <div className="flex items-center gap-3">
           <img src="/Lingora_logo.png" alt="" className="h-8 w-8 object-contain" />
           <div>
@@ -77,13 +134,14 @@ export function StudentSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 flex flex-col gap-2 min-h-0">
+      <nav className="relative z-10 flex-1 p-4 flex flex-col gap-2 min-h-0">
         <div className="px-4 mb-1 font-poppins text-lg font-semibold text-white/90 lg:mt-0 mt-16">Menú principal</div>
         {links.map((link) => {
           const isActive = pathname.startsWith(link.href)
           return (
             <Link
               key={link.href}
+              ref={isActive ? activeRef : null}
               to={link.href}
               onClick={() => setIsOpen(false)}
               className={cn(
@@ -124,7 +182,7 @@ export function StudentSidebar() {
       </nav>
 
       {/* User Status / Logout */}
-      <div className="p-4 border-t border-white/10 bg-black/20">
+      <div className="relative z-10 p-4 border-t border-white/10 bg-black/20">
         <button 
           onClick={logout}
           className="w-full flex items-center gap-3 px-4 py-3 font-poppins text-sm font-medium text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-xl transition-colors group"
