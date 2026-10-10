@@ -302,6 +302,7 @@ export const STORE_ITEMS: StoreItem[] = [
   { id: 'tema-rosa', kind: 'theme', label: 'Tema rosa', description: 'Con carácter.', price: 250, accent: '#f472b6' },
   { id: 'tema-azul', kind: 'theme', label: 'Tema azul', description: 'Sereno y clásico.', price: 200, accent: '#3b82f6' },
   { id: 'tema-turquesa', kind: 'theme', label: 'Tema turquesa', description: 'Fresco y luminoso.', price: 250, accent: '#2dd4bf' },
+  { id: 'tema-celeste', kind: 'theme', label: 'Tema celeste', description: 'Azul claro, sereno.', price: 250, accent: '#7dd3fc' },
   { id: 'tema-lima', kind: 'theme', label: 'Tema lima', description: 'Energía pura.', price: 250, accent: '#a3e635' },
   { id: 'tema-magenta', kind: 'theme', label: 'Tema magenta', description: 'Para destacar.', price: 300, accent: '#d946ef' },
   { id: 'tema-hielo', kind: 'theme', label: 'Tema hielo', description: 'Limpio y frío.', price: 250, accent: '#e2e8f0' },
