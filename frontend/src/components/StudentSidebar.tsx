@@ -50,11 +50,33 @@ export function StudentSidebar() {
 
   // Máscara SVG con el hueco: rectángulo completo menos una píldora pegada al
   // borde derecho (mismo truco que las muescas, pero de verdad transparente).
-  const maskUrl = hole && hole.pill > 0
-    ? `url("data:image/svg+xml,${encodeURIComponent(
-        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${hole.w} ${hole.h}' preserveAspectRatio='none'><path fill='black' fill-rule='evenodd' d='M0 0H${hole.w}V${hole.h}H0Z M${hole.w + 4} ${hole.top}H${hole.pill / 2}A${hole.pill / 2} ${hole.pill / 2} 0 0 0 ${hole.pill / 2} ${hole.top + hole.pill}H${hole.w + 4}Z'/></svg>`,
-      )}")`
-    : undefined
+  const maskUrl = (() => {
+    if (!hole || hole.pill <= 0) return undefined
+
+    // Píldora del activo con las esquinas redondeadas: la izquierda es media
+    // circunferencia y, al llegar al borde derecho, dos muescas cóncavas (r)
+    // funden la píldora con el borde, como en la referencia.
+    const w = hole.w
+    const t = hole.top
+    const h = hole.pill
+    const p = h / 2
+    const r = 16
+    // 4 px de más a la derecha: el agujero cruza el borde y se recorta solo.
+    const e = 4
+    const path =
+      `M0 0H${w}V${hole.h}H0Z ` +
+      `M${w + e} ${t - r}H${w}` +
+      `A${r} ${r} 0 0 0 ${w - r} ${t}` +
+      `H${p}` +
+      `A${p} ${p} 0 0 0 ${p} ${t + h}` +
+      `H${w - r}` +
+      `A${r} ${r} 0 0 0 ${w} ${t + h + r}` +
+      `H${w + e}Z`
+
+    return `url("data:image/svg+xml,${encodeURIComponent(
+      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${w} ${hole.h}' preserveAspectRatio='none'><path fill='black' fill-rule='evenodd' d='${path}'/></svg>`,
+    )}")`
+  })()
 
   // Tu personaje completo con el marco equipado (tienda o pase), para el hueco del menú.
   const frame = equippedItem(shop, 'frame') ?? activeFrame(season)
