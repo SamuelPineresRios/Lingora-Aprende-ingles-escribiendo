@@ -7,6 +7,7 @@ import { ownsResource } from '../../lib/authorization.ts'
 import { normalizeAvatar } from '../../lib/avatar.ts'
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
 import { updateUserAvatar } from '../auth/service.ts'
+import { getStudentMedals } from '../medals/service.ts'
 import { getSeasonProgress } from '../season/service.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { queryInt, routeParam } from '../../utils/route-params.ts'
@@ -75,6 +76,16 @@ studentsRouter.patch('/:id/avatar', requireAuth, async (req, res) => {
   if (!user) throw new HttpError(404, 'Alumno no encontrado')
 
   res.json({ user })
+})
+
+/** Medallas del alumno: evalúa logros pendientes y devuelve el catálogo. */
+studentsRouter.get('/:id/medals', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+
+  if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
+
+  res.json(await getStudentMedals(studentId))
 })
 
 studentsRouter.get('/:id/weekly-stats', requireAuth, async (req, res) => {

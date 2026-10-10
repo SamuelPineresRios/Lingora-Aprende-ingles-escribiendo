@@ -15,6 +15,8 @@ import { resolveAvatar } from '@vox/shared'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { activeFrame, badgeIcon, unlockedBadges } from '@/lib/season'
 import { equippedItem, equippedTitles } from '@/lib/store'
+import { cn } from '@/lib/utils'
+import { medalIcon, type StudentMedals } from '@/lib/medals'
 
 interface Mission { id:string; title:string; description:string|null; cefr_level:string; status:string }
 
@@ -69,6 +71,7 @@ export default function ProfilePage() {
   /** Acento del tema equipado: tiñe barra de XP, gráfica y detalles del perfil. */
   const accent = useThemeAccent(user?.id)
   const [missions, setMissions] = useState<Mission[]>([])
+  const [medals, setMedals] = useState<StudentMedals | null>(null)
   const [skills, setSkills] = useState<StudentSkills | null>(null)
   const [, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
@@ -120,10 +123,12 @@ export default function ProfilePage() {
     Promise.all([
       fetch('/api/missions').then(readJson),
       fetch(`/api/students/${user.id}/skills`).then(readJson),
+      fetch(`/api/students/${user.id}/medals`).then(readJson),
     ])
-      .then(([missionsData, skillsData]) => {
+      .then(([missionsData, skillsData, medalsData]) => {
         setMissions(missionsData?.missions ?? [])
         setSkills(skillsData ?? null)
+        setMedals(medalsData ?? null)
         setLoading(false)
       })
       .catch((err) => {
@@ -336,6 +341,44 @@ export default function ProfilePage() {
         </h3>
         <XpBar progress={progress} variant="full" />
       </section>
+
+      {/* Medallas: hitos permanentes, ganados y por ganar */}
+      {medals && (
+        <section className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+            <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-300">
+              <Award className="w-4 h-4 text-amber" />
+              Medallas
+            </h3>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
+              {medals.earned}/{medals.total} conseguidas
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+            {medals.medals.map(medal => {
+              const Icon = medalIcon(medal.icon)
+              return (
+                <div
+                  key={medal.id}
+                  className={cn(
+                    'flex flex-col items-center gap-2 rounded-2xl border px-3 py-4 text-center transition-colors',
+                    medal.earned
+                      ? 'border-amber/40 bg-amber/5 shadow-[0_0_22px_-10px_rgba(245,158,11,0.8)]'
+                      : 'border-white/10 bg-black/20 opacity-45 grayscale',
+                  )}
+                >
+                  <Icon className={cn('h-7 w-7', medal.earned ? 'text-amber' : 'text-slate-500')} />
+                  <p className={cn('text-xs font-bold leading-tight', medal.earned ? 'text-white' : 'text-slate-400')}>
+                    {medal.name}
+                  </p>
+                  <p className="text-[10px] leading-snug text-slate-500">{medal.description}</p>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Historial de actividad: misiones por día, semana y mes */}
       {user?.id && <ActivityHistory studentId={user.id} />}

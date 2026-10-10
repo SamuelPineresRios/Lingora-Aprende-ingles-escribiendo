@@ -395,6 +395,24 @@ export const student_loadout = pgTable('student_loadout', {
   updated_at: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
+/** Medallas ganadas: hitos permanentes del alumno (no se pierden). */
+export const medals = pgTable(
+  'medals',
+  {
+    id: text('id').primaryKey(),
+    student_id: text('student_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    /** Id del catálogo (`backend/src/lib/medals.ts`). */
+    medal_id: text('medal_id').notNull(),
+    earned_at: timestamp('earned_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex('medals_student_medal_key').on(t.student_id, t.medal_id),
+    index('medals_student_idx').on(t.student_id),
+  ],
+)
+
 /** Escudos de racha: `used_for_day` (YYYY-MM-DD) es el día que salvaron. */
 export const streak_shields = pgTable(
   'streak_shields',
