@@ -80,6 +80,8 @@ export function StudentSidebar() {
 
   // Tu personaje completo con el marco equipado (tienda o pase), para el hueco del menú.
   const frame = equippedItem(shop, 'frame') ?? activeFrame(season)
+  /** Color del ítem activo: el tema equipado o el cian de siempre. */
+  const activeColor = accent ?? '#a5f3fc'
   const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null }))
 
   const links = [
@@ -180,9 +182,20 @@ export function StudentSidebar() {
                     "z-10 rounded-xl bg-transparent font-semibold before:bg-transparent after:bg-transparent"
                   : "rounded-xl text-slate-400 hover:text-white hover:bg-white/5 before:bg-transparent after:bg-transparent",
               )}
-              style={isActive ? ({ color: accent ?? '#67e8f9', backgroundColor: 'transparent' } as CSSProperties) : undefined}
+              style={
+                isActive
+                  ? ({
+                      color: activeColor,
+                      backgroundColor: 'transparent',
+                      textShadow: `0 0 6px ${activeColor}, 0 0 18px ${activeColor}99`,
+                    } as CSSProperties)
+                  : undefined
+              }
             >
-              <link.icon className={cn("h-4 w-4", isActive ? '' : 'opacity-70 group-hover:opacity-100')} />
+              <link.icon
+                className={cn('h-4 w-4', isActive ? '' : 'opacity-70 group-hover:opacity-100')}
+                style={isActive ? { filter: `drop-shadow(0 0 5px ${activeColor})` } : undefined}
+              />
               <span>{link.label}</span>
             </Link>
           )
