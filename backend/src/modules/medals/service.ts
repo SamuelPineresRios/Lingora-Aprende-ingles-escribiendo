@@ -7,7 +7,7 @@
  * rompe la racha o se repite el pase, la medalla sigue siendo suya.
  */
 import { randomUUID } from 'node:crypto'
-import { and, eq, gte, isNotNull, or, sql } from 'drizzle-orm'
+import { and, eq, gte, inArray, isNotNull, or, sql } from 'drizzle-orm'
 import { db } from '../../db/client.ts'
 import {
   evaluations,
@@ -20,7 +20,7 @@ import {
   saved_words,
 } from '../../db/schema.ts'
 import { levelProgress } from '../../lib/xp.ts'
-import { MEDALS, type MedalDefinition } from '../../lib/medals.ts'
+import { MEDAL_BY_ID, MEDALS, type MedalDefinition } from '../../lib/medals.ts'
 import { getSeasonXpBySeason } from '../season/service.ts'
 import { getStudentProgress } from '../students/service.ts'
 
@@ -187,4 +187,28 @@ export async function getStudentMedals(
   }))
 
   return { medals: catalog, earned: byId.size, total: MEDALS.length }
+}
+
+/** Medallas guardadas de una lista de alumnos (para ranking y listas). */
+export async function medalsByStudent(
+  studentIds: string[],
+): Promise<Map<string, Array<Pick<MedalDefinition, 'id' | 'name' | 'icon'>>>> {
+  const result = new Map<string, Array<Pick<MedalDefinition, 'id' | 'name' | 'icon'>>>()
+  if (studentIds.length === 0) return result
+
+  const rows = await db
+    .select({ student_id: medals.student_id, medal_id: medals.medal_id, earned_at: medals.earned_at })
+    .from(medals)
+    .where(inArray(medals.student_id, studentIds))
+    .orderBy(medals.earned_at)
+
+  for (const row of rows) {
+    const definition = MEDAL_BY_ID.get(row.medal_id)
+    if (!definition) continue
+    const list = result.get(row.student_id) ?? []
+    list.push({ id: definition.id, name: definition.name, icon: definition.icon })
+    result.set(row.student_id, list)
+  }
+
+  return result
 }

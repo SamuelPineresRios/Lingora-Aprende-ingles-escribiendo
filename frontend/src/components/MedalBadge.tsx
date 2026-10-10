@@ -10,9 +10,18 @@ import { Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { medalIcon, type StudentMedal } from '@/lib/medals'
 
-const BAND = 'radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px))'
+export function MedalBadge({
+  medal,
+  size = 76,
+}: {
+  /** Basta el icono y si está ganada (el ranking usa versiones mini). */
+  medal: Pick<StudentMedal, 'icon'> & { earned?: boolean }
+  size?: number
+}) {
+  const ring = Math.max(2, Math.round(size * 0.045))
+  const inset = Math.max(4, Math.round(size * 0.1))
+  const lock = Math.max(13, Math.round(size * 0.3))
 
-export function MedalBadge({ medal, size = 76 }: { medal: StudentMedal; size?: number }) {
   return (
     <div className="relative" style={{ width: size, height: size }}>
       {/* Cinta en V detrás del aro */}
@@ -29,11 +38,12 @@ export function MedalBadge({ medal, size = 76 }: { medal: StudentMedal; size?: n
       <span
         aria-hidden
         className={cn(
-          'absolute inset-0 rounded-full p-[3px]',
+          'absolute inset-0 rounded-full',
           medal.earned
             ? 'bg-[conic-gradient(from_0deg,#92400e,#f59e0b,#fde68a,#f59e0b,#92400e)]'
             : 'bg-white/15',
         )}
+        style={{ padding: ring }}
       >
         <span className={cn('block h-full w-full rounded-full', medal.earned ? 'bg-slate-950' : 'bg-slate-900')} />
       </span>
@@ -46,14 +56,14 @@ export function MedalBadge({ medal, size = 76 }: { medal: StudentMedal; size?: n
           style={{
             animationDuration: '8s',
             background: 'conic-gradient(from 0deg, transparent 0 300deg, rgba(255,255,255,0.5) 330deg, transparent 360deg)',
-            maskImage: BAND,
-            WebkitMaskImage: BAND,
+            maskImage: `radial-gradient(farthest-side, transparent calc(100% - ${ring + 1}px), #000 calc(100% - ${ring}px))`,
+            WebkitMaskImage: `radial-gradient(farthest-side, transparent calc(100% - ${ring + 1}px), #000 calc(100% - ${ring}px))`,
           }}
         />
       )}
 
       {/* Icono (createElement: el compilador no admite componentes en render) */}
-      <span className="absolute inset-[7px] flex items-center justify-center rounded-full">
+      <span className="absolute flex items-center justify-center rounded-full" style={{ inset }}>
         {createElement(medalIcon(medal.icon), {
           className: cn(
             'h-1/2 w-1/2',
@@ -64,8 +74,11 @@ export function MedalBadge({ medal, size = 76 }: { medal: StudentMedal; size?: n
 
       {/* Candado de las pendientes */}
       {!medal.earned && (
-        <span className="absolute -bottom-0.5 -right-0.5 flex h-5 w-5 items-center justify-center rounded-full border border-white/15 bg-slate-950">
-          <Lock className="h-3 w-3 text-slate-500" />
+        <span
+          className="absolute -bottom-0.5 -right-0.5 flex items-center justify-center rounded-full border border-white/15 bg-slate-950"
+          style={{ width: lock, height: lock }}
+        >
+          <Lock style={{ width: Math.round(lock * 0.6), height: Math.round(lock * 0.6) }} className="text-slate-500" />
         </span>
       )}
     </div>

@@ -10,7 +10,7 @@ import request from 'supertest'
 import { randomUUID } from 'node:crypto'
 import { createApp } from '../src/app.ts'
 import { db } from '../src/db/client.ts'
-import { evaluations, responses, student_loadout } from '../src/db/schema.ts'
+import { evaluations, medals, responses, student_loadout } from '../src/db/schema.ts'
 import { resetDb } from './helpers/db.ts'
 import { createMission, signupActor, type Actor } from './helpers/fixtures.ts'
 
@@ -162,6 +162,9 @@ describe('cosméticos del ranking', () => {
     await db
       .insert(student_loadout)
       .values({ student_id: ana.id, frame_id: 'marco-fuego', title_ids: ['titulo-constante'] })
+    await db
+      .insert(medals)
+      .values({ id: randomUUID(), student_id: ana.id, medal_id: 'primera-mision', earned_at: new Date() })
 
     const res = await ana.agent.get('/api/students/ranking')
 
@@ -169,10 +172,12 @@ describe('cosméticos del ranking', () => {
       avatar: { seed: string }
       frame: { id: string; colors: string[] } | null
       titles: Array<{ id: string; text: string }>
+      medals: Array<{ id: string; name: string; icon: string }>
     }>
     expect(entry?.avatar.seed).toBe(ana.id)
     expect(entry?.frame).toEqual({ id: 'marco-fuego', colors: ['#dc2626', '#f59e0b'] })
     expect(entry?.titles).toEqual([{ id: 'titulo-constante', text: 'Constante' }])
+    expect(entry?.medals).toEqual([{ id: 'primera-mision', name: 'Primer Paso', icon: 'footprints' }])
   })
 
   it('sin marco de tienda cae al mejor del pase desbloqueado', async () => {

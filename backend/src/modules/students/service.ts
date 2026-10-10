@@ -23,6 +23,7 @@ import { minusDays, mondayKeyOf, safeTimeZone, todayKeyIn } from '../../lib/date
 import { LEAGUE_SIZE, leagueZones, zoneAt, type LeagueZone } from '../../lib/league.ts'
 import { SEASON_REWARDS, seasonFor, tierFromXp } from '../../lib/season.ts'
 import { STORE_ITEMS } from '../../lib/store.ts'
+import { medalsByStudent } from '../medals/service.ts'
 import type { UserAvatar } from '@vox/shared'
 import { getWeekStart } from '../../utils/week.ts'
 
@@ -410,6 +411,8 @@ export interface RankingCosmetics {
   frame: { id: string; colors: [string, string] } | null
   /** Títulos equipados, en el orden en que se pusieron. */
   titles: Array<{ id: string; text: string }>
+  /** Medallas ganadas, en orden de consecución. */
+  medals: Array<{ id: string; name: string; icon: string }>
 }
 
 export interface RankingEntry extends RankingCosmetics {
@@ -430,12 +433,12 @@ export interface RankingEntry extends RankingCosmetics {
  */
 async function rankingCosmetics(
   studentIds: string[],
-): Promise<Map<string, Pick<RankingCosmetics, 'frame' | 'titles'>>> {
-  const cosmetics = new Map<string, Pick<RankingCosmetics, 'frame' | 'titles'>>()
+): Promise<Map<string, Pick<RankingCosmetics, 'frame' | 'titles' | 'medals'>>> {
+  const cosmetics = new Map<string, Pick<RankingCosmetics, 'frame' | 'titles' | 'medals'>>()
   if (studentIds.length === 0) return cosmetics
 
   const current = seasonFor(new Date())
-  const [loadouts, seasonRows] = await Promise.all([
+  const [loadouts, seasonRows, medalsMap] = await Promise.all([
     db.select().from(student_loadout).where(inArray(student_loadout.student_id, studentIds)),
     db
       .select({
@@ -452,6 +455,7 @@ async function rankingCosmetics(
         ),
       )
       .groupBy(responses.student_id),
+    medalsByStudent(studentIds),
   ])
 
   const loadoutByStudent = new Map(loadouts.map(loadout => [loadout.student_id, loadout]))
@@ -493,6 +497,7 @@ async function rankingCosmetics(
     cosmetics.set(studentId, {
       frame: frameId && colors ? { id: frameId, colors } : null,
       titles,
+      medals: medalsMap.get(studentId) ?? [],
     })
   }
 
@@ -554,6 +559,7 @@ export async function getGlobalRanking(
     avatar: row.avatar ?? null,
     frame: null,
     titles: [],
+    medals: [],
     xp: row.xp,
     missions: row.missions,
     seconds: row.seconds,
@@ -576,6 +582,7 @@ export async function getGlobalRanking(
     ...entry,
     frame: cosmetics.get(entry.student_id)?.frame ?? null,
     titles: cosmetics.get(entry.student_id)?.titles ?? [],
+    medals: cosmetics.get(entry.student_id)?.medals ?? [],
   })
 
   return {
@@ -821,6 +828,7 @@ export async function getWeeklyLeague(studentId: string, timezone?: unknown): Pr
     avatar: row.avatar ?? null,
     frame: cosmetics.get(row.student_id)?.frame ?? null,
     titles: cosmetics.get(row.student_id)?.titles ?? [],
+    medals: cosmetics.get(row.student_id)?.medals ?? [],
     week_xp: row.week_xp,
     zone: zoneAt(index + 1, bracket.length),
   }))

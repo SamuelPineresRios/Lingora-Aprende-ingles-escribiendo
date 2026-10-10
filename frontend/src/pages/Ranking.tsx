@@ -11,6 +11,7 @@ import { Crown, Flame, Loader2, TrendingDown, TrendingUp, Trophy } from 'lucide-
 import { resolveAvatar, type UserAvatar } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { FrameRing } from '@/components/FrameRing'
+import { MedalBadge } from '@/components/MedalBadge'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
@@ -25,6 +26,8 @@ interface Cosmetics {
   frame: { id: string; colors: [string, string] } | null
   /** Títulos equipados, en su orden. */
   titles: Array<{ id: string; text: string }>
+  /** Medallas ganadas, en orden de consecución. */
+  medals: Array<{ id: string; name: string; icon: string }>
 }
 
 interface RankingEntry extends Cosmetics {
@@ -116,6 +119,23 @@ function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } })
   return <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
 }
 
+/** Medallas ganadas en miniatura (máximo 5 y un contador), junto al valor. */
+function MiniMedals({ medals }: { medals: Array<{ id: string; name: string; icon: string }> }) {
+  if (medals.length === 0) return null
+  const visibles = medals.slice(0, 5)
+
+  return (
+    <span className="flex shrink-0 items-center gap-1" title={medals.map(medal => medal.name).join(' · ')}>
+      {visibles.map(medal => (
+        <MedalBadge key={medal.id} medal={{ icon: medal.icon, earned: true }} size={24} />
+      ))}
+      {medals.length > visibles.length && (
+        <span className="font-mono text-[10px] text-amber">+{medals.length - visibles.length}</span>
+      )}
+    </span>
+  )
+}
+
 /** Títulos equipados, con el mismo aspecto que en el perfil. */
 function TitleBadge({ titles }: { titles: Array<{ id: string; text: string }> }) {
   if (titles.length === 0) return null
@@ -174,9 +194,12 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
         </p>
       </div>
 
-      <span className={cn('shrink-0 font-body text-xl font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
-        {metric.value(entry)}
-      </span>
+      <div className="flex shrink-0 items-center gap-3">
+        <MiniMedals medals={entry.medals ?? []} />
+        <span className={cn('font-body text-xl font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
+          {metric.value(entry)}
+        </span>
+      </div>
     </li>
   )
 }
@@ -221,9 +244,12 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
         )}
       </div>
 
-      <span className={cn('shrink-0 font-body text-xl font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
-        {XP_FMT.format(entry.week_xp)} XP
-      </span>
+      <div className="flex shrink-0 items-center gap-3">
+        <MiniMedals medals={entry.medals ?? []} />
+        <span className={cn('font-body text-xl font-bold', isMe ? 'text-cyan' : 'text-slate-200')}>
+          {XP_FMT.format(entry.week_xp)} XP
+        </span>
+      </div>
     </li>
   )
 }
