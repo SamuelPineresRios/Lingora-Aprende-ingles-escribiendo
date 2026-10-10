@@ -156,8 +156,7 @@ export function StudentSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-10 flex-1 p-4 flex flex-col gap-2 min-h-0">
-        <div className="px-4 mb-1 font-poppins text-lg font-semibold text-white/90 lg:mt-0 mt-16">Menú principal</div>
+      <nav className="relative z-10 mt-16 flex flex-1 flex-col gap-2 p-4 min-h-0 lg:mt-0">
         {links.map((link) => {
           const isActive = pathname.startsWith(link.href)
           return (
