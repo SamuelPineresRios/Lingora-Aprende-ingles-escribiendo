@@ -45,7 +45,7 @@ function SceneFigure({
     <div className={cn('flex flex-col items-center justify-end transition-all duration-500', speaking ? 'scale-100' : 'scale-95')}>
       <div
         className={cn(
-          'relative aspect-square w-[min(40vw,12rem,25vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)]',
+          'relative aspect-square w-[min(42vw,13rem,26vh)] transition-all duration-500 drop-shadow-[0_18px_26px_rgba(0,0,0,0.55)] lg:w-[min(16vw,18rem,34vh)]',
           mirrored && '-scale-x-100',
           !speaking && 'opacity-45 grayscale',
         )}
@@ -694,6 +694,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   /** Género del personaje que interpreta la IA, para que el avatar coincida. */
   const characterGender = introduction?.characters.find(character => character.played_by === 'ai')?.gender
   const studentCharacter = introduction?.characters.find(character => character.played_by === 'student')
+  /** Cargo del personaje de la IA, para su etiqueta en escena. */
+  const aiRole = introduction?.characters.find(character => character.played_by === 'ai')?.role ?? 'Lo interpreta la IA'
   /** Último turno de cada lado: la conversación se lee como una escena. */
   const lastAssistant = [...messages].reverse().find(message => message.role === 'assistant')
   const lastUser = [...messages].reverse().find(message => message.role === 'user')
@@ -756,68 +758,79 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             </div>
           </header>
 
-          {/* Escenario: la IA a la izquierda, tu personaje a la derecha */}
-          <div className="flex-1 min-h-0 flex items-end justify-center px-2 pb-1">
-            <div className="grid w-full max-w-3xl grid-cols-2 gap-2 sm:gap-12 items-end justify-items-center">
+          {/* Conversación: los personajes, grandes, a los lados, y las frases
+              en burbujas por el centro. Así no se confunde con la escena
+              narrativa, que va sin cajas. */}
+          <div className="flex min-h-0 flex-1 gap-2 px-3 lg:gap-6 lg:px-6">
+            {/* La IA, a la izquierda (solo escritorio) */}
+            <div className="hidden shrink-0 items-end pb-1 lg:flex">
               <SceneFigure
                 src={characterAvatarUrl(mission.character_name, characterGender)}
                 name={mission.character_name}
-                role={introduction?.characters.find(character => character.played_by === 'ai')?.role ?? 'Lo interpreta la IA'}
+                role={aiRole}
                 speaking={assistantSpeaking || (!lastUser && messages.length > 0)}
-                glow="drop-shadow-[0_0_26px_rgba(6,182,212,0.5)]"
+                glow="drop-shadow-[0_0_28px_rgba(34,211,238,0.55)]"
               />
-              {studentAvatar && (
-                <SceneFigure
-                  src={studentAvatar}
-                  name={studentCharacter?.name ?? 'Tú'}
-                  role={studentCharacter?.role ?? 'Tu papel'}
-                  speaking={!!lastUser && !assistantSpeaking}
-                  mirrored
-                  glow="drop-shadow-[0_0_26px_rgba(16,185,129,0.5)]"
-                />
-              )}
             </div>
-          </div>
 
-          {/* Diálogo: sin cajas, sobre la escena, como en la narrativa */}
-          <div className="shrink-0 px-4 pb-2">
-            <div className="mx-auto w-full max-w-3xl space-y-3">
+            {/* Burbujas de la conversación */}
+            <div className="mission-screen-messages min-h-0 flex-1 space-y-3 overflow-y-auto py-2">
               {lastAssistant && (
-                <div className="min-h-[86px]">
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-cyan">{mission.character_name}</p>
-                  <p className="mt-1 font-reading text-xl sm:text-2xl leading-relaxed font-medium tracking-[0.01em] text-cyan-50 drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)]">
-                    {isLastMessageTyping ? (
-                      <TypewriterMessage text={lastAssistant.content} isActive speed={30} onComplete={() => setIsLastMessageTyping(false)} />
-                    ) : (
-                      <InteractiveWords text={lastAssistant.content} context={lastAssistant.content} />
-                    )}
-                  </p>
+                <div className="flex items-end gap-2.5">
+                  <img
+                    src={characterAvatarUrl(mission.character_name, characterGender)}
+                    alt=""
+                    className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)] lg:hidden"
+                  />
+                  <div className="max-w-[92%] rounded-2xl rounded-bl-sm border border-cyan/25 bg-cyan/10 px-4 py-3 backdrop-blur-sm lg:max-w-[78%]">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-cyan">{mission.character_name}</p>
+                    <p className="mt-1 font-reading text-lg leading-relaxed text-cyan-50 sm:text-xl">
+                      {isLastMessageTyping ? (
+                        <TypewriterMessage text={lastAssistant.content} isActive speed={30} onComplete={() => setIsLastMessageTyping(false)} />
+                      ) : (
+                        <InteractiveWords text={lastAssistant.content} context={lastAssistant.content} />
+                      )}
+                    </p>
+                  </div>
                 </div>
               )}
 
               {isThinking && (
-                <p className="text-[11px] font-mono uppercase tracking-widest text-cyan/70 animate-pulse">
-                  {mission.character_name} escribiendo…
-                </p>
+                <div className="flex items-end gap-2.5">
+                  <img
+                    src={characterAvatarUrl(mission.character_name, characterGender)}
+                    alt=""
+                    className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)] lg:hidden"
+                  />
+                  <div className="rounded-2xl rounded-bl-sm border border-cyan/20 bg-cyan/5 px-4 py-2.5 backdrop-blur-sm">
+                    <span className="text-xs text-cyan/80 animate-pulse">{mission.character_name} escribiendo…</span>
+                  </div>
+                </div>
               )}
 
               {lastUser && (
-                <div className="text-right">
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-emerald">
-                    TÚ
-                    {lastUser.rating && <span className="ml-2 text-amber-400">{'★'.repeat(lastUser.rating)}</span>}
-                  </p>
-                  <p className="mt-1 text-base sm:text-lg leading-relaxed text-emerald-100 drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)]">
-                    {lastUser.content}
-                  </p>
-                  {lastUser.feedback && (
-                    <div className="mt-2 flex flex-col items-end gap-1 animate-in fade-in slide-in-from-top-1">
-                      <span className="text-[10px] uppercase font-bold text-amber tracking-widest">AI Coach</span>
-                      <p className="max-w-xl text-left text-xs text-amber/90 bg-amber/10 px-3 py-2 rounded-lg border border-amber/15 backdrop-blur-sm">
-                        {lastUser.feedback}
-                      </p>
-                    </div>
+                <div className="flex flex-row-reverse items-end gap-2.5">
+                  {studentAvatar && (
+                    <img src={studentAvatar} alt="" className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)] lg:hidden" />
                   )}
+                  <div className="flex max-w-[92%] flex-col items-end gap-2 lg:max-w-[78%]">
+                    <div className="rounded-2xl rounded-br-sm border border-emerald/25 bg-emerald/10 px-4 py-3 backdrop-blur-sm">
+                      <p className="text-right text-[10px] font-mono uppercase tracking-widest text-emerald">
+                        TÚ
+                        {lastUser.rating && <span className="ml-2 text-amber-400">{'★'.repeat(lastUser.rating)}</span>}
+                      </p>
+                      <p className="mt-1 text-base leading-relaxed text-emerald-50 sm:text-lg">{lastUser.content}</p>
+                    </div>
+
+                    {lastUser.feedback && (
+                      <div className="flex flex-col items-end gap-1 animate-in fade-in slide-in-from-top-1">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber">AI Coach</span>
+                        <p className="max-w-xl rounded-lg border border-amber/15 bg-amber/10 px-3 py-2 text-left text-xs text-amber/90 backdrop-blur-sm">
+                          {lastUser.feedback}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
@@ -837,6 +850,20 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                     Reintentar
                   </button>
                 </div>
+              )}
+            </div>
+
+            {/* Tu personaje, a la derecha (solo escritorio) */}
+            <div className="hidden shrink-0 items-end pb-1 lg:flex">
+              {studentAvatar && (
+                <SceneFigure
+                  src={studentAvatar}
+                  name={studentCharacter?.name ?? 'Tú'}
+                  role={studentCharacter?.role ?? 'Tu papel'}
+                  speaking={!!lastUser && !assistantSpeaking}
+                  mirrored
+                  glow="drop-shadow-[0_0_28px_rgba(52,211,153,0.5)]"
+                />
               )}
             </div>
           </div>
