@@ -16,7 +16,8 @@ import { studentAvatarUrl } from '@/lib/avatar'
 import { activeFrame, badgeIcon, unlockedBadges } from '@/lib/season'
 import { equippedItem, equippedTitles } from '@/lib/store'
 import { cn } from '@/lib/utils'
-import { medalIcon, type StudentMedals } from '@/lib/medals'
+import { type StudentMedals } from '@/lib/medals'
+import { MedalBadge } from '@/components/MedalBadge'
 
 interface Mission { id:string; title:string; description:string|null; cefr_level:string; status:string }
 
@@ -356,26 +357,23 @@ export default function ProfilePage() {
           </div>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
-            {medals.medals.map(medal => {
-              const Icon = medalIcon(medal.icon)
-              return (
-                <div
-                  key={medal.id}
-                  className={cn(
-                    'flex flex-col items-center gap-2 rounded-2xl border px-3 py-4 text-center transition-colors',
-                    medal.earned
-                      ? 'border-amber/40 bg-amber/5 shadow-[0_0_22px_-10px_rgba(245,158,11,0.8)]'
-                      : 'border-white/10 bg-black/20 opacity-45 grayscale',
-                  )}
-                >
-                  <Icon className={cn('h-7 w-7', medal.earned ? 'text-amber' : 'text-slate-500')} />
-                  <p className={cn('text-xs font-bold leading-tight', medal.earned ? 'text-white' : 'text-slate-400')}>
-                    {medal.name}
-                  </p>
-                  <p className="text-[10px] leading-snug text-slate-500">{medal.description}</p>
-                </div>
-              )
-            })}
+            {medals.medals.map(medal => (
+              <div
+                key={medal.id}
+                className={cn(
+                  'flex flex-col items-center gap-3 rounded-2xl border px-3 pb-4 pt-6 text-center transition-colors',
+                  medal.earned
+                    ? 'border-amber/40 bg-amber/5 shadow-[0_0_22px_-10px_rgba(245,158,11,0.8)]'
+                    : 'border-white/10 bg-black/20',
+                )}
+              >
+                <MedalBadge medal={medal} />
+                <p className={cn('text-xs font-bold leading-tight', medal.earned ? 'text-white' : 'text-slate-400')}>
+                  {medal.name}
+                </p>
+                <p className="text-[10px] leading-snug text-slate-500">{medal.description}</p>
+              </div>
+            ))}
           </div>
         </section>
       )}
