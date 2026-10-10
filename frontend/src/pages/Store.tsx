@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils'
 import { resolveAvatar } from '@vox/shared'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { CoinRain } from '@/components/CoinRain'
+import { ModuleBackdrop } from '@/components/ModuleBackdrop'
 import { FrameRing } from '@/components/FrameRing'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
@@ -144,7 +145,10 @@ export default function StorePage() {
   }
 
   return (
-    <div className="relative min-h-[100vh] w-full overflow-hidden bg-black/90">
+    <div className="relative min-h-[100vh] w-full overflow-hidden">
+      {/* El mismo fondo que el resto de módulos (el azul), con la cascada de
+          monedas de la tienda por encima. */}
+      <ModuleBackdrop />
       <CoinRain />
       {burst > 0 && <CoinRain key={burst} variant="burst" />}
 
