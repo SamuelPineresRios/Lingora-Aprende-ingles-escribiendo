@@ -1,9 +1,9 @@
 /**
  * Insignia de medalla: el icono va dentro de una medalla de verdad.
  *
- * Ganada: cinta coral arriba, aro metálico dorado (conic-gradient), brillo que
- * gira y el icono en ámbar con resplandor. Bloqueada: aro gris apagado y un
- * candado abajo a la derecha, para leerse como «aún no».
+ * Ganada: aro metálico dorado (conic-gradient), brillo que gira, icono en
+ * ámbar con resplandor y un halo alrededor para que destaque. Bloqueada: aro
+ * gris apagado y un candado abajo a la derecha, para leerse como «aún no».
  */
 import { createElement } from 'react'
 import { Lock } from 'lucide-react'
@@ -23,17 +23,14 @@ export function MedalBadge({
   const lock = Math.max(13, Math.round(size * 0.3))
 
   return (
-    <div className="relative" style={{ width: size, height: size }}>
-      {/* Cinta en V detrás del aro */}
-      <span
-        aria-hidden
-        className={cn(
-          'absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[62%]',
-          medal.earned ? 'bg-gradient-to-b from-coral to-rose-800' : 'bg-white/10',
-        )}
-        style={{ width: size * 0.42, height: size * 0.4, clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}
-      />
-
+    <div
+      className="relative"
+      style={{
+        width: size,
+        height: size,
+        filter: medal.earned ? 'drop-shadow(0 0 7px rgba(245,158,11,0.55))' : undefined,
+      }}
+    >
       {/* Aro de la medalla */}
       <span
         aria-hidden

@@ -104,19 +104,23 @@ function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } })
     <img
       src={studentAvatarUrl(resolveAvatar({ id: entry.student_id, avatar: entry.avatar }))}
       alt=""
-      className="h-full w-full"
+      className="h-full w-full object-contain"
     />
   )
 
   if (entry.frame) {
     return (
-      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={88}>
-        {image}
+      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={92}>
+        <div className="flex h-full w-full items-center justify-center p-1">{image}</div>
       </FrameRing>
     )
   }
 
-  return <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
+  return (
+    <div className="h-[92px] w-[92px] shrink-0 rounded-full border border-white/10 bg-slate-950 p-1.5">
+      <div className="h-full w-full overflow-hidden rounded-full">{image}</div>
+    </div>
+  )
 }
 
 /** Medallas ganadas en miniatura, junto al valor: 4 en escritorio (2 en

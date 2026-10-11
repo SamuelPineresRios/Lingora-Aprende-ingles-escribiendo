@@ -361,7 +361,7 @@ export default function ProfilePage() {
               <div
                 key={medal.id}
                 className={cn(
-                  'flex flex-col items-center gap-3 rounded-2xl border px-3 pb-4 pt-6 text-center transition-colors',
+                  'flex flex-col items-center gap-3 rounded-2xl border px-3 py-4 text-center transition-colors',
                   medal.earned
                     ? 'border-amber/40 bg-amber/5 shadow-[0_0_22px_-10px_rgba(245,158,11,0.8)]'
                     : 'border-white/10 bg-black/20',
