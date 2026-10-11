@@ -1791,6 +1791,18 @@
         "translation": "reembolso",
         "example": "I would like a refund.",
         "example_translation": "Quisiera un reembolso."
+      },
+      {
+        "word": "size",
+        "translation": "talla",
+        "example": "What size do you need?",
+        "example_translation": "¿Qué talla necesitas?"
+      },
+      {
+        "word": "exchange",
+        "translation": "cambiar (devolver)",
+        "example": "I'd like to exchange it, please.",
+        "example_translation": "Me gustaría cambiarlo, por favor."
       }
     ]
   },
@@ -1826,6 +1838,18 @@
         "translation": "dentista",
         "example": "The dentist is very kind.",
         "example_translation": "El dentista es muy amable."
+      },
+      {
+        "word": "chew",
+        "translation": "masticar",
+        "example": "It hurts when I chew.",
+        "example_translation": "Me duele al masticar."
+      },
+      {
+        "word": "week",
+        "translation": "semana",
+        "example": "Can I come this week?",
+        "example_translation": "¿Puedo venir esta semana?"
       }
     ]
   },
@@ -1861,6 +1885,24 @@
         "translation": "fin de semana",
         "example": "We travel this weekend.",
         "example_translation": "Viajamos este fin de semana."
+      },
+      {
+        "word": "breakfast",
+        "translation": "desayuno",
+        "example": "Is breakfast included?",
+        "example_translation": "¿Está incluido el desayuno?"
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What's the price per night?",
+        "example_translation": "¿Cuál es el precio por noche?"
+      },
+      {
+        "word": "confirm",
+        "translation": "confirmar",
+        "example": "Let me confirm the booking.",
+        "example_translation": "Déjame confirmar la reserva."
       }
     ]
   },
@@ -1896,6 +1938,18 @@
         "translation": "andén",
         "example": "The train leaves from platform three.",
         "example_translation": "El tren sale del andén tres."
+      },
+      {
+        "word": "transfer",
+        "translation": "transbordo",
+        "example": "Where do I transfer?",
+        "example_translation": "¿Dónde hago transbordo?"
+      },
+      {
+        "word": "number",
+        "translation": "número",
+        "example": "Which line number is it?",
+        "example_translation": "¿Qué número de línea es?"
       }
     ]
   },
@@ -1931,6 +1985,18 @@
         "translation": "escenario",
         "example": "The band is on the stage.",
         "example_translation": "La banda está en el escenario."
+      },
+      {
+        "word": "row",
+        "translation": "fila",
+        "example": "The front row is more expensive.",
+        "example_translation": "La primera fila es más cara."
+      },
+      {
+        "word": "cheap",
+        "translation": "barato",
+        "example": "Is there a cheaper option?",
+        "example_translation": "¿Hay una opción más barata?"
       }
     ]
   },
@@ -1966,6 +2032,24 @@
         "translation": "quedar de acuerdo",
         "example": "We agree on the plan.",
         "example_translation": "Quedamos de acuerdo con el plan."
+      },
+      {
+        "word": "forecast",
+        "translation": "pronóstico",
+        "example": "The forecast says it will be sunny.",
+        "example_translation": "El pronóstico dice que hará sol."
+      },
+      {
+        "word": "early",
+        "translation": "temprano",
+        "example": "Let's meet early for breakfast.",
+        "example_translation": "Quedemos temprano para desayunar."
+      },
+      {
+        "word": "Sunday",
+        "translation": "domingo",
+        "example": "See you on Sunday.",
+        "example_translation": "Nos vemos el domingo."
       }
     ]
   },
@@ -2001,6 +2085,24 @@
         "translation": "número",
         "example": "Write your order number here.",
         "example_translation": "Escribe tu número de pedido aquí."
+      },
+      {
+        "word": "customer service",
+        "translation": "atención al cliente",
+        "example": "I called customer service.",
+        "example_translation": "Llamé a atención al cliente."
+      },
+      {
+        "word": "solve",
+        "translation": "solucionar",
+        "example": "How are you going to solve this?",
+        "example_translation": "¿Cómo vais a solucionar esto?"
+      },
+      {
+        "word": "wait",
+        "translation": "esperar",
+        "example": "I've been waiting two weeks.",
+        "example_translation": "Llevo dos semanas esperando."
       }
     ]
   },
@@ -2036,6 +2138,24 @@
         "translation": "caro",
         "example": "The course is not expensive.",
         "example_translation": "El curso no es caro."
+      },
+      {
+        "word": "day",
+        "translation": "día",
+        "example": "Which day is the course?",
+        "example_translation": "¿Qué día es el curso?"
+      },
+      {
+        "word": "cook",
+        "translation": "cocinar",
+        "example": "I want to learn to cook.",
+        "example_translation": "Quiero aprender a cocinar."
+      },
+      {
+        "word": "ingredients",
+        "translation": "ingredientes",
+        "example": "Do we bring the ingredients?",
+        "example_translation": "¿Traemos los ingredientes?"
       }
     ]
   },
@@ -2071,6 +2191,24 @@
         "translation": "aplicación",
         "example": "You can use the app today.",
         "example_translation": "Puedes usar la aplicación hoy."
+      },
+      {
+        "word": "open",
+        "translation": "abrir",
+        "example": "I'd like to open an account.",
+        "example_translation": "Quisiera abrir una cuenta."
+      },
+      {
+        "word": "passport",
+        "translation": "pasaporte",
+        "example": "Here's my passport.",
+        "example_translation": "Aquí está mi pasaporte."
+      },
+      {
+        "word": "long",
+        "translation": "tardar",
+        "example": "How long does the card take?",
+        "example_translation": "¿Cuánto tarda la tarjeta?"
       }
     ]
   },
@@ -2106,6 +2244,18 @@
         "translation": "minutos",
         "example": "It arrives in twenty minutes.",
         "example_translation": "Llega en veinte minutos."
+      },
+      {
+        "word": "pizza",
+        "translation": "pizza",
+        "example": "A margherita pizza, please.",
+        "example_translation": "Una pizza margarita, por favor."
+      },
+      {
+        "word": "tip",
+        "translation": "propina",
+        "example": "Do I need to leave a tip?",
+        "example_translation": "¿Tengo que dejar propina?"
       }
     ]
   },
@@ -2141,6 +2291,24 @@
         "translation": "tarde",
         "example": "The taxi arrived late.",
         "example_translation": "El taxi llegó tarde."
+      },
+      {
+        "word": "counter",
+        "translation": "mostrador",
+        "example": "Go to the airline counter.",
+        "example_translation": "Ve al mostrador de la aerolínea."
+      },
+      {
+        "word": "available",
+        "translation": "disponible",
+        "example": "Are there seats available today?",
+        "example_translation": "¿Hay plazas disponibles hoy?"
+      },
+      {
+        "word": "pay",
+        "translation": "pagar",
+        "example": "Do I have to pay extra?",
+        "example_translation": "¿Tengo que pagar extra?"
       }
     ]
   },
@@ -2176,6 +2344,18 @@
         "translation": "mejor",
         "example": "I feel better today.",
         "example_translation": "Hoy me siento mejor."
+      },
+      {
+        "word": "team",
+        "translation": "equipo",
+        "example": "I'll tell the team.",
+        "example_translation": "Se lo diré al equipo."
+      },
+      {
+        "word": "medicine",
+        "translation": "medicina",
+        "example": "Are you taking your medicine?",
+        "example_translation": "¿Estás tomando la medicina?"
       }
     ]
   },
@@ -2211,6 +2391,12 @@
         "translation": "popular",
         "example": "This toy is very popular.",
         "example_translation": "Este juguete es muy popular."
+      },
+      {
+        "word": "toy",
+        "translation": "juguete",
+        "example": "Which toy do you recommend for an eight-year-old?",
+        "example_translation": "¿Qué juguete recomiendas para un niño de ocho años?"
       }
     ]
   },
@@ -2246,6 +2432,24 @@
         "translation": "conducir",
         "example": "I drive to the mountains.",
         "example_translation": "Conduzco a la montaña."
+      },
+      {
+        "word": "small car",
+        "translation": "coche pequeño",
+        "example": "I'd like a small car.",
+        "example_translation": "Quisiera un coche pequeño."
+      },
+      {
+        "word": "full",
+        "translation": "lleno",
+        "example": "Return it with a full tank.",
+        "example_translation": "Devuélvelo con el depósito lleno."
+      },
+      {
+        "word": "licence",
+        "translation": "carné",
+        "example": "Can I see your driving licence?",
+        "example_translation": "¿Puedo ver su carné de conducir?"
       }
     ]
   },
@@ -2281,6 +2485,12 @@
         "translation": "funciona",
         "example": "It works in the rooms.",
         "example_translation": "Funciona en las habitaciones."
+      },
+      {
+        "word": "room",
+        "translation": "habitación",
+        "example": "Does the wifi reach my room?",
+        "example_translation": "¿El wifi llega a mi habitación?"
       }
     ]
   },
@@ -2316,6 +2526,24 @@
         "translation": "agua caliente",
         "example": "We have no hot water today.",
         "example_translation": "Hoy no tenemos agua caliente."
+      },
+      {
+        "word": "landlord",
+        "translation": "casero",
+        "example": "I'm calling the landlord.",
+        "example_translation": "Estoy llamando al casero."
+      },
+      {
+        "word": "today",
+        "translation": "hoy",
+        "example": "Can the technician come today?",
+        "example_translation": "¿Puede venir el técnico hoy?"
+      },
+      {
+        "word": "pay for",
+        "translation": "pagar",
+        "example": "Who pays for the repair?",
+        "example_translation": "¿Quién paga la reparación?"
       }
     ]
   },
@@ -2351,6 +2579,24 @@
         "translation": "turno",
         "example": "My shift is in the morning.",
         "example_translation": "Mi turno es por la mañana."
+      },
+      {
+        "word": "available",
+        "translation": "disponible",
+        "example": "I'm available all summer.",
+        "example_translation": "Estoy disponible todo el verano."
+      },
+      {
+        "word": "manager",
+        "translation": "encargado",
+        "example": "The manager is busy right now.",
+        "example_translation": "El encargado está ocupado ahora."
+      },
+      {
+        "word": "hours",
+        "translation": "horario",
+        "example": "What are the hours?",
+        "example_translation": "¿Cuál es el horario?"
       }
     ]
   },
@@ -2386,6 +2632,12 @@
         "translation": "peor",
         "example": "The cough is worse at night.",
         "example_translation": "La tos empeora por la noche."
+      },
+      {
+        "word": "dose",
+        "translation": "dosis",
+        "example": "What dose should an adult take?",
+        "example_translation": "¿Qué dosis debe tomar un adulto?"
       }
     ]
   },
@@ -2421,6 +2673,24 @@
         "translation": "traer",
         "example": "Bring a bottle of water.",
         "example_translation": "Trae una botella de agua."
+      },
+      {
+        "word": "spinning",
+        "translation": "spinning",
+        "example": "When is the spinning class?",
+        "example_translation": "¿Cuándo es la clase de spinning?"
+      },
+      {
+        "word": "towel",
+        "translation": "toalla",
+        "example": "Do I need to bring a towel?",
+        "example_translation": "¿Tengo que traer una toalla?"
+      },
+      {
+        "word": "join",
+        "translation": "apuntarse",
+        "example": "I'd like to join the class.",
+        "example_translation": "Me gustaría apuntarme a la clase."
       }
     ]
   },
@@ -2456,6 +2726,18 @@
         "translation": "lavado",
         "example": "The price includes the wash.",
         "example_translation": "El precio incluye el lavado."
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What's the price with a wash?",
+        "example_translation": "¿Cuál es el precio con lavado?"
+      },
+      {
+        "word": "Saturday",
+        "translation": "sábado",
+        "example": "Do you have a slot on Saturday?",
+        "example_translation": "¿Tienes hueco el sábado?"
       }
     ]
   },
@@ -2491,6 +2773,24 @@
         "translation": "pedir prestado",
         "example": "Can I borrow this book?",
         "example_translation": "¿Puedo pedir prestado este libro?"
+      },
+      {
+        "word": "renew",
+        "translation": "renovar",
+        "example": "Can I renew this book?",
+        "example_translation": "¿Puedo renovar este libro?"
+      },
+      {
+        "word": "due",
+        "translation": "vencer",
+        "example": "When is it due?",
+        "example_translation": "¿Cuándo vence?"
+      },
+      {
+        "word": "sorry",
+        "translation": "lo siento",
+        "example": "I'm sorry for the delay.",
+        "example_translation": "Lo siento por el retraso."
       }
     ]
   },
@@ -2526,6 +2826,18 @@
         "translation": "platos",
         "example": "Do not forget the plates.",
         "example_translation": "No olvides los platos."
+      },
+      {
+        "word": "table",
+        "translation": "mesa",
+        "example": "Is the table reserved?",
+        "example_translation": "¿Está la mesa reservada?"
+      },
+      {
+        "word": "time",
+        "translation": "hora",
+        "example": "What time shall we meet?",
+        "example_translation": "¿A qué hora quedamos?"
       }
     ]
   },
@@ -2561,6 +2873,24 @@
         "translation": "última llamada",
         "example": "Listen for the last call.",
         "example_translation": "Escucha la última llamada."
+      },
+      {
+        "word": "delayed",
+        "translation": "retrasado",
+        "example": "The flight is delayed.",
+        "example_translation": "El vuelo está retrasado."
+      },
+      {
+        "word": "information desk",
+        "translation": "mostrador de información",
+        "example": "Ask at the information desk.",
+        "example_translation": "Pregunta en el mostrador de información."
+      },
+      {
+        "word": "run",
+        "translation": "correr",
+        "example": "You'll have to run to the gate.",
+        "example_translation": "Tendrás que correr a la puerta."
       }
     ]
   },
@@ -2596,6 +2926,12 @@
         "translation": "medir",
         "example": "Measure the wall first.",
         "example_translation": "Mide la pared primero."
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What's the price of this shelf?",
+        "example_translation": "¿Cuál es el precio de esta estantería?"
       }
     ]
   },
@@ -2631,6 +2967,24 @@
         "translation": "póliza",
         "example": "Write your policy number here.",
         "example_translation": "Escribe tu número de póliza aquí."
+      },
+      {
+        "word": "report",
+        "translation": "dar parte",
+        "example": "I want to report the damage.",
+        "example_translation": "Quiero dar parte del daño."
+      },
+      {
+        "word": "photos",
+        "translation": "fotos",
+        "example": "I took photos of the damage.",
+        "example_translation": "Hice fotos del daño."
+      },
+      {
+        "word": "days",
+        "translation": "días",
+        "example": "The repair takes five days.",
+        "example_translation": "La reparación tarda cinco días."
       }
     ]
   },
@@ -3506,6 +3860,777 @@
         "translation": "resolver",
         "example": "They solved it quickly.",
         "example_translation": "Lo resolvieron rápido."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-020",
+    "words": [
+      {
+        "word": "weekend",
+        "translation": "fin de semana",
+        "example": "What are your plans for the weekend?",
+        "example_translation": "¿Qué planes tienes para el fin de semana?"
+      },
+      {
+        "word": "cinema",
+        "translation": "cine",
+        "example": "Let's go to the cinema on Saturday.",
+        "example_translation": "Vamos al cine el sábado."
+      },
+      {
+        "word": "plan",
+        "translation": "plan",
+        "example": "That sounds like a good plan.",
+        "example_translation": "Eso suena como un buen plan."
+      },
+      {
+        "word": "action movie",
+        "translation": "película de acción",
+        "example": "The new action movie starts at seven.",
+        "example_translation": "La nueva película de acción empieza a las siete."
+      },
+      {
+        "word": "invite",
+        "translation": "invitar",
+        "example": "I'd like to invite you to the cinema.",
+        "example_translation": "Me gustaría invitarte al cine."
+      },
+      {
+        "word": "agree",
+        "translation": "estar de acuerdo",
+        "example": "I agree with your plan.",
+        "example_translation": "Estoy de acuerdo con tu plan."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-017",
+    "words": [
+      {
+        "word": "appointment",
+        "translation": "cita",
+        "example": "I'd like an appointment for tomorrow.",
+        "example_translation": "Quisiera una cita para mañana."
+      },
+      {
+        "word": "fever",
+        "translation": "fiebre",
+        "example": "I have a fever and a sore throat.",
+        "example_translation": "Tengo fiebre y dolor de garganta."
+      },
+      {
+        "word": "sore throat",
+        "translation": "dolor de garganta",
+        "example": "My sore throat hurts a lot.",
+        "example_translation": "Me duele mucho la garganta."
+      },
+      {
+        "word": "tomorrow",
+        "translation": "mañana",
+        "example": "Can I come tomorrow morning?",
+        "example_translation": "¿Puedo venir mañana por la mañana?"
+      },
+      {
+        "word": "receptionist",
+        "translation": "recepcionista",
+        "example": "The receptionist answered the phone.",
+        "example_translation": "La recepcionista contestó el teléfono."
+      },
+      {
+        "word": "wait",
+        "translation": "esperar",
+        "example": "Please wait a moment.",
+        "example_translation": "Espere un momento, por favor."
+      },
+      {
+        "word": "confirm",
+        "translation": "confirmar",
+        "example": "Let me confirm your appointment.",
+        "example_translation": "Déjeme confirmar su cita."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-021",
+    "words": [
+      {
+        "word": "fit",
+        "translation": "quedar bien",
+        "example": "It doesn't fit me.",
+        "example_translation": "No me queda bien."
+      },
+      {
+        "word": "size",
+        "translation": "talla",
+        "example": "I need a larger size.",
+        "example_translation": "Necesito una talla más grande."
+      },
+      {
+        "word": "receipt",
+        "translation": "recibo",
+        "example": "Here's the receipt.",
+        "example_translation": "Aquí está el recibo."
+      },
+      {
+        "word": "change",
+        "translation": "cambiar",
+        "example": "Can I change it for a size L?",
+        "example_translation": "¿Puedo cambiarla por una talla L?"
+      },
+      {
+        "word": "week",
+        "translation": "semana",
+        "example": "I bought it a week ago.",
+        "example_translation": "La compré hace una semana."
+      },
+      {
+        "word": "bought",
+        "translation": "compré",
+        "example": "I bought this T-shirt here.",
+        "example_translation": "Compré esta camiseta aquí."
+      },
+      {
+        "word": "medium",
+        "translation": "talla M",
+        "example": "It is a medium, but it is too small.",
+        "example_translation": "Es una talla M, pero es demasiado pequeña."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-016",
+    "words": [
+      {
+        "word": "book",
+        "translation": "reservar",
+        "example": "I'd like to book a flight.",
+        "example_translation": "Me gustaría reservar un vuelo."
+      },
+      {
+        "word": "flight",
+        "translation": "vuelo",
+        "example": "Is there a flight to Madrid?",
+        "example_translation": "¿Hay un vuelo a Madrid?"
+      },
+      {
+        "word": "destination",
+        "translation": "destino",
+        "example": "What is your destination?",
+        "example_translation": "¿Cuál es su destino?"
+      },
+      {
+        "word": "passenger",
+        "translation": "pasajero",
+        "example": "How many passengers?",
+        "example_translation": "¿Cuántos pasajeros?"
+      },
+      {
+        "word": "window seat",
+        "translation": "asiento de ventana",
+        "example": "I'd prefer a window seat.",
+        "example_translation": "Preferiría un asiento de ventana."
+      },
+      {
+        "word": "pay",
+        "translation": "pagar",
+        "example": "Can I pay by card?",
+        "example_translation": "¿Puedo pagar con tarjeta?"
+      },
+      {
+        "word": "baggage",
+        "translation": "equipaje",
+        "example": "Is baggage included?",
+        "example_translation": "¿Está incluido el equipaje?"
+      },
+      {
+        "word": "one-way",
+        "translation": "solo ida",
+        "example": "A one-way ticket, please.",
+        "example_translation": "Un billete de solo ida, por favor."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-018",
+    "words": [
+      {
+        "word": "order",
+        "translation": "pedir",
+        "example": "Are you ready to order?",
+        "example_translation": "¿Está listo para pedir?"
+      },
+      {
+        "word": "waiter",
+        "translation": "camarero",
+        "example": "The waiter brought the menu.",
+        "example_translation": "El camarero trajo la carta."
+      },
+      {
+        "word": "nuts",
+        "translation": "frutos secos",
+        "example": "Does it contain nuts?",
+        "example_translation": "¿Contiene frutos secos?"
+      },
+      {
+        "word": "allergy",
+        "translation": "alergia",
+        "example": "I have a nut allergy.",
+        "example_translation": "Tengo alergia a los frutos secos."
+      },
+      {
+        "word": "alternative",
+        "translation": "alternativa",
+        "example": "Is there an alternative?",
+        "example_translation": "¿Hay alguna alternativa?"
+      },
+      {
+        "word": "drink",
+        "translation": "bebida",
+        "example": "What would you like to drink?",
+        "example_translation": "¿Qué le gustaría beber?"
+      },
+      {
+        "word": "spicy",
+        "translation": "picante",
+        "example": "I don't like spicy food.",
+        "example_translation": "No me gusta la comida picante."
+      },
+      {
+        "word": "recommendation",
+        "translation": "recomendación",
+        "example": "What is your recommendation?",
+        "example_translation": "¿Cuál es su recomendación?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-019",
+    "words": [
+      {
+        "word": "course",
+        "translation": "curso",
+        "example": "How much is the English course?",
+        "example_translation": "¿Cuánto cuesta el curso de inglés?"
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What is the price?",
+        "example_translation": "¿Cuál es el precio?"
+      },
+      {
+        "word": "discount",
+        "translation": "descuento",
+        "example": "Is there a discount?",
+        "example_translation": "¿Hay algún descuento?"
+      },
+      {
+        "word": "start date",
+        "translation": "fecha de inicio",
+        "example": "What is the start date?",
+        "example_translation": "¿Cuál es la fecha de inicio?"
+      },
+      {
+        "word": "advanced",
+        "translation": "avanzado",
+        "example": "I want the advanced group.",
+        "example_translation": "Quiero el grupo avanzado."
+      },
+      {
+        "word": "group",
+        "translation": "grupo",
+        "example": "When does the next group start?",
+        "example_translation": "¿Cuándo empieza el próximo grupo?"
+      },
+      {
+        "word": "enroll",
+        "translation": "matricularse",
+        "example": "I'd like to enroll.",
+        "example_translation": "Me gustaría matricularme."
+      },
+      {
+        "word": "information",
+        "translation": "información",
+        "example": "Can you send me more information?",
+        "example_translation": "¿Puede enviarme más información?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-022",
+    "words": [
+      {
+        "word": "haircut",
+        "translation": "corte de pelo",
+        "example": "How much is a haircut?",
+        "example_translation": "¿Cuánto cuesta un corte de pelo?"
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What is the price?",
+        "example_translation": "¿Cuál es el precio?"
+      },
+      {
+        "word": "appointment",
+        "translation": "cita",
+        "example": "Do you have an appointment on Saturday?",
+        "example_translation": "¿Tiene cita el sábado?"
+      },
+      {
+        "word": "last",
+        "translation": "durar",
+        "example": "How long does it last?",
+        "example_translation": "¿Cuánto dura?"
+      },
+      {
+        "word": "minutes",
+        "translation": "minutos",
+        "example": "It takes about thirty minutes.",
+        "example_translation": "Tarda unos treinta minutos."
+      },
+      {
+        "word": "Saturday",
+        "translation": "sábado",
+        "example": "Can I come on Saturday at ten?",
+        "example_translation": "¿Puedo venir el sábado a las diez?"
+      },
+      {
+        "word": "phone",
+        "translation": "teléfono",
+        "example": "I am calling by phone.",
+        "example_translation": "Estoy llamando por teléfono."
+      },
+      {
+        "word": "book",
+        "translation": "reservar una cita",
+        "example": "I'd like to book an appointment.",
+        "example_translation": "Me gustaría reservar una cita."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-023",
+    "words": [
+      {
+        "word": "tickets",
+        "translation": "entradas",
+        "example": "Two tickets, please.",
+        "example_translation": "Dos entradas, por favor."
+      },
+      {
+        "word": "concert",
+        "translation": "concierto",
+        "example": "Is the concert on March 15th?",
+        "example_translation": "¿Es el concierto el 15 de marzo?"
+      },
+      {
+        "word": "front row",
+        "translation": "primera fila",
+        "example": "I prefer the front row.",
+        "example_translation": "Prefiero la primera fila."
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What is the price per ticket?",
+        "example_translation": "¿Cuál es el precio por entrada?"
+      },
+      {
+        "word": "buy",
+        "translation": "comprar",
+        "example": "I'd like to buy two tickets.",
+        "example_translation": "Me gustaría comprar dos entradas."
+      },
+      {
+        "word": "pay",
+        "translation": "pagar",
+        "example": "Can I pay in cash?",
+        "example_translation": "¿Puedo pagar en efectivo?"
+      },
+      {
+        "word": "seat",
+        "translation": "asiento",
+        "example": "Where is my seat?",
+        "example_translation": "¿Dónde está mi asiento?"
+      },
+      {
+        "word": "second row",
+        "translation": "segunda fila",
+        "example": "The second row is cheaper.",
+        "example_translation": "La segunda fila es más barata."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-024",
+    "words": [
+      {
+        "word": "appointment",
+        "translation": "cita",
+        "example": "I have an appointment tomorrow.",
+        "example_translation": "Tengo una cita mañana."
+      },
+      {
+        "word": "change",
+        "translation": "cambiar",
+        "example": "I'd like to change my appointment.",
+        "example_translation": "Me gustaría cambiar mi cita."
+      },
+      {
+        "word": "cancel",
+        "translation": "cancelar",
+        "example": "Please, do not cancel it.",
+        "example_translation": "Por favor, no la cancele."
+      },
+      {
+        "word": "available",
+        "translation": "disponible",
+        "example": "Are you available at four?",
+        "example_translation": "¿Está disponible a las cuatro?"
+      },
+      {
+        "word": "afternoon",
+        "translation": "tarde",
+        "example": "Can we meet in the afternoon?",
+        "example_translation": "¿Podemos vernos por la tarde?"
+      },
+      {
+        "word": "doctor",
+        "translation": "médico",
+        "example": "The doctor is busy at two.",
+        "example_translation": "El médico está ocupado a las dos."
+      },
+      {
+        "word": "Excuse me",
+        "translation": "disculpe",
+        "example": "Excuse me, I cannot come.",
+        "example_translation": "Disculpe, no puedo venir."
+      },
+      {
+        "word": "another day",
+        "translation": "otro día",
+        "example": "Can we move it to another day?",
+        "example_translation": "¿Podemos pasarla a otro día?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-025",
+    "words": [
+      {
+        "word": "gift",
+        "translation": "regalo",
+        "example": "I am looking for a gift.",
+        "example_translation": "Estoy buscando un regalo."
+      },
+      {
+        "word": "sweater",
+        "translation": "suéter",
+        "example": "Do you have this sweater in blue?",
+        "example_translation": "¿Tiene este suéter en azul?"
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What is the price?",
+        "example_translation": "¿Cuál es el precio?"
+      },
+      {
+        "word": "discount",
+        "translation": "descuento",
+        "example": "Is there any discount?",
+        "example_translation": "¿Hay algún descuento?"
+      },
+      {
+        "word": "wrapping",
+        "translation": "envoltorio",
+        "example": "I'd like gift wrapping.",
+        "example_translation": "Quisiera envoltorio de regalo."
+      },
+      {
+        "word": "blue",
+        "translation": "azul",
+        "example": "I prefer the blue one.",
+        "example_translation": "Prefiero el azul."
+      },
+      {
+        "word": "budget",
+        "translation": "presupuesto",
+        "example": "My budget is fifty euros.",
+        "example_translation": "Mi presupuesto es de cincuenta euros."
+      },
+      {
+        "word": "take",
+        "translation": "llevarse",
+        "example": "I will take it.",
+        "example_translation": "Me lo llevo."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-026",
+    "words": [
+      {
+        "word": "exchange",
+        "translation": "cambio",
+        "example": "Where is the exchange office?",
+        "example_translation": "¿Dónde está la oficina de cambio?"
+      },
+      {
+        "word": "pounds",
+        "translation": "libras",
+        "example": "I want to change two hundred pounds.",
+        "example_translation": "Quiero cambiar doscientas libras."
+      },
+      {
+        "word": "euros",
+        "translation": "euros",
+        "example": "How many euros will I get?",
+        "example_translation": "¿Cuántos euros recibiré?"
+      },
+      {
+        "word": "rate",
+        "translation": "tipo de cambio",
+        "example": "What is the exchange rate?",
+        "example_translation": "¿Cuál es el tipo de cambio?"
+      },
+      {
+        "word": "commission",
+        "translation": "comisión",
+        "example": "Is there a commission?",
+        "example_translation": "¿Hay comisión?"
+      },
+      {
+        "word": "cash",
+        "translation": "efectivo",
+        "example": "Do you have cash?",
+        "example_translation": "¿Tiene efectivo?"
+      },
+      {
+        "word": "change money",
+        "translation": "cambiar dinero",
+        "example": "I need to change money.",
+        "example_translation": "Necesito cambiar dinero."
+      },
+      {
+        "word": "receive",
+        "translation": "recibir",
+        "example": "How much will I receive?",
+        "example_translation": "¿Cuánto voy a recibir?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-027",
+    "words": [
+      {
+        "word": "day off",
+        "translation": "día libre",
+        "example": "I need a day off.",
+        "example_translation": "Necesito un día libre."
+      },
+      {
+        "word": "boss",
+        "translation": "jefe",
+        "example": "My boss is in a meeting.",
+        "example_translation": "Mi jefe está en una reunión."
+      },
+      {
+        "word": "medical appointment",
+        "translation": "cita médica",
+        "example": "I have a medical appointment.",
+        "example_translation": "Tengo una cita médica."
+      },
+      {
+        "word": "possible",
+        "translation": "posible",
+        "example": "Is it possible?",
+        "example_translation": "¿Es posible?"
+      },
+      {
+        "word": "recover",
+        "translation": "recuperar",
+        "example": "I can recover the work later.",
+        "example_translation": "Puedo recuperar el trabajo después."
+      },
+      {
+        "word": "Wednesday",
+        "translation": "miércoles",
+        "example": "I need Wednesday off.",
+        "example_translation": "Necesito libre el miércoles."
+      },
+      {
+        "word": "request",
+        "translation": "solicitar",
+        "example": "I'd like to request a day off.",
+        "example_translation": "Me gustaría solicitar un día libre."
+      },
+      {
+        "word": "team",
+        "translation": "equipo",
+        "example": "The team can cover for me.",
+        "example_translation": "El equipo puede cubrirme."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-028",
+    "words": [
+      {
+        "word": "rent",
+        "translation": "alquilar",
+        "example": "I'd like to rent a bike.",
+        "example_translation": "Me gustaría alquilar una bicicleta."
+      },
+      {
+        "word": "bike",
+        "translation": "bicicleta",
+        "example": "Is this bike available?",
+        "example_translation": "¿Está disponible esta bicicleta?"
+      },
+      {
+        "word": "helmet",
+        "translation": "casco",
+        "example": "Do you have a helmet?",
+        "example_translation": "¿Tiene un casco?"
+      },
+      {
+        "word": "lock",
+        "translation": "candado",
+        "example": "Can I have a lock too?",
+        "example_translation": "¿Me da también un candado?"
+      },
+      {
+        "word": "weekend",
+        "translation": "fin de semana",
+        "example": "I need it for the weekend.",
+        "example_translation": "La necesito para el fin de semana."
+      },
+      {
+        "word": "deposit",
+        "translation": "fianza",
+        "example": "Is there a deposit?",
+        "example_translation": "¿Hay que dejar fianza?"
+      },
+      {
+        "word": "return",
+        "translation": "devolver",
+        "example": "I will return it on Monday.",
+        "example_translation": "La devolveré el lunes."
+      },
+      {
+        "word": "morning",
+        "translation": "mañana",
+        "example": "I will pick it up in the morning.",
+        "example_translation": "La recogeré por la mañana."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-029",
+    "words": [
+      {
+        "word": "used",
+        "translation": "de segunda mano",
+        "example": "Is this phone used?",
+        "example_translation": "¿Este teléfono es de segunda mano?"
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What is the price?",
+        "example_translation": "¿Cuál es el precio?"
+      },
+      {
+        "word": "guarantee",
+        "translation": "garantía",
+        "example": "Does it have a guarantee?",
+        "example_translation": "¿Tiene garantía?"
+      },
+      {
+        "word": "battery",
+        "translation": "batería",
+        "example": "How is the battery?",
+        "example_translation": "¿Cómo está la batería?"
+      },
+      {
+        "word": "model",
+        "translation": "modelo",
+        "example": "What model is it?",
+        "example_translation": "¿Qué modelo es?"
+      },
+      {
+        "word": "cheap",
+        "translation": "barato",
+        "example": "Is it cheap?",
+        "example_translation": "¿Es barato?"
+      },
+      {
+        "word": "condition",
+        "translation": "estado",
+        "example": "What is the condition?",
+        "example_translation": "¿Cuál es el estado?"
+      },
+      {
+        "word": "buy",
+        "translation": "comprar",
+        "example": "I will buy it.",
+        "example_translation": "Lo compro."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-030",
+    "words": [
+      {
+        "word": "art class",
+        "translation": "clase de arte",
+        "example": "I want to join the art class.",
+        "example_translation": "Quiero apuntarme a la clase de arte."
+      },
+      {
+        "word": "painting",
+        "translation": "pintura",
+        "example": "The painting class is on Tuesdays.",
+        "example_translation": "La clase de pintura es los martes."
+      },
+      {
+        "word": "materials",
+        "translation": "materiales",
+        "example": "Are materials included?",
+        "example_translation": "¿Están incluidos los materiales?"
+      },
+      {
+        "word": "price",
+        "translation": "precio",
+        "example": "What is the price per month?",
+        "example_translation": "¿Cuál es el precio al mes?"
+      },
+      {
+        "word": "month",
+        "translation": "mes",
+        "example": "It is forty-five euros a month.",
+        "example_translation": "Son cuarenta y cinco euros al mes."
+      },
+      {
+        "word": "reserve",
+        "translation": "reservar",
+        "example": "I'd like to reserve a spot.",
+        "example_translation": "Me gustaría reservar una plaza."
+      },
+      {
+        "word": "spot",
+        "translation": "plaza",
+        "example": "Is there a spot left?",
+        "example_translation": "¿Queda alguna plaza?"
+      },
+      {
+        "word": "Tuesday",
+        "translation": "martes",
+        "example": "The class is on Tuesday at seven.",
+        "example_translation": "La clase es el martes a las siete."
       }
     ]
   }
