@@ -119,18 +119,24 @@ function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } })
   return <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full border border-white/10 bg-slate-950">{image}</div>
 }
 
-/** Medallas ganadas en miniatura (máximo 5 y un contador), junto al valor. */
+/** Medallas ganadas en miniatura, junto al valor: 4 en escritorio (2 en
+ * móvil, por espacio) y un contador con las que no caben. */
 function MiniMedals({ medals }: { medals: Array<{ id: string; name: string; icon: string }> }) {
   if (medals.length === 0) return null
-  const visibles = medals.slice(0, 5)
+  const visibles = medals.slice(0, 4)
 
   return (
-    <span className="flex shrink-0 items-center gap-1" title={medals.map(medal => medal.name).join(' · ')}>
-      {visibles.map(medal => (
-        <MedalBadge key={medal.id} medal={{ icon: medal.icon, earned: true }} size={24} />
+    <span className="flex shrink-0 items-center gap-1.5" title={medals.map(medal => medal.name).join(' · ')}>
+      {visibles.map((medal, index) => (
+        <span key={medal.id} className={cn(index >= 2 && 'hidden sm:inline-flex')}>
+          <MedalBadge medal={{ icon: medal.icon, earned: true }} size={34} />
+        </span>
       ))}
+      {medals.length > 2 && (
+        <span className="font-mono text-[11px] text-amber sm:hidden">+{medals.length - 2}</span>
+      )}
       {medals.length > visibles.length && (
-        <span className="font-mono text-[10px] text-amber">+{medals.length - visibles.length}</span>
+        <span className="hidden font-mono text-[11px] text-amber sm:inline">+{medals.length - visibles.length}</span>
       )}
     </span>
   )
