@@ -333,28 +333,28 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
               Estas son las {words.length} palabras de la escena, con su traducción y un ejemplo. Después las emparejarás.
             </p>
 
-            <ul className="space-y-3 mb-6">
+            <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 mb-6">
               {words.map((entry, position) => (
                 <li
                   key={entry.word}
-                  className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm p-4 transition-colors hover:border-cyan/30"
+                  className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm p-3.5 transition-colors hover:border-cyan/30"
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <span className="w-6 h-6 rounded-md border border-cyan/30 bg-cyan/10 text-cyan text-[10px] font-mono flex items-center justify-center shrink-0">
-                        {String(position + 1).padStart(2, '0')}
-                      </span>
-                      <p className="text-lg font-bold text-white truncate">{entry.word}</p>
-                    </div>
-                    <span className="text-xs px-2 py-1 rounded-md border border-cyan/30 bg-cyan/10 text-cyan shrink-0">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-md border border-cyan/30 bg-cyan/10 text-cyan text-[10px] font-mono flex items-center justify-center shrink-0">
+                      {String(position + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-base font-bold text-white truncate">{entry.word}</p>
+                  </div>
+                  <div className="mt-2.5">
+                    <span className="inline-block text-xs px-2 py-1 rounded-md border border-cyan/30 bg-cyan/10 text-cyan break-words">
                       {entry.translation}
                     </span>
                   </div>
-                  <div className="mt-3 ml-[34px] border-l-2 border-cyan/25 pl-3">
-                    <p className="text-[14px] leading-relaxed text-slate-200">
+                  <div className="mt-2.5 border-l-2 border-cyan/25 pl-2.5">
+                    <p className="text-[13px] leading-snug text-slate-200">
                       <ExampleText text={entry.example} word={entry.word} />
                     </p>
-                    <p className="mt-1 text-[12px] text-slate-500 italic">{entry.example_translation}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-slate-500 italic">{entry.example_translation}</p>
                   </div>
                 </li>
               ))}

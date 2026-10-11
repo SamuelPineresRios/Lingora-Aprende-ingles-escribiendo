@@ -31,6 +31,24 @@
         "translation": "museo",
         "example": "The museum opens at ten.",
         "example_translation": "El museo abre a las diez."
+      },
+      {
+        "word": "corner",
+        "translation": "esquina",
+        "example": "Turn left at the corner.",
+        "example_translation": "Gira a la izquierda en la esquina."
+      },
+      {
+        "word": "block",
+        "translation": "manzana",
+        "example": "Walk two blocks and turn right.",
+        "example_translation": "Camina dos manzanas y gira a la derecha."
+      },
+      {
+        "word": "left",
+        "translation": "izquierda",
+        "example": "It's on your left.",
+        "example_translation": "Está a tu izquierda."
       }
     ]
   },
@@ -66,6 +84,24 @@
         "translation": "estante",
         "example": "It is on the second shelf.",
         "example_translation": "Está en el segundo estante."
+      },
+      {
+        "word": "pharmacy",
+        "translation": "farmacia",
+        "example": "Is there a pharmacy open?",
+        "example_translation": "¿Hay alguna farmacia abierta?"
+      },
+      {
+        "word": "employee",
+        "translation": "empleado",
+        "example": "The employee helped me.",
+        "example_translation": "El empleado me ayudó."
+      },
+      {
+        "word": "pack",
+        "translation": "paquete",
+        "example": "I need a pack of tablets.",
+        "example_translation": "Necesito un paquete de pastillas."
       }
     ]
   },
@@ -113,6 +149,12 @@
         "translation": "fin de semana",
         "example": "I relax at the weekend.",
         "example_translation": "Descanso el fin de semana."
+      },
+      {
+        "word": "live",
+        "translation": "vivir",
+        "example": "I live in Madrid.",
+        "example_translation": "Vivo en Madrid."
       }
     ]
   },
@@ -154,6 +196,18 @@
         "translation": "universidad",
         "example": "We met at university.",
         "example_translation": "Nos conocimos en la universidad."
+      },
+      {
+        "word": "friend",
+        "translation": "amigo",
+        "example": "My friend invited me.",
+        "example_translation": "Mi amigo me invitó."
+      },
+      {
+        "word": "drink",
+        "translation": "bebida",
+        "example": "Can I get you a drink?",
+        "example_translation": "¿Te traigo una bebida?"
       }
     ]
   },
@@ -189,6 +243,24 @@
         "translation": "gracias",
         "example": "Thanks for your help.",
         "example_translation": "Gracias por su ayuda."
+      },
+      {
+        "word": "quarter past",
+        "translation": "y cuarto",
+        "example": "It's quarter past five.",
+        "example_translation": "Son las cinco y cuarto."
+      },
+      {
+        "word": "watch",
+        "translation": "reloj",
+        "example": "My watch is broken.",
+        "example_translation": "Mi reloj está roto."
+      },
+      {
+        "word": "late",
+        "translation": "tarde",
+        "example": "The bus is late.",
+        "example_translation": "El bus llega tarde."
       }
     ]
   },
@@ -230,6 +302,18 @@
         "translation": "nueve",
         "example": "The table is at nine.",
         "example_translation": "La mesa es a las nueve."
+      },
+      {
+        "word": "reservation",
+        "translation": "reserva",
+        "example": "I have a reservation.",
+        "example_translation": "Tengo una reserva."
+      },
+      {
+        "word": "outside",
+        "translation": "fuera",
+        "example": "Can we sit outside?",
+        "example_translation": "¿Podemos sentarnos fuera?"
       }
     ]
   },
@@ -271,6 +355,18 @@
         "translation": "descansar",
         "example": "You should rest today.",
         "example_translation": "Deberías descansar hoy."
+      },
+      {
+        "word": "pharmacist",
+        "translation": "farmacéutico",
+        "example": "Ask the pharmacist.",
+        "example_translation": "Pregunta al farmacéutico."
+      },
+      {
+        "word": "twice",
+        "translation": "dos veces",
+        "example": "Twice a day.",
+        "example_translation": "Dos veces al día."
       }
     ]
   },
@@ -312,6 +408,18 @@
         "translation": "viaje",
         "example": "The journey takes two hours.",
         "example_translation": "El viaje dura dos horas."
+      },
+      {
+        "word": "single",
+        "translation": "solo ida",
+        "example": "A single ticket, please.",
+        "example_translation": "Un billete de solo ida, por favor."
+      },
+      {
+        "word": "arrive",
+        "translation": "llegar",
+        "example": "What time does it arrive?",
+        "example_translation": "¿A qué hora llega?"
       }
     ]
   },
@@ -353,6 +461,18 @@
         "translation": "mes",
         "example": "I pay every month.",
         "example_translation": "Pago cada mes."
+      },
+      {
+        "word": "deposit",
+        "translation": "fianza",
+        "example": "How much is the deposit?",
+        "example_translation": "¿Cuánto es la fianza?"
+      },
+      {
+        "word": "neighbours",
+        "translation": "vecinos",
+        "example": "Are the neighbours quiet?",
+        "example_translation": "¿Los vecinos son tranquilos?"
       }
     ]
   },
@@ -388,6 +508,24 @@
         "translation": "aquí",
         "example": "Here you go.",
         "example_translation": "Aquí tiene."
+      },
+      {
+        "word": "milk",
+        "translation": "leche",
+        "example": "With milk, please.",
+        "example_translation": "Con leche, por favor."
+      },
+      {
+        "word": "sugar",
+        "translation": "azúcar",
+        "example": "No sugar, thanks.",
+        "example_translation": "Sin azúcar, gracias."
+      },
+      {
+        "word": "waiter",
+        "translation": "camarero",
+        "example": "The waiter is coming.",
+        "example_translation": "El camarero está viniendo."
       }
     ]
   },
@@ -429,6 +567,18 @@
         "translation": "delicioso",
         "example": "The meal was delicious.",
         "example_translation": "La comida estaba deliciosa."
+      },
+      {
+        "word": "total",
+        "translation": "total",
+        "example": "What's the total?",
+        "example_translation": "¿Cuál es el total?"
+      },
+      {
+        "word": "together",
+        "translation": "juntos",
+        "example": "Can we pay together?",
+        "example_translation": "¿Podemos pagar juntos?"
       }
     ]
   },
@@ -476,6 +626,12 @@
         "translation": "llegar",
         "example": "When does it arrive?",
         "example_translation": "¿Cuándo llega?"
+      },
+      {
+        "word": "author",
+        "translation": "autor",
+        "example": "Who is the author?",
+        "example_translation": "¿Quién es el autor?"
       }
     ]
   },
@@ -523,6 +679,12 @@
         "translation": "abono",
         "example": "A monthly membership is cheaper.",
         "example_translation": "El abono mensual es más barato."
+      },
+      {
+        "word": "open",
+        "translation": "abrir",
+        "example": "What time does it open?",
+        "example_translation": "¿A qué hora abre?"
       }
     ]
   },
@@ -570,6 +732,12 @@
         "translation": "pagar",
         "example": "How do I pay?",
         "example_translation": "¿Cómo pago?"
+      },
+      {
+        "word": "teacher",
+        "translation": "profesor",
+        "example": "The teacher is very nice.",
+        "example_translation": "El profesor es muy simpático."
       }
     ]
   },
@@ -605,6 +773,24 @@
         "translation": "efectivo",
         "example": "I pay in cash.",
         "example_translation": "Pago en efectivo."
+      },
+      {
+        "word": "show",
+        "translation": "sesión",
+        "example": "The show starts at eight.",
+        "example_translation": "La sesión empieza a las ocho."
+      },
+      {
+        "word": "popcorn",
+        "translation": "palomitas",
+        "example": "A large popcorn, please.",
+        "example_translation": "Unas palomitas grandes, por favor."
+      },
+      {
+        "word": "row",
+        "translation": "fila",
+        "example": "Which row are we in?",
+        "example_translation": "¿En qué fila estamos?"
       }
     ]
   },
@@ -646,6 +832,18 @@
         "translation": "para llevar",
         "example": "A coffee to go, please.",
         "example_translation": "Un café para llevar, por favor."
+      },
+      {
+        "word": "small",
+        "translation": "pequeño",
+        "example": "A small coffee, please.",
+        "example_translation": "Un café pequeño, por favor."
+      },
+      {
+        "word": "card",
+        "translation": "tarjeta",
+        "example": "Can I pay by card?",
+        "example_translation": "¿Puedo pagar con tarjeta?"
       }
     ]
   },
@@ -693,6 +891,12 @@
         "translation": "medio kilo",
         "example": "Half a kilo of bananas, please.",
         "example_translation": "Medio kilo de plátanos, por favor."
+      },
+      {
+        "word": "orange",
+        "translation": "naranja",
+        "example": "Two oranges, please.",
+        "example_translation": "Dos naranjas, por favor."
       }
     ]
   },
@@ -734,6 +938,18 @@
         "translation": "wifi",
         "example": "What is the wifi password?",
         "example_translation": "¿Cuál es la contraseña del wifi?"
+      },
+      {
+        "word": "reception",
+        "translation": "recepción",
+        "example": "The reception is open all night.",
+        "example_translation": "La recepción está abierta toda la noche."
+      },
+      {
+        "word": "luggage",
+        "translation": "equipaje",
+        "example": "Can you keep my luggage?",
+        "example_translation": "¿Pueden guardar mi equipaje?"
       }
     ]
   },
@@ -781,6 +997,12 @@
         "translation": "en su lugar",
         "example": "Rice instead, please.",
         "example_translation": "Arroz en su lugar, por favor."
+      },
+      {
+        "word": "vegetables",
+        "translation": "verduras",
+        "example": "With vegetables, please.",
+        "example_translation": "Con verduras, por favor."
       }
     ]
   },
@@ -828,6 +1050,12 @@
         "translation": "descuento",
         "example": "Is there a discount today?",
         "example_translation": "¿Hay descuento hoy?"
+      },
+      {
+        "word": "changing room",
+        "translation": "probador",
+        "example": "The changing room is over there.",
+        "example_translation": "El probador está allí."
       }
     ]
   },
@@ -875,6 +1103,12 @@
         "translation": "válido",
         "example": "It is valid for two hours.",
         "example_translation": "Es válido durante dos horas."
+      },
+      {
+        "word": "ticket",
+        "translation": "billete",
+        "example": "One ticket, please.",
+        "example_translation": "Un billete, por favor."
       }
     ]
   },
@@ -922,6 +1156,12 @@
         "translation": "conducir",
         "example": "You should not drive today.",
         "example_translation": "No deberías conducir hoy."
+      },
+      {
+        "word": "water",
+        "translation": "agua",
+        "example": "Drink water with the pill.",
+        "example_translation": "Bebe agua con la pastilla."
       }
     ]
   },
@@ -969,6 +1209,12 @@
         "translation": "en línea",
         "example": "I buy the tickets online.",
         "example_translation": "Compro las entradas en línea."
+      },
+      {
+        "word": "tickets",
+        "translation": "entradas",
+        "example": "I'll buy the tickets online.",
+        "example_translation": "Compraré las entradas por internet."
       }
     ]
   },
@@ -1016,6 +1262,12 @@
         "translation": "directo",
         "example": "The train is direct.",
         "example_translation": "El tren es directo."
+      },
+      {
+        "word": "departure",
+        "translation": "salida",
+        "example": "What's the departure time?",
+        "example_translation": "¿Cuál es la hora de salida?"
       }
     ]
   },
@@ -1063,6 +1315,12 @@
         "translation": "escaleras",
         "example": "The toilets are next to the stairs.",
         "example_translation": "Los baños están al lado de las escaleras."
+      },
+      {
+        "word": "book",
+        "translation": "libro",
+        "example": "Open your book, please.",
+        "example_translation": "Abre tu libro, por favor."
       }
     ]
   },
@@ -1110,6 +1368,12 @@
         "translation": "incluido",
         "example": "One bag is included.",
         "example_translation": "Una maleta va incluida."
+      },
+      {
+        "word": "boarding pass",
+        "translation": "tarjeta de embarque",
+        "example": "Here's my boarding pass.",
+        "example_translation": "Aquí está mi tarjeta de embarque."
       }
     ]
   },
@@ -1151,6 +1415,18 @@
         "translation": "propina",
         "example": "We leave a tip for the waiter.",
         "example_translation": "Dejamos propina al camarero."
+      },
+      {
+        "word": "share",
+        "translation": "compartir",
+        "example": "Let's share the dessert.",
+        "example_translation": "Compartamos el postre."
+      },
+      {
+        "word": "change",
+        "translation": "cambio",
+        "example": "Keep the change.",
+        "example_translation": "Quédate con el cambio."
       }
     ]
   },
@@ -1198,6 +1474,12 @@
         "translation": "ruta",
         "example": "This route is safe.",
         "example_translation": "Esta ruta es segura."
+      },
+      {
+        "word": "pump",
+        "translation": "bomba",
+        "example": "Can I use a pump?",
+        "example_translation": "¿Puedo usar una bomba?"
       }
     ]
   },
@@ -1245,6 +1527,12 @@
         "translation": "visitar",
         "example": "When is the best time to visit?",
         "example_translation": "¿Cuándo es la mejor época para visitar?"
+      },
+      {
+        "word": "cloudy",
+        "translation": "nublado",
+        "example": "It's cloudy today.",
+        "example_translation": "Hoy está nublado."
       }
     ]
   },
@@ -1292,6 +1580,12 @@
         "translation": "más barato",
         "example": "The second one is cheaper.",
         "example_translation": "El segundo es más barato."
+      },
+      {
+        "word": "battery",
+        "translation": "batería",
+        "example": "The battery lasts all day.",
+        "example_translation": "La batería dura todo el día."
       }
     ]
   },
@@ -1339,6 +1633,12 @@
         "translation": "habitual",
         "example": "Delays are not common here.",
         "example_translation": "Los retrasos no son habituales aquí."
+      },
+      {
+        "word": "platform",
+        "translation": "andén",
+        "example": "Which platform is it?",
+        "example_translation": "¿En qué andén es?"
       }
     ]
   },
@@ -1386,6 +1686,12 @@
         "translation": "frutos secos",
         "example": "I am allergic to nuts.",
         "example_translation": "Soy alérgico a los frutos secos."
+      },
+      {
+        "word": "dessert",
+        "translation": "postre",
+        "example": "I'll bring the dessert.",
+        "example_translation": "Yo traigo el postre."
       }
     ]
   },
@@ -1433,6 +1739,12 @@
         "translation": "tres días",
         "example": "Come back in three days.",
         "example_translation": "Vuelve en tres días."
+      },
+      {
+        "word": "honey",
+        "translation": "miel",
+        "example": "Honey is good for your throat.",
+        "example_translation": "La miel es buena para la garganta."
       }
     ]
   },
@@ -1480,6 +1792,12 @@
         "translation": "cerrar",
         "example": "We close at ten.",
         "example_translation": "Cerramos a las diez."
+      },
+      {
+        "word": "escalator",
+        "translation": "escalera mecánica",
+        "example": "Take the escalator.",
+        "example_translation": "Toma la escalera mecánica."
       }
     ]
   },
@@ -1521,6 +1839,18 @@
         "translation": "ramo",
         "example": "This bouquet is for my mother.",
         "example_translation": "Este ramo es para mi madre."
+      },
+      {
+        "word": "card",
+        "translation": "tarjeta",
+        "example": "Do you have a card for her?",
+        "example_translation": "¿Tienes una tarjeta para ella?"
+      },
+      {
+        "word": "delivery",
+        "translation": "envío",
+        "example": "Is delivery available?",
+        "example_translation": "¿Hay envío a domicilio?"
       }
     ]
   },
@@ -1568,6 +1898,12 @@
         "translation": "mañana",
         "example": "I train in the morning.",
         "example_translation": "Entreno por la mañana."
+      },
+      {
+        "word": "trainer",
+        "translation": "entrenador",
+        "example": "The trainer is very friendly.",
+        "example_translation": "El entrenador es muy simpático."
       }
     ]
   },
@@ -1615,6 +1951,12 @@
         "translation": "ayudar",
         "example": "Can you help me, please?",
         "example_translation": "¿Puedes ayudarme, por favor?"
+      },
+      {
+        "word": "wheel",
+        "translation": "rueda",
+        "example": "It has wheels.",
+        "example_translation": "Tiene ruedas."
       }
     ]
   },
@@ -1662,6 +2004,12 @@
         "translation": "abuelos",
         "example": "My grandparents live with us.",
         "example_translation": "Mis abuelos viven con nosotros."
+      },
+      {
+        "word": "children",
+        "translation": "hijos",
+        "example": "Do you have children?",
+        "example_translation": "¿Tienes hijos?"
       }
     ]
   },
@@ -1709,6 +2057,12 @@
         "translation": "tarde",
         "example": "We may be ten minutes late.",
         "example_translation": "Podemos llegar diez minutos tarde."
+      },
+      {
+        "word": "quiet",
+        "translation": "tranquila",
+        "example": "A quiet table, please.",
+        "example_translation": "Una mesa tranquila, por favor."
       }
     ]
   },
@@ -1756,6 +2110,12 @@
         "translation": "ticket",
         "example": "Keep the receipt, please.",
         "example_translation": "Guarda el ticket, por favor."
+      },
+      {
+        "word": "cashier",
+        "translation": "cajero",
+        "example": "The cashier is very fast.",
+        "example_translation": "El cajero es muy rápido."
       }
     ]
   },
@@ -1803,6 +2163,12 @@
         "translation": "cambiar (devolver)",
         "example": "I'd like to exchange it, please.",
         "example_translation": "Me gustaría cambiarlo, por favor."
+      },
+      {
+        "word": "label",
+        "translation": "etiqueta",
+        "example": "The label is still on.",
+        "example_translation": "La etiqueta sigue puesta."
       }
     ]
   },
@@ -1850,6 +2216,12 @@
         "translation": "semana",
         "example": "Can I come this week?",
         "example_translation": "¿Puedo venir esta semana?"
+      },
+      {
+        "word": "filling",
+        "translation": "empaste",
+        "example": "Maybe you need a filling.",
+        "example_translation": "Quizá necesites un empaste."
       }
     ]
   },
@@ -1950,6 +2322,12 @@
         "translation": "número",
         "example": "Which line number is it?",
         "example_translation": "¿Qué número de línea es?"
+      },
+      {
+        "word": "exit",
+        "translation": "salida",
+        "example": "Which exit is it?",
+        "example_translation": "¿Qué salida es?"
       }
     ]
   },
@@ -1997,6 +2375,12 @@
         "translation": "barato",
         "example": "Is there a cheaper option?",
         "example_translation": "¿Hay una opción más barata?"
+      },
+      {
+        "word": "sold out",
+        "translation": "agotado",
+        "example": "The front row is sold out.",
+        "example_translation": "La primera fila está agotada."
       }
     ]
   },
@@ -2256,6 +2640,12 @@
         "translation": "propina",
         "example": "Do I need to leave a tip?",
         "example_translation": "¿Tengo que dejar propina?"
+      },
+      {
+        "word": "doorbell",
+        "translation": "timbre",
+        "example": "The doorbell is broken.",
+        "example_translation": "El timbre está roto."
       }
     ]
   },
@@ -2356,6 +2746,12 @@
         "translation": "medicina",
         "example": "Are you taking your medicine?",
         "example_translation": "¿Estás tomando la medicina?"
+      },
+      {
+        "word": "blanket",
+        "translation": "manta",
+        "example": "Do you need a blanket?",
+        "example_translation": "¿Necesitas una manta?"
       }
     ]
   },
@@ -2397,6 +2793,18 @@
         "translation": "juguete",
         "example": "Which toy do you recommend for an eight-year-old?",
         "example_translation": "¿Qué juguete recomiendas para un niño de ocho años?"
+      },
+      {
+        "word": "age",
+        "translation": "edad",
+        "example": "What's his age?",
+        "example_translation": "¿Cuál es su edad?"
+      },
+      {
+        "word": "shop assistant",
+        "translation": "dependiente",
+        "example": "The shop assistant helped me.",
+        "example_translation": "La dependienta me ayudó."
       }
     ]
   },
@@ -2491,6 +2899,18 @@
         "translation": "habitación",
         "example": "Does the wifi reach my room?",
         "example_translation": "¿El wifi llega a mi habitación?"
+      },
+      {
+        "word": "network",
+        "translation": "red",
+        "example": "What's the network name?",
+        "example_translation": "¿Cómo se llama la red?"
+      },
+      {
+        "word": "staff",
+        "translation": "personal",
+        "example": "Ask the staff at reception.",
+        "example_translation": "Pregunta al personal de recepción."
       }
     ]
   },
@@ -2638,6 +3058,18 @@
         "translation": "dosis",
         "example": "What dose should an adult take?",
         "example_translation": "¿Qué dosis debe tomar un adulto?"
+      },
+      {
+        "word": "throat",
+        "translation": "garganta",
+        "example": "My throat hurts.",
+        "example_translation": "Me duele la garganta."
+      },
+      {
+        "word": "night",
+        "translation": "noche",
+        "example": "Take it at night.",
+        "example_translation": "Tómalo por la noche."
       }
     ]
   },
@@ -2738,6 +3170,12 @@
         "translation": "sábado",
         "example": "Do you have a slot on Saturday?",
         "example_translation": "¿Tienes hueco el sábado?"
+      },
+      {
+        "word": "dry",
+        "translation": "secar",
+        "example": "With wash and dry, please.",
+        "example_translation": "Con lavado y secado, por favor."
       }
     ]
   },
@@ -2838,6 +3276,12 @@
         "translation": "hora",
         "example": "What time shall we meet?",
         "example_translation": "¿A qué hora quedamos?"
+      },
+      {
+        "word": "park",
+        "translation": "parque",
+        "example": "We'll meet in the park.",
+        "example_translation": "Quedamos en el parque."
       }
     ]
   },
@@ -2932,6 +3376,18 @@
         "translation": "precio",
         "example": "What's the price of this shelf?",
         "example_translation": "¿Cuál es el precio de esta estantería?"
+      },
+      {
+        "word": "wooden",
+        "translation": "de madera",
+        "example": "A wooden shelf, please.",
+        "example_translation": "Una estantería de madera, por favor."
+      },
+      {
+        "word": "wall",
+        "translation": "pared",
+        "example": "It fits on this wall.",
+        "example_translation": "Cabe en esta pared."
       }
     ]
   },
@@ -3020,6 +3476,24 @@
         "translation": "por escrito",
         "example": "Please confirm it in writing.",
         "example_translation": "Confírmalo por escrito, por favor."
+      },
+      {
+        "word": "landlord",
+        "translation": "casero",
+        "example": "The landlord wants more rent.",
+        "example_translation": "El casero quiere más alquiler."
+      },
+      {
+        "word": "monthly",
+        "translation": "mensual",
+        "example": "The monthly rent is too high.",
+        "example_translation": "El alquiler mensual es demasiado alto."
+      },
+      {
+        "word": "notice",
+        "translation": "aviso",
+        "example": "You must give notice.",
+        "example_translation": "Tienes que avisar con antelación."
       }
     ]
   },
@@ -3055,6 +3529,24 @@
         "translation": "copiar en",
         "example": "Please copy me in the email.",
         "example_translation": "Cópiame en el correo, por favor."
+      },
+      {
+        "word": "extend",
+        "translation": "ampliar",
+        "example": "Can we extend the deadline?",
+        "example_translation": "¿Podemos ampliar el plazo?"
+      },
+      {
+        "word": "team",
+        "translation": "equipo",
+        "example": "I'll tell the team.",
+        "example_translation": "Se lo diré al equipo."
+      },
+      {
+        "word": "priority",
+        "translation": "prioridad",
+        "example": "This task is a priority.",
+        "example_translation": "Esta tarea es prioritaria."
       }
     ]
   },
@@ -3090,6 +3582,24 @@
         "translation": "trabajo en equipo",
         "example": "Teamwork is important here.",
         "example_translation": "El trabajo en equipo es importante aquí."
+      },
+      {
+        "word": "strength",
+        "translation": "fortaleza",
+        "example": "My main strength is teamwork.",
+        "example_translation": "Mi principal fortaleza es el trabajo en equipo."
+      },
+      {
+        "word": "example",
+        "translation": "ejemplo",
+        "example": "Let me give you an example.",
+        "example_translation": "Déjeme darle un ejemplo."
+      },
+      {
+        "word": "achievement",
+        "translation": "logro",
+        "example": "That was my biggest achievement.",
+        "example_translation": "Ese fue mi mayor logro."
       }
     ]
   },
@@ -3125,6 +3635,24 @@
         "translation": "reclamación",
         "example": "I will open a claim.",
         "example_translation": "Voy a abrir una reclamación."
+      },
+      {
+        "word": "overcharged",
+        "translation": "cobrado de más",
+        "example": "I was overcharged this month.",
+        "example_translation": "Me cobraron de más este mes."
+      },
+      {
+        "word": "contract",
+        "translation": "contrato",
+        "example": "My contract includes free calls.",
+        "example_translation": "Mi contrato incluye llamadas gratis."
+      },
+      {
+        "word": "refund",
+        "translation": "reembolso",
+        "example": "I want a refund.",
+        "example_translation": "Quiero un reembolso."
       }
     ]
   },
@@ -3160,6 +3688,24 @@
         "translation": "formulario",
         "example": "Fill in this form, please.",
         "example_translation": "Rellena este formulario, por favor."
+      },
+      {
+        "word": "claim",
+        "translation": "reclamar",
+        "example": "I want to claim compensation.",
+        "example_translation": "Quiero reclamar una compensación."
+      },
+      {
+        "word": "receipt",
+        "translation": "recibo",
+        "example": "Keep the receipt.",
+        "example_translation": "Guarda el recibo."
+      },
+      {
+        "word": "airline",
+        "translation": "aerolínea",
+        "example": "The airline must pay.",
+        "example_translation": "La aerolínea debe pagar."
       }
     ]
   },
@@ -3195,6 +3741,24 @@
         "translation": "progreso",
         "example": "We check your progress in two weeks.",
         "example_translation": "Revisamos tu progreso en dos semanas."
+      },
+      {
+        "word": "workout",
+        "translation": "entrenamiento",
+        "example": "My workout is hard.",
+        "example_translation": "Mi entrenamiento es duro."
+      },
+      {
+        "word": "goal",
+        "translation": "objetivo",
+        "example": "My goal is to sleep better.",
+        "example_translation": "Mi objetivo es dormir mejor."
+      },
+      {
+        "word": "energy",
+        "translation": "energía",
+        "example": "I have more energy now.",
+        "example_translation": "Ahora tengo más energía."
       }
     ]
   },
@@ -3230,6 +3794,24 @@
         "translation": "compartir",
         "example": "I share the prices in the group.",
         "example_translation": "Comparto los precios en el grupo."
+      },
+      {
+        "word": "dates",
+        "translation": "fechas",
+        "example": "Let's agree on the dates.",
+        "example_translation": "Acordemos las fechas."
+      },
+      {
+        "word": "split",
+        "translation": "dividir",
+        "example": "We can split the cost.",
+        "example_translation": "Podemos dividir el coste."
+      },
+      {
+        "word": "flight",
+        "translation": "vuelo",
+        "example": "The flight is cheap.",
+        "example_translation": "El vuelo es barato."
       }
     ]
   },
@@ -3265,6 +3847,24 @@
         "translation": "derecho",
         "example": "You have the right to a refund.",
         "example_translation": "Tienes derecho a un reembolso."
+      },
+      {
+        "word": "warranty",
+        "translation": "garantía",
+        "example": "It's under warranty.",
+        "example_translation": "Está en garantía."
+      },
+      {
+        "word": "exchange",
+        "translation": "cambio",
+        "example": "I prefer an exchange.",
+        "example_translation": "Prefiero un cambio."
+      },
+      {
+        "word": "manager",
+        "translation": "encargado",
+        "example": "Can I speak to the manager?",
+        "example_translation": "¿Puedo hablar con el encargado?"
       }
     ]
   },
@@ -3300,6 +3900,24 @@
         "translation": "pantallas",
         "example": "Avoid screens before bed.",
         "example_translation": "Evita las pantallas antes de dormir."
+      },
+      {
+        "word": "relax",
+        "translation": "relajarse",
+        "example": "I can't relax at night.",
+        "example_translation": "No puedo relajarme por la noche."
+      },
+      {
+        "word": "breathing",
+        "translation": "respiración",
+        "example": "Try breathing exercises.",
+        "example_translation": "Prueba ejercicios de respiración."
+      },
+      {
+        "word": "schedule",
+        "translation": "horario",
+        "example": "My schedule is crazy.",
+        "example_translation": "Mi horario es una locura."
       }
     ]
   },
@@ -3335,6 +3953,24 @@
         "translation": "voluntarios",
         "example": "Volunteers check the bins.",
         "example_translation": "Los voluntarios revisan las papeleras."
+      },
+      {
+        "word": "bin",
+        "translation": "contenedor",
+        "example": "We need new recycling bins.",
+        "example_translation": "Necesitamos contenedores nuevos."
+      },
+      {
+        "word": "poster",
+        "translation": "cartel",
+        "example": "We can make posters.",
+        "example_translation": "Podemos hacer carteles."
+      },
+      {
+        "word": "support",
+        "translation": "apoyo",
+        "example": "We need your support.",
+        "example_translation": "Necesitamos tu apoyo."
       }
     ]
   },
@@ -3370,6 +4006,24 @@
         "translation": "contar con",
         "example": "You can count on me.",
         "example_translation": "Puedes contar conmigo."
+      },
+      {
+        "word": "apologise",
+        "translation": "disculparse",
+        "example": "I want to apologise.",
+        "example_translation": "Quiero disculparme."
+      },
+      {
+        "word": "upset",
+        "translation": "molesto",
+        "example": "You seemed upset.",
+        "example_translation": "Parecías molesto."
+      },
+      {
+        "word": "clear",
+        "translation": "claro",
+        "example": "Let's be clear about this.",
+        "example_translation": "Seamos claros con esto."
       }
     ]
   },
@@ -3405,6 +4059,24 @@
         "translation": "aprobar",
         "example": "Send the numbers to approve.",
         "example_translation": "Envía los números para aprobar."
+      },
+      {
+        "word": "contract",
+        "translation": "contrato",
+        "example": "The new contract is ready.",
+        "example_translation": "El nuevo contrato está listo."
+      },
+      {
+        "word": "landlord",
+        "translation": "casero",
+        "example": "The landlord approved it.",
+        "example_translation": "El casero lo aprobó."
+      },
+      {
+        "word": "upgrade",
+        "translation": "mejora",
+        "example": "The upgrade is worth it.",
+        "example_translation": "La mejora merece la pena."
       }
     ]
   },
@@ -3440,6 +4112,24 @@
         "translation": "número de expediente",
         "example": "Note the case number.",
         "example_translation": "Anota el número de expediente."
+      },
+      {
+        "word": "statement",
+        "translation": "extracto",
+        "example": "Check your statement.",
+        "example_translation": "Revisa tu extracto."
+      },
+      {
+        "word": "branch",
+        "translation": "sucursal",
+        "example": "Visit the branch.",
+        "example_translation": "Visita la sucursal."
+      },
+      {
+        "word": "confirm",
+        "translation": "confirmar",
+        "example": "Can you confirm the refund?",
+        "example_translation": "¿Puede confirmar el reembolso?"
       }
     ]
   },
@@ -3475,6 +4165,24 @@
         "translation": "reservar",
         "example": "I reserve a place on Thursday.",
         "example_translation": "Reservo una plaza el jueves."
+      },
+      {
+        "word": "deadline",
+        "translation": "fecha límite",
+        "example": "The deadline is Friday.",
+        "example_translation": "La fecha límite es el viernes."
+      },
+      {
+        "word": "enrol",
+        "translation": "matricularse",
+        "example": "I want to enrol.",
+        "example_translation": "Quiero matricularme."
+      },
+      {
+        "word": "fee",
+        "translation": "cuota",
+        "example": "The fee is 90 euros.",
+        "example_translation": "La cuota son 90 euros."
       }
     ]
   },
@@ -3510,6 +4218,24 @@
         "translation": "decidir",
         "example": "I need time to decide.",
         "example_translation": "Necesito tiempo para decidir."
+      },
+      {
+        "word": "degree",
+        "translation": "carrera",
+        "example": "Which degree is best?",
+        "example_translation": "¿Qué carrera es mejor?"
+      },
+      {
+        "word": "counsellor",
+        "translation": "orientador",
+        "example": "The counsellor helped me.",
+        "example_translation": "El orientador me ayudó."
+      },
+      {
+        "word": "option",
+        "translation": "opción",
+        "example": "I have three options.",
+        "example_translation": "Tengo tres opciones."
       }
     ]
   },
@@ -3545,6 +4271,24 @@
         "translation": "aumento",
         "example": "I would also like a small raise.",
         "example_translation": "También quisiera un pequeño aumento."
+      },
+      {
+        "word": "part-time",
+        "translation": "media jornada",
+        "example": "I work part-time now.",
+        "example_translation": "Ahora trabajo media jornada."
+      },
+      {
+        "word": "contract",
+        "translation": "contrato",
+        "example": "My contract ends in June.",
+        "example_translation": "Mi contrato termina en junio."
+      },
+      {
+        "word": "performance",
+        "translation": "rendimiento",
+        "example": "The review looks at performance.",
+        "example_translation": "La revisión evalúa el rendimiento."
       }
     ]
   },
@@ -3580,6 +4324,24 @@
         "translation": "justo",
         "example": "That seems fair to me.",
         "example_translation": "Eso me parece justo."
+      },
+      {
+        "word": "chores",
+        "translation": "tareas de casa",
+        "example": "We share the chores.",
+        "example_translation": "Compartimos las tareas de casa."
+      },
+      {
+        "word": "quiet",
+        "translation": "silencio",
+        "example": "After ten, quiet please.",
+        "example_translation": "Después de las diez, silencio."
+      },
+      {
+        "word": "agree",
+        "translation": "acordar",
+        "example": "Let's agree on some rules.",
+        "example_translation": "Acordemos algunas normas."
       }
     ]
   },
@@ -3615,6 +4377,24 @@
         "translation": "empezar",
         "example": "I can start on Monday.",
         "example_translation": "Puedo empezar el lunes."
+      },
+      {
+        "word": "salary",
+        "translation": "salario",
+        "example": "What's the salary?",
+        "example_translation": "¿Cuál es el salario?"
+      },
+      {
+        "word": "uniform",
+        "translation": "uniforme",
+        "example": "Is there a uniform?",
+        "example_translation": "¿Hay uniforme?"
+      },
+      {
+        "word": "nights",
+        "translation": "noches",
+        "example": "Can you work nights?",
+        "example_translation": "¿Puedes trabajar de noche?"
       }
     ]
   },
@@ -3650,6 +4430,24 @@
         "translation": "propuesta",
         "example": "The proposal is simple and cheap.",
         "example_translation": "La propuesta es simple y barata."
+      },
+      {
+        "word": "litter",
+        "translation": "basura",
+        "example": "There is litter everywhere.",
+        "example_translation": "Hay basura por todas partes."
+      },
+      {
+        "word": "meeting",
+        "translation": "reunión",
+        "example": "Come to the meeting.",
+        "example_translation": "Ven a la reunión."
+      },
+      {
+        "word": "improve",
+        "translation": "mejorar",
+        "example": "We want to improve the park.",
+        "example_translation": "Queremos mejorar el parque."
       }
     ]
   },
@@ -3685,6 +4483,24 @@
         "translation": "pausa",
         "example": "Pause before you answer.",
         "example_translation": "Haz una pausa antes de responder."
+      },
+      {
+        "word": "answer",
+        "translation": "respuesta",
+        "example": "Prepare your answer.",
+        "example_translation": "Prepara tu respuesta."
+      },
+      {
+        "word": "nervous",
+        "translation": "nervioso",
+        "example": "I get nervous in interviews.",
+        "example_translation": "Me pongo nervioso en las entrevistas."
+      },
+      {
+        "word": "practice",
+        "translation": "practicar",
+        "example": "We can practice together.",
+        "example_translation": "Podemos practicar juntos."
       }
     ]
   },
@@ -3720,6 +4536,24 @@
         "translation": "referencia",
         "example": "Write the reference number here.",
         "example_translation": "Escribe el número de referencia aquí."
+      },
+      {
+        "word": "ticket",
+        "translation": "billete",
+        "example": "I had a valid ticket.",
+        "example_translation": "Tenía un billete válido."
+      },
+      {
+        "word": "officer",
+        "translation": "revisor",
+        "example": "The officer gave me a fine.",
+        "example_translation": "El revisor me puso una multa."
+      },
+      {
+        "word": "pay",
+        "translation": "pagar",
+        "example": "You must pay in thirty days.",
+        "example_translation": "Debes pagar en treinta días."
       }
     ]
   },
@@ -3755,6 +4589,24 @@
         "translation": "más barato",
         "example": "The second one is cheaper.",
         "example_translation": "El segundo es más barato."
+      },
+      {
+        "word": "storage",
+        "translation": "almacenamiento",
+        "example": "It has 512 GB of storage.",
+        "example_translation": "Tiene 512 GB de almacenamiento."
+      },
+      {
+        "word": "screen",
+        "translation": "pantalla",
+        "example": "The screen is bigger.",
+        "example_translation": "La pantalla es más grande."
+      },
+      {
+        "word": "review",
+        "translation": "reseña",
+        "example": "I read the reviews.",
+        "example_translation": "Leí las reseñas."
       }
     ]
   },
@@ -3790,6 +4642,24 @@
         "translation": "bajar",
         "example": "Could you lower the volume?",
         "example_translation": "¿Podrías bajar el volumen?"
+      },
+      {
+        "word": "upstairs",
+        "translation": "de arriba",
+        "example": "The neighbours upstairs are loud.",
+        "example_translation": "Los vecinos de arriba hacen ruido."
+      },
+      {
+        "word": "weekdays",
+        "translation": "días de semana",
+        "example": "Please be quiet on weekdays.",
+        "example_translation": "Por favor, silencio entre semana."
+      },
+      {
+        "word": "polite",
+        "translation": "educado",
+        "example": "Be polite but firm.",
+        "example_translation": "Sé educado pero firme."
       }
     ]
   },
@@ -3825,6 +4695,24 @@
         "translation": "comunidad",
         "example": "The community helps every week.",
         "example_translation": "La comunidad ayuda cada semana."
+      },
+      {
+        "word": "shelter",
+        "translation": "refugio",
+        "example": "I help at the animal shelter.",
+        "example_translation": "Ayudo en el refugio de animales."
+      },
+      {
+        "word": "weekends",
+        "translation": "fines de semana",
+        "example": "Are you free at weekends?",
+        "example_translation": "¿Estás libre los fines de semana?"
+      },
+      {
+        "word": "apply",
+        "translation": "apuntarse",
+        "example": "You can apply online.",
+        "example_translation": "Puedes apuntarte en internet."
       }
     ]
   },
@@ -3860,6 +4748,24 @@
         "translation": "resolver",
         "example": "They solved it quickly.",
         "example_translation": "Lo resolvieron rápido."
+      },
+      {
+        "word": "raw",
+        "translation": "crudo",
+        "example": "The chicken is raw.",
+        "example_translation": "El pollo está crudo."
+      },
+      {
+        "word": "waiter",
+        "translation": "camarero",
+        "example": "Ask the waiter.",
+        "example_translation": "Pregunta al camarero."
+      },
+      {
+        "word": "manager",
+        "translation": "encargado",
+        "example": "The manager came to the table.",
+        "example_translation": "El encargado vino a la mesa."
       }
     ]
   },
@@ -3901,6 +4807,18 @@
         "translation": "estar de acuerdo",
         "example": "I agree with your plan.",
         "example_translation": "Estoy de acuerdo con tu plan."
+      },
+      {
+        "word": "tickets",
+        "translation": "entradas",
+        "example": "I'll buy the tickets.",
+        "example_translation": "Yo compro las entradas."
+      },
+      {
+        "word": "meet",
+        "translation": "quedar",
+        "example": "Let's meet at the entrance.",
+        "example_translation": "Quedemos en la entrada."
       }
     ]
   },
@@ -3948,6 +4866,12 @@
         "translation": "confirmar",
         "example": "Let me confirm your appointment.",
         "example_translation": "Déjeme confirmar su cita."
+      },
+      {
+        "word": "check-up",
+        "translation": "revisión",
+        "example": "It's for a check-up.",
+        "example_translation": "Es para una revisión."
       }
     ]
   },
@@ -3995,6 +4919,12 @@
         "translation": "talla M",
         "example": "It is a medium, but it is too small.",
         "example_translation": "Es una talla M, pero es demasiado pequeña."
+      },
+      {
+        "word": "stock",
+        "translation": "stock",
+        "example": "Do you have it in stock?",
+        "example_translation": "¿Lo tienen en stock?"
       }
     ]
   },
