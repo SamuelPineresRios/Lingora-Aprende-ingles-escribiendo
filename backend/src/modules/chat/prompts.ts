@@ -84,12 +84,17 @@ export const ROLEPLAY_TURN_SCHEMA: JsonSchema = {
       description:
         'En ESPAÑOL y en 2-6 palabras, lo que al alumno le falta para completar el paso actual (p. ej. "la hora", "el destino"). null si rating es 4-5. Alimenta la ayuda que ve el alumno, NO tu mensaje.',
     },
+    confused: {
+      type: 'boolean',
+      description:
+        'true cuando tu personaje se queda confundido: respuesta fuera de tema o error gramatical que bloquea el paso. false si la respuesta fue aceptada.',
+    },
     mission_completed: {
       type: 'boolean',
       description: 'true cuando el alumno completó todos los pasos del objetivo.',
     },
   },
-  required: ['message', 'rating', 'feedback', 'correctedText', 'missing_step', 'progress', 'mission_completed'],
+  required: ['message', 'rating', 'feedback', 'correctedText', 'missing_step', 'confused', 'progress', 'mission_completed'],
   additionalProperties: false,
 }
 
@@ -97,6 +102,19 @@ export interface MissionContext {
   character_name: string
   objective: string
   scene_context: string
+  /** Subnivel dentro del CEFR: 1 corta, 2 media, 3 exigente (nulo sin dividir). */
+  tier?: number | null
+}
+
+/**
+ * Exigencia según el subnivel del A1: 1 primeros pasos (no bloquea), 2 frases
+ * completas (bloquea errores básicos) y 3 reto (bloquea también tiempos y
+ * preposiciones y pide dos frases cuando el paso lo necesite).
+ */
+const TIER_DIRECTIVES: Record<number, string> = {
+  1: 'This mission is A1 tier 1 (first steps): keep everything short and easy. Accept short answers; when there is an error give the correct sentence in correctedText but you MAY rate 3-4 and advance.',
+  2: 'This mission is A1 tier 2: require complete sentences (subject + verb). Do NOT advance the step when the answer has a blocking grammar error (see GRAMMAR FIRST).',
+  3: 'This mission is A1 tier 3 (the A1 challenge): be very strict. Require complete sentences and, when the step asks for details, two sentences. Never advance with any error from GRAMMAR FIRST and repeat the step in character until the sentence is correct.',
 }
 
 /** Instrucciones de registro lingüístico según el nivel del alumno. */
@@ -139,12 +157,14 @@ export function buildRoleplaySystemPrompt(params: {
 }): string {
   const { mission, userLevel } = params
   const specificInstruction = LEVEL_DIRECTIVES[userLevel] ?? LEVEL_DIRECTIVES.A2
+  const tierInstruction = mission.tier ? TIER_DIRECTIVES[mission.tier] ?? '' : ''
 
   return `You are ${mission.character_name} in a roleplay conversation.
 Your job: Have a conversation to help student complete this objective: "${mission.objective}"
 Context: "${mission.scene_context}"
 Student level: ${userLevel}
 ${specificInstruction}
+${tierInstruction}
 
 CONVERSATION FLOW - DRIVEN BY THE OBJECTIVE:
 
@@ -160,6 +180,26 @@ DO NOT do this (WRONG):
   ✗ "Tell me everything about yourself" (asks too much at once)
   ✗ Asking about something the objective never mentions
   ✗ Following the typical steps of a different mission
+
+GRAMMAR FIRST - THE SENTENCE MUST BE CORRECT TO ADVANCE:
+
+You are a language class disguised as a scene: a grammatically wrong sentence
+is NOT a completed step. Be strict, like a real teacher who cares.
+
+BLOCKING errors (rating 1 or 2, NEVER 3+, progress does NOT move):
+- Verb before subject ("Want I a coffee", "Is very good the coffee").
+- Missing third-person -s ("She go", "He want").
+- Missing article a/an/the, or plural without -s.
+- Wrong am/is/are, or missing do/does in questions and negatives.
+- Tier 3 only: also simple past mistakes, mixed tenses and wrong basic prepositions.
+When one appears: scold briefly through the coach note (feedback), correctedText
+is the correct sentence, missing_step names the grammar point in Spanish
+(e.g. "la -s de tercera persona", "el orden: sujeto + verbo", "el artículo a").
+The character reacts confused and repeats the step in character; the coach note
+is the one that explains what was wrong.
+
+TIER 1 (first steps): correct the error in correctedText, but you may rate 3-4
+and let the step advance; do not block a beginner.
 
 CRITICAL RULES - EVALUATE RESPONSES STRICTLY:
 
@@ -312,6 +352,8 @@ KEY ABOUT correctedText:
 - For rating 4-5 (good): null
 
 REMEMBER:
+- A grammatically wrong sentence does NOT complete a step (except tier 1)
+- confused = true when you are confused (off-topic or blocking grammar error)
 - Derive the steps from the objective and follow them strictly
 - Ask ONLY for what the objective requires
 - Ask one thing at a time

@@ -41,6 +41,7 @@ interface MissionFixture {
   expected_outcome_indicator: string | null
   example_conversation: string | null
   cefr_level: CefrLevel
+  tier: number | null
   base_duration_seconds: number | null
 }
 
@@ -136,6 +137,7 @@ async function main() {
           expected_outcome_indicator: row.expected_outcome_indicator,
           example_conversation: row.example_conversation,
           cefr_level: row.cefr_level,
+          tier: row.tier,
           base_duration_seconds: row.base_duration_seconds,
         },
       })

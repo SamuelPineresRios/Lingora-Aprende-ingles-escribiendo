@@ -40,7 +40,7 @@ export async function listMissions(userId: string) {
       .select({ mission: missions, backdrop: mission_introductions.backdrop })
       .from(missions)
       .leftJoin(mission_introductions, eq(mission_introductions.mission_id, missions.id))
-      .orderBy(asc(missions.id)),
+      .orderBy(asc(missions.tier), asc(missions.id)),
     db.select().from(narrative_states).where(eq(narrative_states.student_id, userId)),
   ])
 

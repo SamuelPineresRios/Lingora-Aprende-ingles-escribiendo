@@ -14,9 +14,15 @@ import { prewarmIntroduction } from '@/lib/mission-content'
 import { readJson } from '@/lib/api'
 import type { MissionBackdrop as MissionBackdropSpec } from '@vox/shared'
 
-interface Mission { id:string; title:string; description:string|null; scene_context?:string|null; cefr_level:string; base_duration_seconds:number; status:string; backdrop?:MissionBackdropSpec|null }
+interface Mission { id:string; title:string; description:string|null; scene_context?:string|null; cefr_level:string; base_duration_seconds:number; status:string; tier?:number|null; backdrop?:MissionBackdropSpec|null }
 const LEVEL_COLORS: Record<string,string> = { A1:'text-emerald border-emerald/40', A2:'text-cyan border-cyan/40', B1:'text-amber border-amber/40', B2:'text-violet border-violet/40', C1:'text-coral border-coral/40' }
 const LEVEL_BG: Record<string,string> = { A1:'bg-emerald/10', A2:'bg-cyan/10', B1:'bg-amber/10', B2:'bg-violet/10', C1:'bg-coral/10' }
+const TIER_COLORS: Record<number, string> = {
+  1: 'border-emerald/40 text-emerald',
+  2: 'border-cyan/40 text-cyan',
+  3: 'border-amber/50 text-amber',
+}
+
 const STATUS = { not_started:{label:'',color:''}, in_progress:{label:'IN PROGRESS',color:'text-amber animate-pulse'}, completed:{label:'COMPLETED',color:'text-cyan-light'}, paused:{label:'RETRY',color:'text-slate-light'} }
 
 export default function MissionsPage() {
@@ -188,6 +194,11 @@ export default function MissionsPage() {
                       {/* Header with Level and ID */}
                       <div className="flex items-center gap-2">
                          <span className={cn('text-[12px] font-bold border px-2 py-1 rounded tracking-wider', LEVEL_COLORS[m.cefr_level], LEVEL_BG[m.cefr_level])}>{m.cefr_level}</span>
+                         {m.tier && (
+                           <span className={cn('text-[10px] font-bold border px-1.5 py-0.5 rounded tracking-wider', TIER_COLORS[m.tier])}>
+                             NIVEL {m.tier}
+                           </span>
+                         )}
                          <span className="text-[10px] text-slate-500 font-body tracking-tighter">ID:{m.id}</span>
                          {st.label && <span className={cn('text-[10px] font-bold tracking-wider ml-auto', st.color)}>{st.label}</span>}
                       </div>

@@ -9,175 +9,190 @@
     "expected_outcome_indicator": "Directions received clearly",
     "example_conversation": "User: Excuse me, could you tell me how to get to the History Museum?\nLocal: Sure! It's not far. Are you driving or walking?\nUser: I'm walking.\nLocal: Go straight for two blocks, then turn left. It's on your right.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 120,
+    "tier": 1
   },
   {
     "id": "m-002",
     "title": "Pedir ayuda en una tienda",
     "description": "Buscas un producto específico.",
-    "objective": "Pide ayuda para encontrar vitamina C en presentación de 1000mg. Pregunta también si tienen una marca específica.",
+    "objective": "Pide ayuda para encontrar vitamina C en presentación de 1000 mg. Pregunta también si tienen una marca específica.",
     "scene_context": "Estás en una farmacia grande. No encuentras lo que buscas y un empleado se acerca para ayudarte.",
     "character_name": "Street Guide",
     "expected_outcome_indicator": "Product found or alternative offered",
     "example_conversation": "Employee: Can I help you find something?\nUser: Yes, do you have Vitamin C in 1000mg tablets?\nEmployee: We have the store brand right here.\nUser: Do you carry the 'NatureHealth' brand specifically?",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 120,
+    "tier": 1
   },
   {
     "id": "m-003",
     "title": "Saludar y presentarse",
-    "description": "Tu primera conversación en inglés.",
-    "objective": "Preséntate: di tu nombre, de dónde eres y algo que te guste. Hazle una pregunta a la otra persona.",
-    "scene_context": "Estás en un evento de networking. Una persona amable se acerca y te saluda con un 'Hi there!'.",
+    "description": "Preséntate, pregunta y busca un conocido en común en plena sala.",
+    "objective": "Preséntate con tu nombre y de dónde eres, di a qué te dedicas y una cosa que te guste; después haz dos preguntas para conocer al otro e intenta descubrir si tenéis un conocido en común.",
+    "scene_context": "Estás en un evento con mucha gente. Todos llevan una etiqueta con su nombre y tú no conoces a nadie.",
     "character_name": "Street Guide",
     "expected_outcome_indicator": "Introduction with name, origin, and interest completed",
     "example_conversation": "Person: Hi there!\nUser: Hello! My name is Ana. I'm from Colombia.\nPerson: Nice to meet you, Ana.\nUser: I enjoy hiking on weekends. What about you?\nPerson: I love reading.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-004",
     "title": "Conocer a alguien en una fiesta",
-    "description": "Estás en una fiesta y no conoces a nadie.",
-    "objective": "Preséntate a la persona que está junto a las bebidas. Pregúntale su nombre y de dónde conoce al anfitrión (Juan).",
-    "scene_context": "Estás en la sala de una casa con música de fondo y gente charlando. Te acercas a alguien que parece amigable.",
+    "description": "Preséntate, pregunta por su vida y averigua cómo conoce a los anfitriones.",
+    "objective": "Preséntate con tu nombre y de dónde eres, pregunta a qué se dedica y cómo conoció a los anfitriones.",
+    "scene_context": "Estás en una fiesta de un amigo en común. No conoces a casi nadie y buscas con quién hablar.",
     "character_name": "Party Guest",
     "expected_outcome_indicator": "Introduction made and connection to host established",
     "example_conversation": "User: Hi, do you mind if I join you?\nGuest: Not at all! I'm Tom.\nUser: Nice to meet you, Tom. I'm Leo. How do you know Juan?\nGuest: We work together. And you?\nUser: We're old friends from college.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-005",
     "title": "Preguntar la hora a un desconocido",
     "description": "Necesitas saber qué hora es porque se te olvidó el reloj.",
-    "objective": "Preguntarle a una persona en la calle qué hora es, esperar la respuesta y decir 'gracias'.",
+    "objective": "Pregunta la hora a un desconocido. Da las gracias y pregunta cuánto tarda el próximo autobús.",
     "scene_context": "Estás en una parada de autobús esperando. Hablas con una persona desconocida que está también esperando.",
     "character_name": "Passenger",
     "expected_outcome_indicator": "Student asks for the time and thanks the person",
     "example_conversation": "Person: Hello there!\nUser: Hi, excuse me. What time is it?\nPerson: It's 2 o'clock.\nUser: Thank you!\nPerson: You're welcome.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 120,
+    "tier": 1
   },
   {
     "id": "m-006",
     "title": "Reservar una mesa en un restaurante",
-    "description": "Quieres comer con tu familia en un restaurante este fin de semana.",
-    "objective": "Reservar una mesa para 4 personas el sábado a las 19:00 horas a nombre de García.",
-    "scene_context": "Estás hablando por teléfono con el recepcionista del restaurante 'La Marisquería'.",
+    "description": "Reserva la cena del viernes sin dejarte detalle: mesa, hora y terraza.",
+    "objective": "Reserva una mesa para cuatro el viernes a las nueve, di tu nombre, pregunta si hay terraza y confirma la reserva.",
+    "scene_context": "Llamas a un restaurante italiano con las manos ocupadas: tienes que apuntar la reserva.",
     "character_name": "Restaurant Host",
     "expected_outcome_indicator": "Student books a table for 4 people on Saturday at 7pm under the name García",
     "example_conversation": "Person: Good afternoon, La Marisquería restaurant. How can I help you?\nUser: Hello, I want to book a table for four people, please.\nPerson: Yes, certainly. What day?\nUser: Saturday at 7 o'clock.\nPerson: What name is the reservation under?\nUser: García.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-007",
     "title": "Pedir ayuda sobre un dolor en la farmacia",
-    "description": "No te sientes bien y necesitas hablar con el farmacéutico.",
-    "objective": "Explicar que tienes dolor de cabeza, preguntar qué medicamento recomienda y el precio de la aspirina.",
-    "scene_context": "Estás en la farmacia local hablando con el farmacéutico detrás del mostrador.",
+    "description": "Explica tu dolor con detalle y entiende bien la dosis antes de irte.",
+    "objective": "Explica que te duele la espalda desde ayer, pide algo para el dolor, pregunta cada cuántas horas se toma y si da sueño.",
+    "scene_context": "Estás en la farmacia con dolor de espalda. Hay cola y el farmacéutico te atiende rápido.",
     "character_name": "Pharmacist",
     "expected_outcome_indicator": "Student describes headache, asks for medicine recommendation and price",
     "example_conversation": "Person: Good morning. Can I help you?\nUser: I have a headache. Do you have aspirin?\nPerson: Yes, we do. This one is very good.\nUser: How much is it?\nPerson: It's 5 euros.\nUser: Thank you very much.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-008",
     "title": "Comprar un billete de autobús",
-    "description": "Necesitas comprar un billete para viajar en autobús a una ciudad cercana.",
-    "objective": "Comprar un billete de autobús a Barcelona para el lunes a las 14:00 horas, y preguntar el precio (aproximadamente 12 euros).",
-    "scene_context": "Estás en la estación de autobuses. Hablas con el vendedor en la ventanilla.",
+    "description": "Ida y vuelta de fin de semana: hora, andén y precio sin dudar.",
+    "objective": "Compra un billete de ida y vuelta a Manchester para el sábado por la mañana, pregunta la hora de salida y desde qué andén sale.",
+    "scene_context": "Estás en la taquilla de la estación de autobuses con la mochila al hombro.",
     "character_name": "Bus Station Clerk",
     "expected_outcome_indicator": "Purchases a bus ticket to Barcelona on Monday at 2 PM and confirms the price.",
     "example_conversation": "Person: Hello! Where would you like to go?\nUser: I want a ticket to Barcelona, please.\nPerson: When do you want to travel?\nUser: Monday at two o'clock.\nPerson: That is twelve euros.\nUser: Okay, I take it.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-009",
     "title": "Pedir información sobre una casa en alquiler",
-    "description": "Viste un anuncio de un apartamento y quieres saber más detalles sobre él.",
-    "objective": "Preguntar al propietario si el apartamento tiene dos dormitorios, baño, y cuál es el precio del alquiler (500 euros al mes).",
-    "scene_context": "Estás en el apartamento. Hablas con el dueño que quiere alquilarlo.",
+    "description": "Llama por el piso y despeja todas tus dudas antes de visitarlo.",
+    "objective": "Pregunta el precio del alquiler, si incluye los gastos, cuántas habitaciones tiene y cuándo puedes visitarla.",
+    "scene_context": "Ves un anuncio de piso en el tablón del barrio y llamas al número.",
     "character_name": "Landlord",
     "expected_outcome_indicator": "Inquires about the apartment's bedrooms, bathroom, and monthly rent price.",
     "example_conversation": "Person: Welcome! Do you like the apartment?\nUser: Yes, it is nice. How many bedrooms does it have?\nPerson: It has two bedrooms and one bathroom.\nUser: What is the rent per month?\nPerson: Five hundred euros per month.\nUser: That is good. Thank you.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-010",
     "title": "Ordenar comida en una cafetería",
     "description": "El alumno pide un desayuno en una cafetería local.",
-    "objective": "Pedir un café con leche, dos tostadas y un zumo de naranja. Preguntar el precio total.",
+    "objective": "Ordena un café con leche y un cruasán en la cafetería. Pregunta cuánto es.",
     "scene_context": "Estás en una pequeña cafetería por la mañana. Hablas con el camarero detrás del mostrador.",
     "character_name": "Waiter",
     "expected_outcome_indicator": "Student orders breakfast items and asks for the price",
     "example_conversation": "Person: Good morning! What can I have for you?\nUser: I want a coffee with milk, two toasts and an orange juice, please.\nPerson: Perfect! That's 8 euros in total.\nUser: Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 120,
+    "tier": 1
   },
   {
     "id": "m-011",
     "title": "Pedir la cuenta en un restaurante",
-    "description": "El estudiante pide la factura y pregunta el precio total en un restaurante.",
-    "objective": "Pedir la cuenta a la mesera, preguntar el precio total y mencionar que el total es 25 euros.",
-    "scene_context": "Estás en un restaurante pequeño. Hablas con la mesera después de terminar de comer.",
+    "description": "Cierra la cena: cuenta, tarjeta, postre para llevar y propina.",
+    "objective": "Pide la cuenta, pregunta si se puede pagar con tarjeta, pide un postre para llevar y deja propina.",
+    "scene_context": "Termináis de cenar y el camarero retira los platos con prisa: se acerca el cierre.",
     "character_name": "Waitress",
     "expected_outcome_indicator": "Student asks for the bill and confirms the price.",
     "example_conversation": "Person: Hello! Did you enjoy your meal?\nUser: Yes, thank you. Can I have the bill, please?\nPerson: Of course. That's 25 euros.\nUser: Okay. Thank you very much!\nPerson: You're welcome. Have a nice day!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-012",
     "title": "Comprar un libro en una librería",
-    "description": "El estudiante compra un libro específico en una librería y pregunta por el precio.",
-    "objective": "Entra en una librería, pregunta por el libro 'The Little Prince' y cuánto cuesta (£8.99).",
-    "scene_context": "Estás en una librería pequeña. Hablas con el dependiente de la tienda.",
+    "description": "Encuentra el regalo ajustándote al presupuesto y resuelve si no lo tienen.",
+    "objective": "Pide un libro de historia para regalo, pregunta el precio, si pasa de 25 € pregunta por la edición de bolsillo, pide reservarlo si no lo tienen y pregunta cuándo llega.",
+    "scene_context": "Entras en una librería grande buscando un regalo con un presupuesto ajustado.",
     "character_name": "Bookshop Assistant",
     "expected_outcome_indicator": "Successfully finds and prices a book.",
     "example_conversation": "Person: Hello! Welcome to the bookshop. Can I help you?\nUser: Hi. Do you have 'The Little Prince'?\nPerson: Yes, we do. It's on that shelf over there.\nUser: How much is it?\nPerson: It's £8.99.\nUser: Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-013",
     "title": "Preguntar por el horario de cierre de una piscina",
-    "description": "El estudiante pregunta a qué hora cierra la piscina pública hoy.",
-    "objective": "Pregunta en la recepción de la piscina a qué hora cierra hoy (cierra a las 18:00).",
-    "scene_context": "Estás en la recepción de una piscina pública. Hablas con el recepcionista.",
+    "description": "Saca toda la información de la piscina: horarios, precios y normas.",
+    "objective": "Pregunta el horario de cierre entre semana, cuánto cuesta la entrada de un día, si hay clases de natación, si hace falta gorro y si se puede reservar carril.",
+    "scene_context": "En la taquilla de la piscina municipal te atiende un socorrista mientras otros nadadores entran.",
     "character_name": "Receptionist",
     "expected_outcome_indicator": "Obtains the closing time of the facility.",
     "example_conversation": "Person: Good afternoon! How can I help you?\nUser: What time does the pool close today?\nPerson: The pool closes at 6 PM.\nUser: Thank you!\nPerson: You're welcome. Have a nice day!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-014",
     "title": "Pedir información sobre una clase de yoga",
-    "description": "El estudiante pregunta dónde y cuándo es la próxima clase de yoga.",
-    "objective": "Pregúntale al instructor dónde es la clase de yoga, qué día es (jueves) y a qué hora (19:00).",
-    "scene_context": "Estás en un gimnasio. Hablas con el instructor de yoga.",
+    "description": "Empieza desde cero: prueba, precio y material para tus primeras clases.",
+    "objective": "Pregunta los horarios y el precio al mes, explica que eres principiante, pregunta si hay clase de prueba, si necesitas esterilla y cómo se paga.",
+    "scene_context": "En una academia de yoga con velas y música suave, la profesora apunta nombres en una libreta.",
     "character_name": "Yoga Instructor",
     "expected_outcome_indicator": "Finds out class location, day, and time.",
     "example_conversation": "Person: Hi! Are you interested in our yoga class?\nUser: Yes. Where is the class?\nPerson: It's in Studio B, upstairs.\nUser: What day? What time?\nPerson: It's on Thursday at 7 PM.\nUser: Perfect, thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-015",
     "title": "Comprar un billete de cine",
     "description": "El estudiante compra una entrada de cine para una película específica.",
-    "objective": "Pide una entrada para 'Frozen 2' hoy a las 16:00 y pregunta el precio (£9.50).",
+    "objective": "Compra una entrada de cine para la sesión de las ocho. Pregunta si quedan asientos.",
     "scene_context": "Estás en la taquilla de un cine. Hablas con el vendedor de entradas.",
     "character_name": "Ticket Seller",
     "expected_outcome_indicator": "Purchases a cinema ticket with specific time.",
     "example_conversation": "Person: Hello! What can I get for you?\nUser: One ticket for 'Frozen 2' at 4 PM, please.\nPerson: That's £9.50.\nUser: Okay. Here is my money.\nPerson: Thank you! Enjoy the film!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 120,
+    "tier": 1
   },
   {
     "id": "m-016",
@@ -189,7 +204,8 @@
     "expected_outcome_indicator": "Flight booked for March 15th",
     "example_conversation": "User: Hi, I'd like to book a flight to Madrid for March 15th.\nAgent: Sure, I can help with that. Are you traveling alone?\nUser: Yes, just me.\nAgent: Great. Do you have a seating preference?\nUser: I'd prefer a window seat, please.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-017",
@@ -201,7 +217,8 @@
     "expected_outcome_indicator": "Doctor appointment confirmed for tomorrow",
     "example_conversation": "Receptionist: Dr. Rivera's office, how can I help you?\nUser: Hi, I need to make an appointment for tomorrow, please.\nReceptionist: Is it for a check-up or are you feeling ill?\nUser: I'm not feeling well. I have a fever and a sore throat.\nReceptionist: Okay, we can squeeze you in at 10 AM.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-018",
@@ -213,7 +230,8 @@
     "expected_outcome_indicator": "Order placed with allergy confirmed",
     "example_conversation": "Waiter: Are you ready to order?\nUser: Yes, I'd like the daily special, please.\nWaiter: Excellent choice.\nUser: Does it contain any nuts? I have a severe allergy.\nWaiter: The sauce has crushed walnuts. I can have the chef prepare it without the sauce for you.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-019",
@@ -225,7 +243,8 @@
     "expected_outcome_indicator": "Price, start date, and discount info obtained",
     "example_conversation": "Secretary: Hello, Language Institute.\nUser: Hi, I'd like information about the advanced English course.\nSecretary: Certainly. What would you like to know?\nUser: How much does it cost and when does the next group start?\nSecretary: It's $200 and starts next Monday.\nUser: Is there a discount for paying in full?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-020",
@@ -237,7 +256,8 @@
     "expected_outcome_indicator": "Movie plan proposed for Saturday evening",
     "example_conversation": "Friend: Hey, any plans for the weekend?\nUser: I was thinking of going to the movies on Saturday. Want to come?\nFriend: Sounds fun. What time?\nUser: The new action movie is playing at 7 PM.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-021",
@@ -249,7 +269,8 @@
     "expected_outcome_indicator": "Successfully explain the problem and request an exchange for a different size.",
     "example_conversation": "Person: Good morning, how can I help you today?\nUser: Hi, I bought this shirt last week. It is size M but it is too small.\nPerson: I see, do you want to exchange it? What size do you need?\nUser: Yes, please. I need a size L. The price was nineteen euros and ninety-nine cents.\nPerson: No problem, let me check if we have it in stock.\nUser: Thank you very much. This size fits me much better.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-022",
@@ -261,7 +282,8 @@
     "expected_outcome_indicator": "Obtain pricing, duration, and availability information for a haircut appointment.",
     "example_conversation": "Person: Hello, welcome to our salon. What can I do for you?\nUser: Hi, I want to cut my hair. How much does a haircut cost?\nPerson: A basic haircut is twenty-five euros. How long is your hair?\nUser: It is medium length. How long does the haircut take?\nPerson: It takes about thirty minutes. Do you want to book an appointment?\nUser: Yes, do you have time next Saturday at ten o'clock?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-023",
@@ -273,7 +295,8 @@
     "expected_outcome_indicator": "Purchase concert tickets with specific date, quantity, and seating preference.",
     "example_conversation": "Person: Good afternoon! What tickets would you like today?\nUser: I want two tickets for The Singers concert on the fifteenth of March.\nPerson: Great! That concert is thirty-five euros per ticket. Where would you like to sit?\nUser: I prefer the first row, please. That is seventy euros in total.\nPerson: Perfect! Here are your tickets. Enjoy the concert!\nUser: Thank you very much. What time does it start?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-024",
@@ -285,7 +308,8 @@
     "expected_outcome_indicator": "Reschedule a doctor appointment to a different time.",
     "example_conversation": "Person: Good morning, this is the medical clinic. How can I help?\nUser: Hello, I have an appointment tomorrow at two o'clock, but I cannot come.\nPerson: I understand. What time would you prefer?\nUser: Can I come at four o'clock instead? Or maybe another day?\nPerson: Let me check. Yes, we have four o'clock available tomorrow.\nUser: That is perfect for me. Thank you very much!",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-025",
@@ -297,7 +321,8 @@
     "expected_outcome_indicator": "Successful purchase of a gift with price confirmation and delivery/wrapping details.",
     "example_conversation": "Person: Hello! What are you looking for today?\nUser: Hi, I need a blue sweater for my friend's birthday next Saturday.\nPerson: Great! We have nice blue sweaters. What size does your friend wear?\nUser: Medium size, please. How much does it cost?\nPerson: This one is 45 euros. We offer free gift wrapping today.\nUser: Perfect! I'll take it. Can you wrap it for me?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-026",
@@ -309,7 +334,8 @@
     "expected_outcome_indicator": "Exchange transaction completed with rate and fee details confirmed.",
     "example_conversation": "Person: Good morning! How can I help you?\nUser: Hello, I want to exchange 200 British pounds to euros.\nPerson: Okay, let me check the rate. Today it is 1.17 euros per pound.\nUser: So how many euros will I get?\nPerson: You will receive 234 euros. We charge 2 euros commission.\nUser: That's fine. I need the money today for my trip to Barcelona.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-027",
@@ -321,7 +347,8 @@
     "expected_outcome_indicator": "Successfully requested day off with date and reason provided.",
     "example_conversation": "Person: Good morning! Do you need something?\nUser: Yes, I have an important appointment. Can I have Wednesday, March 15 off?\nPerson: What is the appointment for?\nUser: It's a medical appointment. I need to go in the morning.\nPerson: Is it urgent?\nUser: Yes, it is very important for me. Can you approve it?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-028",
@@ -333,7 +360,8 @@
     "expected_outcome_indicator": "Successfully rents a bicycle for Saturday at 10 AM for €15.",
     "example_conversation": "Person: Hello! Can I help you today?\nUser: Yes, I want to rent a bicycle for Saturday, please.\nPerson: Sure! We have many bikes. How long do you need it?\nUser: Just for one day. What is the price?\nPerson: It costs fifteen euros per day. What time do you want to pick it up?\nUser: I can come at ten o'clock in the morning. That's good for me.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-029",
@@ -345,7 +373,8 @@
     "expected_outcome_indicator": "Student successfully negotiates phone purchase with price, warranty details.",
     "example_conversation": "Person: Hello! Can I help you today?\nUser: Yes, how much is this iPhone 12 in the window?\nPerson: It costs 280 euros. It's in very good condition.\nUser: Does it have a warranty? I want six months warranty.\nPerson: We offer six months warranty on all used phones. I can give you 250 euros today.\nUser: Perfect! I'll take it. Can you wrap it for me?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-030",
@@ -357,7 +386,8 @@
     "expected_outcome_indicator": "Student books art class with correct day, time, and price confirmed.",
     "example_conversation": "Person: Good afternoon! Community Centre. How can I help?\nUser: Hi. Do you have painting classes on Tuesdays?\nPerson: Yes, we have a class at 7 PM. Are you interested?\nUser: Yes! What is the price per month?\nPerson: It's 45 euros, and all materials are included.\nUser: Great! Can I book a place for next month?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-031",
@@ -369,7 +399,8 @@
     "expected_outcome_indicator": "Support ticket opened with correct details",
     "example_conversation": "User: Hello, I'm calling because my computer won't turn on.\nAgent: I'm sorry to hear that. Did anything happen before this?\nUser: It was working fine yesterday, but this morning I heard a strange noise and it won't start.\nAgent: Okay, let's try some troubleshooting steps.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-032",
@@ -381,7 +412,8 @@
     "expected_outcome_indicator": "Reservation issue resolved",
     "example_conversation": "Receptionist: Good afternoon, welcome to Hotel Plaza. Do you have a reservation?\nUser: Yes, I booked a room for tonight, but I don't see it on my app.\nReceptionist: Let me check. Do you have the confirmation number?\nUser: Yes, it's #45823. I booked it last week.\nReceptionist: Ah, found it. There was a typo in the name. You're all set.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-033",
@@ -393,7 +425,8 @@
     "expected_outcome_indicator": "Professional introduction completed",
     "example_conversation": "Colleague: Hi, welcome to the team! I'm Sarah.\nUser: Hi Sarah, nice to meet you. I'm Alex.\nColleague: What will you be working on?\nUser: I'm the new Marketing Manager. I used to work in digital advertising for 5 years.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-034",
@@ -405,7 +438,8 @@
     "expected_outcome_indicator": "Complaint registered with details",
     "example_conversation": "User: Hello, I'm calling to report a noise problem.\nManager: Okay, what seems to be the issue?\nUser: Apartment 4B has been playing very loud music every night since 11 PM.\nManager: I see. Have you spoken to them?\nUser: No, I'd like you to intervene, please.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-035",
@@ -417,7 +451,8 @@
     "expected_outcome_indicator": "Conversation started about the couple and ceremony",
     "example_conversation": "User: It's a beautiful ceremony, isn't it?\nGuest: Yes, absolutely lovely. Are you a friend of the bride or groom?\nUser: I'm a friend of the groom from high school. And you?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-036",
@@ -429,7 +464,8 @@
     "expected_outcome_indicator": "Restaurant recommendation given with reasons and directions",
     "example_conversation": "Colleague: I'm looking for a good place for dinner tonight. Do you know any local spots?\nUser: You have to try 'La Trattoria'. It's my favorite Italian place.\nColleague: Oh, that sounds good. Why do you like it?\nUser: The pasta is handmade and the atmosphere is very cozy. plus, it's just two blocks from here.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-037",
@@ -441,7 +477,8 @@
     "expected_outcome_indicator": "Successfully explained product defect, negotiated refund instead of exchange, and received information about refund timeline.",
     "example_conversation": "Person: Good afternoon, how can I help you today?\nUser: Hi, I bought this navy blue coat here two weeks ago for €89.99, but the zipper is completely broken. I'd like a full refund rather than an exchange because I don't trust the quality.\nPerson: I understand your frustration. May I see the receipt and the coat? Unfortunately, our policy states we offer exchanges first, but if you'd prefer a refund, I could process that today.\nUser: Yes, I would really appreciate a refund. How long would it take to receive the money back to my card?\nPerson: Typically it takes between three and five business days once I process it. Would you like me to proceed with that?\nUser: Yes, please. Could you also explain why the zipper failed so quickly? I'm concerned about the overall durability of your products.\nPerson: That's a fair question. We'll look into this batch. Your refund will be processed immediately, and you should see it within five days maximum.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-038",
@@ -453,7 +490,8 @@
     "expected_outcome_indicator": "Secured postponement of interview by two weeks while maintaining professional tone and expressing continued interest.",
     "example_conversation": "Person: Hello, this is Paula from HR. I see you're calling about your interview appointment.\nUser: Hi Paula, yes, I'm calling because I need to reschedule my interview scheduled for March 15th. I have a medical appointment that was booked a month ago and I can't cancel it.\nPerson: I see. That's quite short notice. Can you tell me more about why you can't move your medical appointment instead?\nUser: Unfortunately, it's a specialist appointment that took weeks to get, so rescheduling would be very difficult. Could I possibly postpone the interview to March 29th instead?\nPerson: Let me check our calendar... Actually, March 29th works. However, I do need to ask: are you still genuinely interested in this position despite these complications?\nUser: Absolutely, I'm very interested. I apologize for the inconvenience, and I promise you won't regret reconsidering my application. Thank you so much for your flexibility.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-039",
@@ -465,7 +503,8 @@
     "expected_outcome_indicator": "Negotiated a 15% discount for week-long stay and clarified inclusion of utilities and cancellation terms.",
     "example_conversation": "Person: Hello! Thanks for your interest in my apartment. When are you planning to stay?\nUser: Hi! I'm interested in booking from April 10th to 17th—that's seven nights. I noticed your rate is €100 per night, so that would be €700 total. Since it's a longer stay, would you consider offering a discount, perhaps 15%?\nPerson: I appreciate the inquiry, but my prices are quite reasonable for the neighborhood. What if I offered 10% instead, bringing it to €630?\nUser: I understand, but I've seen similar places offering better rates for week-long bookings. Could we meet at 12% for around €615? Also, I'd like to confirm—does that price include WiFi, heating, and the initial cleaning?\nPerson: The WiFi and heating are included, yes. Initial cleaning is separate at €50. So with 12% discount plus cleaning, it would be €680 total. What about your cancellation policy requirements?\nUser: That works better. For cancellation, I'd prefer flexible cancellation up to five days before arrival. Is that possible with your terms?\nPerson: My standard policy is moderate, which allows cancellation up to 7 days before. I could adjust to 5 days for you given the longer stay. Shall I send you the official listing link to confirm the booking?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-040",
@@ -477,7 +516,8 @@
     "expected_outcome_indicator": "Presented structured proposal for remote work with clear benefits and willingness to trial the arrangement.",
     "example_conversation": "Person: Come in, sit down. What did you want to discuss with me today?\nUser: Thank you for making time. I wanted to propose a flexible work arrangement. After six months here, I've noticed I'm most productive when I can concentrate deeply on big projects without office distractions. I'd like to work from home on Mondays and Wednesdays.\nPerson: Interesting idea, but our team usually collaborates daily. What specific benefits do you see for the company, not just for yourself?\nUser: Good question. I'd be more focused for detailed work, which means fewer errors and faster deliveries. I'd also save two hours commuting, which I could reinvest in my projects. I'm happy to come in Tuesday through Thursday for all meetings and collaborative work.\nPerson: That sounds reasonable, but I'm hesitant about the precedent this sets. What if other team members demand the same?\nUser: I completely understand your concern. What if we trial this for one month and measure my output and team communication? If it works well, we can discuss it with the team. If it doesn't, we revert to the current arrangement.\nPerson: That's a fair proposal. Let's try it for December and revisit in January. I'll need you to send me a detailed schedule showing your collaboration hours.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-041",
@@ -489,7 +529,8 @@
     "expected_outcome_indicator": "Rescheduled pilates class with work conflict explanation and confirmed no additional fee.",
     "example_conversation": "Person: FitLife Gym, how can I assist you?\nUser: Hi, I need to reschedule my Thursday pilates class at 6:30 PM. I have an unexpected work meeting that day and can't attend.\nPerson: I understand. Let me check our schedule. Do you remember which instructor you had?\nUser: Yes, it was Maria's class. I paid 80 euros a month ago and I'd like to move it to another time. Is there an extra charge?\nPerson: No extra charge at all. Maria teaches Tuesday and Saturday mornings as well. Would either of those work for you?\nUser: Tuesday morning would be perfect. Could you confirm the new booking and let me know if I need to do anything else?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-042",
@@ -501,7 +542,8 @@
     "expected_outcome_indicator": "Registered flight delay complaint with meal refund and compensation eligibility explained.",
     "example_conversation": "Person: Good afternoon. I see you're here about a delayed flight. Can I have your booking reference?\nUser: Yes, it's BA 302 from March 15th. The flight was delayed four hours, and I requested meals during the wait but never received them. What compensation am I entitled to?\nPerson: I'm very sorry about that experience. According to EU regulations, you're eligible for 250 euros because the delay exceeded three hours. Did you purchase anything yourself?\nUser: Yes, I bought a sandwich and coffee for about 15 euros. Will that be refunded as well?\nPerson: Of course. I'll process both the compensation and your meal expenses. You should receive everything within two to three weeks to your bank account.\nUser: Thank you. Can you email me confirmation of this claim so I have it documented?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-043",
@@ -513,7 +555,8 @@
     "expected_outcome_indicator": "Successfully negotiate repair or refund for faulty microwave bought 2 weeks ago for €89.",
     "example_conversation": "Person: Good morning, I see you'd like to speak to me about a microwave. What seems to be the problem?\nUser: Yes, I bought this microwave fourteen days ago for eighty-nine euros, but it doesn't heat food properly anymore. I've tried it several times and nothing works.\nPerson: I understand your frustration. Do you have the receipt with you? We could either repair it free of charge or process a refund, though that might take up to two weeks.\nUser: I have the receipt here. Honestly, I'd prefer a refund because I need a working microwave right now for my daily cooking. Would that be possible?\nPerson: Since you're within our two-week return window, I can absolutely arrange that for you. Can I have your name and contact details?\nUser: Of course. It's Elena Martínez, and my email is elena.martinez@email.com. When would the refund appear in my bank account?\nPerson: It should process within five to seven business days. I'll email you a confirmation receipt today.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-044",
@@ -525,7 +568,8 @@
     "expected_outcome_indicator": "Student negotiates partial refund for postponed trip and clarifies cancellation policy.",
     "example_conversation": "Person: Good morning! I'm here about my Barcelona trip booking. How can I help you today?\nUser: Hello Maria. I booked a trip for July 15th for 850 euros, but I need to postpone it until September 20th due to personal reasons. Is it possible to get a refund?\nPerson: I understand. Let me check the cancellation policy. Since you're postponing rather than cancelling completely, we typically charge a 30% administration fee. That would be about 255 euros in fees.\nUser: That seems quite high. I'm still travelling with you, just at a different date. Could you consider a lower fee, maybe 15%? What if I book additional services?\nPerson: I appreciate your loyalty. A 15% fee would be 127 euros, leaving you with a credit of 723 euros. However, the September date has different pricing, so you may need to pay a small difference.\nUser: That sounds more reasonable. Can you check if the September dates are available and tell me what the price difference would be? Also, can I get a written confirmation of this agreement?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-045",
@@ -537,7 +581,8 @@
     "expected_outcome_indicator": "Successfully complains about service quality, provides specific details, and negotiates a free revisit.",
     "example_conversation": "Person: Good afternoon, thank you for calling CleanHome Services. How can I help you today?\nUser: Hello, I'm calling because I'm really disappointed with the cleaning service you provided at my house last week. The kitchen wasn't thoroughly cleaned and the bathrooms still had stains.\nPerson: I'm very sorry to hear that. Could you tell me more about what exactly didn't meet your expectations? We pride ourselves on our quality standards.\nUser: Well, the tiles in both bathrooms weren't properly scrubbed, the kitchen appliances were left streaky, and the carpets looked like they hadn't been vacuumed properly. I've been a customer for two years and this is the worst job they've done.\nPerson: That's concerning. I sincerely apologize. Would you be willing to let us send a team to redo the cleaning at no additional charge?\nUser: Yes, that would be great. Could we schedule it between March 15th and 20th? Would morning or afternoon be better for you?\nPerson: We can definitely arrange that. How about March 18th in the morning, around 9 AM?\nUser: That works perfectly. Thank you for resolving this so quickly.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-046",
@@ -549,7 +594,8 @@
     "expected_outcome_indicator": "Price negotiated below $65",
     "example_conversation": "User: I love this backpack, but $80 is a bit out of my budget.\nVendor: It's good quality leather. How much were you thinking?\nUser: Could you do $60? I'm buying it as a gift.\nVendor: I can't go that low, but I could do $70.\nUser: How about $65? That matches the cash I have.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-047",
@@ -561,7 +607,8 @@
     "expected_outcome_indicator": "Claim registered with tracking number",
     "example_conversation": "Agent: Customer service, how can I help?\nUser: Hi, I'm calling about a missing package. Tracking number TK-2847.\nAgent: Let me check. It says it was delivered yesterday.\nUser: I've been home all day and nothing arrived. I need a solution or a refund.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-048",
@@ -573,7 +620,8 @@
     "expected_outcome_indicator": "Subscription cancellation confirmed",
     "example_conversation": "Agent: Gym membership services, how can I help?\nUser: Hi, I'd like to cancel my subscription.\nAgent: May I ask why you're leaving?\nUser: I haven't used it in 6 months. Please ensure no charge is made next month.\nAgent: I can process that for you.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-049",
@@ -585,7 +633,8 @@
     "expected_outcome_indicator": "Accident description given with key details",
     "example_conversation": "Officer: Can you tell me what happened here?\nUser: Yes, officer. I was waiting at the red light.\nOfficer: And then?\nUser: Another car hit me from behind. There are no injuries, just damage to the bumper.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-050",
@@ -597,7 +646,8 @@
     "expected_outcome_indicator": "Opinion expressed with pros and cons",
     "example_conversation": "Friend: That was amazing! The best movie I've seen all year. What did you think?\nUser: To be honest, I was a bit disappointed.\nFriend: Really? Why?\nUser: The special effects were great, but the ending didn't make any sense to me.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-051",
@@ -609,7 +659,8 @@
     "expected_outcome_indicator": "Duplicate charges removed, full refund obtained, compensation approved.",
     "example_conversation": "Person: Thank you for calling. I see here you're questioning charges from June 12th. Can you walk me through your concern?\nUser: Yes, there are two identical roaming charges of €35 on the same date, which appears to be a system error since I only used data once that day.\nPerson: I understand your frustration. Let me investigate the billing records to determine what happened.\nUser: I'd appreciate that. Furthermore, this error has caused me considerable inconvenience, so I'll need a full reimbursement plus compensation for the trouble.\nPerson: We can certainly credit both charges back. As for compensation, I can offer a €15 credit to your next bill as goodwill.\nUser: I appreciate the gesture, but given the billing error took two weeks to discover, I'd find €25 more appropriate to acknowledge the inconvenience.\nPerson: That's fair. I'll process the full reimbursement of €70 plus a €25 credit immediately, and you'll receive written confirmation within 24 hours.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-052",
@@ -621,7 +672,8 @@
     "expected_outcome_indicator": "Full deposit refund justified with photographic evidence.",
     "example_conversation": "Person: I'm claiming €200 because the sofa now has a stain that wasn't there before. Please accept this deduction from your security deposit.\nUser: I must respectfully disagree. I took photos on arrival showing the same stain was already present, which I documented in the platform's check-in report.\nPerson: I don't recall seeing those photos in your initial comments. Are you certain they're timestamped correctly?\nUser: Yes, the metadata confirms they were taken at 3:45 PM on March 1st, well before I occupied the property. I've attached them for your review.\nPerson: Upon reviewing your evidence, the stain does appear to have existed previously. I apologize for the confusion and will authorize full deposit return immediately.\nUser: Thank you for reconsidering. Please process the complete €500 reimbursement within the binding agreement's 10-day window, and I'll leave you a fair review.\nPerson: Done. Your refund will appear in your account by March 25th, and I appreciate your understanding.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-053",
@@ -633,7 +685,8 @@
     "expected_outcome_indicator": "Negotiated partial refund or alternative flight with compensation",
     "example_conversation": "Person: Good afternoon, I understand you're calling about your flight modification. Could you provide your booking reference, please?\nUser: Yes, my reference is BX4729. My flight was pushed back by eight hours without prior notice, which has created substantial inconvenience and financial loss for my business meeting.\nPerson: I sincerely apologize for the disruption. However, according to our terms and conditions, we're entitled to reschedule flights due to operational reasons.\nUser: I'm aware of those conditions, but given the significant impact this has had on my schedule, I believe you should offer either a full reimbursement or a complimentary rebooking on an earlier flight as compensation.\nPerson: Let me check what options are available. We might be able to offer you a travel voucher worth 100 euros instead.\nUser: That's insufficient given the circumstances. I'd prefer either 150 euros reimbursed to my account or a confirmed seat on the 10:00 departure on March 15th, whichever comes first.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-054",
@@ -645,7 +698,8 @@
     "expected_outcome_indicator": "Defective appliance returned for replacement or refund within cooling-off period",
     "example_conversation": "Person: I've reviewed your receipt. I'm afraid your Dyson XR7 is outside the manufacturer's one-month guarantee period. There's nothing we can do for you.\nUser: I respectfully disagree. The aspiration motor failed unexpectedly after only five weeks of normal use, which clearly indicates a manufacturing defect rather than normal wear and tear. This is materially different from the product I purchased.\nPerson: Even if it's a defect, you're well beyond our return window. Our policy states that customers have fourteen days to return items.\nUser: Your internal policy doesn't override consumer protection regulations. According to EU consumer law, I have fourteen days from purchase to return a defective item, which falls within my rights period.\nPerson: That's not quite accurate. The cooling-off period applies to online purchases primarily, not in-store transactions.\nUser: That's incorrect. The cooling-off period for manufacturing defects applies across all retail channels. Furthermore, I'm invoking my statutory right to a replacement or reimbursement of 280 euros because the product fails to meet the standards I reasonably expected. I'm prepared to provide photographic evidence of the malfunction.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-055",
@@ -657,7 +711,8 @@
     "expected_outcome_indicator": "Successfully lodge a formal complaint and negotiate compensation for poor service quality.",
     "example_conversation": "Person: Good morning, this is James from Delicious Events speaking. How can I help you today?\nUser: Hello James. I'm calling to lodge a formal complaint about your catering service yesterday at my corporate event. The food arrived cold, which was completely unacceptable for a 200-person function that I paid 450 euros for.\nPerson: I'm sorry to hear that. Could you provide me with more details about what exactly went wrong during the service?\nUser: Absolutely. First, you were 40 minutes late, which threw off my entire schedule. Second, you were short 15 dessert portions, and third, the main courses were nowhere near the temperature they should have been. This was a binding agreement, and you failed to deliver the standards we discussed.\nPerson: I understand your frustration, and I sincerely apologize for these inconveniences. What resolution would you be looking for?\nUser: I'm seeking either a 30% reimbursement given the gravity of these issues, or I'll have to pursue this further. I have witnesses and photographs documenting the problems. I trust we can resolve this amicably, but I need a commitment from you today.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-056",
@@ -669,7 +724,8 @@
     "expected_outcome_indicator": "Successfully renegotiate lease terms with evidence-based arguments and reach a mutually acceptable agreement.",
     "example_conversation": "Person: Good afternoon. I've reviewed your application and I'm pleased you're interested in the apartment. However, I must mention the rent is non-negotiable at 1200 euros monthly. Shall we proceed to signing?\nUser: Thank you for considering my application, señor García. Before we sign, I'd like to discuss the terms, as I have some legitimate concerns about both the rent and the deposit structure. The market rate for similar properties in this neighborhood is approximately 1050 euros, according to three recent listings I've reviewed.\nPerson: I understand you've done your research, but my property includes premium finishes and a convenient location. The deposit is standard at three months' rent. What specifically are your concerns?\nUser: While I appreciate the location, the apartment does require some minor repairs—the bathroom tiles need grouting, and the kitchen door hinges are loose. Given these issues and current market conditions, I'm proposing 1050 euros monthly rent with a two-month deposit instead of three. This is still a fair rate for the property, and it demonstrates my commitment with a substantial deposit.\nPerson: Those repairs are minor cosmetic issues that won't affect your tenancy. However, I respect your position. Let me consider your proposal, as a 24-month commitment does have value for me.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-057",
@@ -681,7 +737,8 @@
     "expected_outcome_indicator": "Negotiated workload expectations and secured commitment to review compensation or staffing.",
     "example_conversation": "Person: As you know, we've decided to merge the marketing initiative with your current responsibilities. We believe you're the best fit for this expanded role given your track record and expertise in digital communications.\nUser: I appreciate your confidence, Maria, but I have to be honest—this proposal isn't feasible given my current commitments. I'm already managing two concurrent projects that require 45 hours per week, and adding 15 hours of marketing work would be unsustainable without compromising quality or my wellbeing.\nPerson: Understood, but the project is time-sensitive, and we simply don't have budget approval for additional hiring at the moment. Could you prioritize and perhaps delegate some of your existing tasks?\nUser: I've already optimized my workflow considerably. What I'm proposing is either hiring a junior team member to support me, or alternatively, if the company insists on this expanded scope, we'd need to discuss a salary adjustment of at least 12% to reflect the new responsibilities and workload.\nPerson: That's quite a significant request. Let me discuss this with upper management and get back to you.\nUser: I appreciate that, Maria. However, I do need a resolution within the next two weeks, as I cannot commit to this additional workload under the current terms. I'm hoping we can find a solution that works for both the company and my career development.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-058",
@@ -693,7 +750,8 @@
     "expected_outcome_indicator": "Negotiated hybrid work arrangement with performance review period.",
     "example_conversation": "Person: We're delighted with your technical qualifications, but I should mention that this analyst role traditionally requires full-time office attendance. Our teams collaborate extensively, and we believe the best results come from in-person interaction.\nUser: I truly appreciate the offer, and I'm committed to delivering exceptional results for Deloitte. I'd like to propose a hybrid arrangement where I work three days in the office for team collaboration and two days remotely for focused analytical work that requires deep concentration without interruptions.\nPerson: That's an interesting suggestion, but it deviates significantly from our standard policy. Many clients expect our analysts to be available on-site during business hours.\nUser: I understand those concerns, which is why I'm proposing we implement this as a six-month trial period with clear performance metrics. I'm confident that my productivity, project completion rates, and code quality will demonstrate that this arrangement is not only feasible but actually enhances output. Should the metrics fall below agreed benchmarks, we can revert to the full on-site model.\nPerson: That's a thoughtful proposal. Let me discuss this with the team leads and see if we can accommodate this arrangement on a trial basis.\nUser: Thank you, Thomas. I believe this flexibility will allow me to contribute my best work while maintaining the collaborative spirit your team values. I'm eager to make this partnership successful.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-059",
@@ -705,7 +763,8 @@
     "expected_outcome_indicator": "Successfully negotiates a two-week extension with clear conditions and commitment.",
     "example_conversation": "Person: Good afternoon. I see you've come to discuss your assignment deadline. What seems to be the issue?\nUser: Professor, I appreciate your time. Due to unexpected family circumstances and a technical failure that corrupted my initial draft, I've fallen behind schedule, but I'd like to request a two-week extension to deliver work that meets your standards.\nPerson: I understand, but you're aware that extensions set a precedent. What guarantee can you provide that this won't compromise the quality of your research?\nUser: I'm prepared to submit detailed progress notes every three days and a comprehensive outline by next Friday to demonstrate commitment. Additionally, I'll include supplementary sources that weren't in my original plan.\nPerson: That's a reasonable proposal. However, I can only grant this extension if you understand it's conditional upon those check-ins and if you submit the final version no later than two weeks from today.\nUser: Absolutely. I'm grateful for your understanding, and I assure you this extension will result in a significantly improved submission.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-060",
@@ -717,7 +776,8 @@
     "expected_outcome_indicator": "Clearly articulates symptoms, questions current treatment, and negotiates comprehensive diagnostic plan.",
     "example_conversation": "Person: Welcome back. I see you've been on the prescribed medication for three months now. How are you feeling overall?\nUser: To be honest, the improvement has been minimal. I still experience significant abdominal pain roughly two hours after eating certain foods, and I'm noticing persistent fatigue throughout the day, which is affecting my work performance considerably.\nPerson: That's concerning. Have you noticed any particular foods that trigger these symptoms more than others?\nUser: Yes, actually. High-fat foods and dairy products seem especially problematic. Given these patterns, I'm wondering whether we should pursue more advanced testing, such as an endoscopy or food intolerance analysis, before continuing with medication alone.\nPerson: That's a reasonable request. An endoscopy could be useful, though it's more invasive. Regarding food intolerance testing, the scientific evidence is mixed. However, we could explore a structured elimination diet under nutritionist supervision alongside the endoscopy.\nUser: I appreciate that balanced perspective. Could you refer me to a qualified nutritionist who works with gastroenterologists? I'd like to take a more integrated approach combining medical investigation with dietary management.",
     "cefr_level": "B2",
-    "base_duration_seconds": 90
+    "base_duration_seconds": 90,
+    "tier": null
   },
   {
     "id": "m-061",
@@ -729,7 +789,8 @@
     "expected_outcome_indicator": "Successfully negotiate hybrid work arrangement with concrete commitments.",
     "example_conversation": "Person: Well, congratulations on the offer. Before you sign, are there any terms you'd like to revisit? I should mention that our procurement guidelines stipulate at least three office days per week for collaborative purposes.\nUser: I appreciate the opportunity genuinely, though I'd like to propose an alternative arrangement. Given that the commute from my current residence is forty-five minutes each way, working remotely on Mondays, Wednesdays, and one additional day would substantially mitigate travel costs while allowing me to maintain the in-person collaboration you require on Thursdays and Fridays.\nPerson: That's a fairly significant deviation from our standard discretionary policy. What's your rationale for believing this arrangement would enhance rather than hinder productivity?\nUser: Whereas I recognise your concern about cohesion, research indicates that knowledge workers report higher output when freed from commute fatigue, provided the channels for synchronous communication remain robust. Moreover, I'd be amenable to attending monthly in-person strategy sessions on Wednesdays to offset any liaison gaps.\nPerson: You've thought this through. I'll need to run it past the team leads, but I'm inclined to explore a pilot arrangement for the first quarter.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-062",
@@ -741,7 +802,8 @@
     "expected_outcome_indicator": "Secure specialist referral and additional diagnostic tests.",
     "example_conversation": "Person: Your B12 levels have improved significantly since last month's supplementation. I think we should simply monitor progress and reassess in six weeks.\nUser: I appreciate the improvement in those specific markers, though I'm somewhat concerned that the constellation of symptoms—the fatigue, the migratory joint pain, and the cognitive fog—hasn't substantially abated despite the B12 intervention. While not discounting that deficiency as contributory, I wonder whether a thyroid panel and inflammatory markers might illuminate what appears to be a multisystem presentation.\nPerson: These symptoms are often psychosomatic, you know. Stress can manifest in numerous ways. Have you considered whether your work situation might be exacerbating things?\nUser: I don't wish to be dismissive of that hypothesis, though the onset predates any recent workplace changes, and the symptoms are quite tangible—my exercise tolerance has genuinely diminished. Given the duration and specificity of this presentation, wouldn't it be prudent to rule out autoimmune conditions before attributing everything to psychological factors? I'd be grateful for a referral to internal medicine.\nPerson: Fair point. I'll send you to Dr. Patel. He's thorough—perhaps overly so—but if anyone can get to the bottom of this, it's him.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-063",
@@ -753,7 +815,8 @@
     "expected_outcome_indicator": "Negotiate scope reduction or deadline extension with evidence-based argument.",
     "example_conversation": "Person: I've reviewed your progress notes, and frankly, I'm a bit concerned about your pace. We're eight weeks from submission, and you've only processed roughly one hundred and thirty texts. The thesis committee expects the full analytical scope.\nUser: I understand the expectation, Professor, and I'm not seeking to circumvent the rigour the committee demands. However, I've calculated that comprehensive thematic and linguistic analysis of the remaining three hundred and seventy texts would necessitate approximately sixty hours of intensive work, whereas my current schedule—balancing my research assistant duties and coursework—realistically permits only twenty hours over the remaining period. Should I proceed at this pace, I risk producing superficial analysis that would undermine the dissertation's credibility.\nPerson: Well, you knew the scope when you proposed it. Expanding your hours isn't really my problem.\nUser: You're absolutely right that I designed the methodology, though circumstances have shifted since September when I underestimated the depth required for the comparative framework. I'm not asking to diminish rigour; rather, I'm proposing either a reduction to two hundred and fifty carefully selected texts that preserve geographical and temporal representation, or a four-week extension that would allow the thoroughness you've taught me to value. Which would the committee find more acceptable?\nPerson: An extension is tricky, but a reduced corpus with properly stratified sampling... that could work. Send me a revised methodology by Friday.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-064",
@@ -765,7 +828,8 @@
     "expected_outcome_indicator": "Secure informal mediation without escalating to formal HR complaint.",
     "example_conversation": "Person: Come in, sit down. You look a bit preoccupied. Everything alright with the Westchester contract?\nUser: The project's fine, though something occurred yesterday in the team meeting that I felt needed your awareness before it festers. David made a comment about my accent—suggesting it slows communication—and whilst I don't believe he intended genuine malice, it's landed somewhat uncomfortably, particularly given the confidentiality of the client discussions we conduct.\nPerson: That's a serious accusation. Did anyone else hear this? I'll need to escalate it formally if we're talking about discriminatory behaviour.\nUser: I understand your obligation, though I'm hesitant to trigger the formal machinery unnecessarily. David and I work closely; I'd prefer to address this through a candid conversation where he understands the impact, rather than through a grievance procedure that might poison the team dynamic irreparably. Would a three-way discussion be possible where we reset expectations about professional language without litigating intent?\nPerson: I appreciate you wanting to handle this maturely, but you're putting me in a difficult position. If I don't document this and it continues, I'm liable.\nUser: That's a fair point, and I'm not asking you to ignore it. Perhaps we document that you've addressed it informally, and establish a clear boundary that a second incident triggers the formal pathway? That way you're protected procedurally, and David gets a genuine chance to correct course.\nPerson: Alright, I'll speak with him today. Let's see how he responds, and we'll reconvene on Friday.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-065",
@@ -777,7 +841,8 @@
     "expected_outcome_indicator": "Secure agreement for second peer review and resubmission opportunity.",
     "example_conversation": "Person: Dear Dr. Morrison, thank you for your response to the editorial decision. I've reviewed your concerns. The reviewer's critique seemed quite robust to me.\nUser: I appreciate your candour, Dr. Al-Rashid, though I wonder whether the reviewer's assertion on page three—that my log-linear regression inadequately controls for sociolinguistic variables—reflects a careful reading of my Appendix C, where I explicitly enumerate the stratification criteria and report Variance Inflation Factors beneath accepted thresholds. It's possible my exposition was opaque, though the statistical foundation itself is sound.\nPerson: These technical disputes are difficult to adjudicate without the reviewer present. They might have had access to considerations we're not seeing in the final report.\nUser: Undoubtedly, though I'm particularly concerned that the reviewer dismisses the Lunelli and Rossi 2023 corpus analysis and the Moretti 2023 diachronic study—both published in your own journal—which substantially corroborate my findings on subject licensing asymmetries. Ignoring contemporaneous work that supports one's argument is precisely what peer review should catch. Additionally, their proposed alternative analysis using mixed-effects modelling—whilst methodologically valid—was my initial approach, which I abandoned following the piloting phase outlined in section 3.2 due to convergence failures on the full dataset.\nPerson: I see your point about the recent literature. I'm not entirely convinced the reviewer overlooked those papers intentionally, but I take your frustration. What would resolve this for you?\nUser: A second independent review, ideally from someone conversant with corpus methodology, would either validate the concerns or confirm that the initial assessment was perhaps overly dismissive. I'm prepared to substantially revise the clarity of my statistical reporting, and I can integrate the recent literature more prominently. Rather than a final rejection, might a \"revise and resubmit\" with a second reader be feasible?\nPerson: That's fair. I'll solicit another opinion. Don't revise yet—wait for the second reader's input.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-066",
@@ -789,7 +854,8 @@
     "expected_outcome_indicator": "Request administrative review with documented evidence of qualifications.",
     "example_conversation": "Person: This is the visa office line. May I help you?\nUser: Yes, I'm calling regarding my application reference VW-2024-456789, which was refused yesterday. I believe there's been a substantive error in the assessment, and I'd like to request a formal administrative review before proceeding with reapplication.\nPerson: I'm afraid refusals are rarely overturned. What's your concern with the decision?\nUser: The refusal states that my experience is insufficiently relevant to the role, yet my documentation—a seven-year consultancy background in digital transformation, three professional certifications, and endorsement letters from two C-suite executives—directly mirrors the Skilled Worker requirements outlined by my sponsor, Deloitte Madrid. The justification appears to have overlooked the supporting evidence or misinterpreted my CV.\nPerson: Did you provide a detailed role description from your employer?\nUser: Absolutely. The job specification is attached to my application demonstrating point-for-point alignment with my background. Moreover, my employer's assigned sponsor licence permits precisely this occupational category, and they've confirmed in writing that my profile exceeds their baseline criteria. While I respect the visa officer's gatekeeping role, I'd argue the refusal doesn't address the substantive qualifications documentation, which warrants at minimum a second review before I withdraw and reapply incurring further costs.\nPerson: Submit a written request for review within ten working days, attaching a supplementary statement addressing the specific refusal grounds. That's your recourse.\nUser: I intend to do exactly that. Should the review officer require clarification or additional evidence—testimonials, project portfolios, or academic transcripts—what's the preferred submission channel and expected turnaround time?",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-067",
@@ -801,7 +867,8 @@
     "expected_outcome_indicator": "Secure increased funding, contract extension, and lab access guarantees through reasoned negotiation.",
     "example_conversation": "Person: I appreciate your time today. As you know, we're facing some budgetary constraints across the doctoral scheme this year, which means we may need to revisit certain allocations.\nUser: I understand the fiscal pressures, Dr. Matthews, but I'd like to present a case for why the additional 200 euros monthly wouldn't merely constitute a personal convenience—it's essential for conducting rigorous fieldwork in my methodology.\nPerson: I'm listening, though I should mention that any adjustment would need to be offset by demonstrable gains in productivity or publication trajectory.\nUser: Precisely my point. The supplementary funds would enable me to secure access to the tissue samples repository at the biotech facility, which, whilst technically available, requires a licensing fee that my current allocation simply doesn't accommodate—without it, my comparative analysis becomes untenable.\nPerson: That's a more compelling rationale than I'd anticipated. As for the contract extension, that's considerably trickier given the departmental mandate.\nUser: I recognise the constraints, yet if I might respectfully suggest: postponing the completion date by merely two months would align my thesis submission with the spring publication cycle, thereby maximising the department's research output when it comes to the annual review metrics—not to mention that it mitigates the risk of rushed conclusions.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-068",
@@ -813,7 +880,8 @@
     "expected_outcome_indicator": "Successfully challenge unfair appraisal with documented evidence and negotiate review timeline.",
     "example_conversation": "Person: I've reviewed your annual evaluation, and while your contributions have been solid, we felt your initiative has been somewhat limited this cycle.\nUser: I appreciate your feedback, but I'm afraid I must respectfully contest that characterization. Not only did I spearhead the market expansion initiative that yielded a 23% revenue uptick, but I also mitigated significant procurement bottlenecks, which netted us $50,000 in cost savings—metrics that are, frankly, difficult to reconcile with a \"satisfactory\" rating.\nPerson: Well, those are certainly notable achievements, but we need to see more strategic thinking and cross-departmental collaboration.\nUser: With respect, I led three cross-functional projects this year, all of which concluded ahead of schedule and within budget. I'm concerned that the evaluation doesn't accurately reflect the quantifiable outcomes. I'd like to request an expedited review—either by yourself with additional documentation, or by an independent third party within the next two weeks—to ensure the assessment aligns with the evidence.\nPerson: That's a fair point. I'll discuss it with upper management and get back to you by Friday.\nUser: Thank you. I appreciate your willingness to reconsider, and I'm confident that once you examine the project reports and stakeholder feedback, the discrepancy will become evident.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-069",
@@ -825,7 +893,8 @@
     "expected_outcome_indicator": "Presented compelling ROI argument grounded in attrition data and operational metrics, challenging centralization strategy with feasible decentralized alternative.",
     "example_conversation": "Person: The restructuring is already in motion, and I'm confident it will yield significant efficiencies. I'm not sure what prompted you to revisit this now, frankly.\nUser: I respect the decision, but the data from the first three weeks warrants a reconsideration; we've already lost three senior team members, and our customer response time has ballooned from 24 to 72 hours—figures that directly contradict the efficiency promise.\nPerson: These are early growing pains; people adapt, and we'll optimize response protocols as we go.\nUser: Granted that adjustment periods are inevitable, yet the attrition pattern is alarming when contextualized against industry benchmarks; replacing a mid-level analyst costs roughly 150 percent of their annual salary, so three departures alone have cost us 320.000€ in recruitment and onboarding—a figure that rather undercuts any savings the centralization was meant to achieve.\nPerson: You're conflating separate issues; attrition happens regardless of structure.\nUser: Perhaps in the abstract, but my proposal isn't to jettison the restructuring wholesale; rather, it's to maintain two decentralized hubs with coordinated oversight, which would require 80.000€ additional annually but would likely prevent future attrition and restore client responsiveness, thereby netting a 250.000€ saving relative to the costs of turnover we're currently incurring.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-070",
@@ -837,7 +906,8 @@
     "expected_outcome_indicator": "Persuade Director to reconsider discretionary spending limits through reasoned argumentation.",
     "example_conversation": "Person: I appreciate your proposal, but frankly, the current thresholds have been in place for precisely this reason—to mitigate frivolous expenditure. What makes you think loosening them would benefit rather than compromise our fiscal prudence?\nUser: I understand your concern about fiscal discipline, but I'd argue the criteria are so restrictive that we're inadvertently handicapping ourselves relative to competitors who move faster on emerging opportunities. The $50,000 ceiling, which hasn't been indexed since 2019, effectively prevents us from piloting technologies that could yield substantial ROI within eighteen months.\nPerson: Those are rather broad claims. Do you have empirical evidence that our caution is costing us market share, or are you largely speculating?\nUser: Not entirely—I've analyzed three quarters of rejected proposals that would've fallen into the $50,000 to $150,000 band, and eighteen percent of them addressed client pain points our competitors subsequently captured. Granted, not all would have succeeded, but the opportunity cost of blanket rejection far exceeds the downside risk of selective, monitored access to those funds.\nPerson: You make a fair point, though I'd need to see that analysis in detail before committing to anything. Let's say I'm willing to entertain a pilot phase—perhaps with stricter governance mechanisms and quarterly reviews rather than an outright increase.\nUser: That's a constructive approach, and I'm genuinely grateful. I'd propose we trial this with a $100,000 threshold for Q3 and Q4, coupled with a steering committee that vets proposals against predefined innovation criteria. If the metrics validate the hypothesis—adoption rates, cost savings, or new revenue streams—we revisit the permanent threshold thereafter.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-071",
@@ -849,7 +919,8 @@
     "expected_outcome_indicator": "Successfully balanced ethical imperative with business reality and secured cautious consideration.",
     "example_conversation": "Person: Look, I appreciate the sentiment, but frankly, sinking €2.5 million into sustainability initiatives when our competitors are cutting costs seems tone-deaf to shareholder concerns. What's your contingency if this doesn't yield ROI within three years?\nUser: I understand the trepidation, and you're right to raise it. However, what I'm proposing isn't altruism divorced from strategy; it's a calculated hedge against regulatory liability and reputational risk, both of which, as you know, have increasingly tangible financial implications. The €2.5 million represents a discretionary allocation that, mitigated through phased procurement and operational efficiency gains, would effectively cost us 4.2% rather than the full 8%.\nPerson: Phased, you say? Walk me through the timeline and where you'd absorb the losses initially.\nUser: Precisely. Q1 and Q2 focus on supply-chain audits and vendor renegotiation—minimal outlay. By Q3, we transition to carbon-neutral logistics, which admittedly incurs upfront costs, but the long-term savings on energy procurement offset roughly 60% by month eighteen. As for the remaining 40%, that's where reputational capital and risk mitigation converge; institutional investors increasingly penalize opacity on ESG metrics.\nPerson: And if the market doesn't reward that posture?\nUser: Then we've still fortified ourselves against what's now virtually inevitable regulatory tightening, whilst our competitors scramble to retrofit. We're not betting on virtue signalling; we're inoculating the firm.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-072",
@@ -861,7 +932,8 @@
     "expected_outcome_indicator": "Escalation accepted, independent safety audit scheduled, documented complaint formally recorded.",
     "example_conversation": "Person: Your supervisor mentioned you've raised some concerns about Line 3. I've reviewed her assessment and she seems confident the equipment is within tolerance. What specifically are we discussing here?\nUser: With respect, sir, I believe there's a discrepancy in how the data's been interpreted. I've documented three instances—November 8th, 12th, and December 3rd—where the hydraulic coupling has misfired, each time creating momentary pressure spikes that, fortunately, haven't yet resulted in serious injury. However, what troubles me is the trajectory: the incidents are increasing in frequency, and my supervisor, though conscientious, may be deferring to manufacturer specifications rather than observable degradation.\nPerson: You're suggesting she's been dismissive, then.\nUser: I'm suggesting, sir, that there may be an institutional blind spot—not malice, but perhaps an over-reliance on the equipment's certification history. I've requested a formal maintenance log review three times. What I'm asking is for an independent third-party safety audit before we resume full-capacity production. The liability exposure, frankly, is significant.\nPerson: Independent audit is expensive and signals doubt about our protocols.\nUser: Understandably. However, the cost of a single serious injury—both human and legal—would dwarf the audit expenditure many times over. I'm not asking to shut down; I'm asking for verification. If the equipment passes, everyone sleeps better. If it doesn't, we've averted a catastrophe. That's not hyperbole; it's prudent governance.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-073",
@@ -873,7 +945,8 @@
     "expected_outcome_indicator": "Reframed career narrative as strategic asset; demonstrated meta-competence in organizational complexity.",
     "example_conversation": "Person: I'll be candid—your CV shows three companies in twelve years, lateral moves rather than progression. Some hiring managers might interpret that as restlessness or inability to commit. How do you see it?\nUser: Fair question, and I appreciate the directness. What appears as lateral movement is actually deliberately curated exposure to different operational architectures. Each transition wasn't flight; it was strategic infiltration of a new ecosystem. At TechCore, I optimized supply-chain procurement; at Nordic, I restructured customer operations for a distributed model; at Ascent, I navigated a post-acquisition integration where two entirely different cultures had to coalesce.\nPerson: So you're framing instability as intentional learning. But how does that translate to staying put and delivering in this role?\nUser: Because what I've acquired isn't just technical acumen—it's immunity to institutional inertia. Most directors of operations inherit a system and tweak it. I've built systems from misaligned fragments. I understand not just *how* operations function, but *why* they resist change, and critically, which resistance is structural versus cultural. When you inherit a role in a growing firm, you won't need someone who optimizes yesterday's paradigm; you'll need someone who can diagnose why stakeholders disagree on what optimization even means.\nPerson: That's elegant, but it's still a bet on someone who hasn't held a position longer than four years.\nUser: True. But consider: I'm not asking you to bet on loyalty to a title; I'm asking you to leverage someone whose liability *is* their ability to operate across organizational fractures. In eighteen months, you'll have clarity on whether that's valuable or whether you need institutional continuity. Either way, you'll have de-risked the decision through my track record of successful integrations.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-074",
@@ -885,7 +958,8 @@
     "expected_outcome_indicator": "Successfully negotiated delivery timeline, liability cap, and force majeure clause.",
     "example_conversation": "Person: I appreciate your concerns, but I must emphasize that our standard terms reflect industry norms and mitigate our exposure considerably. Frankly, reducing the delivery window to sixty days would necessitate restructuring our entire supply chain, which frankly isn't discretionary for us.\nUser: I understand the constraints, yet what you're characterizing as industry standard doesn't align with what we're seeing elsewhere. Moreover, if we're to commit to a three-year contract of this magnitude, we need the flexibility that a sixty-day window provides, particularly given the volatility in our sector.\nPerson: That's a fair point, though I'd argue that the liability cap of one hundred thousand is precisely calibrated to compensate for unforeseen disruptions without bankrupting us operationally.\nUser: That's where I must respectfully push back. A hundred thousand doesn't adequately reflect the scale of our potential losses, nor does it incentivize the quality assurance we're investing in. What if we compromise at fifty thousand, but only if we include a robust force majeure clause that protects both parties?\nPerson: You're not wrong that a force majeure provision would assuage certain concerns. I could potentially advocate internally for seventy-five days and fifty thousand if you're amenable to accepting the liability as written.\nUser: That's movement, and I appreciate it. Seventy-five days is workable, provided we lock in the fifty thousand cap and ensure the force majeure language explicitly covers supply chain disruptions, which frankly, is increasingly relevant given geopolitical uncertainties we've all witnessed.",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-075",
@@ -897,307 +971,333 @@
     "expected_outcome_indicator": "Successfully challenge vague contract terms and propose three concrete amendments.",
     "example_conversation": "Person: Well, I've drafted a fairly standard agreement for the full renovation, which as you know encompasses the structural assessment, interior redesign, and project management through to completion.\nUser: I appreciate the comprehensiveness, but I'm concerned about the liability clause—specifically section 4.3, which appears to place all responsibility for unforeseen structural damage exclusively on my shoulders, despite my having engaged your firm precisely to mitigate such risks. Could we redefine that?\nPerson: That clause is fairly boilerplate in the industry, though I understand your apprehension. What sort of amendment were you envisioning?\nUser: I'd propose a tiered liability model whereby structural issues attributable to poor initial assessment fall under your purview, whereas those stemming from pre-existing conditions I failed to disclose remain mine. Additionally, the delivery timeline is vague—would you be amenable to inserting penalty clauses for overruns beyond three months?\nPerson: Penalty clauses do add complexity, but they're not unreasonable given the €85,000 investment involved. However, I'd need to insert a force majeure clause to protect us both from unforeseen circumstances.\nUser: Absolutely, provided we define force majeure narrowly to exclude supply chain delays, which are rather predictable in this market. That brings me to my third concern: the dispute resolution mechanism. Rather than litigation, might we include mandatory mediation before proceeding to arbitration?",
     "cefr_level": "C1",
-    "base_duration_seconds": 75
+    "base_duration_seconds": 75,
+    "tier": null
   },
   {
     "id": "m-076",
     "title": "Pedir un café para llevar",
-    "description": "Entras con prisa a una cafetería de barrio.",
-    "objective": "Pide un café grande con leche para llevar y pregunta cuánto cuesta antes de pagar.",
-    "scene_context": "Estás en una cafetería pequeña por la mañana. Hay dos personas esperando y el camarero te saluda.",
+    "description": "Pide el café con tus preferencias, paga y entérate del horario.",
+    "objective": "Pide un café grande con leche para llevar, escucha el precio, paga y pregunta a qué hora cierran.",
+    "scene_context": "Entras con prisa a la cafetería antes del trabajo. Hay dos personas delante y el camarero sonríe.",
     "character_name": "Barista",
     "expected_outcome_indicator": "Coffee ordered and paid",
     "example_conversation": "Barista: Good morning! What can I get you?\nUser: A coffee, please. To go.\nBarista: Small or large?\nUser: Large, please. With milk.\nBarista: That's three dollars.\nUser: Here you go. Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-077",
     "title": "Comprar fruta en el mercado",
-    "description": "Es sábado y el mercado está lleno de puestos.",
-    "objective": "Compra un kilo de manzanas, pregunta el precio y decide si te llevas también plátanos.",
-    "scene_context": "Estás en un puesto de fruta del mercado. El vendedor coloca manzanas mientras te mira y sonríe.",
+    "description": "Compra la fruta del sábado con presupuesto y compara precios.",
+    "objective": "Compra un kilo de manzanas y medio de plátanos, pregunta el precio de cada uno, pide una bolsa si hace falta, compara con las naranjas y decide sin pasarte de 5 dólares.",
+    "scene_context": "Sábado en el mercado de barrio, con puestos llenos y mucho ruido. El de la fruta te saluda.",
     "character_name": "Fruit Vendor",
     "expected_outcome_indicator": "Fruit bought, price asked",
     "example_conversation": "Fruit Vendor: Hello! The apples are very fresh today.\nUser: How much are they?\nFruit Vendor: Two dollars a kilo.\nUser: I want one kilo, please.\nFruit Vendor: Anything else?\nUser: No, thank you. That's all.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-078",
     "title": "Registrarte en un hotel",
-    "description": "Llegas al hotel después de un viaje largo.",
-    "objective": "Da tu nombre, confirma tu reserva de dos noches y pregunta a qué hora es el desayuno.",
-    "scene_context": "Estás en la recepción de un hotel pequeño con tu maleta. El recepcionista busca en el ordenador.",
+    "description": "Regístrate y resuelve desayuno, wifi y servicio de habitaciones.",
+    "objective": "Da tu nombre y confirma la reserva de dos noches, pregunta a qué hora es el desayuno, pide la contraseña del wifi y pregunta si hay servicio de habitaciones.",
+    "scene_context": "Llegas al hotel con la maleta después de seis horas de tren. La recepción está tranquila.",
     "character_name": "Receptionist",
     "expected_outcome_indicator": "Checked in, breakfast time known",
     "example_conversation": "Receptionist: Good evening! Do you have a reservation?\nUser: Yes, my name is Laura.\nReceptionist: Room 305. Here is your key.\nUser: What time is breakfast?\nReceptionist: From seven to ten.\nUser: Perfect, thank you.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-079",
     "title": "Pedir comida en un restaurante",
-    "description": "Comes en un restaurante con un menú sencillo.",
-    "objective": "Pide pollo con ensalada y agua, y confirma que no quieres postre.",
-    "scene_context": "Estás sentado en un restaurante. El camarero llega con una libreta y te saluda.",
+    "description": "Pide tu comida, esquiva lo picante y remata con postre.",
+    "objective": "Pide pollo con ensalada y agua, pregunta si el pollo lleva salsa, cambia a arroz si lleva picante, pregunta el postre del día y pide pan.",
+    "scene_context": "Restaurante de barrio a mediodía con manteles a cuadros. El camarero se acerca con la libreta.",
     "character_name": "Waiter",
     "expected_outcome_indicator": "Meal ordered clearly",
     "example_conversation": "Waiter: Good afternoon! Are you ready to order?\nUser: Yes. I want the chicken, please.\nWaiter: With rice or salad?\nUser: With salad, please.\nWaiter: And to drink?\nUser: Water, please. No dessert.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-080",
     "title": "Comprar una camiseta",
-    "description": "Buscas ropa nueva para el fin de semana.",
-    "objective": "Pide una camiseta azul talla mediana, pregunta si puedes probártela y decide si la compras.",
-    "scene_context": "Estás en una tienda de ropa con música suave. Una dependienta te saluda mientras dobla camisetas.",
+    "description": "Encuentra tu talla, pruébate otra y decide con el descuento incluido.",
+    "objective": "Pide una camiseta azul talla mediana, pregunta el precio, si no te queda pide otra en el probador, pregunta si hay descuento y decide si la compras.",
+    "scene_context": "Tienda de ropa con música suave; un montón de camisetas dobladas y dos probadores al fondo.",
     "character_name": "Shop Assistant",
     "expected_outcome_indicator": "T-shirt found and tried on",
     "example_conversation": "Shop Assistant: Hi! Can I help you?\nUser: Yes, I like this blue T-shirt.\nShop Assistant: What size are you?\nUser: Medium, please.\nShop Assistant: Here you go. The fitting room is there.\nUser: Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-081",
     "title": "Preguntar por la parada del bus",
-    "description": "No encuentras la parada del autobús.",
-    "objective": "Pregunta a alguien dónde está la parada del bus y cuánto se tarda andando.",
-    "scene_context": "Estás en una esquina del centro con el móvil en la mano. Una señora espera junto al semáforo.",
+    "description": "Moverte en bus como un local: parada, horario, precio y validez.",
+    "objective": "Pregunta dónde está la parada del bus, a qué hora pasa el próximo, cuánto cuesta el billete, si sirve el mismo para dos viajes y cuánto tiempo vale.",
+    "scene_context": "Esquina del centro con coches y bicis. Una señora espera junto al semáforo con bolsas.",
     "character_name": "Local",
     "expected_outcome_indicator": "Bus stop located",
     "example_conversation": "Local: Excuse me, where is the bus stop?\nUser: It's next to the bank.\nLocal: Is it far?\nUser: No, two minutes walking.\nLocal: Thank you very much!\nUser: You're welcome.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-082",
     "title": "En el médico: dolor de cabeza",
-    "description": "Vas a la consulta porque te duele la cabeza.",
-    "objective": "Explica que te duele la cabeza desde anoche, entiende cómo tomar la medicina y despídete.",
-    "scene_context": "Estás sentado en la consulta del médico. El doctor revisa una carpeta y te pregunta cómo te sientes.",
+    "description": "Cuenta tus síntomas, entiende el tratamiento y qué hacer si sigue el dolor.",
+    "objective": "Explica que te duele la cabeza desde anoche y si tomaste algo, pregunta cada cuánto tomar la medicina, si puedes conducir y cuándo volver si no mejora.",
+    "scene_context": "Consulta del médico con estanterías y un reloj de pared. El doctor revisa tu historial.",
     "character_name": "Doctor",
     "expected_outcome_indicator": "Pain explained, treatment understood",
     "example_conversation": "Doctor: Good morning. How do you feel?\nUser: I have a headache.\nDoctor: When did it start?\nUser: Last night.\nDoctor: Take this medicine twice a day.\nUser: Thank you, doctor.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-083",
     "title": "Llamar a un amigo para quedar",
-    "description": "Quieres ir al cine este fin de semana.",
-    "objective": "Llama a tu amigo, propón ir al cine el sábado a las ocho y confirma la cita.",
-    "scene_context": "Estás en tu salón con el teléfono en la mano. Es por la tarde y no tienes planes para el sábado.",
+    "description": "Cierra el plan del sábado: película, hora, entradas y quién paga.",
+    "objective": "Llama a tu amigo, propón ir al cine el sábado, acordad la hora, pregunta qué película quiere ver, organiza dónde comprar las entradas y quién paga.",
+    "scene_context": "Tarde en casa con el móvil en la mano: quieres cerrar el plan del sábado.",
     "character_name": "Friend",
     "expected_outcome_indicator": "Plan confirmed by phone",
     "example_conversation": "Friend: Hello? It's me, Sam.\nUser: Hi Sam! How are you?\nFriend: Good! Do you want to go to the cinema?\nUser: Yes! What time?\nFriend: At eight, on Saturday.\nUser: Perfect, see you there.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-084",
     "title": "Comprar un billete de tren",
-    "description": "Vas a la estación a comprar tu billete.",
-    "objective": "Pide un billete de ida y vuelta a Brighton, escucha el precio y busca tu andén.",
-    "scene_context": "Estás en la taquilla de la estación con una mochila. El taquillero te mira esperando tu petición.",
+    "description": "Billete para hoy con descuento, andén y transbordos incluidos.",
+    "objective": "Compra un billete de ida y vuelta a Brighton para hoy, pregunta si hay descuento, la hora del próximo tren, el andén y si hay que cambiar de vía.",
+    "scene_context": "Estación grande con paneles de salidas y gente corriendo. La taquillera te mira esperando.",
     "character_name": "Ticket Clerk",
     "expected_outcome_indicator": "Ticket bought, platform found",
     "example_conversation": "Ticket Clerk: Hello! Where do you want to go?\nUser: One ticket to Brighton, please.\nTicket Clerk: Single or return?\nUser: Return, please.\nTicket Clerk: That's twenty pounds. Platform 4.\nUser: Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-085",
     "title": "Tu primer día de clase",
-    "description": "Llegas a una academia nueva y no conoces a nadie.",
-    "objective": "Preséntate con tu nombre, pregunta el nombre de tu compañera y habla un poco de la clase.",
-    "scene_context": "Estás en el aula antes de empezar. Una compañera se sienta a tu lado y te sonríe.",
+    "description": "Rompe el hielo el primer día y aprende los básicos del aula.",
+    "objective": "Preséntate a la compañera, pregúntale su nombre y de dónde es, hablad de la clase y del profesor, pregunta el horario de las pausas y dónde están los baños.",
+    "scene_context": "Aula luminosa con mesas pequeñas y un mapa de Inglaterra. Faltan cinco minutos para empezar.",
     "character_name": "Classmate",
     "expected_outcome_indicator": "Introduced yourself to a classmate",
     "example_conversation": "Classmate: Hi! Are you new here?\nUser: Yes, today is my first day.\nClassmate: I'm Maya. Nice to meet you.\nUser: Nice to meet you too. I'm Diego.\nClassmate: Do you like this class?\nUser: Yes, the teacher is very kind.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-086",
     "title": "Facturar una maleta en el aeropuerto",
-    "description": "Vas a volar y llevas una maleta grande.",
-    "objective": "Entrega tu pasaporte, factura una maleta y pregunta en qué puerta embarcas.",
-    "scene_context": "Estás en el mostrador de facturación del aeropuerto con tu pasaporte en la mano.",
+    "description": "Factura sin sorpresas: peso, puerta, embarque y equipaje incluido.",
+    "objective": "Entrega el pasaporte, factura una maleta, pregunta si pesa demasiado, si va incluida en el billete, cuál es la puerta y a qué hora embarcas.",
+    "scene_context": "Aeropuerto amplio con pantallas y cola en el mostrador. El equipaje de mano ya va contigo.",
     "character_name": "Check-in Agent",
     "expected_outcome_indicator": "Bag checked, gate known",
     "example_conversation": "Check-in Agent: Good morning! Your passport, please.\nUser: Here it is.\nCheck-in Agent: How many bags?\nUser: One bag, please.\nCheck-in Agent: Your gate is B12. Have a good flight!\nUser: Thank you very much.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-087",
     "title": "Pagar la cuenta del restaurante",
-    "description": "Has terminado de comer y quieres irte.",
-    "objective": "Di que la comida estaba deliciosa, pide la cuenta y paga con tarjeta.",
-    "scene_context": "Estás en la mesa de un restaurante por la noche. El camarero retira los platos y te pregunta.",
+    "description": "Paga con tarjeta y pide tu recibo con la misma naturalidad.",
+    "objective": "Di que la comida estaba deliciosa, pide la cuenta, paga con tarjeta y pide una copia del recibo.",
+    "scene_context": "Cena a media luz con vistas a la calle. Ya no queréis postre, solo ir a casa.",
     "character_name": "Waiter",
     "expected_outcome_indicator": "Bill paid by card",
     "example_conversation": "Waiter: Did you enjoy the meal?\nUser: Yes, it was delicious.\nWaiter: Do you want dessert?\nUser: No, thank you. The bill, please.\nWaiter: Cash or card?\nUser: Card, please.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-088",
     "title": "Alquilar una bicicleta",
-    "description": "Quieres moverte por la ciudad en bici.",
-    "objective": "Pregunta el precio por día, alquila una bici con casco y pide la llave.",
-    "scene_context": "Estás en una tienda de alquiler de bicicletas. Hay bicis de colores aparcadas fuera.",
+    "description": "Alquila la bici, pide extras y traza la ruta más segura.",
+    "objective": "Alquila una bici por un día, pregunta el precio y la fianza, pide casco y candado, pregunta la ruta más segura al centro y a qué hora devolverla.",
+    "scene_context": "Tienda de alquiler con bicis de colores fuera y un mapa de rutas en la pared.",
     "character_name": "Rental Clerk",
     "expected_outcome_indicator": "Bike rented with helmet",
     "example_conversation": "Rental Clerk: Hello! Do you want to rent a bike?\nUser: Yes, how much is it?\nRental Clerk: Ten dollars a day.\nUser: Great. I need a helmet too.\nRental Clerk: Of course. Here is the key.\nUser: Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-089",
     "title": "Hablar del tiempo con tu vecino",
-    "description": "Te encuentras con tu vecino en el portal.",
-    "objective": "Comenta que hace sol hoy, escucha que mañana lloverá y despídete con naturalidad.",
-    "scene_context": "Estás en la puerta de tu edificio. Tu vecino llega con el periódico y os saludáis.",
+    "description": "Charla de vecinos: tiempo, paraguas y la mejor época para visitar la ciudad.",
+    "objective": "Comenta el tiempo de hoy, pregunta por el de mañana, hablad de paraguas y abrigo y pregunta por la mejor época para visitar la ciudad.",
+    "scene_context": "Portal del edificio con el cielo despejado. El vecino llega con el periódico y os saludáis.",
     "character_name": "Neighbor",
     "expected_outcome_indicator": "Small talk about weather",
     "example_conversation": "Neighbor: Hi! Nice weather today, right?\nUser: Yes, it's sunny and warm.\nNeighbor: Tomorrow it will rain.\nUser: Really? I need my umbrella.\nNeighbor: Take a coat too.\nUser: Thanks for the advice!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-090",
     "title": "Comprar un teléfono sencillo",
-    "description": "Necesitas un móvil básico y barato.",
-    "objective": "Pide un teléfono sencillo, pregunta el precio y decide llevártelo.",
-    "scene_context": "Estás en una tienda de telefonía. Hay móviles de exposición sobre mesas blancas.",
+    "description": "Compara dos móviles, pregunta por la garantía y el cargador, y decide el tuyo.",
+    "objective": "Pide un teléfono sencillo, pregunta el precio, compara el segundo modelo si es más barato, pregunta por la garantía y el cargador, y decide cuál llevas.",
+    "scene_context": "Tienda de telefonía con móviles de exposición y un vendedor que espera tu decisión.",
     "character_name": "Salesperson",
     "expected_outcome_indicator": "Simple phone chosen",
     "example_conversation": "Salesperson: Good morning! Can I help you?\nUser: Yes, I need a simple phone.\nSalesperson: This one is cheap and easy.\nUser: How much is it?\nSalesperson: Ninety euros.\nUser: OK, I'll take it.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-091",
     "title": "Preguntar el horario del próximo tren",
-    "description": "Llegas a la estación y no sabes cuándo sale tu tren.",
-    "objective": "Pregunta a qué hora sale el próximo tren a Oxford y cuánto dura el viaje.",
-    "scene_context": "Estás delante del panel de salidas de la estación. Un empleado pasa con un uniforme azul.",
+    "description": "Llega a Oxford sin perder el tren: hora, andén, duración y transbordos.",
+    "objective": "Pregunta la hora del próximo tren a Oxford, en qué andén sale, cuánto dura el viaje, si hay que cambiar y si el retraso es habitual.",
+    "scene_context": "Estación luminosa con gran panel de salidas. Un empleado con uniforme pasa a tu lado.",
     "character_name": "Clerk",
     "expected_outcome_indicator": "Timetable understood",
     "example_conversation": "Clerk: Excuse me, what time is the next train?\nUser: At half past three.\nClerk: To Oxford?\nUser: Yes, platform two.\nClerk: How long is the trip?\nUser: About one hour.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-092",
     "title": "Invitar a un amigo a cenar",
-    "description": "Quieres organizar una cena en casa.",
-    "objective": "Invita a tu amigo el viernes, dile que traiga un postre y confirma la hora.",
-    "scene_context": "Estás en tu cocina preparando la cena cuando llamas a tu amigo para invitarle.",
+    "description": "Organiza la cena perfecta: menú, alergias, hora y postre.",
+    "objective": "Invita a cenar el viernes, explica qué vas a cocinar, pregunta si tu amigo tiene alergias, queda a las nueve y pide que traiga el postre.",
+    "scene_context": "Cocina cálida al atardecer con la mesa a medio poner y la nevera abierta.",
     "character_name": "Friend",
     "expected_outcome_indicator": "Dinner invitation accepted",
     "example_conversation": "Friend: Hi! Are you free on Friday?\nUser: Yes, why?\nFriend: Do you want to have dinner at my house?\nUser: I'd love to! What can I bring?\nFriend: Just bring a dessert.\nUser: Perfect, see you on Friday.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-093",
     "title": "En la farmacia: dolor de garganta",
-    "description": "Te duele la garganta y vas a la farmacia.",
-    "objective": "Pide algo para el dolor de garganta, pregunta cómo tomar las pastillas y da las gracias.",
-    "scene_context": "Estás en una farmacia de barrio. El farmacéutico está detrás del mostrador.",
+    "description": "Explica tus síntomas y vuelve sabiendo cómo tomarte el jarabe.",
+    "objective": "Explica el dolor de garganta y si tienes fiebre, pregunta por el jarabe y la dosis, si da sueño, si se puede tomar con la comida y cuándo volver si no mejora.",
+    "scene_context": "Farmacia de barrio con bata blanca y cajones. Otra persona espera detrás de ti.",
     "character_name": "Pharmacist",
     "expected_outcome_indicator": "Remedy explained",
     "example_conversation": "Pharmacist: Good afternoon! How can I help you?\nUser: I need something for a sore throat.\nPharmacist: These tablets are good.\nUser: How do I take them?\nPharmacist: One every eight hours.\nUser: Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-094",
     "title": "Buscar el baño en un centro comercial",
-    "description": "Estás de compras y necesitas el baño.",
-    "objective": "Pregunta dónde está el baño, entiende que está en la segunda planta y da las gracias.",
-    "scene_context": "Estás en la planta baja de un centro comercial grande. Junto a ti hay un mostrador de información.",
+    "description": "Oriéntate en el centro comercial sin perderte ni un detalle.",
+    "objective": "Pregunta dónde está el baño, si hay ascensor, en qué planta, si hay cambiador para bebés, dónde queda la salida y si cierran a mediodía.",
+    "scene_context": "Centro comercial enorme con escaleras mecánicas y un mapa de plantas junto a ti.",
     "character_name": "Info Assistant",
     "expected_outcome_indicator": "Toilet found",
     "example_conversation": "Info Assistant: Hello! Do you need help?\nUser: Yes, where is the toilet?\nInfo Assistant: On the second floor, next to the lifts.\nUser: Is there a lift here?\nInfo Assistant: Yes, behind you.\nUser: Thanks a lot!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-095",
     "title": "Comprar flores para un regalo",
-    "description": "Buscas flores para el cumpleaños de tu madre.",
-    "objective": "Pide flores para tu madre, pregunta el precio de las rosas y llévatelas.",
-    "scene_context": "Estás en una floristería con olor a flores frescas. La florista prepara un ramo.",
+    "description": "Elige el ramo perfecto sin pasarte del presupuesto.",
+    "objective": "Pide flores para tu madre, pregunta cuánto cuestan, elige un ramo que no pase de 20 dólares y pide una tarjeta de regalo.",
+    "scene_context": "Entras en la floristería del barrio con algo de prisa: el cumpleaños es hoy.",
     "character_name": "Florist",
     "expected_outcome_indicator": "Flowers bought",
     "example_conversation": "Florist: Good morning! What are you looking for?\nUser: Some flowers for my mother.\nFlorist: These red roses are beautiful.\nUser: How much are they?\nFlorist: Fifteen dollars.\nUser: I'll take them, please.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 180,
+    "tier": 2
   },
   {
     "id": "m-096",
     "title": "Apuntarte al gimnasio del barrio",
-    "description": "Quieres empezar a hacer ejercicio cerca de casa.",
-    "objective": "Pregunta el precio al mes, si hay piscina y di que quieres apuntarte.",
-    "scene_context": "Estás en la recepción de un gimnasio de barrio. Un instructor te muestra las instalaciones.",
+    "description": "Apúntate al gimnasio sabiendo precios, matrícula y clases.",
+    "objective": "Pregunta el precio al mes y la matrícula, pide una clase de prueba, pregunta el horario de mañana, si hay entrenador y cuánto cuesta apuntarse hoy.",
+    "scene_context": "Recepción del gimnasio con música de fondo y entrenadores enseñando las salas.",
     "character_name": "Instructor",
     "expected_outcome_indicator": "Gym membership asked",
     "example_conversation": "Instructor: Hi! Are you interested in the gym?\nUser: Yes, how much is it per month?\nInstructor: Thirty euros. It opens at seven.\nUser: Is there a swimming pool?\nInstructor: No, but there are classes.\nUser: Great, I want to join.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-097",
     "title": "Pedir ayuda con una maleta pesada",
-    "description": "Tu maleta pesa demasiado para subirla sola.",
-    "objective": "Pide ayuda a un desconocido, explica que la maleta es pesada y agradece su ayuda.",
-    "scene_context": "Estás en la estación con una maleta enorme. Un viajero pasa a tu lado con el tren a punto de salir.",
+    "description": "Consigue ayuda con la maleta y llega a tu andén a tiempo.",
+    "objective": "Pide ayuda con la maleta, explica que pesa mucho, pregunta dónde están las escaleras, si hay ascensor y si puede ayudarte hasta el andén.",
+    "scene_context": "Estación con escaleras anchas y gente pasando rápido: tu tren sale en diez minutos.",
     "character_name": "Traveller",
     "expected_outcome_indicator": "Help requested politely",
     "example_conversation": "Traveller: Excuse me, can you help me?\nUser: Of course. What's the problem?\nTraveller: This suitcase is very heavy.\nUser: I can carry it to the stairs.\nTraveller: Thank you so much!\nUser: No problem.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-098",
     "title": "Hablar de tu familia",
-    "description": "Conoces a alguien nuevo y habláis de la familia.",
-    "objective": "Cuenta cuántos hermanos tienes, di con quién vives y qué hace tu padre.",
-    "scene_context": "Estás en una cafetería con una amiga nueva. Tenéis café y tiempo para charlar.",
+    "description": "Conoce a alguien nuevo hablando de tu familia y de la suya.",
+    "objective": "Habla de tu familia: cuántos hermanos tienes, con quién vives y a qué se dedica tu familia; después pregunta por la suya y si vive cerca.",
+    "scene_context": "Cafetería tranquila con plantas y jazz suave. La conversación va saliendo sola.",
     "character_name": "New Friend",
     "expected_outcome_indicator": "Family described simply",
     "example_conversation": "New Friend: Do you have brothers or sisters?\nUser: Yes, one brother and two sisters.\nNew Friend: Do you live with your family?\nUser: Yes, with my parents.\nNew Friend: What does your father do?\nUser: He is a cook.",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-099",
     "title": "Reservar una mesa por teléfono",
-    "description": "Quieres reservar para cenar con amigos.",
-    "objective": "Reserva una mesa para cuatro el viernes a las nueve y da tu nombre.",
-    "scene_context": "Estás en casa llamando a un restaurante. Al otro lado suena el ruido suave de platos.",
+    "description": "Reserva la mesa con todos los detalles y confírmala por teléfono.",
+    "objective": "Reserva mesa para cuatro el viernes a las nueve, pregunta si hay terraza, si guardan la mesa quince minutos, da un teléfono de contacto y confirma la reserva.",
+    "scene_context": "Salón en penumbra con una lámpara encendida. La llamada suena dos veces antes de contestar.",
     "character_name": "Host",
     "expected_outcome_indicator": "Table reserved by phone",
     "example_conversation": "Host: Good evening, Bella Restaurant.\nUser: Hello, I want a table for four.\nHost: What day, please?\nUser: Friday at nine.\nHost: What's your name?\nUser: Maria Lopez. Thank you!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-100",
     "title": "Pagar en la caja del supermercado",
-    "description": "Terminas la compra y llegas a la caja.",
-    "objective": "Pide una bolsa, escucha el total y pregunta si puedes pagar con tarjeta.",
-    "scene_context": "Estás en la caja del supermercado con el carro lleno. La cajera pasa los productos.",
+    "description": "Cierra la compra como un experto: bolsa, pago, ticket y cupón.",
+    "objective": "Pide una bolsa, pregunta el total, paga con tarjeta, pide el ticket, pregunta dónde canjear un cupón y si hay caja rápida.",
+    "scene_context": "Supermercado de barrio con cajas numeradas y tu carro lleno de la compra del mes.",
     "character_name": "Cashier",
     "expected_outcome_indicator": "Groceries paid by card",
     "example_conversation": "Cashier: Hello! Do you have a bag?\nUser: No, I need one, please.\nCashier: That's twelve euros fifty.\nUser: Can I pay by card?\nCashier: Yes, of course.\nUser: Here you go. Thanks!",
     "cefr_level": "A1",
-    "base_duration_seconds": 180
+    "base_duration_seconds": 240,
+    "tier": 3
   },
   {
     "id": "m-101",
@@ -1209,7 +1309,8 @@
     "expected_outcome_indicator": "Exchange requested with receipt",
     "example_conversation": "Shop Assistant: Good afternoon! How can I help you?\nUser: I bought this jacket yesterday, but it is too small.\nShop Assistant: Do you have the receipt?\nUser: Yes, here it is. Can I change it for a large one?\nShop Assistant: Of course. The large ones are over there.\nUser: Great, thank you very much.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-102",
@@ -1221,7 +1322,8 @@
     "expected_outcome_indicator": "Dental appointment booked",
     "example_conversation": "Receptionist: Good morning, Dental Care Clinic.\nUser: Hello, I would like to make an appointment.\nReceptionist: Of course. What is the problem?\nUser: My tooth hurts when I eat.\nReceptionist: We have a free time on Thursday at five.\nUser: Thursday at five is perfect. Thank you.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-103",
@@ -1233,7 +1335,8 @@
     "expected_outcome_indicator": "Room with a view booked",
     "example_conversation": "Hotel Receptionist: Good morning, Sea View Hotel.\nUser: Hello, I would like to book a double room.\nHotel Receptionist: For which dates?\nUser: For this weekend, two nights.\nHotel Receptionist: With sea view or city view?\nUser: Sea view, please. Does the price include breakfast?\nHotel Receptionist: Yes, breakfast is included.\nUser: Perfect. Can I pay at the hotel?",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-104",
@@ -1245,7 +1348,8 @@
     "expected_outcome_indicator": "Route and transfer understood",
     "example_conversation": "Station Staff: Excuse me, which line goes to the museum?\nUser: Take line two, the green one.\nStation Staff: How many stops is it?\nUser: Four stops, then change at Central Station.\nStation Staff: Do I need a new ticket to change?\nUser: No, the same ticket is fine.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-105",
@@ -1257,7 +1361,8 @@
     "expected_outcome_indicator": "Two tickets bought",
     "example_conversation": "Ticket Seller: Hello! I would like two tickets for Saturday.\nUser: Front seats or balcony?\nTicket Seller: How much are the balcony seats?\nUser: Twenty euros each.\nTicket Seller: The balcony is fine. Here is my card.\nUser: Enjoy the concert!",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-106",
@@ -1269,7 +1374,8 @@
     "expected_outcome_indicator": "Weekend plan agreed",
     "example_conversation": "Friend: What are you doing on Sunday?\nUser: Nothing special. Why?\nFriend: If it is sunny, we can go to the beach.\nUser: Good idea! Should we take the train?\nFriend: Yes, and we can have breakfast first.\nUser: Perfect, see you at nine.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-107",
@@ -1281,7 +1387,8 @@
     "expected_outcome_indicator": "Late order reported",
     "example_conversation": "Support Agent: Good morning, how can I help you?\nUser: My order has not arrived and it was two weeks ago.\nSupport Agent: Can you give me the order number?\nUser: Yes, it is 4-5-8-2-1.\nSupport Agent: I am sorry. The package is lost. Do you want a refund?\nUser: Yes, please. A refund is better.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-108",
@@ -1293,7 +1400,8 @@
     "expected_outcome_indicator": "Cooking course details asked",
     "example_conversation": "Course Coordinator: Hello! I am interested in the Italian cooking course.\nUser: It is on Tuesdays and Thursdays.\nCourse Coordinator: What time does it start?\nUser: At six in the evening. It costs fifty euros.\nCourse Coordinator: Do I need to bring an apron?\nUser: No, we give you one. Do you want to book a place?\nCourse Coordinator: Yes, please. My name is Ana.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-109",
@@ -1305,7 +1413,8 @@
     "expected_outcome_indicator": "Account requirements known",
     "example_conversation": "Bank Clerk: Good morning! I would like to open an account.\nUser: Of course. Do you have your ID card?\nBank Clerk: Yes, here it is.\nUser: And a certificate of your address.\nBank Clerk: I have it too. How long does the card take?\nUser: One week, and you can use the app today.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-110",
@@ -1317,7 +1426,8 @@
     "expected_outcome_indicator": "Delivery order placed",
     "example_conversation": "Restaurant Host: Good evening, Bella Pizza.\nUser: Hello, I would like to order some food.\nRestaurant Host: What would you like?\nUser: A pizza and a salad, please.\nRestaurant Host: What is your address?\nUser: Number five, Green street. How long does it take?\nRestaurant Host: Thirty minutes.\nUser: Perfect, thank you.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-111",
@@ -1329,7 +1439,8 @@
     "expected_outcome_indicator": "Next flight arranged",
     "example_conversation": "Airline Agent: Hello, I missed my flight to Rome.\nUser: What time was your flight?\nAirline Agent: At eleven, but the taxi was late.\nUser: There is another flight at four.\nAirline Agent: Is there an extra cost?\nUser: There is a change fee of thirty euros.\nAirline Agent: OK, I will take it.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-112",
@@ -1341,7 +1452,8 @@
     "expected_outcome_indicator": "Colleague comforted",
     "example_conversation": "Sick Colleague: How do you feel today?\nUser: Better, but I still have a fever.\nSick Colleague: I brought you some soup.\nUser: Thank you! You did not have to.\nSick Colleague: Do you need anything from the shop?\nUser: No, thanks. Just rest.\nSick Colleague: I will tell the team you are ill.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-113",
@@ -1353,7 +1465,8 @@
     "expected_outcome_indicator": "Birthday gift chosen",
     "example_conversation": "Toy Shop Assistant: Hello! I am looking for a present for my nephew.\nUser: How old is he?\nToy Shop Assistant: He is eight. He loves building things.\nUser: This construction set is very popular.\nToy Shop Assistant: How much is it?\nUser: Twenty-five euros. Do you want it wrapped?\nToy Shop Assistant: Yes, please. It is for his birthday.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-114",
@@ -1365,7 +1478,8 @@
     "expected_outcome_indicator": "Car rented with insurance",
     "example_conversation": "Rental Agent: Hello! I would like to rent a car for the weekend.\nUser: A small car or a big one?\nRental Agent: A small one, please. From Friday to Sunday.\nUser: It is eighty euros with full insurance.\nRental Agent: Is the petrol included?\nUser: No, you return it full.\nRental Agent: OK, that is fine.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-115",
@@ -1377,7 +1491,8 @@
     "expected_outcome_indicator": "Wifi connected",
     "example_conversation": "Hotel Receptionist: Good evening. What is the wifi password?\nUser: It is on your key card, but I can tell you: blue-2-0-2-4.\nHotel Receptionist: Is it free?\nUser: Yes, it is free for all guests.\nHotel Receptionist: Does it work in the rooms?\nUser: Yes, and also in the restaurant.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-116",
@@ -1389,7 +1504,8 @@
     "expected_outcome_indicator": "Repair requested",
     "example_conversation": "Landlord: Hello, this is Ana from flat three.\nUser: Hello Ana, is everything OK?\nLandlord: No, the boiler is broken. There is no hot water.\nUser: I am sorry. I will call a technician today.\nLandlord: Can he come before six? I work in the morning.\nUser: Yes, I will tell him. The repair is on me.\nLandlord: Thank you very much.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-117",
@@ -1401,7 +1517,8 @@
     "expected_outcome_indicator": "Availability and tasks asked",
     "example_conversation": "Café Manager: Hello! I am here about the summer job.\nUser: Great. Do you have any experience?\nCafé Manager: I worked in a bakery last summer.\nUser: When can you start?\nCafé Manager: In July. I am free every morning.\nUser: The job is serving coffee and cleaning tables.\nCafé Manager: That is fine for me.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-118",
@@ -1413,7 +1530,8 @@
     "expected_outcome_indicator": "Cough syrup explained",
     "example_conversation": "Pharmacist: Good morning! I need something for a cough.\nUser: How long have you had it?\nPharmacist: For three days, and it is worse at night.\nUser: This syrup is good for that.\nPharmacist: How much do I take?\nUser: Two spoons three times a day.\nPharmacist: Does it make you sleepy?\nUser: A little, so take it at night.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-119",
@@ -1425,7 +1543,8 @@
     "expected_outcome_indicator": "Trial class arranged",
     "example_conversation": "Gym Receptionist: Hello! I want to try a spinning class.\nUser: We have classes at seven and eight.\nGym Receptionist: Can I try one for free?\nUser: Yes, the first class is free.\nGym Receptionist: Perfect. Are there lockers?\nUser: Yes, bring a padlock.\nGym Receptionist: See you at seven.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-120",
@@ -1437,7 +1556,8 @@
     "expected_outcome_indicator": "Haircut appointment set",
     "example_conversation": "Hairdresser: Hello! Do you have time on Saturday?\nUser: Yes, at eleven or at five.\nHairdresser: At eleven, please. I have a wedding.\nUser: How do you want the cut?\nHairdresser: Short on the sides, not too short on top.\nUser: With wash and dry, it is twenty euros.\nHairdresser: Perfect, see you Saturday.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-121",
@@ -1449,7 +1569,8 @@
     "expected_outcome_indicator": "Late books returned",
     "example_conversation": "Librarian: Hello, I am returning these books. They are late.\nUser: Let me check... one week late.\nLibrarian: How much is the fine?\nUser: One euro per book, so three euros.\nLibrarian: Can I take this one again?\nUser: Yes, but you have to pay first.\nLibrarian: No problem. Here you go.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-122",
@@ -1461,7 +1582,8 @@
     "expected_outcome_indicator": "Barbecue organised",
     "example_conversation": "Friend: So, what time on Saturday?\nUser: At one. I will reserve a table.\nFriend: I can bring the meat and the bread.\nUser: Great. I will bring drinks and plates.\nFriend: What about Marta?\nUser: She will bring a salad and some fruit.\nFriend: Perfect. See you on Saturday!",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-123",
@@ -1473,7 +1595,8 @@
     "expected_outcome_indicator": "New gate located",
     "example_conversation": "Airport Staff: Excuse me, my gate changed. Where is gate C twenty?\nUser: Gate C twenty is in terminal two.\nAirport Staff: How do I get to terminal two?\nUser: Take the shuttle bus, it is five minutes.\nAirport Staff: What time is boarding?\nUser: Boarding starts at half past six.\nAirport Staff: Thank you, I will run!",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-124",
@@ -1485,7 +1608,8 @@
     "expected_outcome_indicator": "Shelf bought with delivery",
     "example_conversation": "Furniture Assistant: Hello! I am looking for a shelf for my living room.\nUser: What size do you need?\nFurniture Assistant: Two metres wide and white.\nUser: This one is two metres and costs ninety euros.\nFurniture Assistant: Do you deliver to your home?\nUser: Yes, for fifteen euros. Assembly is ten more.\nFurniture Assistant: I will take it without assembly.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-125",
@@ -1497,7 +1621,8 @@
     "expected_outcome_indicator": "Claim reported",
     "example_conversation": "Insurance Agent: Good morning, I want to report some damage to my car.\nUser: What happened?\nInsurance Agent: Someone scratched it in the car park.\nUser: When was it?\nInsurance Agent: Yesterday afternoon, at the shopping centre.\nUser: Send me the photos and the policy number.\nInsurance Agent: How long does the repair take?\nUser: About four days.",
     "cefr_level": "A2",
-    "base_duration_seconds": 150
+    "base_duration_seconds": 150,
+    "tier": null
   },
   {
     "id": "m-126",
@@ -1509,7 +1634,8 @@
     "expected_outcome_indicator": "Rent increase negotiated",
     "example_conversation": "Landlord: As you know, I would like to raise the rent this year.\nUser: I understand prices are going up, but eight percent is a lot.\nLandlord: The building costs have increased too.\nUser: Could we agree on four percent instead?\nLandlord: Four percent is very low for me.\nUser: What about five, and I take care of the garden?\nLandlord: That sounds reasonable. Five percent it is.\nUser: Great. Could you send it to me in writing?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-127",
@@ -1521,7 +1647,8 @@
     "expected_outcome_indicator": "Deadline change agreed",
     "example_conversation": "Project Lead: We have a problem with Friday.\nUser: How serious is it?\nProject Lead: Two people are ill and we are behind schedule.\nUser: How much time do we need?\nProject Lead: Two more days. I suggest Tuesday at noon.\nUser: The client will not like it, but it is realistic.\nProject Lead: I will call them and explain the situation.\nUser: Good. Could you copy me in the email?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-128",
@@ -1533,7 +1660,8 @@
     "expected_outcome_indicator": "Experience presented confidently",
     "example_conversation": "Recruiter: Tell me a little about your experience.\nUser: I worked for two years in customer support.\nRecruiter: What did you learn there?\nUser: I learned to solve problems calmly and work with deadlines.\nRecruiter: Why do you want this job?\nUser: I want to grow in a bigger team and learn from them.\nRecruiter: How do you work under pressure?\nUser: I organise my tasks by priority and communicate early.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-129",
@@ -1545,7 +1673,8 @@
     "expected_outcome_indicator": "Wrong charge disputed",
     "example_conversation": "Support Agent: Good morning, how can I help you?\nUser: My bill this month is double the usual amount.\nSupport Agent: Let me check... There is a charge for extra data.\nUser: That cannot be right. I have been using wifi all month.\nSupport Agent: It may be an error in the system.\nUser: I would like a review, and I am not paying that part.\nSupport Agent: I will open a case and send you the result by email.\nUser: Thank you. Please also confirm it in writing today.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-130",
@@ -1557,7 +1686,8 @@
     "expected_outcome_indicator": "Compensation requested politely",
     "example_conversation": "Airline Agent: Good evening. How can I help you?\nUser: My flight was delayed six hours and I missed my connection.\nAirline Agent: I am sorry. We can offer you a hotel for tonight.\nUser: Thank you, but I would also like to claim compensation.\nAirline Agent: Under the rules, that depends on the reason for the delay.\nUser: The reason was technical, so I believe I am entitled.\nAirline Agent: You can fill in this form and we will answer in two weeks.\nUser: Fine. Could you give me a copy of the form?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-131",
@@ -1569,7 +1699,8 @@
     "expected_outcome_indicator": "Two-week plan agreed",
     "example_conversation": "Personal Trainer: How many times a week do you exercise now?\nUser: Once or twice, and I sleep badly.\nPersonal Trainer: Sleep is as important as training.\nUser: I know, but I finish work very late.\nPersonal Trainer: Try three short sessions and no screens after ten.\nUser: That sounds possible. What about food?\nPersonal Trainer: More vegetables and water, less sugar at night.\nUser: OK. Can we check the plan again in two weeks?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-132",
@@ -1581,7 +1712,8 @@
     "expected_outcome_indicator": "Group trip decided",
     "example_conversation": "Friend: I still think the mountains are cheaper.\nUser: True, but the beach has more activities.\nFriend: The beach hotels are full in August.\nUser: Then why do not we go in the first week of July?\nFriend: I cannot take those days, I have a course.\nUser: What if we decide by budget? Everyone sends a number.\nFriend: That is fair. We can vote on Friday.\nUser: Agreed. I will create a group to share prices.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-133",
@@ -1593,7 +1725,8 @@
     "expected_outcome_indicator": "Refund claimed for faulty item",
     "example_conversation": "Store Manager: Good afternoon. How can I help you?\nUser: These headphones do not charge. I bought them last week.\nStore Manager: Did you try another cable?\nUser: Yes, and another charger. The problem is the product.\nStore Manager: I can offer you a voucher for the shop.\nUser: I would prefer a refund, as is my right within fourteen days.\nStore Manager: You are right. Let me process the refund.\nUser: Thank you. Could you keep a copy of the receipt?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-134",
@@ -1605,7 +1738,8 @@
     "expected_outcome_indicator": "Stress symptoms explained",
     "example_conversation": "Doctor: What brings you here today?\nUser: I have not been sleeping well for three weeks.\nDoctor: How many hours do you sleep, more or less?\nUser: Four or five, and I wake up at night thinking about work.\nDoctor: Do you drink coffee or use screens late?\nUser: Both. I finish work at eleven and check emails in bed.\nDoctor: Before any medicine, let us change those habits for ten days.\nUser: Fine. Could we have another appointment after that?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-135",
@@ -1617,7 +1751,8 @@
     "expected_outcome_indicator": "Idea defended with answers",
     "example_conversation": "Teacher: So, what is your proposal?\nUser: I suggest three more recycling bins and a poster campaign.\nTeacher: Why do you think bins are the problem?\nUser: Because the survey shows students want to recycle but it is not easy.\nTeacher: How much would it cost?\nUser: Around two hundred euros, and the posters can be designed here.\nTeacher: Who would check that it works?\nUser: A small group of volunteers, with results every month.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-136",
@@ -1629,7 +1764,8 @@
     "expected_outcome_indicator": "Misunderstanding resolved",
     "example_conversation": "Friend: I saw the photos of the dinner. Nobody told me about it.\nUser: I am really sorry. It was a last-minute thing.\nFriend: I felt left out, to be honest.\nUser: I understand, and I should have called you first.\nFriend: It is not only this time, you know.\nUser: You are right. I have been careless with our plans.\nFriend: I just want to count on you when it matters.\nUser: You can. Let me invite you to dinner on Friday to fix this.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-137",
@@ -1641,7 +1777,8 @@
     "expected_outcome_indicator": "Renewal with improvement agreed",
     "example_conversation": "Landlord: So, do you want to stay for another year?\nUser: Yes, I am happy here. But the living room needs paint.\nLandlord: The last tenant left the walls quite bad, that is true.\nUser: Could the painting be included in the renewal?\nLandlord: I can pay for half of the materials if you organise it.\nUser: Deal. I also want to fix the kitchen tap.\nLandlord: Send me the numbers and I will approve them.\nUser: Perfect. When can we sign the new contract?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-138",
@@ -1653,7 +1790,8 @@
     "expected_outcome_indicator": "Duplicate charge reported",
     "example_conversation": "Bank Clerk: Good morning. How can I help you?\nUser: This shop charged me twice for the same purchase.\nBank Clerk: When did it happen?\nUser: On Tuesday, and I only bought one item.\nBank Clerk: I can open a dispute with the shop for you.\nUser: How long does the refund take?\nBank Clerk: Between five and ten working days.\nUser: Please send me the case number by email.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-139",
@@ -1665,7 +1803,8 @@
     "expected_outcome_indicator": "Requirements checked",
     "example_conversation": "Course Adviser: I want to join the advanced course.\nUser: It requires a B1 certificate or a level test.\nCourse Adviser: I do not have the certificate, but I use English at work.\nUser: Then you can take our test. It takes forty minutes.\nCourse Adviser: Is the test free if I then book the course?\nUser: Yes, and the result is valid for one year.\nCourse Adviser: Good. Can I take it on Thursday evening?\nUser: Yes, at six. I will reserve a place for you.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-140",
@@ -1677,7 +1816,8 @@
     "expected_outcome_indicator": "Study options discussed",
     "example_conversation": "School Counsellor: I do not know what to study next year.\nUser: Tell me two subjects you enjoy.\nSchool Counsellor: Biology and maths, but I also like writing.\nUser: Have you thought about health sciences or data science?\nSchool Counsellor: I am worried about the maths level in data science.\nUser: There are introductory courses you can try first.\nSchool Counsellor: That would help me decide. Where can I find them?\nUser: I will send you a list this week and we can meet again.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-141",
@@ -1689,7 +1829,8 @@
     "expected_outcome_indicator": "More hours requested with plan",
     "example_conversation": "Manager: You wanted to talk about your hours.\nUser: Yes. I would like to move to a full-time contract.\nManager: Why now?\nUser: My sales grew twenty percent in the last three months.\nManager: That is true, you are doing well.\nUser: I could also take the afternoon deliveries.\nManager: Let us try it for one month and review the numbers.\nUser: Perfect. Could we write the new hours in an email?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-142",
@@ -1701,7 +1842,8 @@
     "expected_outcome_indicator": "House rules agreed",
     "example_conversation": "Flatmate: Should we talk about the house rules?\nUser: Yes, better now than later.\nFlatmate: I suggest cleaning the kitchen every day in turns.\nUser: Every day is a lot. What about every two days?\nFlatmate: OK, and no loud music after eleven.\nUser: I work late some days, so I will be quiet anyway.\nFlatmate: And guests? I prefer to know before.\nUser: Fair. I will send a message in the group.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-143",
@@ -1713,7 +1855,8 @@
     "expected_outcome_indicator": "Shifts negotiated",
     "example_conversation": "Front Desk Manager: The job has rotating shifts, including nights.\nUser: How many nights per week?\nFront Desk Manager: Two or three, and one weekend per month.\nUser: I can do nights, but I cannot work every Saturday.\nFront Desk Manager: We can arrange one Saturday free each month.\nUser: That works for me. Do you provide training?\nFront Desk Manager: Yes, one week with another receptionist.\nUser: Great. When would I start?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-144",
@@ -1725,7 +1868,8 @@
     "expected_outcome_indicator": "Proposal presented to neighbours",
     "example_conversation": "Neighbourhood Chair: Neighbour, you wanted to raise a point?\nUser: Yes. There are only two recycling bins in the whole street.\nNeighbourhood Chair: Do people use them?\nUser: They are full by Wednesday, so many bags end up on the ground.\nNeighbourhood Chair: What do you suggest?\nUser: We could ask the council for two more and a small sign.\nNeighbourhood Chair: Who writes the letter?\nUser: I can write it and collect signatures this week.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-145",
@@ -1737,7 +1881,8 @@
     "expected_outcome_indicator": "Interview practised with feedback",
     "example_conversation": "Mentor: How do you feel about the interview?\nUser: Nervous. I do not know how to answer about weaknesses.\nMentor: Choose a real one and explain what you are doing about it.\nUser: For example, I used to speak too fast in meetings.\nMentor: Good. How did you solve it?\nUser: I prepare key points and pause before answering.\nMentor: That is a strong answer. Practise it once more.\nUser: OK. Can we do a full simulation on Monday?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-146",
@@ -1749,7 +1894,8 @@
     "expected_outcome_indicator": "Fine appealed formally",
     "example_conversation": "Transport Officer: Good morning. What is the reason for your visit?\nUser: I received a fine, but my ticket was valid.\nTransport Officer: The inspector says you did not validate it.\nUser: The machine at that stop was not working.\nTransport Officer: Do you have any proof?\nUser: Yes, a photo of the machine and the time of my trip.\nTransport Officer: You can present a formal appeal within fifteen days.\nUser: I will do that. Could you give me the form and the reference?",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-147",
@@ -1761,7 +1907,8 @@
     "expected_outcome_indicator": "Laptop compared and chosen",
     "example_conversation": "Tech Seller: I am between these two models.\nUser: What do you use it for?\nTech Seller: Mainly writing, video calls and some design.\nUser: Then memory matters more than the processor for you.\nTech Seller: This one has more memory but worse battery.\nUser: True. It lasts about five hours, the other one eight.\nTech Seller: I travel a lot, so the battery is important.\nUser: Then take the second one. It is also seventy euros cheaper.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-148",
@@ -1773,7 +1920,8 @@
     "expected_outcome_indicator": "Noise issue solved politely",
     "example_conversation": "Neighbour: Hello, do you have a minute?\nUser: Sure, is something wrong?\nNeighbour: The music last night was very loud until two.\nUser: I am sorry, I did not realise. It was a birthday.\nNeighbour: I understand, but I get up at six for work.\nUser: It will not happen again on weekdays.\nNeighbour: Could you lower it after eleven at weekends too?\nUser: Yes. Send me a message if it bothers you again.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-149",
@@ -1785,7 +1933,8 @@
     "expected_outcome_indicator": "Volunteering details asked",
     "example_conversation": "Volunteer Coordinator: Hello! I would like to volunteer here.\nUser: Great. What days do you have available?\nVolunteer Coordinator: Tuesday and Thursday afternoons.\nUser: We need help sorting food and preparing boxes.\nVolunteer Coordinator: Is there any training?\nUser: One short session, and you always work with someone.\nVolunteer Coordinator: Do I need to bring anything?\nUser: Just comfortable clothes. We provide gloves.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   },
   {
     "id": "m-150",
@@ -1797,6 +1946,7 @@
     "expected_outcome_indicator": "Complaint handled politely",
     "example_conversation": "Restaurant Manager: Good evening. Is everything all right?\nUser: Not really. The soup arrived cold and very late.\nRestaurant Manager: I am very sorry. Can I bring you another one?\nUser: I have waited thirty minutes already, so I prefer not.\nRestaurant Manager: I understand. I will take the soup off the bill.\nUser: Thank you. The rest of the food was good, to be fair.\nRestaurant Manager: Would you like a dessert on the house?\nUser: That would be nice. Thanks for solving it quickly.",
     "cefr_level": "B1",
-    "base_duration_seconds": 120
+    "base_duration_seconds": 120,
+    "tier": null
   }
 ]

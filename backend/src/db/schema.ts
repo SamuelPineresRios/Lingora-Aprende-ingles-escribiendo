@@ -54,6 +54,8 @@ export const missions = pgTable('missions', {
   expected_outcome_indicator: text('expected_outcome_indicator'),
   example_conversation: text('example_conversation'),
   cefr_level: text('cefr_level').notNull().$type<CefrLevel>(),
+  /** Subnivel dentro del CEFR (1 corta, 2 media, 3 exigente). Nulo en niveles sin dividir. */
+  tier: integer('tier'),
   base_duration_seconds: integer('base_duration_seconds'),
 })
 

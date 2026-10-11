@@ -136,6 +136,8 @@ export async function requestRoleplayTurn(params: {
       correctedText: data.correctedText || null,
       /** Lo que le falta al paso actual; alimenta la ayuda, no la voz del bot. */
       missingStep: data.missing_step ?? null,
+      /** El personaje se quedó confundido (fuera de tema o error gramatical). */
+      confused: isOpening ? false : data.confused === true,
       progress: data.progress || 0,
       mission_completed: data.mission_completed,
     }
