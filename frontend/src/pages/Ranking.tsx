@@ -184,7 +184,7 @@ function RankingRow({ entry, metric, isMe }: { entry: RankingEntry; metric: Metr
       <RankingAvatar entry={entry} />
 
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 text-base text-white">
+        <p className="flex items-center gap-2 font-poppins text-base font-semibold tracking-tight text-white">
           {entry.position === 1 && <Crown className="h-4 w-4 text-amber shrink-0" />}
           <span className="truncate">{entry.name}</span>
           {isMe && (
@@ -239,7 +239,7 @@ function LeagueRow({ entry, isMe }: { entry: LeagueEntry; isMe: boolean }) {
       <RankingAvatar entry={entry} />
 
       <div className="min-w-0 flex-1">
-        <p className="flex items-center gap-2 text-base text-white">
+        <p className="flex items-center gap-2 font-poppins text-base font-semibold tracking-tight text-white">
           <span className="truncate">{entry.name}</span>
           {isMe && (
             <span className="shrink-0 text-[9px] uppercase tracking-widest text-cyan border border-cyan/40 rounded px-1.5 py-0.5">
