@@ -702,7 +702,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const assistantSpeaking = isThinking || isLastMessageTyping
 
   return (
-    <div className="flex h-[calc(100dvh-4rem)] w-full flex-col relative overflow-y-auto overscroll-contain font-body lg:h-dvh lg:overflow-hidden">
+    <div data-font-legacy className="flex h-[calc(100dvh-4rem)] w-full flex-col relative overflow-y-auto overscroll-contain lg:h-dvh lg:overflow-hidden">
       {/* Fondo de la misión, más presente que antes: ahora la conversación es la escena. */}
       <MissionBackdrop
         backdrop={resolveBackdrop(mission.backdrop, `${mission.title} ${mission.scene_context}`)}
@@ -719,7 +719,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           <header className="px-4 pt-5 shrink-0 space-y-2 sm:pt-4">
             <div className="flex items-center gap-3 py-1">
               <button onClick={() => navigate(-1)} className="text-slate-light hover:text-foreground transition-colors">←</button>
-              <div className="flex-1 text-center font-body text-cyan text-xs uppercase tracking-widest">{mission.title}</div>
+              <div className="flex-1 text-center text-cyan text-xs uppercase tracking-widest">{mission.title}</div>
               <div className="flex gap-2 items-center">
                 <XpBar progress={progress} className="hidden sm:flex" />
                 <button onClick={handleCompleteMission} className="text-xs text-emerald hover:text-emerald-400 border border-emerald/50 px-2 py-1 rounded bg-emerald/10 uppercase tracking-wide">
@@ -740,8 +740,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
             <div className="relative">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-[0.7rem] md:text-[0.75rem] text-slate-400 font-body uppercase tracking-widest">Progreso</span>
-                <span className={cn('text-[0.8rem] md:text-sm font-bold font-body', missionProgress >= 100 ? 'text-emerald animate-pulse' : 'text-cyan')}>
+                <span className="text-[0.7rem] md:text-[0.75rem] text-slate-400 uppercase tracking-widest">Progreso</span>
+                <span className={cn('text-[0.8rem] md:text-sm font-bold', missionProgress >= 100 ? 'text-emerald animate-pulse' : 'text-cyan')}>
                   {missionProgress}%
                 </span>
               </div>
@@ -879,7 +879,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 placeholder={timedOut ? 'Mission time ended. Finish up!' : 'Type your message...'}
                 disabled={state === 'submitting' || isThinking}
                 rows={1}
-                className="flex-1 bg-transparent resize-none p-2 text-foreground placeholder:text-slate/40 focus:outline-none font-body text-sm leading-relaxed disabled:opacity-50 max-h-32"
+                className="flex-1 bg-transparent resize-none p-2 text-foreground placeholder:text-slate/40 focus:outline-none text-sm leading-relaxed disabled:opacity-50 max-h-32"
               />
               <button
                 onClick={handleSendMessage}
@@ -889,7 +889,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 <span className="text-xs font-bold uppercase">Send</span>
               </button>
             </div>
-            <p className="text-center text-[10px] text-slate/30 mt-1.5 font-body pb-safe">Enter to send • Shift+Enter for new line</p>
+            <p className="text-center text-[10px] text-slate/30 mt-1.5 pb-safe">Enter to send • Shift+Enter for new line</p>
           </div>
         </div>
 

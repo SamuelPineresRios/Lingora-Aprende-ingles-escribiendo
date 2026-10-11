@@ -458,7 +458,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
   }
 
   return (
-    <div className="flex h-[calc(100dvh-4rem)] w-full flex-col bg-slate-950 font-body relative overflow-y-auto overscroll-contain lg:h-dvh lg:overflow-hidden">
+    <div data-font-legacy className="flex h-[calc(100dvh-4rem)] w-full flex-col bg-slate-950 relative overflow-y-auto overscroll-contain lg:h-dvh lg:overflow-hidden">
       {/* Fondo ambientado según la misión: la dirección de arte generada o,
           si la escena es antigua, el respaldo por palabras clave. El velo
           oscuro mantiene el texto legible sobre cualquier escena. */}
@@ -474,7 +474,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
           para que nada se corte ni tape la escena. */}
       <header className="relative z-10 shrink-0 px-4 py-3 sm:px-6 sm:py-4">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <h2 className="hidden min-w-0 flex-1 truncate font-body text-xl font-bold text-white sm:block sm:text-2xl">
+          <h2 className="hidden min-w-0 flex-1 truncate text-xl font-bold text-white sm:block sm:text-2xl">
             {introduction.scene_title}
           </h2>
           <span className={cn('shrink-0 rounded border px-2 py-1 text-xs font-bold', CEFR_BADGE[cefrLevel] ?? CEFR_BADGE.B1)}>

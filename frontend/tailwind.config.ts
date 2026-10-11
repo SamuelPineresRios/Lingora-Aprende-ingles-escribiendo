@@ -6,15 +6,19 @@ const config: Config = {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      // Los módulos usan Poppins (la de los nombres del ranking). `reading`
+      // se queda para el diálogo de escena/conversación y la zona
+      // `data-font-legacy` conserva DM Sans y JetBrains en las tres pantallas
+      // excluidas (escena, emparejamiento y conversación).
       fontFamily: { 
-        display: ["'Sora'","sans-serif"], 
+        display: ["'Poppins'","sans-serif"], 
         poppins: ["'Poppins'","sans-serif"], 
-        body: ["'DM Sans'","sans-serif"], 
+        body: ["'Poppins'","sans-serif"], 
         reading: ["'Literata'","Georgia","serif"], 
-        mono: ["'JetBrains Mono'","monospace"],
-        tech: ["'Orbitron'", "sans-serif"],
-        techBody: ["'Rajdhani'", "sans-serif"],
-        techMono: ["'Share Tech Mono'", "monospace"]
+        mono: ["'Poppins'","sans-serif"],
+        tech: ["'Poppins'", "sans-serif"],
+        techBody: ["'Poppins'", "sans-serif"],
+        techMono: ["'Poppins'", "monospace"]
       },
       colors: {
         background: "hsl(var(--background))", foreground: "hsl(var(--foreground))",

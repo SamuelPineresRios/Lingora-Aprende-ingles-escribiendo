@@ -289,7 +289,7 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-slate-950 font-body overflow-hidden flex flex-col">
+    <div data-font-legacy className="relative min-h-screen w-full bg-slate-950 overflow-hidden flex flex-col">
       {/* Mismo fondo que la escena, para no romper la continuidad */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(8,51,68,0.6)_0%,rgba(2,6,23,0.97)_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0e2a38_1px,transparent_1px),linear-gradient(to_bottom,#0e2a38_1px,transparent_1px)] bg-[size:56px_56px] opacity-20" />

@@ -136,7 +136,6 @@ function FeaturedReward({
         <p className="max-w-md text-xs text-slate-500">
           {reward.kind === 'frame' && 'Se aplica a tu avatar del perfil.'}
           {reward.kind === 'badge' && reward.description}
-          {reward.kind === 'coins' && 'Monedas para la tienda (próximamente).'}
         </p>
       </div>
     </section>

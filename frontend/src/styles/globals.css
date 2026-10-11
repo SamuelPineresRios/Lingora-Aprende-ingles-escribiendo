@@ -543,3 +543,21 @@ textarea {
   .text-\[10px\] { font-size: 12px; }
   .text-\[11px\] { font-size: 12.5px; }
 }
+
+/* ================================
+   ZONA DE TIPOGRAFÍA CLÁSICA
+   Escena narrativa, emparejamiento y conversación conservan su tipografía:
+   DM Sans en el texto, JetBrains en las etiquetas mono y Literata en el
+   diálogo. El resto de módulos usa Poppins.
+   ================================ */
+[data-font-legacy] {
+  font-family: 'DM Sans', 'Poppins', sans-serif;
+}
+
+[data-font-legacy] .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+[data-font-legacy] .font-reading {
+  font-family: 'Literata', Georgia, serif;
+}
