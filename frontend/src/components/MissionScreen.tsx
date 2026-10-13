@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { Languages } from 'lucide-react'
 import { resolveAvatar, type MissionBackdrop as MissionBackdropSpec, type MissionIntroduction } from '@vox/shared'
 import { useNavigate } from 'react-router-dom'
 import { Timer } from './Timer'
 import { TypewriterMessage } from './TypewriterMessage'
-import { InteractiveWords } from './InteractiveWords'
 import { VocabularyQuiz } from './VocabularyQuiz'
 import { XpBar } from './XpBar'
 import { useProgress } from '@/lib/hooks/useProgress'
@@ -21,6 +19,7 @@ import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { MissionTitleCard } from '@/components/MissionTitleCard'
 import { getCachedIntroduction, prewarmVocabulary, setCachedIntroduction } from '@/lib/mission-content'
 import { ConversationLog } from '@/components/ConversationLog'
+import { ConversationMessages, type ChatMessage } from '@/components/ConversationMessages'
 
 
 /**
@@ -90,18 +89,6 @@ interface MissionScreenProps {
 }
     type MissionState = 'introduction' | 'vocabulary' | 'preparation' | 'active' | 'submitting'
 
-interface Message {
-  role: 'user' | 'assistant' | 'system'
-  content: string
-  /** Traducción al español del mensaje del personaje (la da la IA en el turno). */
-  translation?: string
-  feedback?: string
-  rating?: number // 1-5
-  correctedText?: string // Corrected version if exists
-  /** El personaje se quedó confundido (fuera de tema o error gramatical). */
-  confused?: boolean
-}
-
 export function MissionScreen({ mission, studentId, groupId }: MissionScreenProps) {
   const { user } = useAuth()
   /** El avatar del alumno es el suyo en todas las misiones (chat y escena). */
@@ -109,13 +96,11 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const [state, setState] = useState<MissionState>('introduction')
 
   const [missionMode, setMissionMode] = useState<'free' | 'evaluation'>('free')
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [currentInput, setCurrentInput] = useState('')
   const [startTime, setStartTime] = useState<number | null>(null)
   const [isThinking, setIsThinking] = useState(false)
   const [isLastMessageTyping, setIsLastMessageTyping] = useState(false)
-  /** Traducción del mensaje del personaje a la vista (se reinicia por turno). */
-  const [showAiTranslation, setShowAiTranslation] = useState(false)
   /** El saludo inicial no llegó (proveedor de IA): se ofrece reintentar. */
   const [startError, setStartError] = useState<string | null>(null)
   /** Misión cuya cabecera de presentación ya se vio (se rearma al cambiar). */
@@ -174,7 +159,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
     const payload = {
         mode: 'chat',
         missionMode: mode,
-        messages: [] as Message[],
+        messages: [] as ChatMessage[],
         mission,
         userLevel: user?.cefr_level || mission.cefr_level
     }
@@ -198,7 +183,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             } else {
                 setMessages([data.message])
                 setIsLastMessageTyping(true)
-                setShowAiTranslation(false)
                 if (mode === 'evaluation' && data.estimated_time) {
                     setTimerDuration(data.estimated_time)
                     setTimerKey(prev => prev + 1)
@@ -223,7 +207,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
    * Un envío fallido no debe dejar al alumno bloqueado: se retira su mensaje
    * del chat y se devuelve al cuadro de texto para reintentar con un toque.
    */
-  const restoreFailedMessage = (failedMessage: Message, notice: string) => {
+  const restoreFailedMessage = (failedMessage: ChatMessage, notice: string) => {
     setMessages(current => [
       ...current.filter(message => message !== failedMessage),
       { role: 'system', content: notice },
@@ -244,7 +228,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const handleSendMessage = async () => {
     if (!currentInput.trim() || isThinking) return;
     
-    const userMsg: Message = { role: 'user', content: currentInput.trim() }
+    const userMsg: ChatMessage = { role: 'user', content: currentInput.trim() }
     const newMessages = [...messages, userMsg]
     setMessages(newMessages)
     setCurrentInput('')
@@ -334,7 +318,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             
             // Enable typewriter effect for the new assistant message
             setIsLastMessageTyping(true)
-            setShowAiTranslation(false)
 
             if (missionMode === 'evaluation' && data.estimated_time) {
                 setTimerDuration(data.estimated_time)
@@ -484,7 +467,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
     if (scrollRef.current) {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-  }, [messages])
+  }, [messages, isThinking, isLastMessageTyping])
   
   // Auto-resize textarea
   useEffect(() => {
@@ -792,42 +775,16 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
               />
             </div>
 
-            {/* Burbujas de la conversación */}
-            <div className="mission-screen-messages min-h-0 flex-1 space-y-3 overflow-y-auto py-2">
-              {lastAssistant && (
-                <div className="flex items-end gap-2.5">
-                  <img
-                    src={characterAvatarUrl(mission.character_name, characterGender)}
-                    alt=""
-                    className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)] lg:hidden"
-                  />
-                  <div className="max-w-[92%] rounded-2xl rounded-bl-sm border border-cyan/25 bg-cyan/10 px-4 py-3 backdrop-blur-sm lg:max-w-[78%]">
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-cyan">{mission.character_name}</p>
-                    <p className="mt-1 font-reading text-lg leading-relaxed text-cyan-50 sm:text-xl">
-                      {isLastMessageTyping ? (
-                        <TypewriterMessage text={lastAssistant.content} isActive speed={30} onComplete={() => setIsLastMessageTyping(false)} />
-                      ) : (
-                        <InteractiveWords text={lastAssistant.content} context={lastAssistant.content} />
-                      )}
-                    </p>
-                    {lastAssistant.translation && (
-                      <>
-                        <button
-                          onClick={() => setShowAiTranslation(value => !value)}
-                          className="mt-2 inline-flex items-center gap-1.5 rounded-md border border-cyan/25 px-2 py-1 text-[10px] font-mono uppercase tracking-widest text-cyan/70 transition-colors hover:border-cyan/50 hover:text-cyan"
-                        >
-                          <Languages className="h-3 w-3" /> {showAiTranslation ? 'Ocultar' : 'Traducción'}
-                        </button>
-                        {showAiTranslation && (
-                          <p className="mt-2 border-t border-cyan/15 pt-2 font-reading text-sm italic leading-relaxed text-cyan-100/80">
-                            {lastAssistant.translation}
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </div>
-              )}
+            {/* Burbujas de la conversación: historial completo, como un chat */}
+            <div ref={scrollRef} className="mission-screen-messages min-h-0 flex-1 space-y-3 overflow-y-auto py-2">
+              <ConversationMessages
+                messages={messages}
+                characterName={mission.character_name}
+                characterGender={characterGender}
+                studentAvatar={studentAvatar}
+                isLastMessageTyping={isLastMessageTyping}
+                onTypingComplete={() => setIsLastMessageTyping(false)}
+              />
 
               {isThinking && (
                 <div className="flex items-end gap-2.5">
@@ -838,32 +795,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                   />
                   <div className="rounded-2xl rounded-bl-sm border border-cyan/20 bg-cyan/5 px-4 py-2.5 backdrop-blur-sm">
                     <span className="text-xs text-cyan/80 animate-pulse">{mission.character_name} escribiendo…</span>
-                  </div>
-                </div>
-              )}
-
-              {lastUser && (
-                <div className="flex flex-row-reverse items-end gap-2.5">
-                  {studentAvatar && (
-                    <img src={studentAvatar} alt="" className="h-10 w-10 shrink-0 drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)] lg:hidden" />
-                  )}
-                  <div className="flex max-w-[92%] flex-col items-end gap-2 lg:max-w-[78%]">
-                    <div className="rounded-2xl rounded-br-sm border border-emerald/25 bg-emerald/10 px-4 py-3 backdrop-blur-sm">
-                      <p className="text-right text-[10px] font-mono uppercase tracking-widest text-emerald">
-                        TÚ
-                        {lastUser.rating && <span className="ml-2 text-amber-400">{'★'.repeat(lastUser.rating)}</span>}
-                      </p>
-                      <p className="mt-1 text-base leading-relaxed text-emerald-50 sm:text-lg">{lastUser.content}</p>
-                    </div>
-
-                    {lastUser.feedback && (
-                      <div className="flex flex-col items-end gap-1 animate-in fade-in slide-in-from-top-1">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber">AI Coach</span>
-                        <p className="max-w-xl rounded-lg border border-amber/15 bg-amber/10 px-3 py-2 text-left text-xs text-amber/90 backdrop-blur-sm">
-                          {lastUser.feedback}
-                        </p>
-                      </div>
-                    )}
                   </div>
                 </div>
               )}
