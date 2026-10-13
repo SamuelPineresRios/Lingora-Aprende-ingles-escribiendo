@@ -33,6 +33,7 @@ import { cn } from '@/lib/utils'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { FrameRing } from '@/components/FrameRing'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { useThemeAccent } from '@/lib/hooks/useStoreView'
 import { useStoreView } from '@/lib/hooks/useStoreView'
 import { useSeasonProgress } from '@/lib/hooks/useSeasonProgress'
 import { activeFrame } from '@/lib/season'
@@ -177,10 +178,12 @@ function Preview({
   onBase: () => void
   onSave: () => void
 }) {
+  const { user } = useAuth()
+  const accent = useThemeAccent(user?.id)
   const size = compact ? 104 : 360
   const image = <img src={studentAvatarUrl(avatar)} alt="Tu personaje" className="h-full w-full" />
   const marco = frame ? (
-    <FrameRing frameId={frame.id} colors={frame.colors} size={size}>
+    <FrameRing frameId={frame.id} colors={frame.colors} accent={accent} size={size}>
       {image}
     </FrameRing>
   ) : (

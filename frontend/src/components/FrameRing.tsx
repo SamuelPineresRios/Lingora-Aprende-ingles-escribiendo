@@ -246,6 +246,17 @@ const DESIGNS: Record<string, Design> = {
 /** Diseño para ids desconocidos: aro pulido con los colores que lleguen. */
 const FALLBACK: Design = { band: metal, spin: 6 }
 
+/** Aclara un color hex hacia el blanco (0-1); entrada inválida, se devuelve tal cual. */
+function lighten(hex: string, amount = 0.45): string {
+  const raw = hex.replace('#', '')
+  const full = raw.length === 3 ? raw.split('').map(c => c + c).join('') : raw
+  if (full.length !== 6) return hex
+  const channels = [0, 2, 4].map(index => parseInt(full.slice(index, index + 2), 16))
+  return `#${channels
+    .map(channel => Math.round(channel + (255 - channel) * amount).toString(16).padStart(2, '0'))
+    .join('')}`
+}
+
 /** Punto que brilla girando alrededor del marco. */
 function Satelite({ duration, delay = '0s', className }: { duration: number; delay?: string; className: string }) {
   return (
@@ -258,18 +269,22 @@ function Satelite({ duration, delay = '0s', className }: { duration: number; del
 export function FrameRing({
   frameId,
   colors,
+  accent,
   size = 56,
   className,
   children,
 }: {
   frameId: string
   colors: Colors
+  /** Acento del tema equipado: tiñe la órbita del marco con él. */
+  accent?: string | null
   size?: number
   className?: string
   children?: ReactNode
 }) {
   const design = DESIGNS[frameId] ?? FALLBACK
-  const [a, b] = colors
+  const ringColors: Colors = accent ? [accent, lighten(accent)] : colors
+  const [a, b] = ringColors
   const baseBand = Math.max(3, Math.round(size * 0.05))
   const band = design.tight ? Math.max(2, Math.round(baseBand * 0.62)) : baseBand
   const glow = { '--glow-a': `${a}cc`, '--glow-b': `${b}59` } as CSSProperties
@@ -284,7 +299,7 @@ export function FrameRing({
         <span
           aria-hidden
           className="frame-glow-drop absolute inset-0"
-          style={{ ...glow, clipPath: clip, background: design.band(colors) }}
+          style={{ ...glow, clipPath: clip, background: design.band(ringColors) }}
         />
         <div className="absolute overflow-hidden bg-slate-950" style={{ inset: '6.5%', clipPath: clip }}>
           {content}
@@ -307,7 +322,7 @@ export function FrameRing({
       <span
         aria-hidden
         className="frame-spin absolute inset-0 rounded-full"
-        style={{ ...maskStyle, background: design.band(colors), ...spinStyle(design.spin ?? 6) }}
+        style={{ ...maskStyle, background: design.band(ringColors), ...spinStyle(design.spin ?? 6) }}
       />
 
       {design.overlay && (
@@ -316,7 +331,7 @@ export function FrameRing({
           className="frame-spin absolute inset-0 rounded-full"
           style={{
             ...maskStyle,
-            background: design.overlay.background(colors),
+            background: design.overlay.background(ringColors),
             opacity: design.overlay.opacity,
             ...spinStyle(design.overlay.spin ?? 6),
           }}

@@ -184,9 +184,8 @@ export default function ProfilePage() {
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
               
               <div className="relative mb-4">
-                 {/* Con marco (tienda o pase), el anillo animado lo pinta FrameRing; sin él, el punteado */}
-                 {frameId && frameColors ? (
-                   <FrameRing frameId={frameId} colors={frameColors} size={288}>
+                  {frameId && frameColors ? (
+                   <FrameRing frameId={frameId} colors={frameColors} accent={accent} size={288}>
                       <img src={avatar} alt="" className="h-full w-full" />
                       <Link
                         to="/avatar"

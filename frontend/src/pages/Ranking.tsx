@@ -15,6 +15,7 @@ import { MedalBadge } from '@/components/MedalBadge'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { useThemeAccent } from '@/lib/hooks/useStoreView'
 
 type Mode = 'league' | 'global'
 type RankingMetric = 'xp' | 'missions' | 'time'
@@ -100,6 +101,8 @@ const POSITION_STYLE: Record<number, string> = {
 
 /** Avatar del ranking con su marco (tienda o pase), como en el perfil. */
 function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } }) {
+  const { user } = useAuth()
+  const accent = useThemeAccent(user?.id)
   const image = (
     <img
       src={studentAvatarUrl(resolveAvatar({ id: entry.student_id, avatar: entry.avatar }))}
@@ -110,7 +113,7 @@ function RankingAvatar({ entry }: { entry: Cosmetics & { student_id: string } })
 
   if (entry.frame) {
     return (
-      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} size={92}>
+      <FrameRing frameId={entry.frame.id} colors={entry.frame.colors} accent={accent} size={92}>
         <div className="flex h-full w-full items-center justify-center p-1">{image}</div>
       </FrameRing>
     )

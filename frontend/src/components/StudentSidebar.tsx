@@ -206,7 +206,7 @@ export function StudentSidebar() {
             el menú y la sesión. */}
         <div className="mt-auto hidden justify-center pb-0.5 lg:flex">
           {frame ? (
-            <FrameRing frameId={frame.id} colors={frame.colors as [string, string]} size={160}>
+            <FrameRing frameId={frame.id} colors={frame.colors as [string, string]} accent={accent} size={160}>
               <img src={avatar} alt="Tu avatar" className="h-full w-full" />
             </FrameRing>
           ) : (
