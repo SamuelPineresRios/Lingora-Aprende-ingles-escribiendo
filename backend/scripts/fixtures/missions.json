@@ -2,8 +2,8 @@
   {
     "id": "m-001",
     "title": "Pedir direcciones",
-    "description": "Calle del centro con turistas: pregunta cómo llegar al Museo de Historia.",
-    "objective": "Pregunta a un transeúnte cómo llegar al Museo de Historia. Menciona que vas caminando.",
+    "description": "Vas caminando por una calle del centro y no encuentras el Museo de Historia. Detén a un transeúnte, pregunta cómo llegar y si está lejos.",
+    "objective": "Detén a un transeúnte y pregunta cómo llegar al Museo de Historia; aclara que vas caminando y pregunta cuánto se tarda más o menos.",
     "scene_context": "Estás en una calle del centro de la ciudad. Ves a una persona local que parece poder ayudarte.",
     "character_name": "Street Guide",
     "expected_outcome_indicator": "Directions received clearly",
@@ -15,8 +15,8 @@
   {
     "id": "m-002",
     "title": "Pedir ayuda en una tienda",
-    "description": "Una farmacia grande: pide ayuda para encontrar la vitamina C de 1000 mg.",
-    "objective": "Pide ayuda para encontrar vitamina C en presentación de 1000 mg. Pregunta también si tienen una marca específica.",
+    "description": "No encuentras la vitamina C de 1000 mg en una farmacia grande y un empleado se acerca a ayudarte. Pídele ayuda con la marca y la presentación.",
+    "objective": "Explica al empleado que no encuentras la vitamina C de 1000 mg y pídele ayuda, y pregunta también si tienen la marca que buscas.",
     "scene_context": "Estás en una farmacia grande. No encuentras lo que buscas y un empleado se acerca para ayudarte.",
     "character_name": "Street Guide",
     "expected_outcome_indicator": "Product found or alternative offered",
@@ -28,7 +28,7 @@
   {
     "id": "m-003",
     "title": "Saludar y presentarse",
-    "description": "Preséntate, pregunta y busca un conocido en común en plena sala.",
+    "description": "Estás en una sala con gente nueva y quieres presentarte con naturalidad. Da tu nombre y origen, di a qué te dedicas y busca un conocido en común.",
     "objective": "Preséntate con tu nombre y de dónde eres, di a qué te dedicas y una cosa que te guste; después haz dos preguntas para conocer al otro e intenta descubrir si tenéis un conocido en común.",
     "scene_context": "Estás en un evento con mucha gente. Todos llevan una etiqueta con su nombre y tú no conoces a nadie.",
     "character_name": "Street Guide",
@@ -41,8 +41,8 @@
   {
     "id": "m-004",
     "title": "Conocer a alguien en una fiesta",
-    "description": "Preséntate, pregunta por su vida y averigua cómo conoce a los anfitriones.",
-    "objective": "Preséntate con tu nombre y de dónde eres, pregunta a qué se dedica y cómo conoció a los anfitriones.",
+    "description": "Una fiesta con gente que no conoces y quieres romper el hielo. Preséntate, pregunta a qué se dedica tu interlocutor y cómo conoce a los anfitriones.",
+    "objective": "Preséntate con tu nombre y de dónde eres, pregunta a tu interlocutor a qué se dedica y averigua cómo conoce a los anfitriones de la fiesta.",
     "scene_context": "Estás en una fiesta de un amigo en común. No conoces a casi nadie y buscas con quién hablar.",
     "character_name": "Party Guest",
     "expected_outcome_indicator": "Introduction made and connection to host established",
@@ -54,8 +54,8 @@
   {
     "id": "m-005",
     "title": "Preguntar la hora a un desconocido",
-    "description": "En la parada del autobús: pregunta la hora a un desconocido y cuándo llega el bus.",
-    "objective": "Pregunta la hora a un desconocido. Da las gracias y pregunta cuánto tarda el próximo autobús.",
+    "description": "Esperas el autobús en una parada y no llevas reloj. Pregunta la hora a un desconocido, dale las gracias y averigua cuánto tarda el próximo bus.",
+    "objective": "Pregunta la hora a la persona que espera contigo en la parada, dale las gracias y aprovecha para preguntar cuánto tarda el próximo autobús.",
     "scene_context": "Estás en una parada de autobús esperando. Hablas con una persona desconocida que está también esperando.",
     "character_name": "Passenger",
     "expected_outcome_indicator": "Student asks for the time and thanks the person",
@@ -67,8 +67,8 @@
   {
     "id": "m-006",
     "title": "Reservar una mesa en un restaurante",
-    "description": "Reserva la cena del viernes sin dejarte detalle: mesa, hora y terraza.",
-    "objective": "Reserva una mesa para cuatro el viernes a las nueve, di tu nombre, pregunta si hay terraza y confirma la reserva.",
+    "description": "Quieres reservar la cena del viernes en un restaurante con encanto. Llama, reserva mesa para cuatro a las nueve y pregunta si hay terraza.",
+    "objective": "Reserva una mesa para cuatro el viernes a las nueve a tu nombre, pregunta si hay terraza y confirma la reserva antes de colgar.",
     "scene_context": "Llamas a un restaurante italiano con las manos ocupadas: tienes que apuntar la reserva.",
     "character_name": "Restaurant Host",
     "expected_outcome_indicator": "Student books a table for 4 people on Saturday at 7pm under the name García",
@@ -80,8 +80,8 @@
   {
     "id": "m-007",
     "title": "Pedir ayuda sobre un dolor en la farmacia",
-    "description": "Explica tu dolor con detalle y entiende bien la dosis antes de irte.",
-    "objective": "Explica que te duele la espalda desde ayer, pide algo para el dolor, pregunta cada cuántas horas se toma y si da sueño.",
+    "description": "Te duele la espalda desde ayer y necesitas algo en la farmacia. Explica el dolor, pregunta cada cuántas horas tomarlo y si da sueño.",
+    "objective": "Explica en la farmacia que te duele la espalda desde ayer, pide algo para el dolor y pregunta cada cuántas horas tomarlo y si da sueño.",
     "scene_context": "Estás en la farmacia con dolor de espalda. Hay cola y el farmacéutico te atiende rápido.",
     "character_name": "Pharmacist",
     "expected_outcome_indicator": "Student describes headache, asks for medicine recommendation and price",
@@ -93,8 +93,8 @@
   {
     "id": "m-008",
     "title": "Comprar un billete de autobús",
-    "description": "Ida y vuelta de fin de semana: hora, andén y precio sin dudar.",
-    "objective": "Compra un billete de ida y vuelta a Manchester para el sábado por la mañana, pregunta la hora de salida y desde qué andén sale.",
+    "description": "Viajas a Manchester el sábado por la mañana y no quieres perder el bus. Compra el billete de ida y vuelta, pregunta la hora y el andén.",
+    "objective": "Compra un billete de ida y vuelta a Manchester para el sábado por la mañana, pregunta la hora de salida y desde qué andén sale el autobús.",
     "scene_context": "Estás en la taquilla de la estación de autobuses con la mochila al hombro.",
     "character_name": "Bus Station Clerk",
     "expected_outcome_indicator": "Purchases a bus ticket to Barcelona on Monday at 2 PM and confirms the price.",
@@ -106,8 +106,8 @@
   {
     "id": "m-009",
     "title": "Pedir información sobre una casa en alquiler",
-    "description": "Llama por el piso y despeja todas tus dudas antes de visitarlo.",
-    "objective": "Pregunta el precio del alquiler, si incluye los gastos, cuántas habitaciones tiene y cuándo puedes visitarla.",
+    "description": "Has visto el anuncio de un piso en alquiler y llamas para informarte. Pregunta el precio, los gastos incluidos, las habitaciones y cuándo visitarlo.",
+    "objective": "Pregunta por teléfono el precio del alquiler y si incluye los gastos, cuántas habitaciones tiene el piso y cuándo puedes visitarlo.",
     "scene_context": "Ves un anuncio de piso en el tablón del barrio y llamas al número.",
     "character_name": "Landlord",
     "expected_outcome_indicator": "Inquires about the apartment's bedrooms, bathroom, and monthly rent price.",
@@ -119,8 +119,8 @@
   {
     "id": "m-010",
     "title": "Ordenar comida en una cafetería",
-    "description": "Una cafetería por la mañana: pide café con leche y cruasán, y pregunta el precio.",
-    "objective": "Ordena un café con leche y un cruasán en la cafetería. Pregunta cuánto es.",
+    "description": "Entras en una cafetería pequeña por la mañana con hambre. Pide un café con leche y un cruasán en la barra y pregunta cuánto es.",
+    "objective": "Pide al camarero un café con leche y un cruasán, y pregunta cuánto cuesta en total antes de pagar en la barra.",
     "scene_context": "Estás en una pequeña cafetería por la mañana. Hablas con el camarero detrás del mostrador.",
     "character_name": "Waiter",
     "expected_outcome_indicator": "Student orders breakfast items and asks for the price",
@@ -132,8 +132,8 @@
   {
     "id": "m-011",
     "title": "Pedir la cuenta en un restaurante",
-    "description": "Cierra la cena: cuenta, tarjeta, postre para llevar y propina.",
-    "objective": "Pide la cuenta, pregunta si se puede pagar con tarjeta, pide un postre para llevar y deja propina.",
+    "description": "La cena ha terminado y quieres cerrarla sin prisas. Pide la cuenta, pregunta si puedes pagar con tarjeta, pide un postre para llevar y deja propina.",
+    "objective": "Pide la cuenta al terminar la cena, pregunta si puedes pagar con tarjeta, pide un postre para llevar y no te olvides de dejar propina.",
     "scene_context": "Termináis de cenar y el camarero retira los platos con prisa: se acerca el cierre.",
     "character_name": "Waitress",
     "expected_outcome_indicator": "Student asks for the bill and confirms the price.",
@@ -145,7 +145,7 @@
   {
     "id": "m-012",
     "title": "Comprar un libro en una librería",
-    "description": "Encuentra el regalo ajustándote al presupuesto y resuelve si no lo tienen.",
+    "description": "Buscas un libro de historia para regalar en una librería de barrio. Pregunta el precio, valora la edición de bolsillo si pasa de 25 € y resuelve la reserva.",
     "objective": "Pide un libro de historia para regalo, pregunta el precio, si pasa de 25 € pregunta por la edición de bolsillo, pide reservarlo si no lo tienen y pregunta cuándo llega.",
     "scene_context": "Entras en una librería grande buscando un regalo con un presupuesto ajustado.",
     "character_name": "Bookshop Assistant",
@@ -158,7 +158,7 @@
   {
     "id": "m-013",
     "title": "Preguntar por el horario de cierre de una piscina",
-    "description": "Saca toda la información de la piscina: horarios, precios y normas.",
+    "description": "Quieres empezar a nadar y llamas a la piscina municipal. Saca toda la información: cierre, entrada diaria, clases, gorro y reserva de carril.",
     "objective": "Pregunta el horario de cierre entre semana, cuánto cuesta la entrada de un día, si hay clases de natación, si hace falta gorro y si se puede reservar carril.",
     "scene_context": "En la taquilla de la piscina municipal te atiende un socorrista mientras otros nadadores entran.",
     "character_name": "Receptionist",
@@ -171,7 +171,7 @@
   {
     "id": "m-014",
     "title": "Pedir información sobre una clase de yoga",
-    "description": "Empieza desde cero: prueba, precio y material para tus primeras clases.",
+    "description": "Nunca has hecho yoga y quieres probar una clase. Pregunta horarios y precio, avisa de que eres principiante y aclara prueba, esterilla y pago.",
     "objective": "Pregunta los horarios y el precio al mes, explica que eres principiante, pregunta si hay clase de prueba, si necesitas esterilla y cómo se paga.",
     "scene_context": "En una academia de yoga con velas y música suave, la profesora apunta nombres en una libreta.",
     "character_name": "Yoga Instructor",
@@ -184,8 +184,8 @@
   {
     "id": "m-015",
     "title": "Comprar un billete de cine",
-    "description": "Taquilla del cine: compra una entrada para la sesión de las ocho.",
-    "objective": "Compra una entrada de cine para la sesión de las ocho. Pregunta si quedan asientos.",
+    "description": "Es noche de cine y hay cola en la taquilla. Compra una entrada para la sesión de las ocho y pregunta si quedan asientos libres cerca.",
+    "objective": "Compra en taquilla una entrada de cine para la sesión de las ocho y pregunta si quedan asientos libres cerca de la pantalla.",
     "scene_context": "Estás en la taquilla de un cine. Hablas con el vendedor de entradas.",
     "character_name": "Ticket Seller",
     "expected_outcome_indicator": "Purchases a cinema ticket with specific time.",
@@ -197,8 +197,8 @@
   {
     "id": "m-016",
     "title": "Reservar un vuelo",
-    "description": "Llamada internacional: cierra un vuelo con asiento, pago y equipaje incluidos.",
-    "objective": "Reserva un vuelo a Madrid para el 15 de marzo, viaja solo con asiento de ventana, confirma el pago y pregunta por el equipaje.",
+    "description": "Llamada internacional para cerrar un vuelo a Madrid el 15 de marzo. Quieres viajar solo, con asiento de ventana y el equipaje claro.",
+    "objective": "Reserva un vuelo a Madrid para el 15 de marzo: confirma que viajas solo, elige un asiento de ventana, paga con tarjeta y pregunta qué equipaje va incluido.",
     "scene_context": "Estás llamando a una aerolínea internacional con la tarjeta en la mano. Tienes que completar 4 pasos: 1. Confirmar destino y fecha (Madrid, 15 de marzo). 2. Confirmar pasajero (solo). 3. Elegir asiento (ventana). 4. Pagar y preguntar por el equipaje.",
     "character_name": "Airline Agent",
     "expected_outcome_indicator": "Flight booked for March 15th",
@@ -210,8 +210,8 @@
   {
     "id": "m-017",
     "title": "Llamar al médico",
-    "description": "No te sientes bien: consigue cita y explica tus síntomas por teléfono.",
-    "objective": "Llama al consultorio médico, pide una cita para mañana y explica que tienes fiebre y dolor de garganta.",
+    "description": "No te encuentras bien y necesitas cita cuanto antes. Al otro lado del teléfono, la recepcionista del Dr. Rivera atiende con calma.",
+    "objective": "Llama al consultorio del Dr. Rivera, pide una cita para mañana y explica que tienes fiebre y dolor de garganta desde anoche.",
     "scene_context": "Llamas al consultorio del Dr. Rivera; la recepcionista contesta con amabilidad. Tienes que completar 3 pasos: 1. Pedir cita para mañana. 2. Describir los síntomas (fiebre y dolor de garganta). 3. Confirmar la hora.",
     "character_name": "Receptionist",
     "expected_outcome_indicator": "Doctor appointment confirmed for tomorrow",
@@ -223,8 +223,8 @@
   {
     "id": "m-018",
     "title": "Ordenar en un restaurante",
-    "description": "Carta con trampa: pide el plato del día esquivando tu alergia a los frutos secos.",
-    "objective": "Ordena el plato del día, pregunta si contiene nueces y, si las tiene, pide una alternativa.",
+    "description": "Comida en un restaurante casual, pero tienes una alergia grave a los frutos secos. Pide el plato del día preguntando antes por las nueces.",
+    "objective": "Ordena el plato del día, pregunta al camarero si contiene nueces por tu alergia y, si las lleva, pide una alternativa sin salsa.",
     "scene_context": "Estás en un restaurante casual; el mesero se acerca con la carta y te pregunta qué vas a ordenar. Tienes que completar 4 pasos: 1. Pedir el plato del día. 2. Preguntar por las nueces (eres alérgico). 3. Pedir una alternativa si las lleva. 4. Añadir la bebida.",
     "character_name": "Waiter",
     "expected_outcome_indicator": "Order placed with allergy confirmed",
@@ -236,8 +236,8 @@
   {
     "id": "m-019",
     "title": "Pedir información de un curso",
-    "description": "Tres preguntas clave en una llamada: precio, fecha de inicio y descuento.",
-    "objective": "Pregunta cuánto cuesta el curso de inglés avanzado, cuándo empieza el próximo grupo y si hay descuento por pagar completo.",
+    "description": "Quieres matricularte en un curso de inglés avanzado y llamas al instituto. Compara precio, fecha de inicio y descuentos antes de decidir.",
+    "objective": "Pregunta cuánto cuesta el curso de inglés avanzado, cuándo empieza el próximo grupo y si hay descuento por pagar completo; pide que te reserven plaza.",
     "scene_context": "Llamas a un instituto de idiomas; la secretaria contesta con un saludo y ofrece su ayuda. Tienes que completar 4 pasos: 1. Preguntar el precio. 2. Preguntar la fecha del próximo grupo. 3. Preguntar por el descuento. 4. Pedir que te reserven plaza.",
     "character_name": "Secretary",
     "expected_outcome_indicator": "Price, start date, and discount info obtained",
@@ -249,8 +249,8 @@
   {
     "id": "m-020",
     "title": "Hablar de planes de fin de semana",
-    "description": "Un plan sencillo con un amigo en la cafetería: invítale al cine del sábado.",
-    "objective": "Invita a tu amigo a ir al cine el sábado y propón ver la nueva película de acción a las 7 PM.",
+    "description": "Estás tomando un café con un amigo y quieres proponerle un plan. Invítale al cine del sábado con una película y una hora concretas.",
+    "objective": "Invita a tu amigo a ir al cine el sábado, propón ver la nueva película de acción a las 7 PM y confirma que le apetece el plan.",
     "scene_context": "Estás en una cafetería tranquila con tu amigo, que acaba de preguntarte qué harás el fin de semana. Tienes que completar 2 pasos: 1. Proponer el plan (cine, sábado). 2. Acordar la película y la hora (acción, 7 PM).",
     "character_name": "Close Friend",
     "expected_outcome_indicator": "Movie plan proposed for Saturday evening",
@@ -262,8 +262,8 @@
   {
     "id": "m-021",
     "title": "Cambiar un artículo en una tienda",
-    "description": "La camiseta no te queda: explica la compra y consigue la talla correcta.",
-    "objective": "Explica que la camiseta no te queda bien y pide cambiarla por una talla L.",
+    "description": "La camiseta que compraste la semana pasada no te queda. Vuelve a la tienda con el recibo y consigue la talla correcta.",
+    "objective": "Explica en la tienda que la camiseta talla M no te queda bien, da los datos de la compra con el recibo y pide cambiarla por una talla L.",
     "scene_context": "Estás en la tienda de ropa donde compraste la camiseta, con el recibo en la mano. Tienes que completar 3 pasos: 1. Explicar el problema (talla M, no te queda). 2. Dar los datos de la compra (€19.99, hace una semana). 3. Pedir la talla L.",
     "character_name": "Shop Assistant",
     "expected_outcome_indicator": "Successfully explain the problem and request an exchange for a different size.",
@@ -275,8 +275,8 @@
   {
     "id": "m-022",
     "title": "Preguntar sobre un servicio en una peluquería",
-    "description": "Antes de decidirte: precio, duración y hueco del sábado, todo por teléfono.",
-    "objective": "Pregunta el precio del corte, cuánto dura el servicio y si hay hueco el sábado a las 10:00.",
+    "description": "Quieres cortarte el pelo y llamas a la peluquería. Pregunta precio, duración y si hay hueco el sábado por la mañana.",
+    "objective": "Pregunta al peluquero cuánto cuesta el corte y cuánto dura, y pide cita para el sábado a las diez de la mañana si hay hueco.",
     "scene_context": "Llamas al negocio del peluquero, que atiende entre tijeras. Tienes que completar 4 pasos: 1. Preguntar el precio (unos €25-30). 2. Preguntar la duración (unos 30 minutos). 3. Pedir hueco el sábado a las 10:00. 4. Confirmar la cita.",
     "character_name": "Hairdresser",
     "expected_outcome_indicator": "Obtain pricing, duration, and availability information for a haircut appointment.",
@@ -288,8 +288,8 @@
   {
     "id": "m-023",
     "title": "Comprar entradas para un evento",
-    "description": "Taquilla del concierto: dos entradas, fila y pago, sin quedarte sin sitio.",
-    "objective": "Compra dos entradas para el concierto de The Singers el 15 de marzo, di tu preferencia de fila y paga.",
+    "description": "Hay concierto el 15 de marzo y no quieres quedarte sin entradas. Compra dos, compara filas y paga en taquilla.",
+    "objective": "Compra dos entradas para el concierto de The Singers el 15 de marzo: confirma el precio por entrada, elige la fila y paga.",
     "scene_context": "Hablas con el vendedor en la taquilla del teatro. Tienes que completar 4 pasos: 1. Pedir dos entradas para el 15 de marzo. 2. Decir la fila preferida (primera o segunda). 3. Confirmar el precio (€35 cada una). 4. Pagar.",
     "character_name": "Ticket Seller",
     "expected_outcome_indicator": "Purchase concert tickets with specific date, quantity, and seating preference.",
@@ -301,8 +301,8 @@
   {
     "id": "m-024",
     "title": "Cambiar la hora de una cita médica",
-    "description": "Se te cruza la cita: muévela de hora sin perderla.",
-    "objective": "Explica que no puedes ir a la cita de mañana a las 14:00 y pide cambiarla a las 16:00 o a otro día.",
+    "description": "Una cita médica se te cruza con el trabajo y necesitas moverla. Propón otra hora o cambia de día sin perderla.",
+    "objective": "Explica en la clínica que no puedes ir a la cita de mañana a las 14:00 y pide cambiarla a las 16:00 o a otro día de la semana.",
     "scene_context": "Llamas a la clínica del doctor para cambiar tu cita. Tienes que completar 4 pasos: 1. Identificarte. 2. Explicar el problema con la cita (mañana, 14:00). 3. Proponer alternativa (16:00 u otro día). 4. Confirmar la nueva hora.",
     "character_name": "Receptionist",
     "expected_outcome_indicator": "Reschedule a doctor appointment to a different time.",
@@ -314,8 +314,8 @@
   {
     "id": "m-025",
     "title": "Comprar un regalo de cumpleaños",
-    "description": "Regalo con presupuesto: suéter azul, descuento y envoltorio antes de pagar.",
-    "objective": "Pregunta por un suéter azul y su precio, pide descuento o envoltorio de regalo y confirma que te lo llevas.",
+    "description": "Buscas un regalo de cumpleaños en una tienda de ropa. Encuentra el suéter azul, ajusta el presupuesto y pide envoltorio.",
+    "objective": "Pregunta por un suéter azul y su precio en la tienda, pide el descuento o el envoltorio de regalo y confirma que te lo llevas.",
     "scene_context": "Estás en una tienda de ropa; un vendedor te ayuda a buscar un regalo. Tienes que completar 4 pasos: 1. Pedir un suéter azul. 2. Preguntar el precio (entre 30 y 50 euros). 3. Preguntar por el descuento o el envoltorio. 4. Confirmar la compra.",
     "character_name": "Shop Assistant",
     "expected_outcome_indicator": "Successful purchase of a gift with price confirmation and delivery/wrapping details.",
@@ -327,8 +327,8 @@
   {
     "id": "m-026",
     "title": "Cambiar dinero en una oficina de cambio",
-    "description": "Cambio de divisas: tipo, comisión y euros exactos antes de entregar las libras.",
-    "objective": "Di que quieres cambiar 200 libras, pregunta el tipo de cambio, cuántos euros recibirás y la comisión.",
+    "description": "Necesitas euros para tu viaje y llevas 200 libras encima. Compara el tipo de cambio y la comisión antes de aceptar.",
+    "objective": "Pide cambiar 200 libras y pregunta el tipo de cambio, la comisión y cuántos euros vas a recibir antes de entregar el dinero.",
     "scene_context": "Estás en una oficina de cambio en el centro; un empleado te atiende tras el cristal. Tienes que completar 4 pasos: 1. Pedir el cambio de 200 libras. 2. Preguntar el tipo de cambio. 3. Preguntar la comisión. 4. Confirmar cuántos euros recibirás.",
     "character_name": "Currency Exchanger",
     "expected_outcome_indicator": "Exchange transaction completed with rate and fee details confirmed.",
@@ -340,8 +340,8 @@
   {
     "id": "m-027",
     "title": "Pedir un día libre en el trabajo",
-    "description": "En el despacho del jefe: consigue el miércoles libre sin dramas.",
-    "objective": "Explica que necesitas libre el miércoles 15 por una cita médica, pregunta si es posible y ofrece recuperar el trabajo.",
+    "description": "Tienes una cita médica el miércoles por la mañana y necesitas el día libre. Habla con tu jefe y ofrece recuperar las horas.",
+    "objective": "Explica a tu jefe que necesitas libre el miércoles 15 por una cita médica por la mañana, ofrece recuperar las horas y pide que lo apruebe.",
     "scene_context": "Estás en la oficina con tu jefe, que tiene un momento para hablar contigo. Tienes que completar 4 pasos: 1. Explicar el motivo (cita médica). 2. Pedir el día (miércoles 15). 3. Ofrecer recuperar el trabajo. 4. Agradecer y confirmar.",
     "character_name": "Manager",
     "expected_outcome_indicator": "Successfully requested day off with date and reason provided.",
@@ -353,8 +353,8 @@
   {
     "id": "m-028",
     "title": "Alquilar una bicicleta para el fin de semana",
-    "description": "Alquiler de fin de semana: reserva, precio y hora de recogida bien atados.",
-    "objective": "Alquila una bicicleta para el sábado, pregunta el precio y confirma que la recoges a las 10:00.",
+    "description": "Quieres alquilar una bici el sábado para moverte por la ciudad. Aclara precio, extras y la hora de recogida.",
+    "objective": "Alquila una bicicleta para el sábado, pregunta el precio por día y si incluye casco y candado, y confirma que la recoges a las 10:00.",
     "scene_context": "Estás en una tienda de alquiler de bicicletas; el empleado ajusta una rueda. Tienes que completar 4 pasos: 1. Pedir la bici para el sábado. 2. Preguntar el precio (15 euros). 3. Añadir casco o candado si hace falta. 4. Confirmar la recogida a las 10:00.",
     "character_name": "Bike Shop Assistant",
     "expected_outcome_indicator": "Successfully rents a bicycle for Saturday at 10 AM for €15.",
@@ -366,8 +366,8 @@
   {
     "id": "m-029",
     "title": "Comprar un teléfono móvil usado",
-    "description": "Escaparate de segunda mano: pregunta, comprueba y llévate el móvil con garantía.",
-    "objective": "Pregunta el precio del iPhone 12, el año de fabricación y la garantía, y cómpralo por 250 euros.",
+    "description": "En la tienda hay un móvil de segunda mano que te interesa. Comprueba su estado y su garantía antes de cerrar el precio.",
+    "objective": "Pregunta el precio del iPhone 12 del escaparate, el año de fabricación y la garantía, y ciérralo por 250 euros si todo está bien.",
     "scene_context": "Estás en una tienda pequeña de electrónica usada; el vendedor te enseña un teléfono del escaparate. Tienes que completar 4 pasos: 1. Preguntar el precio. 2. Preguntar el año de fabricación. 3. Preguntar la garantía (6 meses). 4. Cerrar la compra por 250 euros.",
     "character_name": "Shop Assistant",
     "expected_outcome_indicator": "Student successfully negotiates phone purchase with price, warranty details.",
@@ -379,8 +379,8 @@
   {
     "id": "m-030",
     "title": "Reservar una clase de arte en un centro comunitario",
-    "description": "Apúntate a pintura: horario, precio, materiales y plaza reservada.",
-    "objective": "Pregunta por la clase de pintura de los martes, el precio, si incluye materiales y reserva tu sitio.",
+    "description": "Quieres empezar pintura los martes por la tarde. Pregunta horario, precio y materiales antes de reservar tu plaza.",
+    "objective": "Pregunta por la clase de pintura de los martes a las 19:00, el precio al mes y si incluye los materiales, y reserva tu sitio.",
     "scene_context": "Estás llamando al centro comunitario; la recepcionista te cuenta las clases disponibles. Tienes que completar 4 pasos: 1. Preguntar por la clase de los martes a las 19:00. 2. Preguntar el precio (45 euros al mes). 3. Preguntar por los materiales. 4. Reservar tu sitio.",
     "character_name": "Receptionist",
     "expected_outcome_indicator": "Student books art class with correct day, time, and price confirmed.",
@@ -392,8 +392,8 @@
   {
     "id": "m-031",
     "title": "Problema técnico al soporte",
-    "description": "Tu computador no enciende y llamas al soporte técnico de la empresa.",
-    "objective": "Explica al agente de soporte que tu computador no enciende desde esta mañana, describe el sonido extraño que escuchas al encenderlo y confirma que estás en tu escritorio.",
+    "description": "Tu computador no enciende desde esta mañana y tienes trabajo acumulado. Llamas al soporte técnico y describes el fallo paso a paso.",
+    "objective": "Explica al agente de soporte que tu computador no enciende desde esta mañana, describe el ruido extraño que escuchas al pulsar el botón y confirma que estás en tu escritorio.",
     "scene_context": "Llamas al soporte técnico de tu empresa; el agente contesta y pide que describas el problema. Tienes que completar 2 pasos: 1. Explicar el fallo (no enciende desde esta mañana). 2. Describir el sonido extraño al encenderlo y confirmar que estás listo.",
     "character_name": "Tech Support",
     "expected_outcome_indicator": "Support ticket opened with correct details",
@@ -405,8 +405,8 @@
   {
     "id": "m-032",
     "title": "Check-in en el hotel",
-    "description": "Tu reserva no aparece en el sistema al llegar al hotel.",
-    "objective": "Explica al recepcionista que tienes una reserva para esta noche que no aparece en tu app, facilita el número de confirmación #45823 y confirma tu nombre.",
+    "description": "Después de un viaje largo llegas al Hotel Plaza y tu reserva no aparece. Toca explicarlo en recepción con el número de confirmación.",
+    "objective": "Explica al recepcionista que tu reserva de esta noche no aparece en la app, facilita el número de confirmación #45823 y confirma tu nombre.",
     "scene_context": "Llegas al Hotel Plaza después de un viaje largo; el recepcionista te saluda y pide tu nombre. Tienes que completar 2 pasos: 1. Explicar el problema con la reserva (no aparece en la app). 2. Dar el número de confirmación (#45823) y confirmar tu nombre.",
     "character_name": "Hotel Receptionist",
     "expected_outcome_indicator": "Reservation issue resolved",
@@ -418,8 +418,8 @@
   {
     "id": "m-033",
     "title": "Presentarse en trabajo nuevo",
-    "description": "Tu primer día en una empresa nueva: preséntate al equipo.",
-    "objective": "Preséntate a tu nuevo colega con tu nombre y tu cargo (Marketing Manager) y menciona tu experiencia anterior en publicidad digital.",
+    "description": "Es tu primer día en la empresa y tu colega se acerca a saludar. Preséntate con tu cargo y cuenta tu experiencia anterior.",
+    "objective": "Preséntate a tu nuevo colega con tu nombre y tu cargo de Marketing Manager, y cuéntale tu experiencia anterior en publicidad digital.",
     "scene_context": "Entras a la oficina el primer día; tu colega se acerca sonriendo y se presenta. Tienes que completar 2 pasos: 1. Dar tu nombre y tu cargo (Marketing Manager). 2. Mencionar tu experiencia anterior (cinco años en publicidad digital).",
     "character_name": "Colleague",
     "expected_outcome_indicator": "Professional introduction completed",
@@ -431,8 +431,8 @@
   {
     "id": "m-034",
     "title": "Reportar un problema de vecindad",
-    "description": "Ruido excesivo en tu edificio: reclama al administrador.",
-    "objective": "Reporta al administrador que el apartamento 4B pone música muy alta desde las 11 p. m. todos los días, aclara que no has hablado con ellos y pide que intervengan.",
+    "description": "El apartamento 4B pone música a todo volumen cada noche y ya no puedes dormir. Llamas al administrador para que intervenga.",
+    "objective": "Reporta al administrador que el apartamento 4B pone música muy alta desde las 11 p. m. todos los días, aclara que no has hablado con ellos y pide que la administración intervenga.",
     "scene_context": "Llamas a la oficina de administración del edificio; el administrador contesta y abre una incidencia. Tienes que completar 3 pasos: 1. Describir el problema (apartamento 4B, música alta, desde las 11 p. m.). 2. Aclarar que no has hablado con ellos. 3. Pedir que la administración intervenga.",
     "character_name": "Building Manager",
     "expected_outcome_indicator": "Complaint registered with details",
@@ -444,8 +444,8 @@
   {
     "id": "m-035",
     "title": "Conversación casual en una boda",
-    "description": "Mesa de desconocidos en una boda: rompe el hielo.",
-    "objective": "Inicia una conversación con la persona a tu lado: pregunta cómo conoce a los novios y comenta qué te parece la ceremonia.",
+    "description": "Estás en una boda sentado con desconocidos y la cena no empieza. Rompe el hielo con la persona de al lado y comentad la ceremonia.",
+    "objective": "Inicia una conversación con la persona de al lado en la mesa: pregunta cómo conoce a los novios y comenta qué te ha parecido la ceremonia.",
     "scene_context": "Estás en la recepción de una boda elegante; la cena aún no empieza y hay un silencio incómodo en la mesa. Tienes que completar 2 pasos: 1. Preguntar cómo conoce a los novios. 2. Comentar qué te parece la ceremonia.",
     "character_name": "Wedding Guest",
     "expected_outcome_indicator": "Conversation started about the couple and ceremony",
@@ -457,8 +457,8 @@
   {
     "id": "m-036",
     "title": "Recomendar un restaurante",
-    "description": "Un colega de otra sucursal busca dónde cenar en tu ciudad.",
-    "objective": "Recomienda tu restaurante italiano favorito: explica por qué es bueno (comida y ambiente) e indica cómo llegar desde la oficina.",
+    "description": "Un colega de otra sucursal quiere cenar bien en tu ciudad. Recomiéndale tu italiano favorito y explícale cómo llegar desde la oficina.",
+    "objective": "Recomienda a tu colega el restaurante italiano La Trattoria, explica por qué es bueno (comida y ambiente) e indica cómo llegar desde la oficina.",
     "scene_context": "Estás en el descanso del café con un colega de otra sucursal que quiere probar comida local esta noche. Tienes que completar 2 pasos: 1. Recomendar el restaurante y justificarlo (comida y ambiente). 2. Explicar cómo llegar desde la oficina.",
     "character_name": "Visiting Colleague",
     "expected_outcome_indicator": "Restaurant recommendation given with reasons and directions",
@@ -470,7 +470,7 @@
   {
     "id": "m-037",
     "title": "Reclamar una devolución de ropa defectuosa",
-    "description": "Abrigo con la cremallera rota tras dos semanas: reembolso, no cambio.",
+    "description": "Compraste un abrigo hace dos semanas y la cremallera ya está rota. Vuelves a la tienda con el recibo y buscas el reembolso completo.",
     "objective": "Devuelve el abrigo azul marino (€89,99, comprado hace 14 días): explica que la cremallera está rota, pide el reembolso completo en vez de un cambio y pregunta cuánto tarda (3-5 días hábiles).",
     "scene_context": "Estás en el mostrador de atención al cliente de una tienda de moda con el abrigo y el recibo. Tienes que completar 4 pasos: 1. Explicar la compra (abrigo, €89,99, 14 días). 2. Explicar el defecto (cremallera rota). 3. Pedir el reembolso completo y rebatir el cambio. 4. Preguntar el plazo (3-5 días hábiles).",
     "character_name": "Store Manager",
@@ -483,7 +483,7 @@
   {
     "id": "m-038",
     "title": "Posponer una entrevista de trabajo importante",
-    "description": "Cita médica el mismo día de la entrevista: posponla sin perder el puesto.",
+    "description": "Tu entrevista del 15 de marzo choca con una cita médica que no puedes cancelar. Llama a la reclutadora para posponerla sin perder el puesto.",
     "objective": "Llama al reclutador: explica la cita médica, pide posponer la entrevista dos semanas (del 15 al 29 de marzo), discúlpate por el aviso tardío y confirma que sigues interesado.",
     "scene_context": "Llamas por teléfono a recursos humanos de una empresa tecnológica; hablas con Paula, la reclutadora. Tienes que completar 4 pasos: 1. Explicar la cita médica. 2. Pedir posponer del 15 al 29 de marzo. 3. Disculparte por el aviso tardío. 4. Confirmar que sigues interesado.",
     "character_name": "Recruiter",
@@ -496,7 +496,7 @@
   {
     "id": "m-039",
     "title": "Negociar el contrato de un Airbnb antes de reservar",
-    "description": "Antes de reservar el Airbnb: descuento, cancelación y precio cerrado.",
+    "description": "Antes de reservar el Airbnb de Gràcia quieres negociar. Pide descuento por estancia larga y aclara la política de cancelación.",
     "objective": "Negocia la reserva del 10 al 17 de abril (7 noches): pide un 15% de descuento por estancia larga, pregunta la política de cancelación y cierra el precio de €700 a €595.",
     "scene_context": "Envías un mensaje al propietario de un apartamento de dos dormitorios en Gràcia, Barcelona. Tienes que completar 4 pasos: 1. Plantear las fechas (10-17 de abril, 7 noches). 2. Pedir el 15% de descuento (de €700 a €595). 3. Preguntar la política de cancelación. 4. Confirmar condiciones y reserva.",
     "character_name": "Property Owner",
@@ -509,7 +509,7 @@
   {
     "id": "m-040",
     "title": "Argumentar la necesidad de trabajar desde casa",
-    "description": "Tras seis meses en la empresa: propón teletrabajo con datos.",
+    "description": "Tras seis meses en la empresa quieres teletrabajar lunes y miércoles. Prepara tus argumentos y propón una prueba a tu jefa.",
     "objective": "Solicita teletrabajar lunes y miércoles: da tres razones (menos distracciones, mejor concentración, dos horas menos de transporte), ofrece un mes de prueba y propone reuniones presenciales los martes y jueves.",
     "scene_context": "Tienes una reunión en el despacho de María, directora de marketing. Tienes que completar 5 pasos: 1. Proponer el teletrabajo (lunes y miércoles). 2. Dar tres razones con datos. 3. Ofrecer un mes de prueba. 4. Proponer reuniones presenciales (martes y jueves). 5. Aceptar cómo se medirá el resultado.",
     "character_name": "Direct Manager",
@@ -522,7 +522,7 @@
   {
     "id": "m-041",
     "title": "Cambiar el horario de una clase que ya pagaste",
-    "description": "Una reunión te impide ir a tu clase de pilates ya pagada.",
+    "description": "Una reunión de trabajo te impide ir a tu clase de pilates del jueves. Llama al gimnasio para cambiar el horario de una clase ya pagada.",
     "objective": "Llama al gimnasio para cambiar tu clase de pilates del jueves a las 18:30 (pagaste €80 hace un mes), explica la reunión de trabajo y pregunta si hay coste adicional.",
     "scene_context": "Llamas por teléfono al centro FitLife; te atiende recepción. Tienes que completar 4 pasos: 1. Identificarte y dar la clase (pilates, jueves 18:30, €80 pagados). 2. Explicar la reunión de trabajo. 3. Pedir otro horario disponible. 4. Preguntar si hay coste adicional.",
     "character_name": "Gym Receptionist",
@@ -535,7 +535,7 @@
   {
     "id": "m-042",
     "title": "Reclamar un vuelo retrasado y pedir compensación",
-    "description": "Cuatro horas de retraso y sin las comidas prometidas: reclama.",
+    "description": "Tu vuelo BA 302 se retrasó cuatro horas y no recibiste las comidas. Reclama en el mostrador los 250 euros que te corresponden.",
     "objective": "Habla con Blue Airways: reclama por el retraso de 4 horas del vuelo BA 302 del 15 de marzo, menciona las comidas solicitadas y no recibidas, y pregunta si eres elegible para los €250 de indemnización.",
     "scene_context": "Estás en el mostrador de atención al cliente del aeropuerto, recién bajado del avión. Tienes que completar 4 pasos: 1. Dar la referencia (BA 302, 15 de marzo). 2. Explicar el retraso de 4 horas. 3. Mencionar las comidas no recibidas. 4. Preguntar por la indemnización de €250.",
     "character_name": "Airline Customer Service Agent",
@@ -548,7 +548,7 @@
   {
     "id": "m-043",
     "title": "Reclamar sobre un electrodoméstico defectuoso",
-    "description": "Microondas que no calienta a las dos semanas: repara o devuelve.",
+    "description": "El microondas que compraste hace dos semanas no calienta bien. En el mostrador negocias entre reparación gratuita y reembolso.",
     "objective": "Explica que el microondas no calienta bien (comprado hace 14 días por €89), negocia entre reparación gratuita y reembolso completo, y justifica tu elección.",
     "scene_context": "Estás en el mostrador de atención al cliente de una tienda de electrodomésticos con el microondas y el recibo. Tienes que completar 4 pasos: 1. Explicar la compra (14 días, €89). 2. Explicar el defecto (no calienta bien). 3. Escuchar las opciones (reparación o reembolso). 4. Negociar y justificar tu elección.",
     "character_name": "Store Manager",
@@ -561,7 +561,7 @@
   {
     "id": "m-044",
     "title": "Reclamar un reembolso parcial por un viaje pospuesto",
-    "description": "Viaje pospuesto por motivos personales: recupera parte del dinero.",
+    "description": "Tuviste que posponer el viaje a Barcelona del 15 de julio al 20 de septiembre. Negocia con la agencia cuánto dinero recuperas.",
     "objective": "Consigue un reembolso de al menos €200 de los €850 del viaje a Barcelona pospuesto del 15 de julio al 20 de septiembre: explica los motivos, pregunta por la política de cancelación y negocia las condiciones.",
     "scene_context": "Estás en la oficina de Viajes Express, frente a María, la agente que organizó tu reserva. Tienes que completar 4 pasos: 1. Explicar la reserva original (€850, 15 de julio). 2. Explicar el motivo del cambio (20 de septiembre). 3. Preguntar la política de cancelación. 4. Negociar un reembolso de al menos €200.",
     "character_name": "Travel Agent",
@@ -574,7 +574,7 @@
   {
     "id": "m-045",
     "title": "Reclamar sobre un mal servicio de limpieza del hogar",
-    "description": "Limpieza deficiente la semana pasada: quieres una repetición sin coste.",
+    "description": "La limpieza de la semana pasada dejó la cocina y los baños a medias. Reclama a la empresa una repetición sin coste y una fecha.",
     "objective": "Explica qué salió mal en la limpieza (cocina, baños y alfombras), pregunta si pueden volver sin coste adicional y acuerda una fecha entre el 15 y el 20 de marzo.",
     "scene_context": "Llamas a la empresa de limpieza; te atiende el gerente de servicio al cliente. Tienes que completar 4 pasos: 1. Explicar qué salió mal (cocina, baños, alfombras). 2. Explicar por qué no estás satisfecho. 3. Pedir una repetición sin coste. 4. Acordar fecha entre el 15 y el 20 de marzo.",
     "character_name": "Service Manager",
@@ -587,8 +587,8 @@
   {
     "id": "m-046",
     "title": "Negociar un precio",
-    "description": "Quieres comprar un artículo pero el precio es alto.",
-    "objective": "Negocia el precio de una mochila. El precio inicial es $80. Intenta conseguirlo por menos de $65, justificando tu oferta.",
+    "description": "Estás en un mercado artesanal y ves una mochila de cuero que te encanta. El vendedor pide $80 y tú quieres regatear sin ofender.",
+    "objective": "Negocia el precio de una mochila de cuero que cuesta 80 dólares: ofrece argumentos de calidad y de mercado, y cierra la compra por menos de 65.",
     "scene_context": "Estás en un mercado artesanal. El vendedor tiene mochilas de cuero. Ves una que te gusta.",
     "character_name": "Market Vendor",
     "expected_outcome_indicator": "Price negotiated below $65",
@@ -600,8 +600,8 @@
   {
     "id": "m-047",
     "title": "Reclamar un paquete perdido",
-    "description": "Tu pedido online nunca llegó.",
-    "objective": "Reclama a la empresa de envíos que tu paquete con número de seguimiento TK-2847 no llegó en la fecha prometida. Pide solución.",
+    "description": "Tu pedido online debía llegar hace cinco días y sigues sin noticias. Llamas a la empresa de envíos con el número de seguimiento a mano.",
+    "objective": "Reclama a la empresa de envíos que tu paquete con seguimiento TK-2847 no llegó en la fecha prometida, explica los cinco días de espera y pide una solución concreta antes de colgar.",
     "scene_context": "Llamas al servicio al cliente de la empresa de envíos. Llevas 5 días esperando el paquete.",
     "character_name": "Tech Support",
     "expected_outcome_indicator": "Claim registered with tracking number",
@@ -613,8 +613,8 @@
   {
     "id": "m-048",
     "title": "Cancelar una suscripción",
-    "description": "Quieres cancelar un servicio que no usas.",
-    "objective": "Cancela tu suscripción al gimnasio. Llevas 6 meses pagando sin ir. Pide que el cargo no se haga el próximo mes.",
+    "description": "Llevas seis meses pagando el gimnasio sin pisarlo y no quieres pagar un mes más. Llamas para cancelar la suscripción con tiempo.",
+    "objective": "Cancela tu suscripción al gimnasio tras seis meses sin ir, pide que no te cobren el próximo mes y pide confirmación por escrito del cierre.",
     "scene_context": "Llamas al servicio al cliente del gimnasio. Te contesta un representante.",
     "character_name": "Tech Support",
     "expected_outcome_indicator": "Subscription cancellation confirmed",
@@ -626,8 +626,8 @@
   {
     "id": "m-049",
     "title": "Describir un accidente menor",
-    "description": "Tuviste un pequeño accidente de tráfico.",
-    "objective": "Explica a la policía lo que pasó: otro carro te golpeó por detrás mientras esperabas en un semáforo. No hay heridos.",
+    "description": "Un coche te golpeó por detrás mientras esperabas en un semáforo y no hay heridos. Un oficial se acerca para tomar tu declaración.",
+    "objective": "Explica al oficial que otro coche te golpeó por detrás mientras esperabas en un semáforo, describe los daños y aclara que no hay heridos.",
     "scene_context": "Un oficial de policía se acerca al lugar del accidente y pide tu declaración de lo sucedido.",
     "character_name": "Street Guide",
     "expected_outcome_indicator": "Accident description given with key details",
@@ -639,8 +639,8 @@
   {
     "id": "m-050",
     "title": "Debatir sobre una película",
-    "description": "Acabas de ver una película con un amigo y tienen opiniones diferentes.",
-    "objective": "Expresa tu opinión de que el final de la película fue decepcionante porque no tuvo sentido, aunque los efectos especiales fueron buenos.",
+    "description": "Acabas de salir del cine con un amigo que salió encantado. A ti el final no te convenció y toca explicarlo sin desanimar la charla.",
+    "objective": "Expón con respeto que el final te pareció decepcionante porque no tuvo sentido, reconoce los buenos efectos especiales y debate las razones con tu amigo.",
     "scene_context": "Están saliendo del cine. Tu amigo dice que le encantó la película y te pregunta qué piensas tú.",
     "character_name": "Movie Buff Friend",
     "expected_outcome_indicator": "Opinion expressed with pros and cons",
@@ -652,7 +652,7 @@
   {
     "id": "m-051",
     "title": "Resolver una factura telefónica con cargos duplicados",
-    "description": "Contactas a tu proveedor de servicios móviles para disputar cargos inesperados y exigir un reembolso.",
+    "description": "Tu factura móvil de €87,50 trae dos cargos de roaming repetidos del 12 de junio. Llamas a la operadora para disputarlos y pedir compensación.",
     "objective": "Debes identificar los cargos duplicados en tu factura de €87,50 (dos cargos de roaming internacional de €35 del 12 de junio), solicitar un reembolso completo más una compensación por la inconveniencia, y obtener una explicación por escrito.",
     "scene_context": "Estás llamando al servicio de atención al cliente de tu operadora móvil. Un agente te atiende después de esperar 8 minutos.",
     "character_name": "Customer Service Representative",
@@ -665,7 +665,7 @@
   {
     "id": "m-052",
     "title": "Disputar un depósito de caución en un Airbnb después del checkout",
-    "description": "Negocias con tu anfitrión sobre daños supuestamente causados durante tu estancia que cuestionas.",
+    "description": "El anfitrión del Airbnb te reclama €200 del depósito por una mancha que ya estaba antes. Respondes con tus fotos de la llegada y exiges la devolución.",
     "objective": "El anfitrión reclama €200 del depósito de €500 por una mancha en el sofá que afirma no estaba allí antes. Debes demostrar con evidencia fotográfica de tu llegada que el daño ya existía, negarte a pagar, y exigir la devolución completa del depósito dentro de 10 días.",
     "scene_context": "Recibes un mensaje de Airbnb del anfitrión después de tu checkout el 15 de marzo. Respondes a su reclamo enviando fotos y argumentando tu posición.",
     "character_name": "Airbnb Host",
@@ -678,7 +678,7 @@
   {
     "id": "m-053",
     "title": "Reclamar un reembolso por un vuelo modificado",
-    "description": "Necesitas contactar con la aerolínea porque tu vuelo ha sido reprogramado y quieres compensación por los inconvenientes causados.",
+    "description": "La aerolínea reprogramó tu vuelo y te ha roto los planes de trabajo del 15 de marzo. Llamas para negociar un reembolso o un vuelo alternativo gratis.",
     "objective": "Debes negociar un reembolso parcial de 150 euros o un vuelo alternativo gratuito para el 15 de marzo a las 10:00, argumentando que los cambios en tu itinerario te han causado pérdidas económicas significativas en tus planes de trabajo.",
     "scene_context": "Estás llamando al departamento de atención al cliente de una aerolínea. Hablas con un agente que intenta resolver tu queja de manera formal.",
     "character_name": "Airline Customer Service Agent",
@@ -691,7 +691,7 @@
   {
     "id": "m-054",
     "title": "Reclamar sobre una compra defectuosa con devolución rechazada",
-    "description": "Compraste un electrodoméstico hace cinco semanas que dejó de funcionar correctamente, pero la tienda rechaza tu devolución argumentando que ha pasado el período de garantía.",
+    "description": "Tu aspirador Dyson XR7 (€280) dejó de funcionar a las cinco semanas y la tienda se niega a devolverlo por \"garantía vencida\".",
     "objective": "Debes argumentar que el artículo (un aspirador sin bolsa Dyson modelo XR7 comprado por 280 euros el 15 de enero) tiene un defecto de fabricación, no desgaste normal, y que dentro de 14 días deberías tener derecho a cambio o reembolso según la Directiva de Derechos del Consumidor, independientemente de lo que diga el recibo.",
     "scene_context": "Estás en la sección de servicio al cliente de una tienda de electrónica. El gerente intenta convencerte de que el producto está fuera de garantía.",
     "character_name": "Store Manager",
@@ -704,7 +704,7 @@
   {
     "id": "m-055",
     "title": "Reclamar por un servicio de catering insatisfactorio",
-    "description": "Necesitas contactar con una empresa de catering para reclamar por la comida de mala calidad en un evento importante que organizaste.",
+    "description": "La comida del catering llegó fría, faltaron postres y el servicio se retrasó cuarenta minutos. Llamas al gerente para reclamar parte de los €450.",
     "objective": "Debes explicar que la comida llegó fría, que faltaban 15 porciones de postre, que el servicio fue lento (40 minutos de retraso) y que pagaste 450 euros. Exige un reembolso parcial del 30% o la devolución del dinero completo si no aceptan las condiciones.",
     "scene_context": "Estás llamando por teléfono al gerente de la empresa de catering 'Delicious Events' el día después del evento para presentar tu queja formal.",
     "character_name": "Catering Manager",
@@ -717,7 +717,7 @@
   {
     "id": "m-056",
     "title": "Negociar el cambio de términos en un contrato de alquiler",
-    "description": "Necesitas renegociar ciertos términos de tu contrato de alquiler con el propietario antes de firmar el acuerdo vinculante.",
+    "description": "Antes de firmar el contrato de alquiler quieres renegociarlo. Te reúnes con el señor García para bajar la renta y reducir el depósito.",
     "objective": "Debes solicitar una reducción del precio de alquiler de 1200 euros a 1050 euros por mes (duración 24 meses), y además pedir que el depósito de caución se reduzca de 3 meses a 2 meses de renta. Debes presentar argumentos sobre el estado del apartamento (necesita reparaciones menores) y justificar con datos de mercado.",
     "scene_context": "Te reúnes en persona con el propietario, señor García, en la oficina de su agencia inmobiliaria para discutir los términos del contrato antes de la firma final.",
     "character_name": "Property Owner",
@@ -730,7 +730,7 @@
   {
     "id": "m-057",
     "title": "Defender tu posición en una reunión sobre cambio de responsabilidades laborales",
-    "description": "Debes argumentar firmemente contra una redistribución de tareas que consideras injusta y desequilibrada.",
+    "description": "Tu gerente María quiere cargarte el marketing de formación con 15 horas extra a la semana. Ya llevas 45 horas y dos proyectos: te niegas.",
     "objective": "En una reunión con tu gerente, explicar por qué no puedes asumir las responsabilidades adicionales del proyecto de marketing (que implica 15 horas semanales extra sin compensación) cuando ya trabajas en dos proyectos simultáneamente con una carga de 45 horas, solicitando que se contrate personal adicional o se redefina tu rol con ajuste salarial del 12%.",
     "scene_context": "Estás en la oficina en una reunión con tu gerente, Maria. Ella acaba de proponerte tomar el proyecto de marketing de forma inesperada.",
     "character_name": "Manager",
@@ -743,7 +743,7 @@
   {
     "id": "m-058",
     "title": "Presentar una propuesta alternativa en una entrevista de trabajo sobre horario flexible",
-    "description": "Debes defender tu necesidad de horario flexible en una entrevista final sin parecer poco comprometido.",
+    "description": "Entrevista final en Deloitte y todo va bien, pero necesitas dos días de teletrabajo. Toca defenderlo sin parecer poco comprometido.",
     "objective": "En tu entrevista final para el puesto de Analista de Datos en Deloitte (salario €48,000 anuales, contrato de 3 años), explicar por qué necesitas trabajar 2 días desde casa y 3 desde la oficina, argumentar cómo esto mejorará tu productividad y concentración, y ofrecer un acuerdo de 6 meses de prueba con métricas de desempeño claras.",
     "scene_context": "Estás en la oficina de Deloitte en una reunión con el director de recursos humanos, Thomas. Ha mencionado que la posición requiere presencia completa en la oficina 5 días a la semana.",
     "character_name": "HR Director",
@@ -756,7 +756,7 @@
   {
     "id": "m-059",
     "title": "Discutir una prórroga de plazo de entrega con tu profesor",
-    "description": "Necesitas negociar una extensión de dos semanas para entregar tu trabajo de investigación de fin de semestre debido a circunstancias imprevistas.",
+    "description": "El ensayo de fin de semestre sobre cambio climático no llegará a tiempo. Vas a ver al profesor para negociar dos semanas de prórroga.",
     "objective": "Debes convencer al profesor de que te otorgue una prórroga de 14 días para entregar tu ensayo sobre cambio climático, explicando las razones válidas (enfermedad familiar, problema técnico) y comprometiéndote a entregar un trabajo de calidad superior.",
     "scene_context": "Estás en la oficina de tu profesor de la Universidad durante sus horas de consulta. Él es un docente experimentado pero conocido por ser estricto con los plazos.",
     "character_name": "Professor Henderson",
@@ -769,7 +769,7 @@
   {
     "id": "m-060",
     "title": "Consultar sobre síntomas persistentes y opciones de tratamiento",
-    "description": "Necesitas hablar con un especialista sobre problemas digestivos crónicos y explorar opciones de tratamiento más allá de los medicamentos convencionales.",
+    "description": "Segunda visita al gastroenterólogo y los síntomas siguen igual. Quieres cuestionar el tratamiento actual y pedir pruebas y alternativas.",
     "objective": "Debes describir con detalle tus síntomas (dolor abdominal después de ciertas comidas, fatiga durante el día, inflamación ocasional), cuestionar la efectividad del tratamiento actual, solicitar pruebas adicionales específicas (endoscopia, análisis de intolerancias alimentarias) y discutir enfoques alternativos como cambios dietéticos o terapia complementaria.",
     "scene_context": "Estás en la consulta privada de un gastroenterólogo especializado. Es tu segunda visita y quieres tomar un papel más activo en tus cuidados.",
     "character_name": "Dr. Martinez",
@@ -782,7 +782,7 @@
   {
     "id": "m-061",
     "title": "Negociar condiciones de trabajo remoto en una empresa nueva",
-    "description": "Defender tu necesidad de flexibilidad laboral durante la entrevista final antes de aceptar una oferta de empleo.",
+    "description": "Entrevista final en Mitchell & Associates, en el centro de Londres. Antes de aceptar la oferta quieres defender tres días de teletrabajo.",
     "objective": "Convencer al jefe de proyecto (señor Mitchell) de permitirte trabajar desde casa 3 días a la semana, argumentando mejora en productividad y reducción de costos de transporte (tu desplazamiento es de 45 minutos), sin que esto afecte la colaboración presencial requerida los jueves y viernes en la oficina central de Londres.",
     "scene_context": "Estás en la oficina de Mitchell & Associates en el centro de Londres, sentado frente al director de Recursos Humanos después de recibir una oferta formal. Es tu última oportunidad para negociar los términos antes de firmar el contrato.",
     "character_name": "HR Director",
@@ -795,7 +795,7 @@
   {
     "id": "m-062",
     "title": "Cuestionar un diagnóstico médico vago y solicitar pruebas adicionales",
-    "description": "Expresar preocupación profesional ante síntomas persistentes que han sido minimizados por tu médico de cabecera.",
+    "description": "Tercera cita con la doctora Chen y los síntomas siguen sin explicación. Quieres que te remita al especialista y que pida pruebas concretas.",
     "objective": "Persuadir a la doctora Chen de que remita tus síntomas (fatiga crónica, dolores articulares intermitentes y dificultad de concentración que persisten desde hace 8 semanas) a un especialista en medicina interna, argumentando que la hipótesis inicial de déficit de vitamina B12 (confirmada con análisis de hace 3 semanas) no explica completamente el patrón de síntomas, y solicitar específicamente un análisis de función tiroidea y autoinmunidad.",
     "scene_context": "En la consulta de la doctora Chen en la clínica privada Harley Street, Londres. Es tu tercera cita en dos meses y la doctora ha sugerido que los síntomas \"mejorarán pronto\" con el tratamiento actual.",
     "character_name": "General Practitioner",
@@ -808,7 +808,7 @@
   {
     "id": "m-063",
     "title": "Cuestionar la viabilidad de un proyecto académico y solicitar una prórroga justificada",
-    "description": "Argumentar ante tu supervisor de tesis que el alcance actual es insostenible dado los recursos y el cronograma disponibles.",
+    "description": "El corpus de tu tesis (500 textos) es inabarcable con el tiempo que queda. Te reúnes con tu supervisor Holbrook para reducir alcance o fecha.",
     "objective": "Convencer al profesor Arthur Holbrook de reducir el corpus de análisis de tu tesis de máster de 500 textos históricos (período 1840-1920) a 250, o alternativamente, extender la fecha de entrega del 15 de junio al 30 de julio, demostrando cálculos concretos de tiempo (60 horas estimadas de análisis textual vs. 22 horas disponibles hasta la fecha límite) e indicando que la calidad se verá comprometida si no se hace.",
     "scene_context": "En el despacho del profesor Holbrook en la facultad de Humanidades de la Universidad de Oxford, después de su seminario semanal. Ha quedado claro que espera que mantengas el cronograma original sin excepciones.",
     "character_name": "Academic Supervisor",
@@ -821,7 +821,7 @@
   {
     "id": "m-064",
     "title": "Informar sobre un comportamiento inapropiado en el lugar de trabajo y solicitar mediación",
-    "description": "Reportar una situación incómoda con un colega de rango similar sin escalar directamente a una queja formal.",
+    "description": "Un colega senior hizo comentarios sobre tu acento en una reunión y te incomodó. Quieres contárselo a Sandra Mills sin abrir un caso formal de RRHH.",
     "objective": "Comunicarle a tu jefa directa, Sandra Mills, que tu colega senior analyst David Rosenthal ha hecho comentarios potencialmente discriminatorios e inapropiados sobre tu acento durante una reunión de equipo del martes (específicamente, sugirió que \"tu pronunciación ralentiza la comunicación\"), y solicitar que se aborde mediante una conversación confidencial entre ustedes tres, sin iniciar un procedimiento de recursos humanos formal que podría afectar la dinámica del equipo de 8 personas.",
     "scene_context": "En la oficina privada de Sandra Mills, gerente de Análisis Cuantitativo en una firma de consultoría de datos en Canary Wharf, Londres. Es el miércoles por la tarde, un día después del incidente, y acabas de cerrar la puerta.",
     "character_name": "Line Manager",
@@ -834,7 +834,7 @@
   {
     "id": "m-065",
     "title": "Explicar el rechazo académico y solicitar otra oportunidad de publicación",
-    "description": "Responder constructivamente a la decisión editorial de rechazar un artículo y negociar la posibilidad de reenvío después de revisiones significativas.",
+    "description": "Te han rechazado el artículo en Contemporary Linguistics Quarterly. Escribes al editor para refutar al revisor y pedir un segundo dictamen.",
     "objective": "Escribir un correo persuasivo al editor jefe de la revista *Contemporary Linguistics Quarterly* (Dr. Hassan Al-Rashid) cuestionando gentilmente el fallo del reviewer anónimo que rechazó tu artículo sobre sintaxis comparativa (\"Null Subjects Across Romance Microvariation: A Diachronic Corpus Study\"), argumentando que sus críticas (a) malinterpretan tu metodología estadística en la página 7, (b) ignoran tres estudios recientes de 2023 que apoyan tu tesis, y (c) proponen un análisis alternativo que ya descartaste en la sección 3.2 por razones que explicas de nuevo, y solicitando un segundo dictamen peer-review antes de una decisión definitiva.",
     "scene_context": "En tu despacho de investigador en el departamento de Lingüística de la Universidad de Edinburgh, después de recibir el correo de rechazo hace una hora. Tu doctorado depende de publicaciones en revistas de Tier 1.",
     "character_name": "Journal Editor",
@@ -847,7 +847,7 @@
   {
     "id": "m-066",
     "title": "Impugnar una decisión de denegación de visa y solicitar revisión",
-    "description": "Cuestionar una decisión consular que rechazó tu solicitud de visa de trabajo patrocinada por un empleador, argumentando que la evaluación no reflejó adecuadamente tu perfil y la documentación presentada.",
+    "description": "El Reino Unido rechazó tu visa Skilled Worker patrocinada por tu empleador. Preparas una carta formal para pedir la revisión del expediente.",
     "objective": "Enviar una carta formal al oficial de visas (Centro de Visas Británicas en Madrid, oficina de Cristina Márquez) solicitando una revisión de tu denegación de visa Skilled Worker (categoría de la que tu empleador Deloitte Madrid confirmó que calificas), argumentando que la conclusión de que \"tu experiencia no es relevante para el puesto de Senior Consultant\" contradice tu CV que enumera 7 años en consultoría de transformación digital, tres certificaciones profesionales (PMP, Agile, Cloud Architecture), y cartas de recomendación de dos directivos de Fortune 500 incluidas en el dossier original.",
     "scene_context": "En tu apartamento en Madrid, después de recibir la notificación de denegación del Reino Unido hace tres días. Tu empleador está esperando tu aprobación antes de formalizar la mudanza y el inicio laboral el 1 de octubre.",
     "character_name": "Visa Officer",
@@ -860,7 +860,7 @@
   {
     "id": "m-067",
     "title": "Negociar términos de una beca de investigación",
-    "description": "Debes discutir con un coordinador académico sobre las condiciones de tu beca doctoral para asegurar que se alineen con tus necesidades de investigación.",
+    "description": "Beca doctoral: 800 euros al mes, contrato de 36 meses y laboratorio a tope. Negocias con el Dr. Matthews las condiciones antes de firmar.",
     "objective": "Convencer al coordinador (Dr. Matthews) de que aumente tu asignación mensual de 800 a 1000 euros, añada 2 meses de prórroga al contrato de 36 meses, y asegure acceso garantizado a los equipos del laboratorio de microscopía antes de septiembre, justificando cada petición con argumentos académicos concretos.",
     "scene_context": "Estás en la oficina del Dr. Matthews, coordinador de investigación doctoral en una universidad británica, después de que te haya notificado cambios en la financiación disponible.",
     "character_name": "Dr. Matthews, Research Coordinator",
@@ -873,7 +873,7 @@
   {
     "id": "m-068",
     "title": "Impugnar una evaluación de desempeño laboral",
-    "description": "Cuestionas una calificación injusta en tu evaluación anual y solicitas una revisión basada en evidencia concreta.",
+    "description": "Tu evaluación anual te dejó en \"satisfactorio\" pese a subir ventas un 23%. Estás con Sarah Chen para impugnarla con evidencia y pedir una revisión.",
     "objective": "Debes impugnar la evaluación de desempeño recibida el 15 de marzo argumentando que tus logros (incremento de ventas del 23%, liderazgo de 3 proyectos exitosos y reducción de costos de $50,000) no se reflejan en la calificación \"satisfactorio\", y solicitar explícitamente una reclasificación a \"excepcional\" o una revisión por un tercero en las próximas dos semanas.",
     "scene_context": "Estás en la oficina de tu manager, Sarah Chen, después de recibir tu evaluación anual. La tensión es evidente pero profesional.",
     "character_name": "HR Manager",
@@ -886,7 +886,7 @@
   {
     "id": "m-069",
     "title": "Defender tu argumento sobre un cambio de estructura organizacional en tu empresa",
-    "description": "Tu empresa ha reorganizado los departamentos y tú debes defender la viabilidad de una propuesta alternativa ante el director ejecutivo.",
+    "description": "La reestructuración centralizada ya ha costado tres bajas senior en dos meses. Defiendes ante la CEO un modelo alternativo con números.",
     "objective": "Debes argumentar que el nuevo modelo centralizado perjudicará la retención de talento (ya han renunciado 3 empleados senior en 2 meses), aumentará el tiempo de respuesta a clientes de 24 a 72 horas, y afectará la productividad del equipo de tu división en un 35% según tus proyecciones. Propone mantener 2 equipos descentralizados con supervisión coordinada, requiriendo un presupuesto adicional de 80.000€ anuales pero generando ahorros de 250.000€ evitando rotación de personal.",
     "scene_context": "Estás en una reunión de junta directiva con la CEO, Margaret Chen, quien ya implementó la reestructuración hace 3 semanas sin retroalimentación.",
     "character_name": "Chief Executive Officer",
@@ -899,8 +899,8 @@
   {
     "id": "m-070",
     "title": "Cuestionar una política de crédito corporativo restrictiva",
-    "description": "Negocias con tu director financiero sobre la revisión de los criterios de acceso a fondos discrecionales para proyectos innovadores.",
-    "objective": "Debes convencer al director de que amplíe los límites de crédito discrecional de $50,000 a $150,000 para tu departamento, argumentando que los criterios actuales son demasiado rigurosos y limitan la competitividad de la empresa en el mercado.",
+    "description": "Los límites de crédito discrecional ahogan los proyectos innovadores de tu área. Negocias con el director financiero ampliarlos de $50.000 a $150.000.",
+    "objective": "Convence al director financiero de ampliar los límites de crédito discrecional de $50.000 a $150.000 para tu departamento, argumenta que los criterios actuales frenan la innovación y propón un seguimiento trimestral para justificar cada ampliación.",
     "scene_context": "Estás en la oficina del director financiero de una empresa multinacional. Necesitas justificar por qué la política actual es contraproducente para la estrategia de innovación.",
     "character_name": "Finance Director",
     "expected_outcome_indicator": "Persuade Director to reconsider discretionary spending limits through reasoned argumentation.",
@@ -912,7 +912,7 @@
   {
     "id": "m-071",
     "title": "Defender tu posición en un debate ético corporativo",
-    "description": "Participas en una reunión de stakeholders donde debes argumentar una posición matizada sobre responsabilidad social empresarial frente a presiones financieras.",
+    "description": "En la sala de juntas, accionistas y consejeros presionan por márgenes. Defiendes invertir 2,5 millones en sostenibilidad reconociendo sus dudas.",
     "objective": "Debes explicar por qué tu empresa debería invertir 2,5 millones de euros en prácticas sostenibles durante los próximos 18 meses, a pesar de que reducirá márgenes de ganancia en un 8%, reconociendo simultáneamente las preocupaciones de los accionistas sobre dividendos trimestrales y competitividad de mercado.",
     "scene_context": "Estás en una sala de juntas con el director financiero y tres miembros del consejo asesor que cuestionan tus propuestas de sostenibilidad. Necesitas persuadir sin sonar ingenuo.",
     "character_name": "CFO",
@@ -925,7 +925,7 @@
   {
     "id": "m-072",
     "title": "Escalación de queja grave a gestión superior",
-    "description": "Necesitas elevar una reclamación de seguridad laboral seria al director general después de que tu supervisora inmediata rechazó múltiples reportes sobre un equipo defectuoso.",
+    "description": "Llevas seis semanas reportando una máquina defectuosa en la línea 3 y tu supervisora no actúa. Escalas el caso al director general con evidencia.",
     "objective": "Debes documentar e informar al director general que durante 6 semanas has reportado malfuncionamiento crítico en la maquinaria de la línea 3, presentar evidencia de tres incidentes sin lesiones graves, e insistir en una auditoría independiente de seguridad antes del 15 de enero, sin acusar directamente a tu supervisora de negligencia deliberada.",
     "scene_context": "Estás en el despacho del director general en una fábrica de manufactura. Tu supervisora directa no está presente. El director general te conoce de vista pero no íntimamente.",
     "character_name": "General Manager",
@@ -938,7 +938,7 @@
   {
     "id": "m-073",
     "title": "Entrevista senior: argumentar experiencia no convencional",
-    "description": "Entrevista para un puesto de director de operaciones donde tu carrera ha sido marcada por rotaciones y relevos laterales en lugar de una trayectoria lineal ascendente.",
+    "description": "Entrevista para director de operaciones con un currículum de rotaciones en lugar de ascensos lineales. Toca convertir esa ruta en tu ventaja.",
     "objective": "Debes explicar cómo tus 12 años en tres empresas diferentes, con cambios de rol cada 3-4 años, te han preparado mejor para este puesto de director de operaciones que un candidato con ascenso lineal, mencionando específicamente el aprendizaje adquirido en gestión de cambio organizacional, adaptabilidad cultural y pensamiento sistémico.",
     "scene_context": "Estás en una entrevista con la directora de RRHH y el CEO de una empresa de tecnología mediana. Ambos han hecho una pregunta directa sobre la falta de linealidad en tu currículum.",
     "character_name": "Head of HR",
@@ -951,8 +951,8 @@
   {
     "id": "m-074",
     "title": "Negociar los términos de un contrato de suministro",
-    "description": "Debes defender tu posición sobre los plazos de entrega y las cláusulas de responsabilidad en una reunión con el proveedor senior.",
-    "objective": "Lograr reducir el período de entrega de 90 a 60 días, limitar la responsabilidad máxima a €50,000 y asegurar que se incluya una cláusula de fuerza mayor que exima a ambas partes en caso de circunstancias impredecibles.",
+    "description": "Renovación del contrato de suministro y las condiciones se te escapan. Defiendes plazos más cortos, responsabilidad limitada y fuerza mayor.",
+    "objective": "Negocia la renovación del contrato: reduce el plazo de entrega de 90 a 60 días, limita la responsabilidad máxima a €50.000, blinda una cláusula de fuerza mayor para ambas partes y confirma los nuevos términos por escrito.",
     "scene_context": "Estás en una sala de conferencias corporativa con el Procurement Director del principal proveedor de materias primas. Es la tercera ronda de negociaciones y necesitas cerrar el acuerdo esta semana.",
     "character_name": "Procurement Director",
     "expected_outcome_indicator": "Successfully negotiated delivery timeline, liability cap, and force majeure clause.",
@@ -964,8 +964,8 @@
   {
     "id": "m-075",
     "title": "Negociar cláusulas de un contrato de obra con un arquitecto",
-    "description": "Explicar tus preocupaciones sobre términos contractuales ambiguos en un proyecto de renovación residencial.",
-    "objective": "Cuestionar al menos tres cláusulas específicas del contrato (plazos de entrega, responsabilidad por daños materiales, y mecanismo de resolución de disputas) y solicitar enmiendas concretas antes de firmar por €85,000.",
+    "description": "Recibes el borrador del contrato de reforma de tu casa (€85.000) y hay cláusulas ambiguas. Cuestionas las tres más peligrosas antes de firmar.",
+    "objective": "Cuestiona al menos tres cláusulas del contrato (plazos de entrega, responsabilidad por daños y resolución de disputas), propón enmiendas concretas para cada una y deja claro que no firmas los €85.000 sin cambios.",
     "scene_context": "Estás en la oficina de un arquitecto renombrado tras recibir un borrador de contrato para la renovación de tu propiedad. Necesitas aclarar términos que consideras onerosos.",
     "character_name": "Senior Architect",
     "expected_outcome_indicator": "Successfully challenge vague contract terms and propose three concrete amendments.",
@@ -977,8 +977,8 @@
   {
     "id": "m-076",
     "title": "Pedir un café para llevar",
-    "description": "Pide el café con tus preferencias, paga y entérate del horario.",
-    "objective": "Pide un café grande con leche para llevar, escucha el precio, paga y pregunta a qué hora cierran.",
+    "description": "Vas con prisa por la mañana y quieres un café para llevar. Pide un café grande con leche, escucha el precio, paga y pregunta a qué hora cierran.",
+    "objective": "Pide al camarero un café grande con leche para llevar, escucha el precio y paga, y pregunta también a qué hora cierran hoy.",
     "scene_context": "Entras con prisa a la cafetería antes del trabajo. Hay dos personas delante y el camarero sonríe.",
     "character_name": "Barista",
     "expected_outcome_indicator": "Coffee ordered and paid",
@@ -990,7 +990,7 @@
   {
     "id": "m-077",
     "title": "Comprar fruta en el mercado",
-    "description": "Compra la fruta del sábado con presupuesto y compara precios.",
+    "description": "Es sábado por la mañana y toca comprar fruta en el mercado. Compra manzanas y plátanos, compara precios con las naranjas y ajústate a 5 dólares.",
     "objective": "Compra un kilo de manzanas y medio de plátanos, pregunta el precio de cada uno, pide una bolsa si hace falta, compara con las naranjas y decide sin pasarte de 5 dólares.",
     "scene_context": "Sábado en el mercado de barrio, con puestos llenos y mucho ruido. El de la fruta te saluda.",
     "character_name": "Fruit Vendor",
@@ -1003,7 +1003,7 @@
   {
     "id": "m-078",
     "title": "Registrarte en un hotel",
-    "description": "Regístrate y resuelve desayuno, wifi y servicio de habitaciones.",
+    "description": "Llegas al hotel de noche y quieres instalarte rápido. Da tu nombre, confirma las dos noches y resuelve desayuno, wifi y servicio de habitaciones.",
     "objective": "Da tu nombre y confirma la reserva de dos noches, pregunta a qué hora es el desayuno, pide la contraseña del wifi y pregunta si hay servicio de habitaciones.",
     "scene_context": "Llegas al hotel con la maleta después de seis horas de tren. La recepción está tranquila.",
     "character_name": "Receptionist",
@@ -1016,7 +1016,7 @@
   {
     "id": "m-079",
     "title": "Pedir comida en un restaurante",
-    "description": "Pide tu comida, esquiva lo picante y remata con postre.",
+    "description": "Comes en un restaurante donde no conoces los platos. Pide pollo con ensalada, esquiva lo picante cambiando a arroz y remata con el postre del día.",
     "objective": "Pide pollo con ensalada y agua, pregunta si el pollo lleva salsa, cambia a arroz si lleva picante, pregunta el postre del día y pide pan.",
     "scene_context": "Restaurante de barrio a mediodía con manteles a cuadros. El camarero se acerca con la libreta.",
     "character_name": "Waiter",
@@ -1029,7 +1029,7 @@
   {
     "id": "m-080",
     "title": "Comprar una camiseta",
-    "description": "Encuentra tu talla, pruébate otra y decide con el descuento incluido.",
+    "description": "Quieres una camiseta azul y la primera talla no te convence. Pregunta el precio, pruébate otra talla, averigua si hay descuento y decide con calma.",
     "objective": "Pide una camiseta azul talla mediana, pregunta el precio, si no te queda pide otra en el probador, pregunta si hay descuento y decide si la compras.",
     "scene_context": "Tienda de ropa con música suave; un montón de camisetas dobladas y dos probadores al fondo.",
     "character_name": "Shop Assistant",
@@ -1042,7 +1042,7 @@
   {
     "id": "m-081",
     "title": "Preguntar por la parada del bus",
-    "description": "Moverte en bus como un local: parada, horario, precio y validez.",
+    "description": "Te mudas de barrio y necesitas dominar el autobús. Pregunta dónde está la parada, cada cuánto pasa, cuánto cuesta y si el billete vale para dos viajes.",
     "objective": "Pregunta dónde está la parada del bus, a qué hora pasa el próximo, cuánto cuesta el billete, si sirve el mismo para dos viajes y cuánto tiempo vale.",
     "scene_context": "Esquina del centro con coches y bicis. Una señora espera junto al semáforo con bolsas.",
     "character_name": "Local",
@@ -1055,7 +1055,7 @@
   {
     "id": "m-082",
     "title": "En el médico: dolor de cabeza",
-    "description": "Cuenta tus síntomas, entiende el tratamiento y qué hacer si sigue el dolor.",
+    "description": "Llevas con dolor de cabeza desde anoche y vas al médico. Explica los síntomas, pregunta la dosis, si puedes conducir y cuándo volver si no mejora.",
     "objective": "Explica que te duele la cabeza desde anoche y si tomaste algo, pregunta cada cuánto tomar la medicina, si puedes conducir y cuándo volver si no mejora.",
     "scene_context": "Consulta del médico con estanterías y un reloj de pared. El doctor revisa tu historial.",
     "character_name": "Doctor",
@@ -1068,7 +1068,7 @@
   {
     "id": "m-083",
     "title": "Llamar a un amigo para quedar",
-    "description": "Cierra el plan del sábado: película, hora, entradas y quién paga.",
+    "description": "Quieres organizar el sábado con tu amigo por teléfono. Propón el cine, acordad la hora y la película, y resolved quién compra las entradas.",
     "objective": "Llama a tu amigo, propón ir al cine el sábado, acordad la hora, pregunta qué película quiere ver, organiza dónde comprar las entradas y quién paga.",
     "scene_context": "Tarde en casa con el móvil en la mano: quieres cerrar el plan del sábado.",
     "character_name": "Friend",
@@ -1081,7 +1081,7 @@
   {
     "id": "m-084",
     "title": "Comprar un billete de tren",
-    "description": "Billete para hoy con descuento, andén y transbordos incluidos.",
+    "description": "Sales hoy hacia Brighton y no quieres perder tiempo. Compra ida y vuelta, pregunta por el descuento, el próximo tren, el andén y los cambios de vía.",
     "objective": "Compra un billete de ida y vuelta a Brighton para hoy, pregunta si hay descuento, la hora del próximo tren, el andén y si hay que cambiar de vía.",
     "scene_context": "Estación grande con paneles de salidas y gente corriendo. La taquillera te mira esperando.",
     "character_name": "Ticket Clerk",
@@ -1094,7 +1094,7 @@
   {
     "id": "m-085",
     "title": "Tu primer día de clase",
-    "description": "Rompe el hielo el primer día y aprende los básicos del aula.",
+    "description": "Es tu primer día en una escuela de inglés. Preséntate a tu compañera, hablad del profesor y la clase y pregunta por las pausas y los baños.",
     "objective": "Preséntate a la compañera, pregúntale su nombre y de dónde es, hablad de la clase y del profesor, pregunta el horario de las pausas y dónde están los baños.",
     "scene_context": "Aula luminosa con mesas pequeñas y un mapa de Inglaterra. Faltan cinco minutos para empezar.",
     "character_name": "Classmate",
@@ -1107,7 +1107,7 @@
   {
     "id": "m-086",
     "title": "Facturar una maleta en el aeropuerto",
-    "description": "Factura sin sorpresas: peso, puerta, embarque y equipaje incluido.",
+    "description": "Estás en el mostrador del aeropuerto facturando tu equipaje. Entrega el pasaporte, factura la maleta y aclara el peso, la puerta y el embarque.",
     "objective": "Entrega el pasaporte, factura una maleta, pregunta si pesa demasiado, si va incluida en el billete, cuál es la puerta y a qué hora embarcas.",
     "scene_context": "Aeropuerto amplio con pantallas y cola en el mostrador. El equipaje de mano ya va contigo.",
     "character_name": "Check-in Agent",
@@ -1120,8 +1120,8 @@
   {
     "id": "m-087",
     "title": "Pagar la cuenta del restaurante",
-    "description": "Paga con tarjeta y pide tu recibo con la misma naturalidad.",
-    "objective": "Di que la comida estaba deliciosa, pide la cuenta, paga con tarjeta y pide una copia del recibo.",
+    "description": "La comida estaba buena y toca pagar. Dile al camarero que estaba deliciosa, pide la cuenta, paga con tarjeta y pide una copia del recibo.",
+    "objective": "Dile al camarero que la comida estaba deliciosa, pide la cuenta, paga con tarjeta y pide una copia del recibo para guardarlo.",
     "scene_context": "Cena a media luz con vistas a la calle. Ya no queréis postre, solo ir a casa.",
     "character_name": "Waiter",
     "expected_outcome_indicator": "Bill paid by card",
@@ -1133,7 +1133,7 @@
   {
     "id": "m-088",
     "title": "Alquilar una bicicleta",
-    "description": "Alquila la bici, pide extras y traza la ruta más segura.",
+    "description": "Quieres alquilar una bici por un día para moverte por la ciudad. Pregunta precio y fianza, pide casco y candado y planea la ruta más segura.",
     "objective": "Alquila una bici por un día, pregunta el precio y la fianza, pide casco y candado, pregunta la ruta más segura al centro y a qué hora devolverla.",
     "scene_context": "Tienda de alquiler con bicis de colores fuera y un mapa de rutas en la pared.",
     "character_name": "Rental Clerk",
@@ -1146,7 +1146,7 @@
   {
     "id": "m-089",
     "title": "Hablar del tiempo con tu vecino",
-    "description": "Charla de vecinos: tiempo, paraguas y la mejor época para visitar la ciudad.",
+    "description": "Te cruzas con tu vecino en el portal y habláis del tiempo. Comenta el día de hoy, pregunta por mañana y por la mejor época para visitar la ciudad.",
     "objective": "Comenta el tiempo de hoy, pregunta por el de mañana, hablad de paraguas y abrigo y pregunta por la mejor época para visitar la ciudad.",
     "scene_context": "Portal del edificio con el cielo despejado. El vecino llega con el periódico y os saludáis.",
     "character_name": "Neighbor",
@@ -1159,7 +1159,7 @@
   {
     "id": "m-090",
     "title": "Comprar un teléfono sencillo",
-    "description": "Compara dos móviles, pregunta por la garantía y el cargador, y decide el tuyo.",
+    "description": "Buscas un teléfono sencillo y barato en una tienda de barrio. Compara dos modelos, pregunta por la garantía y el cargador y decide cuál te llevas.",
     "objective": "Pide un teléfono sencillo, pregunta el precio, compara el segundo modelo si es más barato, pregunta por la garantía y el cargador, y decide cuál llevas.",
     "scene_context": "Tienda de telefonía con móviles de exposición y un vendedor que espera tu decisión.",
     "character_name": "Salesperson",
@@ -1172,7 +1172,7 @@
   {
     "id": "m-091",
     "title": "Preguntar el horario del próximo tren",
-    "description": "Llega a Oxford sin perder el tren: hora, andén, duración y transbordos.",
+    "description": "Necesitas llegar a Oxford hoy sin perder el tren. Pregunta la hora del próximo, el andén, la duración, si hay cambio y si los retrasos son habituales.",
     "objective": "Pregunta la hora del próximo tren a Oxford, en qué andén sale, cuánto dura el viaje, si hay que cambiar y si el retraso es habitual.",
     "scene_context": "Estación luminosa con gran panel de salidas. Un empleado con uniforme pasa a tu lado.",
     "character_name": "Clerk",
@@ -1185,7 +1185,7 @@
   {
     "id": "m-092",
     "title": "Invitar a un amigo a cenar",
-    "description": "Organiza la cena perfecta: menú, alergias, hora y postre.",
+    "description": "Quieres invitar a cenar a un amigo el viernes. Cuéntale el menú, pregunta por alergias, fija la hora y pídele que traiga el postre.",
     "objective": "Invita a cenar el viernes, explica qué vas a cocinar, pregunta si tu amigo tiene alergias, queda a las nueve y pide que traiga el postre.",
     "scene_context": "Cocina cálida al atardecer con la mesa a medio poner y la nevera abierta.",
     "character_name": "Friend",
@@ -1198,7 +1198,7 @@
   {
     "id": "m-093",
     "title": "En la farmacia: dolor de garganta",
-    "description": "Explica tus síntomas y vuelve sabiendo cómo tomarte el jarabe.",
+    "description": "Te duele la garganta desde hace días y vas a la farmacia. Explica los síntomas, pregunta por el jarabe y la dosis, y cuándo volver si sigues igual.",
     "objective": "Explica el dolor de garganta y si tienes fiebre, pregunta por el jarabe y la dosis, si da sueño, si se puede tomar con la comida y cuándo volver si no mejora.",
     "scene_context": "Farmacia de barrio con bata blanca y cajones. Otra persona espera detrás de ti.",
     "character_name": "Pharmacist",
@@ -1211,7 +1211,7 @@
   {
     "id": "m-094",
     "title": "Buscar el baño en un centro comercial",
-    "description": "Oriéntate en el centro comercial sin perderte ni un detalle.",
+    "description": "Estás en un centro comercial enorme y necesitas orientarte. Pregunta por el baño, el ascensor, el cambiador de bebés, la salida y los horarios.",
     "objective": "Pregunta dónde está el baño, si hay ascensor, en qué planta, si hay cambiador para bebés, dónde queda la salida y si cierran a mediodía.",
     "scene_context": "Centro comercial enorme con escaleras mecánicas y un mapa de plantas junto a ti.",
     "character_name": "Info Assistant",
@@ -1224,8 +1224,8 @@
   {
     "id": "m-095",
     "title": "Comprar flores para un regalo",
-    "description": "Elige el ramo perfecto sin pasarte del presupuesto.",
-    "objective": "Pide flores para tu madre, pregunta cuánto cuestan, elige un ramo que no pase de 20 dólares y pide una tarjeta de regalo.",
+    "description": "Es el cumpleaños de tu madre y quieres flores para regalar. Pregunta precios, elige un ramo de menos de 20 dólares y pide una tarjeta de regalo.",
+    "objective": "Pide flores para tu madre en la floristería, pregunta cuánto cuestan, elige un ramo que no pase de 20 dólares y pide una tarjeta de regalo.",
     "scene_context": "Entras en la floristería del barrio con algo de prisa: el cumpleaños es hoy.",
     "character_name": "Florist",
     "expected_outcome_indicator": "Flowers bought",
@@ -1237,7 +1237,7 @@
   {
     "id": "m-096",
     "title": "Apuntarte al gimnasio del barrio",
-    "description": "Apúntate al gimnasio sabiendo precios, matrícula y clases.",
+    "description": "Quieres apuntarte al gimnasio del barrio sin gastos sorpresa. Pregunta la cuota y la matrícula, pide una clase de prueba y aclara horarios y entrenador.",
     "objective": "Pregunta el precio al mes y la matrícula, pide una clase de prueba, pregunta el horario de mañana, si hay entrenador y cuánto cuesta apuntarse hoy.",
     "scene_context": "Recepción del gimnasio con música de fondo y entrenadores enseñando las salas.",
     "character_name": "Instructor",
@@ -1250,7 +1250,7 @@
   {
     "id": "m-097",
     "title": "Pedir ayuda con una maleta pesada",
-    "description": "Consigue ayuda con la maleta y llega a tu andén a tiempo.",
+    "description": "Llegas a la estación cargado y la maleta pesa demasiado. Pide ayuda, pregunta por las escaleras y el ascensor y llega a tu andén a tiempo.",
     "objective": "Pide ayuda con la maleta, explica que pesa mucho, pregunta dónde están las escaleras, si hay ascensor y si puede ayudarte hasta el andén.",
     "scene_context": "Estación con escaleras anchas y gente pasando rápido: tu tren sale en diez minutos.",
     "character_name": "Traveller",
@@ -1263,7 +1263,7 @@
   {
     "id": "m-098",
     "title": "Hablar de tu familia",
-    "description": "Conoce a alguien nuevo hablando de tu familia y de la suya.",
+    "description": "Estás conociendo a alguien nuevo y habláis de familia. Cuenta cuántos hermanos tienes y con quién vives, y pregunta por la suya y si vive cerca.",
     "objective": "Habla de tu familia: cuántos hermanos tienes, con quién vives y a qué se dedica tu familia; después pregunta por la suya y si vive cerca.",
     "scene_context": "Cafetería tranquila con plantas y jazz suave. La conversación va saliendo sola.",
     "character_name": "New Friend",
@@ -1276,7 +1276,7 @@
   {
     "id": "m-099",
     "title": "Reservar una mesa por teléfono",
-    "description": "Reserva la mesa con todos los detalles y confírmala por teléfono.",
+    "description": "Reservas mesa para cuatro por teléfono y no quieres fallos. Confirma día y hora, pregunta por la terraza, la cortesía de quince minutos y da tu teléfono.",
     "objective": "Reserva mesa para cuatro el viernes a las nueve, pregunta si hay terraza, si guardan la mesa quince minutos, da un teléfono de contacto y confirma la reserva.",
     "scene_context": "Salón en penumbra con una lámpara encendida. La llamada suena dos veces antes de contestar.",
     "character_name": "Host",
@@ -1289,7 +1289,7 @@
   {
     "id": "m-100",
     "title": "Pagar en la caja del supermercado",
-    "description": "Cierra la compra como un experto: bolsa, pago, ticket y cupón.",
+    "description": "Estás en la caja del supermercado con la compra hecha. Pide una bolsa, pregunta el total, paga con tarjeta, pide el ticket y canjea tu cupón.",
     "objective": "Pide una bolsa, pregunta el total, paga con tarjeta, pide el ticket, pregunta dónde canjear un cupón y si hay caja rápida.",
     "scene_context": "Supermercado de barrio con cajas numeradas y tu carro lleno de la compra del mes.",
     "character_name": "Cashier",
@@ -1302,8 +1302,8 @@
   {
     "id": "m-101",
     "title": "Devolver una chaqueta",
-    "description": "Vuelves a la tienda con la chaqueta de ayer y el recibo: cambio o devolución.",
-    "objective": "Explica que compraste la chaqueta ayer, pide cambiarla por otra talla y guarda el recibo.",
+    "description": "Ayer compraste una chaqueta y hoy vuelves a la tienda con el recibo. Quieres cambiar la talla sin perder el derecho a devolución.",
+    "objective": "Explica que compraste la chaqueta ayer, pide cambiarla por otra talla sin perder el recibo y confirma cómo queda el cambio.",
     "scene_context": "Estás en el mostrador de una tienda de ropa con la chaqueta y el recibo en la mano. Tienes que completar 3 pasos: 1. Explicar la compra (chaqueta, ayer). 2. Pedir el cambio de talla. 3. Confirmar que conservas el recibo.",
     "character_name": "Shop Assistant",
     "expected_outcome_indicator": "Exchange requested with receipt",
@@ -1315,8 +1315,8 @@
   {
     "id": "m-102",
     "title": "Pedir cita con el dentista",
-    "description": "Te duele al masticar: llama a la clínica dental y cierra el hueco de esta semana.",
-    "objective": "Pide una cita para esta semana, explica que te duele al masticar y confirma la hora.",
+    "description": "Te duele una muela al masticar y necesitas cita esta semana. Llama a la clínica dental y asegura el hueco.",
+    "objective": "Pide una cita para esta semana, explica que te duele la muela al masticar y confirma el día y la hora de la cita.",
     "scene_context": "Estás en casa llamando a una clínica dental; al otro lado suena una radio suave. Tienes que completar 3 pasos: 1. Pedir cita para esta semana. 2. Explicar el dolor (al masticar). 3. Confirmar día y hora.",
     "character_name": "Receptionist",
     "expected_outcome_indicator": "Dental appointment booked",
@@ -1328,8 +1328,8 @@
   {
     "id": "m-103",
     "title": "Reservar una habitación con vistas",
-    "description": "Llamada al hotel: habitación doble con vistas al mar y precio con desayuno.",
-    "objective": "Reserva una habitación doble con vistas al mar para el fin de semana y pregunta el precio con desayuno.",
+    "description": "Fin de semana fuera y quieres una habitación doble con vistas al mar. Pregunta el precio con desayuno antes de confirmar.",
+    "objective": "Reserva una habitación doble con vistas al mar para el fin de semana, pregunta el precio con desayuno y confirma la reserva a tu nombre.",
     "scene_context": "Estás en la oficina preparando un viaje, con una libreta delante y el hotel al teléfono. Tienes que completar 4 pasos: 1. Pedir habitación doble para el fin de semana. 2. Pedir vistas al mar. 3. Preguntar el precio con desayuno. 4. Confirmar la reserva a tu nombre.",
     "character_name": "Hotel Receptionist",
     "expected_outcome_indicator": "Room with a view booked",
@@ -1341,8 +1341,8 @@
   {
     "id": "m-104",
     "title": "Perderse en el metro",
-    "description": "Andén equivocado con un plano en la mano: pregunta y encuentra tu ruta.",
-    "objective": "Pregunta qué línea tomar, cuántas paradas son y dónde hacer transbordo.",
+    "description": "Vas en metro y no sabes dónde está tu estación. Pregunta la línea, las paradas y el transbordo exacto.",
+    "objective": "Pregunta en el andén qué línea tomar y cuántas paradas son, y aclara dónde debes hacer transbordo sin comprar otro billete.",
     "scene_context": "Estás en el andén de una estación de metro con un plano en la mano y el tren que no llega. Tienes que completar 3 pasos: 1. Preguntar la línea correcta. 2. Contar las paradas. 3. Localizar el transbordo.",
     "character_name": "Station Staff",
     "expected_outcome_indicator": "Route and transfer understood",
@@ -1354,8 +1354,8 @@
   {
     "id": "m-105",
     "title": "Comprar entradas para un concierto",
-    "description": "En la taquilla del teatro: entradas para el sábado y elegir bien el asiento.",
-    "objective": "Pide dos entradas para el sábado, pregunta por los asientos y elige la opción más barata.",
+    "description": "Hay concierto el sábado y quieres dos asientos. Compara las opciones y elige la más barata antes de pagar.",
+    "objective": "Pide dos entradas para el sábado, pregunta por los asientos disponibles y elige la opción más barata antes de pagar.",
     "scene_context": "Estás en la taquilla del teatro; hay un cartel del concierto con los precios. Tienes que completar 3 pasos: 1. Pedir dos entradas para el sábado. 2. Preguntar por los asientos. 3. Elegir la opción más barata.",
     "character_name": "Ticket Seller",
     "expected_outcome_indicator": "Two tickets bought",
@@ -1367,8 +1367,8 @@
   {
     "id": "m-106",
     "title": "Planes para el fin de semana",
-    "description": "Plan condicional con un amigo: playa si hace sol y desayuno antes.",
-    "objective": "Propón ir a la playa el domingo si hace sol y queda para desayunar antes.",
+    "description": "Un amigo y tú queréis plan para el domingo. Propón la playa si hace sol y deja apalabrado el desayuno.",
+    "objective": "Propón ir a la playa el domingo si hace sol, queda para desayunar antes y acordad la hora de salida.",
     "scene_context": "Estás en un banco del parque con tu amigo y el cielo despejado. Tienes que completar 4 pasos: 1. Proponer la playa para el domingo. 2. Poner la condición del sol. 3. Quedar para desayunar. 4. Acordar la hora.",
     "character_name": "Friend",
     "expected_outcome_indicator": "Weekend plan agreed",
@@ -1380,8 +1380,8 @@
   {
     "id": "m-107",
     "title": "Reclamar un pedido que llegó tarde",
-    "description": "Atención al cliente: número de pedido, retraso y una solución o el reembolso.",
-    "objective": "Da el número de pedido, explica el retraso y pide una solución o el reembolso; insiste si te ofrecen esperar.",
+    "description": "Tu pedido llegó tarde y llamas a atención al cliente. Da el número, explica el retraso y pide una solución.",
+    "objective": "Da el número de pedido, explica cuánto se ha retrasado y pide una solución o el reembolso; insiste si te ofrecen esperar más tiempo.",
     "scene_context": "Estás en casa llamando a atención al cliente con el correo del pedido abierto. Tienes que completar 4 pasos: 1. Dar el número de pedido. 2. Explicar el retraso. 3. Pedir una solución o reembolso. 4. Cerrar el acuerdo.",
     "character_name": "Support Agent",
     "expected_outcome_indicator": "Late order reported",
@@ -1393,8 +1393,8 @@
   {
     "id": "m-108",
     "title": "Apuntarse a un curso de cocina",
-    "description": "Escuela de cocina con olor a pan: días, precio, delantal y plaza.",
-    "objective": "Pregunta los días, el precio y si hace falta llevar delantal, y reserva una plaza.",
+    "description": "La cocina te llama y buscas un curso. Pregunta días, precio y si llevas delantal antes de reservar plaza.",
+    "objective": "Pregunta los días y el precio del curso de cocina, pregunta si hace falta llevar delantal y reserva una plaza.",
     "scene_context": "Estás en la recepción de una escuela de cocina; huele a pan recién hecho. Tienes que completar 4 pasos: 1. Preguntar los días del curso. 2. Preguntar el precio. 3. Preguntar por el delantal. 4. Reservar una plaza.",
     "character_name": "Course Coordinator",
     "expected_outcome_indicator": "Cooking course details asked",
@@ -1406,8 +1406,8 @@
   {
     "id": "m-109",
     "title": "Abrir una cuenta en el banco",
-    "description": "Sentado frente al banquero: cuenta nueva, documentos y tarjeta.",
-    "objective": "Pide abrir una cuenta, pregunta qué documentos necesitas y cuánto tarda la tarjeta.",
+    "description": "Quieres abrir una cuenta en el banco y no conoces los trámites. Asegura documentos y plazos antes de decidir.",
+    "objective": "Pide abrir una cuenta en el banco, pregunta qué documentos necesitas llevar y cuánto tarda en llegar la tarjeta.",
     "scene_context": "Estás en una oficina bancaria sentado frente a un empleado. Tienes que completar 4 pasos: 1. Pedir abrir una cuenta. 2. Preguntar los documentos. 3. Preguntar por la tarjeta y su demora. 4. Confirmar los siguientes pasos.",
     "character_name": "Bank Clerk",
     "expected_outcome_indicator": "Account requirements known",
@@ -1419,8 +1419,8 @@
   {
     "id": "m-110",
     "title": "Pedir comida a domicilio",
-    "description": "A casa y con hambre: pizza, ensalada y saber cuándo llama el repartidor.",
-    "objective": "Pide una pizza y una ensalada, da tu dirección y pregunta cuánto tarda el reparto.",
+    "description": "Noche en casa con hambre y quieres pedir a domicilio. Pide tu cena, da la dirección y controla el tiempo de espera.",
+    "objective": "Pide por teléfono una pizza y una ensalada, da tu dirección completa y pregunta cuánto tarda el reparto en llegar.",
     "scene_context": "Estás en casa con hambre llamando al restaurante italiano de la esquina. Tienes que completar 3 pasos: 1. Pedir la pizza y la ensalada. 2. Dar tu dirección. 3. Preguntar cuánto tarda el reparto.",
     "character_name": "Restaurant Host",
     "expected_outcome_indicator": "Delivery order placed",
@@ -1432,8 +1432,8 @@
   {
     "id": "m-111",
     "title": "Perder el vuelo",
-    "description": "Mostrador de la aerolínea: otro vuelo hoy, explicando qué pasó sí o sí.",
-    "objective": "Explica lo que ha pasado, pide otro vuelo para hoy y pregunta si hay coste extra; si no hay plazas, pide alternativas.",
+    "description": "Has perdido el vuelo y estás en el mostrador. Explica lo ocurrido y busca plaza para hoy sin costes ocultos.",
+    "objective": "Explica lo que pasó, pide otro vuelo para hoy, pregunta si hay coste extra y pide alternativas si no quedan plazas.",
     "scene_context": "Estás en el mostrador de la aerolínea, sudando y con la maleta. Tienes que completar 5 pasos: 1. Explicar lo ocurrido. 2. Pedir otro vuelo para hoy. 3. Preguntar el coste extra. 4. Pedir alternativas si no hay plazas. 5. Confirmar la nueva reserva.",
     "character_name": "Airline Agent",
     "expected_outcome_indicator": "Next flight arranged",
@@ -1445,8 +1445,8 @@
   {
     "id": "m-112",
     "title": "Visitar a un compañero enfermo",
-    "description": "De visita con la bolsa de la compra: interesa, ofrece y avisa al equipo.",
-    "objective": "Pregunta cómo se siente tu compañero, ofrécele sopa y dile que avisarás al equipo.",
+    "description": "Visitas a un compañero enfermo con la compra hecha. Interésate por él y organízate para avisar al equipo.",
+    "objective": "Pregunta a tu compañero cómo se siente, ofrécele la sopa que le llevas y dile que avisarás al equipo de su baja.",
     "scene_context": "Estás en casa de tu compañero con una bolsa de la compra; él está en el sofá con una manta. Tienes que completar 3 pasos: 1. Preguntar cómo se siente. 2. Ofrecerle la sopa. 3. Prometer avisar al equipo.",
     "character_name": "Sick Colleague",
     "expected_outcome_indicator": "Colleague comforted",
@@ -1458,8 +1458,8 @@
   {
     "id": "m-113",
     "title": "Comprar un regalo para tu sobrino",
-    "description": "Una juguetería llena de colores: encuentra el regalo perfecto para un niño.",
-    "objective": "Pregunta por juguetes para un niño de ocho años y elige uno con envío a casa.",
+    "description": "El cumpleaños de tu sobrino se acerca y buscas un juguete. Pregunta por su edad y resuelve el envío a casa.",
+    "objective": "Pregunta en la juguetería por un juguete para un niño de ocho años, elige uno que le guste y pide que lo envíen a casa.",
     "scene_context": "Estás en una juguetería con estanterías de colores; una dependienta te saluda mientras coloca cajas. Tienes que completar 2 pasos: 1. Explicar para quién es el regalo (niño, 8 años). 2. Elegir el juguete y pedir el envío a casa.",
     "character_name": "Toy Shop Assistant",
     "expected_outcome_indicator": "Birthday gift chosen",
@@ -1471,8 +1471,8 @@
   {
     "id": "m-114",
     "title": "Alquilar un coche para el fin de semana",
-    "description": "Mostrador de alquiler: coche pequeño, seguro y combustible claros.",
-    "objective": "Alquila un coche pequeño desde el viernes, pregunta por el seguro y el combustible y confirma la devolución.",
+    "description": "Fin de semana largo y necesitas coche. Aclara seguro y combustible antes de firmar el alquiler.",
+    "objective": "Alquila un coche pequeño desde el viernes, pregunta por el seguro y el combustible, y confirma la hora de devolución.",
     "scene_context": "Estás en el mostrador de una empresa de alquiler de coches. Tienes que completar 4 pasos: 1. Pedir un coche pequeño desde el viernes. 2. Preguntar por el seguro. 3. Preguntar por el combustible. 4. Confirmar la devolución.",
     "character_name": "Rental Agent",
     "expected_outcome_indicator": "Car rented with insurance",
@@ -1484,8 +1484,8 @@
   {
     "id": "m-115",
     "title": "Preguntar por el wifi del hotel",
-    "description": "Llegas al hotel y tu primera tarea es conectar el móvil a internet.",
-    "objective": "Pide la contraseña del wifi y pregunta si es gratis y si llega a las habitaciones.",
+    "description": "Acabas de llegar al hotel y quieres conectar el móvil. Pide la clave y comprueba que llega a tu habitación.",
+    "objective": "Pide la contraseña del wifi en recepción, pregunta si es gratis para los huéspedes y confirma que llega a tu habitación.",
     "scene_context": "Estás en la recepción del hotel, con el móvil en la mano y la maleta al lado. Tienes que completar 2 pasos: 1. Pedir la contraseña del wifi. 2. Confirmar que es gratis y que llega a tu habitación.",
     "character_name": "Hotel Receptionist",
     "expected_outcome_indicator": "Wifi connected",
@@ -1497,8 +1497,8 @@
   {
     "id": "m-116",
     "title": "Hablar con el casero de una avería",
-    "description": "Sin agua caliente: técnico hoy y quién paga la reparación, por teléfono.",
-    "objective": "Explica que no hay agua caliente, pide un técnico hoy y pregunta quién paga la reparación.",
+    "description": "La caldera no enciende y en casa hace frío. Pide un técnico para hoy y aclara quién paga la reparación.",
+    "objective": "Explica a tu casero que no hay agua caliente, pide que venga un técnico hoy y pregunta quién paga la reparación.",
     "scene_context": "Estás en el salón con el teléfono; hace frío y la caldera no enciende. Tienes que completar 4 pasos: 1. Explicar la avería. 2. Pedir un técnico hoy. 3. Preguntar quién paga. 4. Acordar la visita.",
     "character_name": "Landlord",
     "expected_outcome_indicator": "Repair requested",
@@ -1510,8 +1510,8 @@
   {
     "id": "m-117",
     "title": "Primer contacto para un trabajo de verano",
-    "description": "Barra de cafetería: preséntate, di cuándo puedes y pregunta tus tareas.",
-    "objective": "Preséntate, di tu disponibilidad en verano y pregunta por las tareas y el horario del puesto.",
+    "description": "La cafetería busca gente para el verano y hablas con el encargado. Muestra tu disponibilidad y pregunta por las tareas.",
+    "objective": "Preséntate al encargado de la cafetería, di tu disponibilidad para el verano y pregunta qué tareas y horarios tiene el puesto.",
     "scene_context": "Estás de pie en la barra de una cafetería; el encargado limpia una taza y te mira. Tienes que completar 4 pasos: 1. Presentarte. 2. Dar tu disponibilidad de verano. 3. Preguntar las tareas. 4. Preguntar el horario.",
     "character_name": "Café Manager",
     "expected_outcome_indicator": "Availability and tasks asked",
@@ -1523,8 +1523,8 @@
   {
     "id": "m-118",
     "title": "Farmacia: jarabe para la tos",
-    "description": "Un mostrador de farmacia: pide el jarabe justo y entiende la dosis.",
-    "objective": "Pide un jarabe para la tos y pregunta la dosis para un adulto y si da sueño.",
+    "description": "La tos no te deja dormir y vas a la farmacia. Pide el jarabe y entiende bien la dosis antes de irte.",
+    "objective": "Pide un jarabe para la tos, pregunta la dosis para un adulto, si da sueño y cuántos días hay que tomarlo.",
     "scene_context": "Estás en la farmacia del barrio; el farmacéutico ordena cajas y te atiende con calma. Tienes que completar 2 pasos: 1. Pedir el jarabe para la tos. 2. Preguntar la dosis y si da sueño.",
     "character_name": "Pharmacist",
     "expected_outcome_indicator": "Cough syrup explained",
@@ -1536,8 +1536,8 @@
   {
     "id": "m-119",
     "title": "Clase de prueba en el gimnasio",
-    "description": "Recepción del gimnasio: horario de spinning, prueba gratis y taquillas.",
-    "objective": "Pregunta el horario de spinning, pide una clase de prueba gratis y pregunta por las taquillas.",
+    "description": "Quieres probar el gimnasio antes de apuntarte. Pregunta horarios, clase de prueba y taquillas.",
+    "objective": "Pregunta el horario de spinning, pide una clase de prueba gratis y pregunta si hay taquillas para dejar tus cosas.",
     "scene_context": "Estás en la recepción del gimnasio; suena música con ritmo al fondo. Tienes que completar 4 pasos: 1. Preguntar el horario de spinning. 2. Pedir la clase de prueba gratis. 3. Preguntar por las taquillas. 4. Apuntarte a la próxima clase.",
     "character_name": "Gym Receptionist",
     "expected_outcome_indicator": "Trial class arranged",
@@ -1549,8 +1549,8 @@
   {
     "id": "m-120",
     "title": "Cita en la peluquería",
-    "description": "La peluquería del barrio: cita del sábado y el corte que quieres, sin sorpresas.",
-    "objective": "Pide cita para el sábado, explica el corte que quieres y pregunta el precio con lavado.",
+    "description": "Te toca corte de pelo y quieres cita el sábado. Explica el estilo y aclara el precio con lavado.",
+    "objective": "Pide cita para el sábado, explica con detalle qué corte quieres y pregunta el precio con lavado y secado.",
     "scene_context": "Estás en la puerta de una peluquería pequeña; la peluquera barre el suelo y te saluda. Tienes que completar 3 pasos: 1. Pedir cita para el sábado. 2. Explicar el corte. 3. Preguntar el precio con lavado.",
     "character_name": "Hairdresser",
     "expected_outcome_indicator": "Haircut appointment set",
@@ -1562,8 +1562,8 @@
   {
     "id": "m-121",
     "title": "Devolver libros a la biblioteca con retraso",
-    "description": "Tres libros con retraso: multa, disculpa y renovar si se puede.",
-    "objective": "Explica el retraso, pregunta cuánto es la multa y renueva un libro si puedes.",
+    "description": "Tres libros con retraso y toca devolverlos. Pregunta la multa y si puedes renovar alguno.",
+    "objective": "Explica el retraso de los libros, pregunta cuánto es la multa y si puedes renovar uno de ellos por más tiempo.",
     "scene_context": "Estás en el mostrador de la biblioteca con tres libros y cara de disculpa. Tienes que completar 4 pasos: 1. Explicar el retraso. 2. Preguntar la multa. 3. Pedir renovar un libro. 4. Confirmar las nuevas fechas.",
     "character_name": "Librarian",
     "expected_outcome_indicator": "Late books returned",
@@ -1575,8 +1575,8 @@
   {
     "id": "m-122",
     "title": "Organizar una barbacoa con amigos",
-    "description": "En el parque con dos amigos: reparte tareas y deja el sábado cerrado.",
-    "objective": "Reparte lo que lleva cada uno, confirma la hora y pregunta si hay mesa reservada.",
+    "description": "Barbacoa el sábado y el grupo se organiza. Reparte lo que lleva cada uno y confirma la mesa.",
+    "objective": "Reparte con tus amigos lo que lleva cada uno a la barbacoa, confirma la hora y pregunta si hay mesa reservada en el parque.",
     "scene_context": "Estás en el parque con dos amigos discutiendo el plan del sábado. Tienes que completar 3 pasos: 1. Repartir lo que trae cada uno. 2. Confirmar la hora. 3. Preguntar por la mesa reservada.",
     "character_name": "Friend",
     "expected_outcome_indicator": "Barbecue organised",
@@ -1588,8 +1588,8 @@
   {
     "id": "m-123",
     "title": "Cambio de puerta de embarque",
-    "description": "Panel de vuelos y prisa: encuentra tu puerta, la hora y el camino.",
-    "objective": "Pregunta por tu puerta, comprueba la hora de embarque y pide indicaciones para llegar.",
+    "description": "Tu vuelo cambia de puerta y el aeropuerto es enorme. Encuentra la puerta y controla la hora de embarque.",
+    "objective": "Pregunta por tu nueva puerta de embarque, comprueba la hora de embarque y pide indicaciones para llegar caminando a tiempo.",
     "scene_context": "Estás delante de un panel de vuelos en el aeropuerto con la tarjeta de embarque en la mano. Tienes que completar 4 pasos: 1. Preguntar la puerta. 2. Confirmar la hora de embarque. 3. Pedir indicaciones. 4. Comprobar cuánto tardarás.",
     "character_name": "Airport Staff",
     "expected_outcome_indicator": "New gate located",
@@ -1601,8 +1601,8 @@
   {
     "id": "m-124",
     "title": "Comprar una estantería",
-    "description": "Una tienda de muebles: encuentra la estantería que encaja en casa.",
-    "objective": "Pregunta por una estantería que encaje en tu hueco, su precio y pide la entrega a casa.",
+    "description": "Quieres una estantería que encaje en un hueco que ya has medido. Pregunta medidas, precio y entrega a casa.",
+    "objective": "Pregunta por una estantería que encaje en el hueco que has medido y su precio, y pide que te la entreguen en casa.",
     "scene_context": "Estás en una tienda de muebles con una cinta de medir en el bolsillo; el dependiente se acerca. Tienes que completar 2 pasos: 1. Pedir medidas y precio. 2. Añadir la entrega a casa.",
     "character_name": "Furniture Assistant",
     "expected_outcome_indicator": "Shelf bought with delivery",
@@ -1614,8 +1614,8 @@
   {
     "id": "m-125",
     "title": "Dar parte al seguro del coche",
-    "description": "Con fotos del daño: parte del seguro completo y plazo de reparación.",
-    "objective": "Explica el daño, da la fecha y el lugar, y pregunta cuánto tarda la reparación.",
+    "description": "Has tenido un golpe con el coche y llamas al seguro. Explica el daño con fechas y pregunta plazos.",
+    "objective": "Explica el daño del coche, da la fecha y el lugar del golpe, y pregunta cuánto tarda la reparación del seguro.",
     "scene_context": "Estás en casa llamando a tu seguro de coche con las fotos del daño delante. Tienes que completar 4 pasos: 1. Explicar el daño. 2. Dar fecha y lugar. 3. Preguntar el plazo de reparación. 4. Confirmar la apertura del parte.",
     "character_name": "Insurance Agent",
     "expected_outcome_indicator": "Claim reported",
@@ -1627,7 +1627,7 @@
   {
     "id": "m-126",
     "title": "Negociar la subida del alquiler",
-    "description": "El casero quiere subir el alquiler un 8%: negocia con argumentos.",
+    "description": "Tu casero quiere subir el alquiler un 8% y quieres negociar. Prepara argumentos con precios del barrio y busca un acuerdo por escrito.",
     "objective": "Discute la subida del alquiler con argumentos (precios del barrio y contrato), propón un aumento menor (3-4%) y pide que el acuerdo quede por escrito.",
     "scene_context": "Estás sentado en el salón con el casero y el contrato sobre la mesa. Tienes que completar 4 pasos: 1. Escuchar y rebatir la subida del 8%. 2. Dar argumentos (mercado y contrato). 3. Proponer un 3-4%. 4. Pedir el acuerdo por escrito.",
     "character_name": "Landlord",
@@ -1640,7 +1640,7 @@
   {
     "id": "m-127",
     "title": "Proponer cambiar la fecha del proyecto",
-    "description": "La entrega del viernes no llega: propón un nuevo plan con datos.",
+    "description": "El equipo no llegará a la entrega del viernes y hay que replanificar. Explica el retraso con datos y propón una nueva fecha.",
     "objective": "Explica el retraso con datos concretos, propón mover la entrega al martes, presenta un plan de recuperación y pide confirmación al equipo.",
     "scene_context": "Estás en una sala de reuniones con el equipo y un calendario en la pizarra. Tienes que completar 4 pasos: 1. Explicar el retraso con datos. 2. Proponer el martes como nueva fecha. 3. Presentar un plan de recuperación. 4. Pedir confirmación.",
     "character_name": "Project Lead",
@@ -1653,7 +1653,7 @@
   {
     "id": "m-128",
     "title": "Entrevista de trabajo: experiencia",
-    "description": "Entrevista para un puesto de oficina: convence con ejemplos.",
+    "description": "Entrevista para un puesto de oficina frente a la responsable de contratación. Convence con ejemplos de tu experiencia anterior.",
     "objective": "Habla de tu experiencia anterior con ejemplos concretos, explica por qué te interesa el puesto, pregunta por el equipo y aclara tu disponibilidad.",
     "scene_context": "Estás en una sala pequeña frente a la responsable de contratación. Tienes que completar 4 pasos: 1. Describir tu experiencia con ejemplos. 2. Explicar el interés por el puesto. 3. Preguntar por el equipo. 4. Aclarar tu disponibilidad.",
     "character_name": "Recruiter",
@@ -1666,7 +1666,7 @@
   {
     "id": "m-129",
     "title": "Reclamar una factura del teléfono",
-    "description": "Factura del teléfono al doble: exige una revisión por escrito.",
+    "description": "La factura del teléfono llegó al doble y no entiendes por qué. Reclama los cargos extra y exige una revisión por escrito.",
     "objective": "Pide explicación de los cargos extra, rechaza el cobro si es un error, solicita la revisión por escrito y pregunta por la fecha de respuesta.",
     "scene_context": "Estás llamando a la compañía telefónica con la factura delante y dos cargos repetidos. Tienes que completar 4 pasos: 1. Pedir explicación de los cargos extra. 2. Rechazar el cobro si es un error. 3. Pedir la revisión por escrito. 4. Preguntar la fecha de respuesta.",
     "character_name": "Support Agent",
@@ -1679,8 +1679,8 @@
   {
     "id": "m-130",
     "title": "Vuelo retrasado: pedir compensación",
-    "description": "Tu vuelo se retrasó seis horas y quieres compensación.",
-    "objective": "Pide una explicación del retraso, menciona tus derechos como pasajero y solicita la compensación económica y una noche de hotel.",
+    "description": "Tu vuelo se retrasó seis horas y quieres compensación. En el mostrador reclama tus derechos y pide hotel si toca.",
+    "objective": "Pide una explicación del retraso de seis horas, menciona tus derechos como pasajero y solicita la compensación económica y una noche de hotel.",
     "scene_context": "Estás en el mostrador de la aerolínea con la tarjeta de embarque y seis horas de espera a la espalda. Tienes que completar 3 pasos: 1. Pedir una explicación del retraso. 2. Mencionar tus derechos como pasajero. 3. Solicitar la compensación y la noche de hotel.",
     "character_name": "Airline Agent",
     "expected_outcome_indicator": "Compensation requested politely",
@@ -1692,8 +1692,8 @@
   {
     "id": "m-131",
     "title": "Hábitos saludables con un entrenador",
-    "description": "Quieres mejorar tu rutina de ejercicio y descanso.",
-    "objective": "Explica tu rutina actual de ejercicio y descanso, acepta dos consejos concretos del entrenador y acuerda un plan de dos semanas.",
+    "description": "Quieres mejorar tu rutina de ejercicio y sueño. Con un entrenador revisas tus hábitos y acordáis un plan de dos semanas.",
+    "objective": "Explica tu rutina actual de ejercicio y descanso, acepta dos consejos concretos del entrenador y acuerda con él un plan de dos semanas.",
     "scene_context": "Estás en el gimnasio con un entrenador y una libreta de seguimiento encima de la mesa. Tienes que completar 3 pasos: 1. Describir tu rutina actual (ejercicio y sueño). 2. Aceptar dos consejos concretos. 3. Acordar un plan de dos semanas.",
     "character_name": "Personal Trainer",
     "expected_outcome_indicator": "Two-week plan agreed",
@@ -1705,7 +1705,7 @@
   {
     "id": "m-132",
     "title": "Organizar un viaje en grupo",
-    "description": "El grupo no se pone de acuerdo con el destino del viaje.",
+    "description": "El grupo no se pone de acuerdo con el destino del viaje de verano. Propón un criterio justo y cierra el acuerdo con fechas.",
     "objective": "Escucha las dos opciones del grupo, propón un criterio de decisión (presupuesto y fechas), cierra un acuerdo y reparte las tareas para la reserva.",
     "scene_context": "Estás en un café con dos amigos discutiendo el viaje de verano. Tienes que completar 4 pasos: 1. Escuchar las dos opciones. 2. Proponer un criterio (presupuesto y fechas). 3. Cerrar el acuerdo. 4. Repartir tareas para reservar.",
     "character_name": "Friend",
@@ -1718,8 +1718,8 @@
   {
     "id": "m-133",
     "title": "Devolver un producto defectuoso",
-    "description": "Los auriculares que compraste no cargan.",
-    "objective": "Explica el defecto de los auriculares, pide el reembolso completo y rechaza el vale explicando que la ley te da la razón.",
+    "description": "Los auriculares que compraste no cargan y quieres tu dinero. Negocia en la tienda el reembolso y rebate el vale.",
+    "objective": "Explica que los auriculares nuevos no cargan, pide el reembolso completo y rechaza el vale explicando que la ley te da la razón.",
     "scene_context": "Estás en el mostrador de una tienda de electrónica con la caja y el recibo en la mano. Tienes que completar 3 pasos: 1. Explicar el defecto (no cargan). 2. Pedir el reembolso completo. 3. Rechazar el vale y justificarlo con la ley.",
     "character_name": "Store Manager",
     "expected_outcome_indicator": "Refund claimed for faulty item",
@@ -1731,8 +1731,8 @@
   {
     "id": "m-134",
     "title": "Médico: estrés y mal sueño",
-    "description": "Llevas semanas durmiendo mal por el trabajo.",
-    "objective": "Describe los síntomas de estrés y mal sueño con detalle, pregunta por los hábitos antes de la medicación y pide una revisión.",
+    "description": "Llevas semanas durmiendo mal por el estrés del trabajo. En la consulta describes los síntomas y pides una revisión antes de medicarte.",
+    "objective": "Describe con detalle los síntomas de estrés y mal sueño, pregunta por los hábitos antes de la medicación y pide una revisión.",
     "scene_context": "Estás en la consulta del médico después de varias noches sin dormir bien. Tienes que completar 3 pasos: 1. Describir los síntomas (estrés, mal sueño, cansancio). 2. Preguntar por hábitos antes de medicación. 3. Pedir una revisión.",
     "character_name": "Doctor",
     "expected_outcome_indicator": "Stress symptoms explained",
@@ -1744,7 +1744,7 @@
   {
     "id": "m-135",
     "title": "Presentar una idea en clase",
-    "description": "Expones una propuesta de reciclaje delante de tu clase.",
+    "description": "Expones delante de tu clase una propuesta de reciclaje. Presenta los datos, responde preguntas y busca voluntarios.",
     "objective": "Presenta tu idea con datos, responde a dos preguntas de la clase, acuerda el siguiente paso y busca voluntarios para el equipo.",
     "scene_context": "Estás de pie delante de tu clase con una presentación sencilla en la pizarra. Tienes que completar 4 pasos: 1. Presentar la idea con datos. 2. Responder a dos preguntas. 3. Acordar el siguiente paso. 4. Buscar voluntarios.",
     "character_name": "Teacher",
@@ -1757,7 +1757,7 @@
   {
     "id": "m-136",
     "title": "Resolver un malentendido con un amigo",
-    "description": "Tu amigo cree que no le invitaste a la cena: aclara y arregla.",
+    "description": "Tu amigo cree que le dejaste fuera de la cena y hay tensión. Aclara el malentendido con calma y proponle repetir.",
     "objective": "Aclara lo ocurrido sin discutir, escucha su versión, discúlpate por el malentendido e invítale a repetir la cena.",
     "scene_context": "Estás en un restaurante con tu amigo; hay tensión en el ambiente. Tienes que completar 4 pasos: 1. Aclarar lo ocurrido sin discutir. 2. Escuchar su versión. 3. Disculparte por el malentendido. 4. Invitarle a repetir la cena.",
     "character_name": "Friend",
@@ -1770,7 +1770,7 @@
   {
     "id": "m-137",
     "title": "Renovar el alquiler con una mejora",
-    "description": "Renuevas el contrato y pides pintar el salón.",
+    "description": "Renuevas el alquiler y quieres aprovechar para pintar el salón. Negocia quién paga los materiales y fija la fecha de la obra.",
     "objective": "Acepta renovar el contrato, pide que pinten el salón, negocia quién paga los materiales y fija una fecha para la obra.",
     "scene_context": "Estás en el salón con el casero revisando el contrato nuevo. Tienes que completar 4 pasos: 1. Aceptar la renovación. 2. Pedir que pinten el salón. 3. Negociar quién paga los materiales. 4. Fijar la fecha de la obra.",
     "character_name": "Landlord",
@@ -1783,7 +1783,7 @@
   {
     "id": "m-138",
     "title": "Cargo duplicado en el banco",
-    "description": "Te han cobrado dos veces la misma compra.",
+    "description": "Te han cobrado dos veces la misma compra en el banco. Presenta el movimiento, pide la devolución inmediata y pregunta el plazo.",
     "objective": "Señala el cargo duplicado con la fecha y el importe, pide la devolución inmediata y pregunta cuánto tarda en llegar a tu cuenta.",
     "scene_context": "Estás en la oficina del banco mostrando el movimiento en la app del móvil. Tienes que completar 3 pasos: 1. Señalar el cargo duplicado (fecha e importe). 2. Pedir la devolución inmediata. 3. Preguntar cuánto tarda en llegar.",
     "character_name": "Bank Clerk",
@@ -1796,7 +1796,7 @@
   {
     "id": "m-139",
     "title": "Curso con requisitos",
-    "description": "El curso que quieres exige un nivel mínimo: acredítalo.",
+    "description": "El curso que quieres exige un nivel mínimo que no está claro. Comprueba los requisitos, acredita tu nivel y reserva plaza.",
     "objective": "Comprueba si cumples los requisitos del curso, pregunta cómo acreditar tu nivel, reserva plaza si es posible y confirma el precio final.",
     "scene_context": "Estás en la oficina de una escuela de idiomas con folletos y exámenes de prueba. Tienes que completar 4 pasos: 1. Comprobar los requisitos. 2. Preguntar cómo acreditar el nivel. 3. Reservar plaza. 4. Confirmar el precio final.",
     "character_name": "Course Adviser",
@@ -1809,7 +1809,7 @@
   {
     "id": "m-140",
     "title": "Orientación de estudios",
-    "description": "No sabes qué estudiar: pide orientación con tus notas.",
+    "description": "No sabes qué estudiar el año que viene y pides orientación. Valora opciones con tus notas y decide qué carrera investigar.",
     "objective": "Explica tus intereses y notas, valora dos opciones con el orientador, acuerda investigar una carrera concreta y pídele fuentes o recursos.",
     "scene_context": "Estás en el despacho del orientador con tus notas y una lista de intereses. Tienes que completar 4 pasos: 1. Explicar intereses y notas. 2. Valorar dos opciones. 3. Acordar investigar una carrera. 4. Pedir fuentes o recursos.",
     "character_name": "School Counsellor",
@@ -1822,7 +1822,7 @@
   {
     "id": "m-141",
     "title": "Pedir más horas en el trabajo",
-    "description": "De media jornada a completa: pide el cambio con resultados.",
+    "description": "Quieres pasar de media jornada a completa en tu trabajo. Prepara tus resultados de ventas y negocia una prueba con tu jefa.",
     "objective": "Pide el cambio a jornada completa, justifica con tus resultados de ventas, propón una prueba de un mes y negocia la subida de salario.",
     "scene_context": "Estás en la oficina de tu jefa con tu horario y tus últimos resultados encima de la mesa. Tienes que completar 4 pasos: 1. Pedir la jornada completa. 2. Justificar con resultados de ventas. 3. Proponer una prueba de un mes. 4. Negociar la subida.",
     "character_name": "Manager",
@@ -1835,8 +1835,8 @@
   {
     "id": "m-142",
     "title": "Normas del piso compartido",
-    "description": "Un nuevo compañero se muda y hay que hablar de normas.",
-    "objective": "Propón normas de limpieza y ruido para el piso, escucha las objeciones de tu compañero y acordad un horario común para las tareas.",
+    "description": "Un nuevo compañero se muda al piso y hay que poner normas. Propón acuerdos de limpieza y ruido y fijad un horario común.",
+    "objective": "Propón a tu nuevo compañero normas de limpieza y ruido, escucha sus objeciones y acordad un horario común para las tareas.",
     "scene_context": "Estás en la cocina del piso con tu nuevo compañero y el calendario de tareas en la nevera. Tienes que completar 3 pasos: 1. Proponer normas de limpieza y ruido. 2. Escuchar sus objeciones. 3. Acordar un horario común.",
     "character_name": "Flatmate",
     "expected_outcome_indicator": "House rules agreed",
@@ -1848,7 +1848,7 @@
   {
     "id": "m-143",
     "title": "Entrevista en un hotel: turnos",
-    "description": "Recepción de hotel con turnos rotativos: pregunta y negocia.",
+    "description": "Optas a recepción de hotel con turnos rotativos y quieres claridad. Pregunta la rotación, tu disponibilidad y negocia las noches.",
     "objective": "Pregunta los turnos y la rotación, explica tu disponibilidad, negocia las noches de fin de semana y pregunta por la formación inicial.",
     "scene_context": "Estás en la oficina del hotel frente a la jefa de recepción. Tienes que completar 4 pasos: 1. Preguntar los turnos y la rotación. 2. Explicar tu disponibilidad. 3. Negociar las noches de fin de semana. 4. Preguntar por la formación.",
     "character_name": "Front Desk Manager",
@@ -1861,7 +1861,7 @@
   {
     "id": "m-144",
     "title": "Reciclaje en el barrio",
-    "description": "Faltan contenedores en tu calle: propón un plan a los vecinos.",
+    "description": "En tu calle faltan contenedores y hay basura. Presenta el problema en la reunión de vecinos y propón una solución con seguimiento.",
     "objective": "Presenta el problema en la reunión de vecinos, propón una solución con coste estimado, busca apoyo y ofrece encargarte del seguimiento.",
     "scene_context": "Estás en el salón comunitario con tus vecinos y un plano del barrio. Tienes que completar 4 pasos: 1. Presentar el problema. 2. Proponer una solución con coste. 3. Buscar apoyo. 4. Ofrecerte para el seguimiento.",
     "character_name": "Neighbourhood Chair",
@@ -1874,7 +1874,7 @@
   {
     "id": "m-145",
     "title": "Preparar una entrevista con un mentor",
-    "description": "Entrevista la semana que viene: ensaya con tu mentor.",
+    "description": "Tienes una entrevista importante la semana que viene. Con tu mentor ensayas cómo responder a tus debilidades y pides feedback.",
     "objective": "Pide consejo sobre cómo responder a tus debilidades, ensaya una respuesta, pide feedback concreto y acuerda una segunda práctica.",
     "scene_context": "Estás en una videollamada con tu mentor y tus notas de la oferta. Tienes que completar 4 pasos: 1. Pedir consejo sobre las debilidades. 2. Ensayar una respuesta. 3. Pedir feedback. 4. Acordar una segunda práctica.",
     "character_name": "Mentor",
@@ -1887,7 +1887,7 @@
   {
     "id": "m-146",
     "title": "Multa en el transporte público",
-    "description": "Multa por no validar un billete que sí era válido.",
+    "description": "Te multaron por no validar un billete que sí era válido. Explica tu caso, pide revisar la multa y presenta una reclamación.",
     "objective": "Explica que el billete era válido, pide revisar la multa, presenta una reclamación formal y pregunta el plazo de respuesta.",
     "scene_context": "Estás en la oficina de atención del transporte con el billete y la multa en la mano. Tienes que completar 4 pasos: 1. Explicar que el billete era válido. 2. Pedir revisar la multa. 3. Presentar una reclamación formal. 4. Preguntar el plazo de respuesta.",
     "character_name": "Transport Officer",
@@ -1900,8 +1900,8 @@
   {
     "id": "m-147",
     "title": "Comprar un portátil: comparar opciones",
-    "description": "Dudas entre dos modelos de portátil.",
-    "objective": "Compara los dos portátiles por memoria, batería y precio, y decide con el vendedor el más adecuado para tu uso.",
+    "description": "Dudas entre dos portátiles y no quieres equivocarte. Compara memoria, batería y precio con el vendedor y decide cuál te llevas.",
+    "objective": "Compara los dos portátiles por memoria, batería y precio, pregunta por la garantía y decide con el vendedor el más adecuado.",
     "scene_context": "Estás en una tienda de informática con dos portátiles delante y las fichas técnicas en la mano. Tienes que completar 3 pasos: 1. Comparar memoria y batería. 2. Comparar precios y garantía. 3. Decidir el modelo adecuado con el vendedor.",
     "character_name": "Tech Seller",
     "expected_outcome_indicator": "Laptop compared and chosen",
@@ -1913,8 +1913,8 @@
   {
     "id": "m-148",
     "title": "Hablar con el vecino del ruido",
-    "description": "El vecino de arriba pone música hasta muy tarde.",
-    "objective": "Expón el problema del ruido con calma, propón un horario razonable y acordad avisaros por mensaje si vuelve a pasar.",
+    "description": "El vecino de arriba pone música hasta muy tarde y no duermes. Habla con él con calma y acordad un horario razonable.",
+    "objective": "Expón a tu vecino el problema del ruido con calma, propón un horario razonable para la música y acordad avisaros por mensaje.",
     "scene_context": "Estás en el rellano con tu vecino, después de otra noche sin dormir. Tienes que completar 3 pasos: 1. Exponer el problema con calma. 2. Proponer un horario razonable. 3. Acordar avisaros por mensaje.",
     "character_name": "Neighbour",
     "expected_outcome_indicator": "Noise issue solved politely",
@@ -1926,7 +1926,7 @@
   {
     "id": "m-149",
     "title": "Apuntarte a un voluntariado",
-    "description": "Quieres ayudar en un banco de alimentos.",
+    "description": "Quieres ayudar en un banco de alimentos y no sabes por dónde empezar. Pregunta tareas, tiempo y formación necesaria.",
     "objective": "Pregunta qué tareas hay en el banco de alimentos, cuánto tiempo requiere el turno y qué formación necesitas para empezar.",
     "scene_context": "Estás en la sede de una asociación con carteles de campañas y voluntarios entrando y saliendo. Tienes que completar 3 pasos: 1. Preguntar qué tareas hay. 2. Preguntar cuánto tiempo requiere el turno. 3. Preguntar qué formación necesitas.",
     "character_name": "Volunteer Coordinator",
@@ -1939,7 +1939,7 @@
   {
     "id": "m-150",
     "title": "Queja en el restaurante",
-    "description": "Plato frío y con retraso: queja con calma y pide solución.",
+    "description": "Tu plato llegó frío y con retraso en el restaurante. Queja con calma, pide una solución y negocia la compensación.",
     "objective": "Explica el problema sin perder la calma, pide una solución concreta, escucha la propuesta del camarero y acepta o negocia la compensación.",
     "scene_context": "Estás en la mesa con el camarero y el plato a medio comer. Tienes que completar 4 pasos: 1. Explicar el problema con calma (frío y con retraso). 2. Pedir una solución concreta. 3. Escuchar la propuesta. 4. Aceptar o negociar la compensación.",
     "character_name": "Restaurant Manager",
