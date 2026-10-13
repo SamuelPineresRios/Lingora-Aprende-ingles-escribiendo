@@ -8447,5 +8447,980 @@
         "translation": "¿Puedo reservar una para el próximo mes?"
       }
     ]
+  },
+  {
+    "mission_id": "m-031",
+    "scene_title": "Soporte técnico",
+    "scene_description": "Tu escritorio por la mañana. El computador no enciende y llamas al soporte de la empresa.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Tech Support",
+        "role": "Agente de soporte",
+        "emoji": "💻",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Tech Support, how can I help you?",
+        "translation": "Soporte técnico, ¿en qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Hi, my computer won't turn on.",
+        "translation": "Hola, mi computador no enciende."
+      },
+      {
+        "speaker": "A",
+        "text": "I'm sorry to hear that. Did anything happen before this?",
+        "translation": "Lamento oírlo. ¿Pasó algo antes?"
+      },
+      {
+        "speaker": "B",
+        "text": "It was fine yesterday, but this morning it won't start.",
+        "translation": "Ayer funcionaba bien, pero esta mañana no arranca."
+      },
+      {
+        "speaker": "A",
+        "text": "Does it make any sound when you press the power button?",
+        "translation": "¿Hace algún sonido al pulsar el botón de encendido?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, I hear a strange noise when I turn it on.",
+        "translation": "Sí, escucho un ruido extraño al encenderlo."
+      },
+      {
+        "speaker": "A",
+        "text": "Okay, let's try some steps together. Are you at your desk?",
+        "translation": "Bien, probemos algunos pasos juntos. ¿Está en su escritorio?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, I'm ready. Thank you!",
+        "translation": "Sí, estoy listo. ¡Gracias!"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-032",
+    "scene_title": "Llegada al Hotel Plaza",
+    "scene_description": "El vestíbulo del hotel después de un viaje largo. Llegas al mostrador con la maleta y la app abierta.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Hotel Receptionist",
+        "role": "Recepcionista",
+        "emoji": "🏨",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good afternoon, welcome to Hotel Plaza. Do you have a reservation?",
+        "translation": "Buenas tardes, bienvenido al Hotel Plaza. ¿Tiene una reserva?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, I booked a room for tonight, but I don't see it in the app.",
+        "translation": "Sí, reservé una habitación para esta noche, pero no la veo en la app."
+      },
+      {
+        "speaker": "A",
+        "text": "Let me check. Do you have the confirmation number?",
+        "translation": "Déjeme comprobar. ¿Tiene el número de confirmación?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, it's #45823. I booked it last week.",
+        "translation": "Sí, es el #45823. La reservé la semana pasada."
+      },
+      {
+        "speaker": "A",
+        "text": "Ah, here it is. There was a typo in the name.",
+        "translation": "Ah, aquí está. Había un error en el nombre."
+      },
+      {
+        "speaker": "B",
+        "text": "Great! Can I check in now?",
+        "translation": "¡Genial! ¿Puedo registrarme ahora?"
+      },
+      {
+        "speaker": "A",
+        "text": "Of course. Your room is 305, with a view of the park.",
+        "translation": "Por supuesto. Su habitación es la 305, con vistas al parque."
+      },
+      {
+        "speaker": "B",
+        "text": "Perfect, thank you very much!",
+        "translation": "Perfecto, ¡muchas gracias!"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-033",
+    "scene_title": "Primer día en la oficina",
+    "scene_description": "Tu primer día en la empresa. La oficina está tranquila y un colega se acerca sonriendo.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Colleague",
+        "role": "Colega",
+        "emoji": "👋",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hi, welcome to the team! I'm Sarah.",
+        "translation": "¡Hola, bienvenido al equipo! Soy Sarah."
+      },
+      {
+        "speaker": "B",
+        "text": "Hi Sarah, nice to meet you. I'm Alex.",
+        "translation": "Hola Sarah, encantado. Soy Alex."
+      },
+      {
+        "speaker": "A",
+        "text": "What will you be working on?",
+        "translation": "¿De qué te encargarás?"
+      },
+      {
+        "speaker": "B",
+        "text": "I'm the new Marketing Manager.",
+        "translation": "Soy el nuevo Marketing Manager."
+      },
+      {
+        "speaker": "A",
+        "text": "That is great! Have you worked in marketing before?",
+        "translation": "¡Qué bien! ¿Has trabajado en marketing antes?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, I worked in digital advertising for five years.",
+        "translation": "Sí, trabajé en publicidad digital durante cinco años."
+      },
+      {
+        "speaker": "A",
+        "text": "Amazing. Let me show you your desk.",
+        "translation": "Increíble. Déjame mostrarte tu escritorio."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you, Sarah!",
+        "translation": "¡Gracias, Sarah!"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-034",
+    "scene_title": "Ruido en el edificio",
+    "scene_description": "Llamas a la administración del edificio; al fondo se oyen carpetas y una fotocopiadora.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Building Manager",
+        "role": "Administrador",
+        "emoji": "🏢",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Building management, how can I help you?",
+        "translation": "Administración del edificio, ¿en qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Hello, I'm calling to report a noise problem.",
+        "translation": "Hola, llamo para reportar un problema de ruido."
+      },
+      {
+        "speaker": "A",
+        "text": "Okay, what seems to be the issue?",
+        "translation": "Bien, ¿cuál es el problema?"
+      },
+      {
+        "speaker": "B",
+        "text": "Apartment 4B plays very loud music every night.",
+        "translation": "El apartamento 4B pone música muy alta todas las noches."
+      },
+      {
+        "speaker": "A",
+        "text": "Since when?",
+        "translation": "¿Desde cuándo?"
+      },
+      {
+        "speaker": "B",
+        "text": "Since 11 PM, every day. Have you spoken to them?",
+        "translation": "Desde las 11 de la noche, todos los días. ¿Han hablado con ellos?"
+      },
+      {
+        "speaker": "A",
+        "text": "No, not yet. Would you like us to intervene?",
+        "translation": "No, todavía no. ¿Quiere que intervengamos?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, please. I'd like you to intervene.",
+        "translation": "Sí, por favor. Me gustaría que intervinieran."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-035",
+    "scene_title": "Mesa de desconocidos",
+    "scene_description": "La cena no empieza y hay un silencio incómodo en la mesa. La persona de al lado juega con su copa.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Wedding Guest",
+        "role": "Invitada",
+        "emoji": "💐",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "It's a beautiful ceremony, isn't it?",
+        "translation": "Es una ceremonia preciosa, ¿verdad?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, absolutely lovely. Are you a friend of the bride or the groom?",
+        "translation": "Sí, preciosa. ¿Eres amiga de la novia o del novio?"
+      },
+      {
+        "speaker": "A",
+        "text": "I'm a friend of the groom from university. And you?",
+        "translation": "Soy amiga del novio de la universidad. ¿Y tú?"
+      },
+      {
+        "speaker": "B",
+        "text": "I'm a friend of the groom from high school.",
+        "translation": "Soy amigo del novio del instituto."
+      },
+      {
+        "speaker": "A",
+        "text": "How nice! So we both know David.",
+        "translation": "¡Qué bien! Entonces los dos conocemos a David."
+      },
+      {
+        "speaker": "B",
+        "text": "Yes! The ceremony was emotional.",
+        "translation": "¡Sí! La ceremonia fue emocionante."
+      },
+      {
+        "speaker": "A",
+        "text": "I loved the music. What did you think?",
+        "translation": "Me encantó la música. ¿Qué te pareció?"
+      },
+      {
+        "speaker": "B",
+        "text": "I loved it too. It was perfect.",
+        "translation": "A mí también. Fue perfecta."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-036",
+    "scene_title": "Recomendar un restaurante",
+    "scene_description": "El descanso del café en la oficina. Un colega de otra sucursal busca dónde cenar.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Visiting Colleague",
+        "role": "Colega de visita",
+        "emoji": "☕",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "I'm looking for a good place for dinner tonight. Any ideas?",
+        "translation": "Busco un buen sitio para cenar esta noche. ¿Alguna idea?"
+      },
+      {
+        "speaker": "B",
+        "text": "You have to try La Trattoria. It's my favourite Italian place.",
+        "translation": "Tienes que probar La Trattoria. Es mi italiano favorito."
+      },
+      {
+        "speaker": "A",
+        "text": "That sounds great. What do you like about it?",
+        "translation": "Suena muy bien. ¿Qué te gusta de él?"
+      },
+      {
+        "speaker": "B",
+        "text": "The pasta is handmade and the atmosphere is very cozy.",
+        "translation": "La pasta es casera y el ambiente es muy acogedor."
+      },
+      {
+        "speaker": "A",
+        "text": "Nice! Is it far from here?",
+        "translation": "¡Qué bien! ¿Está lejos de aquí?"
+      },
+      {
+        "speaker": "B",
+        "text": "No, it's just two blocks from the office.",
+        "translation": "No, está a solo dos manzanas de la oficina."
+      },
+      {
+        "speaker": "A",
+        "text": "Perfect. Should I book a table?",
+        "translation": "Perfecto. ¿Debería reservar mesa?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, call them. Fridays are busy.",
+        "translation": "Sí, llámales. Los viernes están llenos."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-037",
+    "scene_title": "Devolución del abrigo",
+    "scene_description": "Mostrador de atención al cliente del centro comercial. Llevas el abrigo, el recibo y la cremallera rota.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Store Manager",
+        "role": "Gerente de la tienda",
+        "emoji": "🧥",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good afternoon, how can I help you today?",
+        "translation": "Buenas tardes, ¿en qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Hi, I bought this navy blue coat here two weeks ago.",
+        "translation": "Hola, compré este abrigo azul marino aquí hace dos semanas."
+      },
+      {
+        "speaker": "A",
+        "text": "What's the problem with it?",
+        "translation": "¿Qué problema tiene?"
+      },
+      {
+        "speaker": "B",
+        "text": "The zipper is completely broken. I'd like a full refund.",
+        "translation": "La cremallera está completamente rota. Quisiera un reembolso completo."
+      },
+      {
+        "speaker": "A",
+        "text": "May I see the receipt? Our policy offers exchanges first.",
+        "translation": "¿Puedo ver el recibo? Nuestra política ofrece primero un cambio."
+      },
+      {
+        "speaker": "B",
+        "text": "I don't trust the quality, so I prefer the refund.",
+        "translation": "No confío en la calidad, así que prefiero el reembolso."
+      },
+      {
+        "speaker": "A",
+        "text": "I understand. It will take three to five working days.",
+        "translation": "Entiendo. Tardará de tres a cinco días hábiles."
+      },
+      {
+        "speaker": "B",
+        "text": "That is fine. Can you confirm it by email?",
+        "translation": "Está bien. ¿Pueden confirmarlo por correo?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-038",
+    "scene_title": "Posponer la entrevista",
+    "scene_description": "En la oficina, con la agenda abierta en la entrevista del 15 de marzo. Marcas el número de recursos humanos.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Recruiter",
+        "role": "Reclutadora",
+        "emoji": "📞",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello, this is Paula from HR. How can I help you?",
+        "translation": "Hola, soy Paula de Recursos Humanos. ¿En qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Hi Paula, I need to reschedule my interview on March 15th.",
+        "translation": "Hola Paula, necesito cambiar mi entrevista del 15 de marzo."
+      },
+      {
+        "speaker": "A",
+        "text": "That's quite short notice. What has happened?",
+        "translation": "Es aviso muy justo. ¿Qué ha pasado?"
+      },
+      {
+        "speaker": "B",
+        "text": "I have a medical appointment booked a month ago.",
+        "translation": "Tengo una cita médica reservada hace un mes."
+      },
+      {
+        "speaker": "A",
+        "text": "I see. When would you like to move it?",
+        "translation": "Ya veo. ¿Para cuándo le gustaría cambiarla?"
+      },
+      {
+        "speaker": "B",
+        "text": "Could we move it two weeks later, to March 29th?",
+        "translation": "¿Podríamos pasarla dos semanas después, al 29 de marzo?"
+      },
+      {
+        "speaker": "A",
+        "text": "Let me check... Yes, the 29th works.",
+        "translation": "Déjeme mirar... Sí, el 29 funciona."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you, and I'm sorry for the change. I'm still very interested.",
+        "translation": "Gracias, y siento el cambio. Sigo muy interesado."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-039",
+    "scene_title": "Negociar el Airbnb",
+    "scene_description": "Desde tu portátil: el chat del apartamento de Gràcia con las fechas de abril en la pantalla.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Property Owner",
+        "role": "Propietario",
+        "emoji": "🔑",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Hello! Thanks for your interest in my apartment.",
+        "translation": "¡Hola! Gracias por tu interés en mi apartamento."
+      },
+      {
+        "speaker": "B",
+        "text": "Hi! I'd like to book from April 10th to 17th, seven nights.",
+        "translation": "¡Hola! Quisiera reservar del 10 al 17 de abril, siete noches."
+      },
+      {
+        "speaker": "A",
+        "text": "Great. The rate is 100 euros per night, 700 in total.",
+        "translation": "Genial. La tarifa es 100 euros por noche, 700 en total."
+      },
+      {
+        "speaker": "B",
+        "text": "Since it's a longer stay, would you offer a discount?",
+        "translation": "Como es una estancia larga, ¿ofrecería un descuento?"
+      },
+      {
+        "speaker": "A",
+        "text": "I can offer 5% off, that is 665 euros.",
+        "translation": "Puedo ofrecer un 5%, son 665 euros."
+      },
+      {
+        "speaker": "B",
+        "text": "Could we close at 595 euros? That is a 15% discount.",
+        "translation": "¿Podríamos cerrar en 595 euros? Es un 15% de descuento."
+      },
+      {
+        "speaker": "A",
+        "text": "Let me think... 595 is okay, but with a strict cancellation policy.",
+        "translation": "Déjame pensar... 595 está bien, pero con cancelación estricta."
+      },
+      {
+        "speaker": "B",
+        "text": "Can you tell me the cancellation policy before I confirm?",
+        "translation": "¿Puede contarme la política de cancelación antes de confirmar?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-040",
+    "scene_title": "Teletrabajo con el jefe",
+    "scene_description": "La reunión en el despacho de María. Llevas tus notas de productividad y el calendario del equipo.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Direct Manager",
+        "role": "Directora",
+        "emoji": "💼",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Come in, sit down. What did you want to discuss?",
+        "translation": "Pasa, siéntate. ¿Qué querías comentarme?"
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you. I'd like to propose working from home on Mondays and Wednesdays.",
+        "translation": "Gracias. Quisiera proponer teletrabajar lunes y miércoles."
+      },
+      {
+        "speaker": "A",
+        "text": "Interesting. Why those two days?",
+        "translation": "Interesante. ¿Por qué esos dos días?"
+      },
+      {
+        "speaker": "B",
+        "text": "I focus better without office distractions, and I save two hours of commuting.",
+        "translation": "Me concentro mejor sin las distracciones de la oficina y ahorro dos horas de transporte."
+      },
+      {
+        "speaker": "A",
+        "text": "I see. But our team collaborates in person.",
+        "translation": "Ya veo. Pero el equipo colabora en persona."
+      },
+      {
+        "speaker": "B",
+        "text": "I suggest a one-month trial, with meetings in the office on Tuesdays and Thursdays.",
+        "translation": "Propongo un mes de prueba, con reuniones en la oficina los martes y jueves."
+      },
+      {
+        "speaker": "A",
+        "text": "That could work. How will we measure it?",
+        "translation": "Podría funcionar. ¿Cómo lo mediremos?"
+      },
+      {
+        "speaker": "B",
+        "text": "With the project deadlines and a short weekly check-in.",
+        "translation": "Con los plazos del proyecto y una revisión semanal corta."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-041",
+    "scene_title": "Cambiar la clase de pilates",
+    "scene_description": "Llamas al gimnasio FitLife desde la oficina; tienes la reunión de trabajo en la agenda del jueves.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Gym Receptionist",
+        "role": "Recepcionista",
+        "emoji": "🧘",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "FitLife Gym, how can I assist you?",
+        "translation": "Gimnasio FitLife, ¿en qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Hi, I need to reschedule my Thursday pilates class at 6:30.",
+        "translation": "Hola, necesito cambiar mi clase de pilates del jueves a las 18:30."
+      },
+      {
+        "speaker": "A",
+        "text": "Of course. May I have your name?",
+        "translation": "Por supuesto. ¿Me dice su nombre?"
+      },
+      {
+        "speaker": "B",
+        "text": "It is Ana, and I paid 80 euros a month ago.",
+        "translation": "Soy Ana, y pagué 80 euros hace un mes."
+      },
+      {
+        "speaker": "A",
+        "text": "I see. Why do you need to change it?",
+        "translation": "Ya veo. ¿Por qué necesita cambiarla?"
+      },
+      {
+        "speaker": "B",
+        "text": "I have an unexpected work meeting that day.",
+        "translation": "Tengo una reunión de trabajo imprevista ese día."
+      },
+      {
+        "speaker": "A",
+        "text": "Let me check... We have a class on Friday at six.",
+        "translation": "Déjeme mirar... Tenemos clase el viernes a las seis."
+      },
+      {
+        "speaker": "B",
+        "text": "Friday at six works. Is there an extra charge?",
+        "translation": "El viernes a las seis me viene bien. ¿Hay coste adicional?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-042",
+    "scene_title": "Compensación por el retraso",
+    "scene_description": "Mostrador de atención al cliente del aeropuerto, tras cuatro horas de espera con el vuelo BA 302.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Airline Customer Service Agent",
+        "role": "Agente de la aerolínea",
+        "emoji": "✈️",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good afternoon. Can I have your booking reference?",
+        "translation": "Buenas tardes. ¿Me da su referencia de reserva?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, it's BA 302 from March 15th.",
+        "translation": "Sí, es el BA 302 del 15 de marzo."
+      },
+      {
+        "speaker": "A",
+        "text": "I see your flight was delayed. How long was the delay?",
+        "translation": "Veo que su vuelo se retrasó. ¿Cuánto duró el retraso?"
+      },
+      {
+        "speaker": "B",
+        "text": "Four hours. And I requested meals but never received them.",
+        "translation": "Cuatro horas. Y pedí comidas pero nunca las recibí."
+      },
+      {
+        "speaker": "A",
+        "text": "I'm very sorry about that.",
+        "translation": "Lo siento mucho."
+      },
+      {
+        "speaker": "B",
+        "text": "What compensation am I entitled to under EU rules?",
+        "translation": "¿A qué compensación tengo derecho según las normas de la UE?"
+      },
+      {
+        "speaker": "A",
+        "text": "You're eligible for 250 euros. I'll open the claim now.",
+        "translation": "Tiene derecho a 250 euros. Abro la reclamación ahora."
+      },
+      {
+        "speaker": "B",
+        "text": "Thank you. How long will the payment take?",
+        "translation": "Gracias. ¿Cuánto tarda el pago?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-043",
+    "scene_title": "Microondas defectuoso",
+    "scene_description": "Mostrador de atención al cliente de la tienda de electrodomésticos. Llevas el microondas, la caja y el recibo.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Store Manager",
+        "role": "Gerente de la tienda",
+        "emoji": "🛒",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good morning. What seems to be the problem with the microwave?",
+        "translation": "Buenos días. ¿Cuál es el problema con el microondas?"
+      },
+      {
+        "speaker": "B",
+        "text": "I bought it fourteen days ago for 89 euros, but it doesn't heat well.",
+        "translation": "Lo compré hace catorce días por 89 euros, pero no calienta bien."
+      },
+      {
+        "speaker": "A",
+        "text": "Have you tried it several times?",
+        "translation": "¿Lo ha probado varias veces?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, I've tried it many times and nothing works.",
+        "translation": "Sí, lo he probado muchas veces y nada funciona."
+      },
+      {
+        "speaker": "A",
+        "text": "We could repair it free of charge.",
+        "translation": "Podríamos repararlo sin coste."
+      },
+      {
+        "speaker": "B",
+        "text": "I'd prefer a full refund, honestly.",
+        "translation": "Sinceramente, preferiría el reembolso completo."
+      },
+      {
+        "speaker": "A",
+        "text": "Our policy allows a refund if the repair fails.",
+        "translation": "Nuestra política permite el reembolso si la reparación falla."
+      },
+      {
+        "speaker": "B",
+        "text": "Then let us start the repair, but I want the refund noted in writing.",
+        "translation": "Entonces empecemos la reparación, pero quiero el reembolso por escrito."
+      }
+    ]
+  },
+  {
+    "mission_id": "m-044",
+    "scene_title": "Reembolso del viaje",
+    "scene_description": "La oficina de Viajes Express. María tiene delante tu reserva original a Barcelona.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Travel Agent",
+        "role": "Agente de viajes",
+        "emoji": "🧳",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good morning! How can I help you today?",
+        "translation": "¡Buenos días! ¿En qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Hello Maria. I booked a trip to Barcelona for 850 euros.",
+        "translation": "Hola María. Reservé un viaje a Barcelona por 850 euros."
+      },
+      {
+        "speaker": "A",
+        "text": "Yes, for July 15th. Is everything okay?",
+        "translation": "Sí, para el 15 de julio. ¿Todo bien?"
+      },
+      {
+        "speaker": "B",
+        "text": "I need to postpone it to September 20th for personal reasons.",
+        "translation": "Necesito posponerlo al 20 de septiembre por motivos personales."
+      },
+      {
+        "speaker": "A",
+        "text": "I understand. The cancellation policy applies to postponements.",
+        "translation": "Entiendo. La política de cancelación aplica a los cambios."
+      },
+      {
+        "speaker": "B",
+        "text": "Can we find a solution? I'd like a refund of at least 200 euros.",
+        "translation": "¿Podemos buscar una solución? Quisiera un reembolso de al menos 200 euros."
+      },
+      {
+        "speaker": "A",
+        "text": "Let me check... We can refund 250 euros and keep the rest as credit.",
+        "translation": "Déjeme mirar... Podemos devolver 250 euros y guardar el resto como saldo."
+      },
+      {
+        "speaker": "B",
+        "text": "250 euros is acceptable. Can you send me the new conditions?",
+        "translation": "250 euros es aceptable. ¿Puede enviarme las nuevas condiciones?"
+      }
+    ]
+  },
+  {
+    "mission_id": "m-045",
+    "scene_title": "Reclamar la limpieza",
+    "scene_description": "Llamas a la empresa de limpieza con las fotos de la cocina y los baños en el móvil.",
+    "characters": [
+      {
+        "id": "A",
+        "name": "Service Manager",
+        "role": "Gerente de servicio",
+        "emoji": "🧹",
+        "gender": "female",
+        "played_by": "ai"
+      },
+      {
+        "id": "B",
+        "name": "Tú",
+        "role": "Tu papel",
+        "emoji": "🧑",
+        "gender": "male",
+        "played_by": "student"
+      }
+    ],
+    "lines": [
+      {
+        "speaker": "A",
+        "text": "Good afternoon, CleanHome Services. How can I help you?",
+        "translation": "Buenas tardes, CleanHome Services. ¿En qué puedo ayudarle?"
+      },
+      {
+        "speaker": "B",
+        "text": "Hello, I'm disappointed with the cleaning service last week.",
+        "translation": "Hola, estoy decepcionado con el servicio de limpieza de la semana pasada."
+      },
+      {
+        "speaker": "A",
+        "text": "I'm sorry to hear that. What exactly was the problem?",
+        "translation": "Siento oírlo. ¿Cuál fue exactamente el problema?"
+      },
+      {
+        "speaker": "B",
+        "text": "The kitchen wasn't cleaned and the bathrooms still had stains.",
+        "translation": "La cocina no quedó limpia y los baños aún tenían manchas."
+      },
+      {
+        "speaker": "A",
+        "text": "Did you notice anything else?",
+        "translation": "¿Notó algo más?"
+      },
+      {
+        "speaker": "B",
+        "text": "Yes, the carpets weren't vacuumed either.",
+        "translation": "Sí, las alfombras tampoco se aspiraron."
+      },
+      {
+        "speaker": "A",
+        "text": "We can send a team again at no cost.",
+        "translation": "Podemos enviar de nuevo un equipo sin coste."
+      },
+      {
+        "speaker": "B",
+        "text": "That would help. Could they come between March 15th and 20th?",
+        "translation": "Eso ayudaría. ¿Podrían venir entre el 15 y el 20 de marzo?"
+      }
+    ]
   }
 ]
