@@ -129,6 +129,7 @@ export async function requestRoleplayTurn(params: {
       message: {
         role: 'assistant',
         content: data.message,
+        translation: data.message_translation,
         rating: data.rating,
       },
       estimated_time: data.estimated_time || 30,

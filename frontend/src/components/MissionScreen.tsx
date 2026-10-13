@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { Languages } from 'lucide-react'
 import { resolveAvatar, type MissionBackdrop as MissionBackdropSpec, type MissionIntroduction } from '@vox/shared'
 import { useNavigate } from 'react-router-dom'
 import { Timer } from './Timer'
@@ -92,6 +93,8 @@ interface MissionScreenProps {
 interface Message {
   role: 'user' | 'assistant' | 'system'
   content: string
+  /** Traducción al español del mensaje del personaje (la da la IA en el turno). */
+  translation?: string
   feedback?: string
   rating?: number // 1-5
   correctedText?: string // Corrected version if exists
@@ -111,6 +114,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const [startTime, setStartTime] = useState<number | null>(null)
   const [isThinking, setIsThinking] = useState(false)
   const [isLastMessageTyping, setIsLastMessageTyping] = useState(false)
+  /** Traducción del mensaje del personaje a la vista (se reinicia por turno). */
+  const [showAiTranslation, setShowAiTranslation] = useState(false)
   /** El saludo inicial no llegó (proveedor de IA): se ofrece reintentar. */
   const [startError, setStartError] = useState<string | null>(null)
   /** Misión cuya cabecera de presentación ya se vio (se rearma al cambiar). */
@@ -193,6 +198,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             } else {
                 setMessages([data.message])
                 setIsLastMessageTyping(true)
+                setShowAiTranslation(false)
                 if (mode === 'evaluation' && data.estimated_time) {
                     setTimerDuration(data.estimated_time)
                     setTimerKey(prev => prev + 1)
@@ -328,6 +334,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             
             // Enable typewriter effect for the new assistant message
             setIsLastMessageTyping(true)
+            setShowAiTranslation(false)
 
             if (missionMode === 'evaluation' && data.estimated_time) {
                 setTimerDuration(data.estimated_time)
@@ -803,6 +810,21 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                         <InteractiveWords text={lastAssistant.content} context={lastAssistant.content} />
                       )}
                     </p>
+                    {lastAssistant.translation && (
+                      <>
+                        <button
+                          onClick={() => setShowAiTranslation(value => !value)}
+                          className="mt-2 inline-flex items-center gap-1.5 rounded-md border border-cyan/25 px-2 py-1 text-[10px] font-mono uppercase tracking-widest text-cyan/70 transition-colors hover:border-cyan/50 hover:text-cyan"
+                        >
+                          <Languages className="h-3 w-3" /> {showAiTranslation ? 'Ocultar' : 'Traducción'}
+                        </button>
+                        {showAiTranslation && (
+                          <p className="mt-2 border-t border-cyan/15 pt-2 font-reading text-sm italic leading-relaxed text-cyan-100/80">
+                            {lastAssistant.translation}
+                          </p>
+                        )}
+                      </>
+                    )}
                   </div>
                 </div>
               )}

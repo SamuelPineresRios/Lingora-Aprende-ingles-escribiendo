@@ -6,7 +6,7 @@
  * el campo `confused` que pinta la cara de confusión.
  */
 import { describe, expect, it } from 'vitest'
-import { buildRoleplaySystemPrompt, ROLEPLAY_TURN_SCHEMA } from '../src/modules/chat/prompts.ts'
+import { buildRoleplaySystemPrompt, ROLEPLAY_OPENING_SCHEMA, ROLEPLAY_TURN_SCHEMA } from '../src/modules/chat/prompts.ts'
 
 const mission = {
   character_name: 'Barista',
@@ -57,5 +57,15 @@ describe('prompt del rol por tier', () => {
     const properties = ROLEPLAY_TURN_SCHEMA.properties as Record<string, { type?: string }>
     expect(ROLEPLAY_TURN_SCHEMA.required).toContain('confused')
     expect(properties.confused?.type).toBe('boolean')
+  })
+
+  it('ambos esquemas exigen la traducción del mensaje', () => {
+    const openingProperties = ROLEPLAY_OPENING_SCHEMA.properties as Record<string, { type?: string }>
+    const turnProperties = ROLEPLAY_TURN_SCHEMA.properties as Record<string, { type?: string }>
+
+    expect(ROLEPLAY_OPENING_SCHEMA.required).toContain('message_translation')
+    expect(ROLEPLAY_TURN_SCHEMA.required).toContain('message_translation')
+    expect(openingProperties.message_translation?.type).toBe('string')
+    expect(turnProperties.message_translation?.type).toBe('string')
   })
 })

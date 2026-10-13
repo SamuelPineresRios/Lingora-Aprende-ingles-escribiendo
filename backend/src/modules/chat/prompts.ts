@@ -40,10 +40,14 @@ export const ROLEPLAY_OPENING_SCHEMA: JsonSchema = {
       type: 'string',
       description: 'Saludo inicial del personaje, en inglés, presentando la escena.',
     },
+    message_translation: {
+      type: 'string',
+      description: 'Traducción al español del saludo, para el botón de traducción del alumno.',
+    },
     progress: { type: 'integer', description: '0.' },
     mission_completed: { type: 'boolean', description: 'false.' },
   },
-  required: ['message', 'progress', 'mission_completed'],
+  required: ['message', 'message_translation', 'progress', 'mission_completed'],
   additionalProperties: false,
 }
 
@@ -59,6 +63,10 @@ export const ROLEPLAY_TURN_SCHEMA: JsonSchema = {
     message: {
       type: 'string',
       description: 'Respuesta del personaje, en inglés.',
+    },
+    message_translation: {
+      type: 'string',
+      description: 'Traducción al español de tu respuesta, para el botón de traducción del alumno.',
     },
     rating: {
       type: 'integer',
@@ -94,7 +102,7 @@ export const ROLEPLAY_TURN_SCHEMA: JsonSchema = {
       description: 'true cuando el alumno completó todos los pasos del objetivo.',
     },
   },
-  required: ['message', 'rating', 'feedback', 'correctedText', 'missing_step', 'confused', 'progress', 'mission_completed'],
+  required: ['message', 'message_translation', 'rating', 'feedback', 'correctedText', 'missing_step', 'confused', 'progress', 'mission_completed'],
   additionalProperties: false,
 }
 
