@@ -45,6 +45,14 @@ describe('prompt del rol por tier', () => {
     expect(prompt).not.toContain('This mission is A1 tier')
   })
 
+  it('no inventa errores de -s fuera de la tercera persona', () => {
+    const prompt = buildRoleplaySystemPrompt({ mission: { ...mission, tier: 2 }, userLevel: 'B1' })
+
+    expect(prompt).toContain('NEVER INVENT AN ERROR')
+    expect(prompt).toContain('Third-person -s exists ONLY with he/she/it')
+    expect(prompt).toContain('"I am not sleeping"')
+  })
+
   it('el esquema del turno exige `confused`', () => {
     const properties = ROLEPLAY_TURN_SCHEMA.properties as Record<string, { type?: string }>
     expect(ROLEPLAY_TURN_SCHEMA.required).toContain('confused')
