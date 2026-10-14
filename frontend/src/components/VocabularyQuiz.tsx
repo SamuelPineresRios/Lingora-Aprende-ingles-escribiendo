@@ -1,10 +1,9 @@
 /**
  * Vocabulario clave: la actividad entre la escena narrativa y la misión.
  *
- * Primero se estudian las palabras (traducción y frase de ejemplo) y después
- * se emparejan: todas las palabras inglesas en la columna izquierda y todas
- * las traducciones barajadas en la derecha. Cada acierto queda unido con una
- * línea que se dibuja sola; la evaluación es local.
+ * Tres pasos: estudiar las palabras (traducción y ejemplo), emparejarlas con
+ * su traducción —con líneas que se dibujan solas— y completar tres frases de
+ * la escena eligiendo la palabra que encaja. La evaluación es local.
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowRight, Check, Eye, RotateCcw, X } from 'lucide-react'
@@ -12,7 +11,19 @@ import { cn } from '@/lib/utils'
 import { readJson } from '@/lib/api'
 import { getCachedVocabulary, setCachedVocabulary, type KeyWord } from '@/lib/mission-content'
 
-type Phase = 'study' | 'match' | 'summary'
+type Phase = 'study' | 'match' | 'complete' | 'summary'
+
+/** Frase de la escena con un hueco: la palabra se elige entre tres opciones. */
+interface GapQuestion {
+  word: string
+  /** Texto antes y después del hueco. */
+  before: string
+  after: string
+  /** Opciones barajadas, con la correcta incluida. */
+  options: string[]
+  /** Traducción de la frase completa, para el feedback. */
+  translation: string
+}
 
 /** Línea que une una palabra con su traducción (coordenadas del tablero). */
 interface Connector {
@@ -85,6 +96,33 @@ function closingMessage(mistakes: number, total: number): string {
   return 'Vuelve a leer la lista si quieres y entra a la misión: estas palabras saldrán en la conversación.'
 }
 
+const GAP_TOTAL = 3
+
+/**
+ * Prepara las frases con hueco a partir de los ejemplos de la escena.
+ *
+ * Elegible toda palabra que aparezca tal cual en su ejemplo (los ejemplos se
+ * escribieron para contenerla). El hueco va en esa aparición y los distractores
+ * salen de las otras palabras de la misma misión, para que suenen al contexto.
+ */
+function buildGapQuestions(words: KeyWord[]): GapQuestion[] {
+  const candidates = words.flatMap(entry => {
+    const match = new RegExp(`\\b${escapeRegExp(entry.word)}\\b`, 'i').exec(entry.example)
+    if (!match) return []
+    return [{
+      word: entry.word,
+      before: entry.example.slice(0, match.index),
+      after: entry.example.slice(match.index + match[0].length),
+      translation: entry.example_translation,
+    }]
+  })
+
+  return shuffled(candidates).slice(0, GAP_TOTAL).map(question => {
+    const others = shuffled(words.filter(entry => entry.word !== question.word).map(entry => entry.word)).slice(0, 2)
+    return { ...question, options: shuffled([question.word, ...others]) }
+  })
+}
+
 export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQuizProps) {
   // Si el vocabulario se precargó durante la cabecera, monta sin pedir nada.
   const [words, setWords] = useState<KeyWord[]>(() => getCachedVocabulary(missionId) ?? [])
@@ -101,6 +139,12 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
   /** Par fallado, para el destello rojo antes de soltarlo. */
   const [wrong, setWrong] = useState<{ word: string; translation: string } | null>(null)
   const [mistakes, setMistakes] = useState(0)
+  /** Frases con hueco: la tercera actividad. */
+  const [gaps, setGaps] = useState<GapQuestion[]>([])
+  const [gapIndex, setGapIndex] = useState(0)
+  /** Opción elegida en la frase actual (null si aún no respondió). */
+  const [gapChoice, setGapChoice] = useState<string | null>(null)
+  const [gapMistakes, setGapMistakes] = useState(0)
   /** Líneas del tablero: pares acertados (verde) y el fallo momentáneo (rojo). */
   const [connectors, setConnectors] = useState<Connector[]>([])
   const boardRef = useRef<HTMLDivElement>(null)
@@ -234,7 +278,7 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
       setSelectedWord(null)
       setSelectedTranslation(null)
       if (pairs.length === words.length) {
-        setTimeout(() => setPhase('summary'), 450)
+        setTimeout(() => startComplete(), 450)
       }
       return
     }
@@ -279,6 +323,36 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
 
   const retryMatching = () => {
     startMatching()
+  }
+
+  /** Tercera actividad: tres frases de la escena con un hueco que rellenar. */
+  const startComplete = () => {
+    const questions = buildGapQuestions(words)
+    if (questions.length === 0) {
+      setPhase('summary')
+      return
+    }
+    setGaps(questions)
+    setGapIndex(0)
+    setGapChoice(null)
+    setGapMistakes(0)
+    setPhase('complete')
+  }
+
+  const pickGapOption = (option: string) => {
+    const question = gaps[gapIndex]
+    if (gapChoice !== null || !question) return
+    setGapChoice(option)
+    if (option !== question.word) setGapMistakes(value => value + 1)
+  }
+
+  const nextGap = () => {
+    if (gapIndex + 1 >= gaps.length) {
+      setPhase('summary')
+      return
+    }
+    setGapIndex(index => index + 1)
+    setGapChoice(null)
   }
 
   const backToStudy = () => {
@@ -330,7 +404,7 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
               </span>
             </header>
             <p className="text-[12px] text-slate-400 mb-4">
-              Estas son las {words.length} palabras de la escena, con su traducción y un ejemplo. Después las emparejarás.
+              Estas son las {words.length} palabras de la escena, con su traducción y un ejemplo. Después las emparejarás y completarás tres frases.
             </p>
 
             <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 mb-6">
@@ -496,18 +570,88 @@ export function VocabularyQuiz({ missionId, cefrLevel, onFinish }: VocabularyQui
           </div>
         )}
 
-        {/* Fase 3: resumen */}
+        {/* Fase 3: completar frases de la escena con la palabra que encaja */}
+        {!loading && !error && phase === 'complete' && gaps[gapIndex] && (
+          <div className="w-full max-w-2xl">
+            <header className="flex items-center justify-between gap-4 mb-2">
+              <div>
+                <p className="text-[10px] text-cyan uppercase tracking-[0.25em]">Antes de la conversación</p>
+                <h2 className="text-xl font-bold text-white">Completa la frase</h2>
+              </div>
+              <span className="text-xs px-2 py-1 rounded border font-bold border-cyan/50 bg-cyan/10 text-cyan">
+                Frase {gapIndex + 1} de {gaps.length}
+              </span>
+            </header>
+            <p className="text-[12px] text-slate-400 mb-4">
+              Elige la palabra que encaja en cada frase de la escena.
+              {gapMistakes > 0 && <> · {gapMistakes} fallo{gapMistakes === 1 ? '' : 's'}</>}
+            </p>
+
+            <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm p-6 mb-4">
+              <p className="font-reading text-xl leading-relaxed text-white sm:text-2xl">
+                {gaps[gapIndex].before}
+                <span
+                  className={cn(
+                    'mx-1 inline-block min-w-20 border-b-2 px-2 text-center font-bold',
+                    gapChoice ? 'border-emerald/60 text-emerald' : 'border-cyan/50 text-cyan/40',
+                  )}
+                >
+                  {gapChoice ? gaps[gapIndex].word : '___'}
+                </span>
+                {gaps[gapIndex].after}
+              </p>
+              {gapChoice && (
+                <p className="mt-3 text-[13px] italic text-slate-400">{gaps[gapIndex].translation}</p>
+              )}
+            </div>
+
+            <div className="grid gap-2.5 sm:grid-cols-3 mb-5">
+              {gaps[gapIndex].options.map(option => {
+                const isCorrect = option === gaps[gapIndex].word
+                const chosen = gapChoice === option
+                return (
+                  <button
+                    key={option}
+                    onClick={() => pickGapOption(option)}
+                    disabled={gapChoice !== null}
+                    className={cn(
+                      'rounded-xl border px-3.5 py-3 text-sm font-bold transition-all duration-200',
+                      gapChoice === null && 'border-white/10 bg-white/5 text-white hover:border-cyan/40 hover:bg-cyan/5 active:scale-[0.98]',
+                      gapChoice !== null && isCorrect && 'border-emerald/50 bg-emerald/10 text-emerald-200 shadow-[0_0_20px_-8px_rgba(52,211,153,0.9)]',
+                      gapChoice !== null && chosen && !isCorrect && 'border-coral/60 bg-coral/10 text-red-100',
+                      gapChoice !== null && !chosen && !isCorrect && 'border-white/10 bg-white/5 text-slate-500',
+                    )}
+                  >
+                    {option}
+                  </button>
+                )
+              })}
+            </div>
+
+            {gapChoice !== null && (
+              <button
+                onClick={nextGap}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-cyan text-black font-bold text-xs uppercase tracking-widest py-3 transition-colors hover:bg-cyan-400"
+              >
+                {gapIndex + 1 >= gaps.length ? 'Ver resumen' : 'Siguiente frase'} <ArrowRight className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Fase 4: resumen */}
         {!loading && !error && phase === 'summary' && (
           <div className="w-full max-w-md rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm p-8 text-center space-y-4">
             <p className="text-4xl">🏅</p>
-            <h2 className="text-xl font-bold text-white">¡Vocabulario listo!</h2>
+            <h2 className="text-xl font-bold text-white">¡Actividades listas!</h2>
             <p className="text-sm text-slate-300">
-              {words.length} pares emparejados{mistakes > 0 && ` · ${mistakes} fallo${mistakes === 1 ? '' : 's'}`}
+              {words.length} pares emparejados{gaps.length > 0 && ` · ${gaps.length} frases completadas`}
+              {mistakes + gapMistakes > 0 && ` · ${mistakes + gapMistakes} fallo${mistakes + gapMistakes === 1 ? '' : 's'}`}
             </p>
             <div className="h-2 rounded-full bg-white/10 overflow-hidden">
               <div className="h-full w-full bg-cyan shadow-[0_0_10px_rgba(6,182,212,0.6)]" />
             </div>
-            <p className="text-[12px] text-slate-400">{closingMessage(mistakes, words.length)}</p>
+            <p className="text-[12px] text-slate-400">{closingMessage(mistakes + gapMistakes, words.length)}</p>
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
               <button
                 onClick={onFinish}
