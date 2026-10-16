@@ -20,6 +20,7 @@ import {
 import { missionXp, streakMultiplier } from '../../lib/xp.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { getActivityStreak } from '../students/service.ts'
+import { recordChallengeScore } from '../social/service.ts'
 import { getWeekStart } from '../../utils/week.ts'
 import {
   NON_GENUINE_EVALUATION,
@@ -267,6 +268,18 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
         },
       })
   })
+
+  // La nota del reto 1v1 se guarda al completar; si falla, no rompe el envío.
+  if (completed) {
+    try {
+      const challengeScore = Math.round(
+        (evaluation.comprehensibility_score + evaluation.grammar_score + evaluation.lexical_richness_score) / 3,
+      )
+      await recordChallengeScore(input.studentId, input.missionId, challengeScore)
+    } catch (err) {
+      console.error('[Social] No se pudo registrar la nota del reto:', err)
+    }
+  }
 
   // El estado narrativo no debe tirar abajo un envío ya persistido.
   try {

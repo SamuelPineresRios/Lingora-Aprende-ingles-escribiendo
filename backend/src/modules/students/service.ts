@@ -431,7 +431,7 @@ export interface RankingEntry extends RankingCosmetics {
  * no hay, el mejor del pase que tenga desbloqueado (su XP de la temporada en
  * curso). El título solo existe en la tienda.
  */
-async function rankingCosmetics(
+export async function rankingCosmetics(
   studentIds: string[],
 ): Promise<Map<string, Pick<RankingCosmetics, 'frame' | 'titles' | 'medals'>>> {
   const cosmetics = new Map<string, Pick<RankingCosmetics, 'frame' | 'titles' | 'medals'>>()

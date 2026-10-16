@@ -36,12 +36,14 @@ export const users = pgTable(
     /** Skin voxel-art ya resuelto (se fija al registrarse) y personalizable. */
     avatar: jsonb('avatar').$type<UserAvatar | null>(),
     cefr_level: text('cefr_level').$type<CefrLevel | null>(),
+    /** Código corto para que otros te agreguen como amigo (se genera al pedirlo). */
+    friend_code: text('friend_code'),
     language_preference: text('language_preference').notNull().default('es'),
     created_at: timestamp('created_at', { withTimezone: true })
       .notNull()
       .defaultNow(),
   },
-  (t) => [uniqueIndex('users_email_key').on(t.email)],
+  (t) => [uniqueIndex('users_email_key').on(t.email), uniqueIndex('users_friend_code_key').on(t.friend_code)],
 )
 
 export const missions = pgTable('missions', {
@@ -444,4 +446,65 @@ export const quest_claims = pgTable(
     created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [uniqueIndex('quest_claims_student_quest_period_key').on(t.student_id, t.quest_id, t.period_key)],
+)
+
+/**
+ * Amistades entre alumnos: una fila por pareja.
+ *
+ * La solicitud viaja del que la pide al que la recibe; al aceptarla queda
+ * `accepted` y la pareja es amiga en ambos sentidos (no hay filas espejo).
+ */
+export const friendships = pgTable(
+  'friendships',
+  {
+    id: text('id').primaryKey(),
+    requester_id: text('requester_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    addressee_id: text('addressee_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    status: text('status').notNull().$type<'pending' | 'accepted'>(),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    // El servicio comprueba la pareja en ambas direcciones antes de insertar;
+    // este índice evita duplicados exactos si dos solicitudes coinciden.
+    uniqueIndex('friendships_pair_key').on(t.requester_id, t.addressee_id),
+    index('friendships_addressee_idx').on(t.addressee_id),
+  ],
+)
+
+/**
+ * Retos 1v1 asíncronos: misma misión, mejor nota.
+ *
+ * Las puntuaciones son la media de la evaluación de la misión (0-100) y se
+ * rellenan cuando cada jugador la completa; el ganador se deriva al leer.
+ */
+export const mission_challenges = pgTable(
+  'mission_challenges',
+  {
+    id: text('id').primaryKey(),
+    mission_id: text('mission_id')
+      .notNull()
+      .references(() => missions.id, { onDelete: 'cascade' }),
+    challenger_id: text('challenger_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    opponent_id: text('opponent_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    /** Media de las tres notas de la evaluación; null hasta que juega. */
+    challenger_score: integer('challenger_score'),
+    opponent_score: integer('opponent_score'),
+    status: text('status').notNull().$type<'pending' | 'declined' | 'finished'>(),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    finished_at: timestamp('finished_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('mission_challenges_challenger_idx').on(t.challenger_id),
+    index('mission_challenges_opponent_idx').on(t.opponent_id),
+    // El hook de puntuación busca retos vivos por (misión, jugador).
+    index('mission_challenges_mission_idx').on(t.mission_id),
+  ],
 )

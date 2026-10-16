@@ -13,6 +13,7 @@ import MissionPage from '@/pages/MissionPage'
 import Missions from '@/pages/Missions'
 import Profile from '@/pages/Profile'
 import Ranking from '@/pages/Ranking'
+import Friends from '@/pages/Friends'
 import Season from '@/pages/Season'
 import Store from '@/pages/Store'
 import Avatar from '@/pages/Avatar'
@@ -22,13 +23,7 @@ import Words from '@/pages/Words'
 import StudentGroups from '@/pages/StudentGroups'
 import TeacherDashboardPage from '@/pages/TeacherDashboardPage'
 
-/**
- * Tabla de rutas del SPA.
- *
- * Sustituye a `middleware.ts`: las páginas dejan de redirigirse en el servidor
- * y la protección pasa a `<ProtectedRoute>`, que espera a resolver la sesión
- * antes de decidir. La API sigue protegida en el backend.
- */
+
 export function App() {
   return (
     <>
@@ -50,6 +45,7 @@ export function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/words" element={<Words />} />
             <Route path="/ranking" element={<Ranking />} />
+            <Route path="/friends" element={<Friends />} />
             <Route path="/season" element={<Season />} />
             <Route path="/store" element={<Store />} />
           <Route path="/avatar" element={<Avatar />} />
@@ -63,11 +59,6 @@ export function App() {
           </Route>
         </Route>
 
-        {/*
-          Ruta desconocida -> /missions, no /login. Mandarla a /login creaba un
-          bucle: RouteTracker guardaba la ruta muerta como "última ruta", y el
-          login devolvía al usuario allí una y otra vez (pantalla en blanco).
-        */}
         <Route path="*" element={<Navigate to="/missions" replace />} />
       </Routes>
 

@@ -9,6 +9,7 @@ import { eq } from 'drizzle-orm'
 import { randomUUID } from 'node:crypto'
 import { db } from '../../db/client.ts'
 import { UNIQUE_VIOLATION, sqlStateOf } from '../../db/errors.ts'
+import { generateFriendCode } from '../../lib/friend-code.ts'
 import { users } from '../../db/schema.ts'
 import { baseAvatar, type CefrLevel, type UserAvatar, type UserRole } from '@vox/shared'
 import { HttpError } from '../../utils/http-error.ts'
@@ -23,6 +24,7 @@ const publicColumns = {
   full_name: users.full_name,
   avatar: users.avatar,
   cefr_level: users.cefr_level,
+  friend_code: users.friend_code,
 } as const
 
 export interface SignupInput {
@@ -41,6 +43,8 @@ export type PublicUser = {
   full_name: string | null
   avatar: UserAvatar | null
   cefr_level: CefrLevel | null
+  /** Código para agregar amigos; se genera al registrarse. */
+  friend_code: string | null
 }
 
 /**
@@ -98,6 +102,7 @@ export async function registerUser(input: SignupInput): Promise<PublicUser> {
         full_name: input.full_name,
         avatar: input.role === 'student' ? baseAvatar(id) : null,
         cefr_level: input.role === 'student' ? (input.cefr_level ?? 'B1') : null,
+        friend_code: input.role === 'student' ? generateFriendCode() : null,
         language_preference: 'es',
         created_at: new Date(),
       })

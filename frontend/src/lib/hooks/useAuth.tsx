@@ -18,6 +18,8 @@ export interface AuthUser {
   /** Skin voxel-art del alumno (los docentes van a null). */
   avatar: UserAvatar | null
   cefr_level: string | null
+  /** Código para agregar amigos; los docentes van a null. */
+  friend_code: string | null
 }
 
 interface AuthState {
