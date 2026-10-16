@@ -45,8 +45,11 @@ const KIND_ICON: Record<StoreItemKind, LucideIcon> = {
 function ItemVisual({ item, avatar }: { item: StoreItem; avatar: string }) {
   if (item.kind === 'frame' && item.colors) {
     return (
-      <FrameRing frameId={item.id} colors={item.colors} size={56}>
-        <img src={avatar} alt="" className="h-full w-full" />
+      <FrameRing frameId={item.id} colors={item.colors} size={84}>
+        {/* Aire entre el avatar y el aro: sin él la cara queda pegada al marco. */}
+        <div className="flex h-full w-full items-center justify-center p-2">
+          <img src={avatar} alt="" className="h-full w-full" />
+        </div>
       </FrameRing>
     )
   }
@@ -81,7 +84,6 @@ export default function StorePage() {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState<string | null>(null)
   const [burst, setBurst] = useState(0)
-  /** Página del catálogo de marcos (el resto de secciones entra entera). */
   const [framePage, setFramePage] = useState(0)
   const avatar = studentAvatarUrl(resolveAvatar({ id: user?.id ?? 'lingora', avatar: user?.avatar ?? null }))
 
@@ -255,7 +257,7 @@ export default function StorePage() {
                           key={item.id}
                           data-item={item.id}
                           className={cn(
-                            'animate-fade-in-up flex flex-wrap items-center gap-3 rounded-2xl border px-4 py-4 transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5 sm:gap-4',
+                            'animate-fade-in-up flex flex-wrap items-center gap-3 rounded-2xl border px-4 py-5 transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5 sm:gap-4',
                             item.equipped
                               ? 'border-cyan/50 bg-cyan/[0.07] shadow-[0_0_25px_rgba(34,211,238,0.08)]'
                               : 'border-white/10 bg-black/30 hover:border-white/25 hover:bg-black/40',
@@ -264,8 +266,8 @@ export default function StorePage() {
                         >
                           <ItemVisual item={item} avatar={avatar} />
                           <div className="min-w-0 flex-1">
-                            <p className="truncate text-[15px] text-white sm:text-sm">{item.label}</p>
-                            <p className="mt-0.5 text-xs text-slate-500 sm:text-[11px]">{item.description}</p>
+                            <p className="truncate text-[15px] text-white sm:text-[15px]">{item.label}</p>
+                            <p className="mt-0.5 text-xs text-slate-500 sm:text-xs">{item.description}</p>
                           </div>
 
                           {/* En móvil la acción baja a su propia fila, a todo lo ancho */}
