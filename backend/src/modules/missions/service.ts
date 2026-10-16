@@ -21,7 +21,9 @@ import { missionXp, streakMultiplier } from '../../lib/xp.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { getActivityStreak } from '../students/service.ts'
 import { recordChallengeScore } from '../social/service.ts'
+import { consumeSurpriseBonus } from '../quests/service.ts'
 import { getWeekStart } from '../../utils/week.ts'
+import { safeTimeZone, todayKeyIn } from '../../lib/date-keys.ts'
 import {
   NON_GENUINE_EVALUATION,
   evaluateResponse,
@@ -209,7 +211,19 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
   // La racha multiplica el XP de las misiones completadas; los intentos
   // parciales no la aprovechan (la racha premia terminar).
   const streak = completed ? await getActivityStreak(input.studentId, input.timezone) : 0
-  const xp = completed ? Math.round(baseXp * streakMultiplier(streak)) : baseXp
+  const xpConRacha = completed ? Math.round(baseXp * streakMultiplier(streak)) : baseXp
+
+  // La sorpresa del día añade su bonus si esta es la misión sorteada y no se
+  // había consumido; si falla, el envío sigue con el XP normal.
+  let xp = xpConRacha
+  if (completed) {
+    try {
+      const dayKey = todayKeyIn(safeTimeZone(input.timezone))
+      xp = await consumeSurpriseBonus(input.studentId, input.missionId, dayKey, xpConRacha)
+    } catch (err) {
+      console.error('[Quests] No se pudo aplicar el bonus de la sorpresa:', err)
+    }
+  }
 
   await db.transaction(async tx => {
     await tx.insert(responses).values({

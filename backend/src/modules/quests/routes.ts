@@ -13,7 +13,7 @@ import { ownsResource } from '../../lib/authorization.ts'
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { routeParam } from '../../utils/route-params.ts'
-import { claimQuest, getStudentQuests } from './service.ts'
+import { claimQuest, getStudentQuests, spinSurprise } from './service.ts'
 
 export const questsRouter = Router()
 
@@ -35,4 +35,12 @@ questsRouter.post('/:id/quests/:questId/claim', requireAuth, async (req, res) =>
   if (session.role !== 'student' || session.userId !== studentId) throw new HttpError(403, 'Forbidden')
 
   res.json(await claimQuest(studentId, routeParam(req, 'questId'), req.query.tz))
+})
+
+questsRouter.post('/:id/quests/surprise', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+  if (session.role !== 'student' || session.userId !== studentId) throw new HttpError(403, 'Forbidden')
+
+  res.json(await spinSurprise(studentId, req.query.tz))
 })

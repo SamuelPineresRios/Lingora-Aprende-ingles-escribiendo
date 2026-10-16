@@ -508,3 +508,32 @@ export const mission_challenges = pgTable(
     index('mission_challenges_mission_idx').on(t.mission_id),
   ],
 )
+
+/**
+ * Sorpresa del día: una misión al azar con bonus de XP si se completa hoy.
+ *
+ * Una fila por alumno y día (índice único): girar dos veces devuelve la
+ * misma misión. El bonus se consume una sola vez al enviar esa misión.
+ */
+export const daily_surprises = pgTable(
+  'daily_surprises',
+  {
+    id: text('id').primaryKey(),
+    student_id: text('student_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    /** Día del alumno (`YYYY-MM-DD` en su zona). */
+    day_key: text('day_key').notNull(),
+    mission_id: text('mission_id')
+      .notNull()
+      .references(() => missions.id, { onDelete: 'cascade' }),
+    /** Porcentaje de XP extra al completar la misión (150 = +50%). */
+    xp_percent: integer('xp_percent').notNull().default(150),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    consumed_at: timestamp('consumed_at', { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex('daily_surprises_student_day_key').on(t.student_id, t.day_key),
+    index('daily_surprises_lookup_idx').on(t.student_id, t.mission_id),
+  ],
+)

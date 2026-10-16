@@ -1,11 +1,13 @@
 /**
- * Retos: los tres del día (con cofre) y el semanal.
+ * Retos: los diarios (con cofre sorpresa y ruleta) y los semanales.
  *
- * El backend calcula el progreso desde la actividad real; aquí solo se pinta
- * y se reclama. `DailyQuests` va en Misiones; `WeeklyQuests`, en el Pase.
+ * El backend calcula el progreso desde la actividad real; aquí solo se pinta,
+ * se reclama y se celebra el premio del cofre. `DailyQuests` va en Misiones;
+ * `WeeklyQuests`, en el Pase.
  */
 import { useEffect, useState } from 'react'
-import { Check, Coins, Flame, Gift, Loader2, Target } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Check, Coins, Dices, Flame, Gift, Loader2, Shield, Target } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
@@ -21,25 +23,40 @@ interface QuestState {
   claimed: boolean
 }
 
+interface Surprise {
+  mission: { id: string; title: string }
+  xp_percent: number
+  consumed: boolean
+}
+
+interface ChestReward {
+  kind: 'coins' | 'shield'
+  coins?: number
+  label: string
+}
+
 interface QuestsView {
   balance: number
-  day: { key: string; quests: QuestState[]; chest: { coins: number; ready: boolean; claimed: boolean } }
+  day: { key: string; quests: QuestState[]; chest: { ready: boolean; claimed: boolean }; surprise: Surprise | null }
   week: { key: string; quests: QuestState[] }
 }
 
-/** Carga los retos y expone la acción de reclamar. */
+/** Carga los retos y expone reclamar, girar la ruleta y el premio del cofre. */
 function useQuestBoard() {
   const { user } = useAuth()
   const [view, setView] = useState<QuestsView | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState('')
+  /** Premio del cofre recién abierto, para celebrarlo. */
+  const [reward, setReward] = useState<ChestReward | null>(null)
+
+  const tz = () => encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
   useEffect(() => {
     if (!user?.id) return
     let cancelled = false
 
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-    fetch(`/api/students/${user.id}/quests?tz=${encodeURIComponent(tz)}`)
+    fetch(`/api/students/${user.id}/quests?tz=${tz()}`)
       .then(readJson<QuestsView>)
       .then(data => {
         if (!cancelled && data) setView(data)
@@ -51,26 +68,29 @@ function useQuestBoard() {
     }
   }, [user?.id])
 
-  const claim = async (questId: string) => {
+  const act = async (url: string, key: string) => {
     if (!user?.id || busy) return
-    setBusy(questId)
+    setBusy(key)
     setError('')
     try {
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-      const res = await fetch(`/api/students/${user.id}/quests/${questId}/claim?tz=${encodeURIComponent(tz)}`, {
-        method: 'POST',
-      })
-      const data = await readJson<QuestsView & { error?: string }>(res)
-      if (!res.ok) throw new Error(data?.error ?? 'No se pudo reclamar.')
-      if (data) setView(data)
+      const res = await fetch(url, { method: 'POST' })
+      const data = await readJson<QuestsView & { reward?: ChestReward | null; error?: string }>(res)
+      if (!res.ok) throw new Error(data?.error ?? 'No se pudo completar la acción.')
+      if (data) {
+        setView(data)
+        if (data.reward) setReward(data.reward)
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'No se pudo reclamar.')
+      setError(err instanceof Error ? err.message : 'No se pudo completar la acción.')
     } finally {
       setBusy(null)
     }
   }
 
-  return { view, busy, error, claim }
+  const claim = (questId: string) => act(`/api/students/${user?.id}/quests/${questId}/claim?tz=${tz()}`, questId)
+  const spin = () => act(`/api/students/${user?.id}/quests/surprise?tz=${tz()}`, 'ruleta')
+
+  return { view, busy, error, reward, setReward, claim, spin }
 }
 
 /** Una fila de reto: progreso, monedas y botón de reclamar. */
@@ -132,13 +152,14 @@ function QuestRow({
   )
 }
 
-/** Tarjeta de los tres retos del día y el cofre. Va en Misiones. */
+/** Tarjeta de los retos del día, la ruleta y el cofre. Va en Misiones. */
 export function DailyQuests() {
-  const { view, busy, error, claim } = useQuestBoard()
+  const { view, busy, error, reward, setReward, claim, spin } = useQuestBoard()
 
   if (!view) return null
 
   const reclamados = view.day.quests.filter(quest => quest.claimed).length
+  const surprise = view.day.surprise
 
   return (
     <section className="rounded-2xl border border-white/10 bg-black/30 p-5 space-y-4">
@@ -157,7 +178,41 @@ export function DailyQuests() {
         ))}
       </ul>
 
-      {/* Cofre: se abre con los tres reclamados */}
+      {/* Sorpresa del día: misión al azar con bonus de XP */}
+      <div className="space-y-2 rounded-xl border border-violet/40 bg-violet/5 px-4 py-3">
+        <div className="flex items-center gap-3">
+          <Dices className={cn('h-5 w-5 shrink-0', surprise?.consumed ? 'text-slate-500' : 'text-violet')} />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm text-white">Sorpresa del día</p>
+            <p className="text-[11px] text-slate-500">
+              {surprise
+                ? surprise.consumed
+                  ? 'Bonus conseguido. Vuelve mañana por otra misión.'
+                  : `«${surprise.mission.title}» con +${surprise.xp_percent - 100}% de XP si la completas hoy.`
+                : 'Gira la ruleta: una misión al azar con XP extra.'}
+            </p>
+          </div>
+          {!surprise && (
+            <button
+              onClick={spin}
+              disabled={busy === 'ruleta'}
+              className="shrink-0 rounded-lg bg-violet px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-violet/80 disabled:opacity-50"
+            >
+              {busy === 'ruleta' ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Girar'}
+            </button>
+          )}
+          {surprise && !surprise.consumed && (
+            <Link
+              to={`/mission/${surprise.mission.id}`}
+              className="shrink-0 rounded-lg bg-violet px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-violet/80"
+            >
+              Jugar
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {/* Cofre: se abre con todos los retos del día reclamados */}
       <div
         className={cn(
           'space-y-3 rounded-xl border px-4 py-3',
@@ -176,13 +231,10 @@ export function DailyQuests() {
               {view.day.chest.claimed
                 ? 'Abierto. Vuelve mañana por otro.'
                 : view.day.chest.ready
-                  ? '¡Listo! Ábrelo y llévate las monedas.'
-                  : 'Se abre al reclamar los tres retos de hoy.'}
+                  ? '¡Listo! Ábrelo y descubre tu premio: monedas… o un escudo de racha.'
+                  : 'Se abre al reclamar todos los retos de hoy.'}
             </p>
           </div>
-          <span className="flex shrink-0 items-center gap-1 text-[11px] text-amber">
-            <Coins className="h-3.5 w-3.5" /> {view.day.chest.coins}
-          </span>
         </div>
 
         {view.day.chest.claimed ? (
@@ -206,11 +258,37 @@ export function DailyQuests() {
       </div>
 
       {error && <p className="text-coral text-xs">{error}</p>}
+
+      {/* Celebración del premio */}
+      {reward && (
+        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/90 p-4 backdrop-blur-md">
+          <div className="w-full max-w-sm space-y-4 rounded-2xl border border-amber/40 bg-slate-950/95 p-8 text-center">
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-amber/40 bg-amber/10">
+              {reward.kind === 'shield' ? (
+                <Shield className="h-7 w-7 text-amber" />
+              ) : (
+                <Coins className="h-7 w-7 text-amber" />
+              )}
+            </span>
+            <h3 className="text-xl font-bold text-white">¡Premio del cofre!</h3>
+            <p className="text-sm text-slate-300">{reward.label}</p>
+            {reward.kind === 'shield' && (
+              <p className="text-[11px] text-slate-500">Salvará un día perdido sin romper tu racha.</p>
+            )}
+            <button
+              onClick={() => setReward(null)}
+              className="w-full rounded-xl bg-amber py-3 text-[11px] font-bold uppercase tracking-widest text-black transition-colors hover:bg-amber-light"
+            >
+              ¡Genial!
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
 
-/** Tarjeta del reto semanal. Va en el Pase. */
+/** Tarjeta de los retos semanales. Va en el Pase. */
 export function WeeklyQuests() {
   const { view, busy, error, claim } = useQuestBoard()
 
@@ -219,7 +297,7 @@ export function WeeklyQuests() {
   return (
     <section className="rounded-2xl border border-white/10 bg-black/30 p-5 space-y-4">
       <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-300">
-        <Flame className="h-4 w-4 text-coral" /> Reto de la semana
+        <Flame className="h-4 w-4 text-coral" /> Retos de la semana
       </h2>
 
       <ul className="space-y-2">
