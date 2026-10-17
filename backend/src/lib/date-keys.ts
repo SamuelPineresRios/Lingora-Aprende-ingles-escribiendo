@@ -9,6 +9,8 @@
 /** Zona horaria IANA válida, o null para usar la de la base de datos. */
 export function safeTimeZone(value: unknown): string | null {
   if (typeof value !== 'string' || value.length === 0 || value.length > 64) return null
+  // Solo nombres IANA: así puede incrustarse como literal SQL sin riesgo.
+  if (!/^[A-Za-z0-9_+/-]+$/.test(value)) return null
   try {
     new Intl.DateTimeFormat('en-US', { timeZone: value })
     return value

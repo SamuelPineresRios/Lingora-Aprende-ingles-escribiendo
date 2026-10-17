@@ -12,6 +12,7 @@ import {
   mission_assignments,
   missions,
   responses,
+  saved_words,
   streak_shields,
   student_loadout,
   users,
@@ -169,6 +170,147 @@ export async function joinGroup(
 }
 
 /** Últimas 4 semanas con los agregados del alumno (0 si no hay datos). */
+/** Estadísticas de una ventana de fechas (claves de día en la zona del alumno). */
+export interface WeeklyReportStats {
+  missions: number
+  xp: number
+  seconds: number
+  grammar: number | null
+  vocabulary: number | null
+  comprehension: number | null
+}
+
+/** Agrega respuestas y evaluaciones entre dos claves de día (`to` exclusivo). */
+async function weekStats(
+  studentId: string,
+  tz: string | null,
+  fromKey: string,
+  toKey: string | null,
+): Promise<WeeklyReportStats> {
+  const day = tz
+    ? sql`((${responses.submitted_at} AT TIME ZONE ${tz}::text)::date)`
+    : sql`(${responses.submitted_at}::date)`
+
+  const conditions = [eq(responses.student_id, studentId), sql`${day} >= ${fromKey}::date`]
+  if (toKey) conditions.push(sql`${day} < ${toKey}::date`)
+
+  const [row] = await db
+    .select({
+      missions: sql<number>`(count(distinct ${responses.mission_id}) filter (where ${responses.status} = 'completed'))::int`,
+      xp: sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`,
+      seconds: sql<number>`coalesce(sum(${responses.time_taken_seconds}), 0)::int`,
+      grammar: sql<number | null>`avg(${evaluations.grammar_score})::float`,
+      vocabulary: sql<number | null>`avg(${evaluations.lexical_richness_score})::float`,
+      comprehension: sql<number | null>`avg(${evaluations.comprehensibility_score})::float`,
+    })
+    .from(responses)
+    .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
+    .where(and(...conditions))
+
+  return {
+    missions: row?.missions ?? 0,
+    xp: row?.xp ?? 0,
+    seconds: row?.seconds ?? 0,
+    grammar: row?.grammar ?? null,
+    vocabulary: row?.vocabulary ?? null,
+    comprehension: row?.comprehension ?? null,
+  }
+}
+
+/**
+ * Informe semanal del alumno: semana en curso contra la anterior, evolución
+ * de las últimas seis semanas, palabras del vocabulario y estructuras top.
+ *
+ * La semana empieza el lunes en la zona del alumno, igual que la liga.
+ */
+export async function getWeeklyReport(studentId: string, timezone?: unknown) {
+  const tz = safeTimeZone(timezone)
+  const todayKey = todayKeyIn(tz)
+  const weekStartKey = mondayKeyOf(todayKey)
+  const weekEndKey = minusDays(weekStartKey, -6)
+  const previousStartKey = minusDays(weekStartKey, 7)
+
+  // La zona va incrustada como literal (ya validada en `safeTimeZone`): si
+  // viajara como parámetro, cada aparición sería un placeholder distinto y
+  // Postgres no reconocería el GROUP BY.
+  const tzLiteral = tz ? sql.raw(`'${tz}'`) : null
+  const day = tzLiteral
+    ? sql`((${responses.submitted_at} AT TIME ZONE ${tzLiteral})::date)`
+    : sql`(${responses.submitted_at}::date)`
+  const weekExpr = sql`date_trunc('week', ${day})::date`
+
+  const wordsDay = tz
+    ? sql`((${saved_words.created_at} AT TIME ZONE ${tz}::text)::date)`
+    : sql`(${saved_words.created_at}::date)`
+
+  const [current, previous, evolutionRows, savedRow, masteredRow, topStructures] = await Promise.all([
+    weekStats(studentId, tz, weekStartKey, null),
+    weekStats(studentId, tz, previousStartKey, weekStartKey),
+    db
+      .select({
+        week: weekExpr,
+        missions: sql<number>`(count(distinct ${responses.mission_id}) filter (where ${responses.status} = 'completed'))::int`,
+        xp: sql<number>`coalesce(sum(${evaluations.xp_awarded}), 0)::int`,
+        seconds: sql<number>`coalesce(sum(${responses.time_taken_seconds}), 0)::int`,
+        grammar: sql<number | null>`avg(${evaluations.grammar_score})::float`,
+      })
+      .from(responses)
+      .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
+      .where(and(eq(responses.student_id, studentId), sql`${day} >= ${minusDays(weekStartKey, 35)}::date`))
+      .groupBy(weekExpr)
+      .orderBy(asc(weekExpr)),
+    db
+      .select({ n: sql<number>`count(*)::int` })
+      .from(saved_words)
+      .where(and(eq(saved_words.student_id, studentId), sql`${wordsDay} >= ${weekStartKey}::date`)),
+    db
+      .select({ n: sql<number>`count(*)::int` })
+      .from(saved_words)
+      .where(and(eq(saved_words.student_id, studentId), isNull(saved_words.review_due_at))),
+    topStructuresForStudent(studentId, 3),
+  ])
+
+  const evolutionByWeek = new Map(
+    evolutionRows.map(row => [
+      String(row.week).slice(0, 10),
+      { missions: row.missions, xp: row.xp, seconds: row.seconds, grammar: row.grammar },
+    ]),
+  )
+
+  const evolution = Array.from({ length: 6 }, (_, index) => {
+    const weekKey = minusDays(weekStartKey, (5 - index) * 7)
+    const row = evolutionByWeek.get(weekKey)
+    return {
+      week_start_date: weekKey,
+      missions: row?.missions ?? 0,
+      xp: row?.xp ?? 0,
+      seconds: row?.seconds ?? 0,
+      grammar: row?.grammar ?? null,
+    }
+  })
+
+  return {
+    week: { starts_at: weekStartKey, ends_at: weekEndKey },
+    current,
+    previous,
+    deltas: {
+      missions: current.missions - previous.missions,
+      xp: current.xp - previous.xp,
+      seconds: current.seconds - previous.seconds,
+      grammar:
+        current.grammar !== null && previous.grammar !== null
+          ? Math.round(current.grammar - previous.grammar)
+          : null,
+    },
+    words: {
+      saved_this_week: savedRow[0]?.n ?? 0,
+      mastered_total: masteredRow[0]?.n ?? 0,
+    },
+    top_structures: topStructures,
+    evolution,
+  }
+}
+
 export async function getWeeklyStats(studentId: string) {
   const weeks = Array.from({ length: 4 }, (_, index) => {
     const date = new Date()

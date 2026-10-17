@@ -6,6 +6,7 @@ import { Camera, Edit2, Shield, Award, Brain, Target, CheckCircle2, TrendingUp, 
 import { ModuleBackdrop } from '@/components/ModuleBackdrop'
 import { FrameRing } from '@/components/FrameRing'
 import { ActivityHistory } from '@/components/ActivityHistory'
+import { WeeklyReport } from '@/components/WeeklyReport'
 import { XpBar } from '@/components/XpBar'
 import { useProgress } from '@/lib/hooks/useProgress'
 import { useStoreView, useThemeAccent } from '@/lib/hooks/useStoreView'
@@ -379,6 +380,9 @@ export default function ProfilePage() {
 
       {/* Historial de actividad: misiones por día, semana y mes */}
       {user?.id && <ActivityHistory studentId={user.id} />}
+
+      {/* Informe semanal: la semana en curso, deltas y evolución */}
+      <WeeklyReport />
 
       {/* Story Mode + Missions + Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
