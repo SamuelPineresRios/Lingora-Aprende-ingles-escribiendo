@@ -510,6 +510,27 @@ export const mission_challenges = pgTable(
 )
 
 /**
+ * Errores gramaticales que bloquearon el avance, por tipo.
+ *
+ * Los escribe el chat al detectar un error que bloquea; alimentan los drills
+ * de «puntos débiles» del alumno. El tipo es una categoría cerrada
+ * (`backend/src/lib/drills.ts`).
+ */
+export const grammar_errors = pgTable(
+  'grammar_errors',
+  {
+    id: text('id').primaryKey(),
+    student_id: text('student_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    mission_id: text('mission_id').references(() => missions.id, { onDelete: 'set null' }),
+    error_type: text('error_type').notNull(),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('grammar_errors_student_idx').on(t.student_id, t.created_at)],
+)
+
+/**
  * Sorpresa del día: una misión al azar con bonus de XP si se completa hoy.
  *
  * Una fila por alumno y día (índice único): girar dos veces devuelve la

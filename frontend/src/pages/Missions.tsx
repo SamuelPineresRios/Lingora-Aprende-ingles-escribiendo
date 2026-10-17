@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { DailyQuests } from '@/components/QuestBoard'
 import { WeekendEventBanner } from '@/components/WeekendEventBanner'
+import { WeaknessDrills } from '@/components/WeaknessDrills'
 import { StreakNotice } from '@/components/StreakNotice'
 import { ReviewSession } from '@/components/ReviewSession'
 import { ModuleBackdrop } from '@/components/ModuleBackdrop'
@@ -306,6 +307,7 @@ export default function MissionsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <DailyQuests />
         <ReviewSession />
+        <WeaknessDrills />
       </div>
 
       </div>

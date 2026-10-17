@@ -1,12 +1,14 @@
 /**
  * Ruta HTTP del modo conversación (montada en `/api/chat`).
  *
- * No toca la base de datos: sólo compone el prompt a partir del contexto que
- * envía el cliente y lo pasa al proveedor de IA.
+ * Compone el prompt con el contexto que envía el cliente y lo pasa al
+ * proveedor de IA. Además, cuando un turno trae un error que bloquea, lo
+ * registra para alimentar los drills de puntos débiles.
  */
 import { Router } from 'express'
 import { AIProviderError } from '../../lib/ai.ts'
-import { requireAuth } from '../../middleware/require-auth.ts'
+import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
+import { recordGrammarError } from '../drills/service.ts'
 import type { MissionContext } from './prompts.ts'
 import { requestHints, requestRoleplayTurn } from './service.ts'
 
@@ -36,7 +38,21 @@ chatRouter.post('/', requireAuth, async (req, res) => {
   }
 
   try {
-    res.json(await requestRoleplayTurn({ rawMessages: body.messages, mission, userLevel }))
+    const result = await requestRoleplayTurn({ rawMessages: body.messages, mission, userLevel })
+
+    // Puntos débiles: el tipo de error del turno (si lo hay) queda registrado.
+    const errorType = result.error_type
+    if (typeof errorType === 'string') {
+      const missionRaw = body.mission as Record<string, unknown> | undefined
+      const missionId = typeof missionRaw?.id === 'string' ? missionRaw.id : null
+      try {
+        await recordGrammarError(sessionOf(req).userId, missionId, errorType)
+      } catch (recordError) {
+        console.error('[Drills] No se pudo registrar el error:', recordError)
+      }
+    }
+
+    res.json(result)
   } catch (err) {
     if (err instanceof AIProviderError) {
       // El status del proveedor (401 por clave inválida, 429 por límite...) no

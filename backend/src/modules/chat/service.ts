@@ -139,6 +139,8 @@ export async function requestRoleplayTurn(params: {
       missingStep: data.missing_step ?? null,
       /** El personaje se quedó confundido (fuera de tema o error gramatical). */
       confused: isOpening ? false : data.confused === true,
+      /** Categoría del error que bloquea; la usa el registro de puntos débiles. */
+      error_type: isOpening ? null : (data.error_type ?? null),
       progress: data.progress || 0,
       mission_completed: data.mission_completed,
     }

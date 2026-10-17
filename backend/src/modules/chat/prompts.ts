@@ -92,6 +92,17 @@ export const ROLEPLAY_TURN_SCHEMA: JsonSchema = {
       description:
         'En ESPAÑOL y en 2-6 palabras, lo que al alumno le falta para completar el paso actual (p. ej. "la hora", "el destino"). null si rating es 4-5. Alimenta la ayuda que ve el alumno, NO tu mensaje.',
     },
+    error_type: {
+      anyOf: [
+        {
+          type: 'string',
+          enum: ['third_person_s', 'word_order', 'article', 'plural', 'auxiliary', 'past_tense', 'preposition', 'other'],
+        },
+        { type: 'null' },
+      ],
+      description:
+        'Categoría del error que bloquea el avance (null si la frase fue aceptada). third_person_s = falta la -s de tercera persona; word_order = orden sujeto+verbo; article = a/an/the; plural = falta -s de plural; auxiliary = do/does o am/is/are; past_tense = pasado simple; preposition = preposición básica; other = otra regla.',
+    },
     confused: {
       type: 'boolean',
       description:
@@ -102,7 +113,7 @@ export const ROLEPLAY_TURN_SCHEMA: JsonSchema = {
       description: 'true cuando el alumno completó todos los pasos del objetivo.',
     },
   },
-  required: ['message', 'message_translation', 'rating', 'feedback', 'correctedText', 'missing_step', 'confused', 'progress', 'mission_completed'],
+  required: ['message', 'message_translation', 'rating', 'feedback', 'correctedText', 'missing_step', 'confused', 'error_type', 'progress', 'mission_completed'],
   additionalProperties: false,
 }
 
@@ -212,7 +223,10 @@ CHECK THE SUBJECT BEFORE YOU BLOCK - NEVER INVENT AN ERROR:
 
 When one appears: scold briefly through the coach note (feedback), correctedText
 is the correct sentence, missing_step names the grammar point in Spanish
-(e.g. "la -s de tercera persona", "el orden: sujeto + verbo", "el artículo a").
+(e.g. "la -s de tercera persona", "el orden: sujeto + verbo", "el artículo a"),
+and error_type classifies it exactly: third_person_s, word_order, article,
+plural, auxiliary, past_tense, preposition or other. When there is NO blocking
+error, error_type is null.
 The character reacts confused and repeats the step in character; the coach note
 is the one that explains what was wrong.
 
