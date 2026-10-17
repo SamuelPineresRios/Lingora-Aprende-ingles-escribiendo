@@ -8,6 +8,7 @@ import { normalizeAvatar } from '../../lib/avatar.ts'
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
 import { updateUserAvatar } from '../auth/service.ts'
 import { getStudentMedals } from '../medals/service.ts'
+import { getActiveVocabulary } from '../vocabulary/service.ts'
 import { getSeasonProgress } from '../season/service.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { queryInt, routeParam } from '../../utils/route-params.ts'
@@ -99,6 +100,15 @@ studentsRouter.get('/:id/weekly-stats', requireAuth, async (req, res) => {
 })
 
 /** Informe semanal del alumno: semana en curso, deltas y evolución. */
+studentsRouter.get('/:id/active-vocabulary', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+
+  if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
+
+  res.json(await getActiveVocabulary(studentId))
+})
+
 studentsRouter.get('/:id/weekly-report', requireAuth, async (req, res) => {
   const session = sessionOf(req)
   const studentId = routeParam(req, 'id')

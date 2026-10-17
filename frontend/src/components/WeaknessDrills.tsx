@@ -16,6 +16,8 @@ interface DrillExercise {
   options: string[]
   answer: string
   translation: string
+  /** Por qué esa opción es la correcta y cómo se usa la regla. */
+  explanation: string
 }
 
 interface WeaknessReport {
@@ -178,6 +180,13 @@ export function WeaknessDrills() {
                 )
               })}
             </div>
+
+            {choice !== null && exercise.explanation && (
+              <div className="rounded-xl border border-cyan/25 bg-cyan/5 px-4 py-3">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-cyan">¿Por qué?</p>
+                <p className="mt-1 text-[12px] leading-relaxed text-slate-300">{exercise.explanation}</p>
+              </div>
+            )}
 
             {choice !== null && (
               <button

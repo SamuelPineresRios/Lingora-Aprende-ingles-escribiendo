@@ -5,6 +5,7 @@
  * ejemplos), así que el detalle se pinta sin pedir nada más.
  */
 import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { ActiveVocabulary } from '@/components/ActiveVocabulary'
 import { useEffect, useMemo, useState } from 'react'
 import { BookMarked, Loader2, Search, Trash2, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -138,6 +139,9 @@ export default function Words() {
         )}
 
         {!loading && error && <p className="text-coral text-sm">{error}</p>}
+
+        {/* Vocabulario activo: lo que ya produces, no solo lo que reconoces */}
+        <ActiveVocabulary />
 
         {!loading && !error && words.length === 0 && (
           <div className="text-center py-20 border-2 border-dashed border-white/5 rounded-2xl">

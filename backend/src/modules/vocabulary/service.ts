@@ -7,9 +7,9 @@
  * reintenta.
  */
 import { randomUUID } from 'node:crypto'
-import { eq } from 'drizzle-orm'
+import { and, eq, inArray } from 'drizzle-orm'
 import { db } from '../../db/client.ts'
-import { mission_vocabulary, type VocabularyWord } from '../../db/schema.ts'
+import { mission_vocabulary, missions, responses, type VocabularyWord } from '../../db/schema.ts'
 import { AIProviderError, completeChat } from '../../lib/ai.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { findIntroductionByMission, getMissionById } from '../introductions/service.ts'
@@ -234,4 +234,99 @@ export async function regenerateVocabulary(missionId: string): Promise<Vocabular
 
   if (!row) throw new HttpError(500, 'El upsert del vocabulario no devolvió la fila')
   return toPayload(row)
+}
+
+
+/** Escapa lo que iría dentro de una expresión regular (apóstrofos, guiones...). */
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/** ¿El texto (ya en minúsculas) contiene la palabra completa? */
+function containsWord(text: string, word: string): boolean {
+  return new RegExp(`\\b${escapeRegExp(word.toLowerCase())}\\b`).test(text)
+}
+
+export interface ActiveVocabularyEntry {
+  word: string
+  translation: string
+  mission_id: string
+  mission_title: string
+}
+
+export interface ActiveVocabularyView {
+  /** Palabras del vocabulario de tus misiones que ya usaste al escribir. */
+  active_count: number
+  /** Total de palabras distintas estudiadas en misiones completadas. */
+  studied_total: number
+  active: ActiveVocabularyEntry[]
+  /** Estudiadas que aún no han aparecido en tus textos. */
+  pending: ActiveVocabularyEntry[]
+}
+
+/**
+ * Vocabulario activo: palabras de tus misiones completadas que aparecen en lo
+ * que escribiste. Se calcula al leer (texto contra el vocabulario de su
+ * misión); con 10x datos convendría precalcularlo, pero hoy es barato.
+ */
+export async function getActiveVocabulary(studentId: string): Promise<ActiveVocabularyView> {
+  const answered = await db
+    .select({ mission_id: responses.mission_id, text_content: responses.text_content })
+    .from(responses)
+    .where(and(eq(responses.student_id, studentId), eq(responses.status, 'completed')))
+
+  const missionIds = [...new Set(answered.map(row => row.mission_id))]
+  if (missionIds.length === 0) {
+    return { active_count: 0, studied_total: 0, active: [], pending: [] }
+  }
+
+  const [vocabRows, missionRows] = await Promise.all([
+    db
+      .select({ mission_id: mission_vocabulary.mission_id, words: mission_vocabulary.words })
+      .from(mission_vocabulary)
+      .where(inArray(mission_vocabulary.mission_id, missionIds)),
+    db.select({ id: missions.id, title: missions.title }).from(missions).where(inArray(missions.id, missionIds)),
+  ])
+
+  const vocabByMission = new Map(vocabRows.map(row => [row.mission_id, row.words]))
+  const titleByMission = new Map(missionRows.map(row => [row.id, row.title]))
+
+  // Varias respuestas de la misma misión se unen en un solo texto.
+  const textByMission = new Map<string, string>()
+  for (const row of answered) {
+    textByMission.set(row.mission_id, `${textByMission.get(row.mission_id) ?? ''} ${row.text_content}`.toLowerCase())
+  }
+
+  const active = new Map<string, ActiveVocabularyEntry>()
+  const pending = new Map<string, ActiveVocabularyEntry>()
+  const studied = new Set<string>()
+
+  for (const missionId of missionIds) {
+    const words = vocabByMission.get(missionId) ?? []
+    const text = textByMission.get(missionId) ?? ''
+    const title = titleByMission.get(missionId) ?? missionId
+
+    for (const entry of words) {
+      const key = entry.word.toLowerCase()
+      const candidate: ActiveVocabularyEntry = {
+        word: entry.word,
+        translation: entry.translation,
+        mission_id: missionId,
+        mission_title: title,
+      }
+      studied.add(key)
+      if (containsWord(text, entry.word)) {
+        if (!active.has(key)) active.set(key, candidate)
+      } else if (!pending.has(key)) {
+        pending.set(key, candidate)
+      }
+    }
+  }
+
+  return {
+    active_count: active.size,
+    studied_total: studied.size,
+    active: [...active.values()],
+    pending: [...pending.values()].slice(0, 24),
+  }
 }

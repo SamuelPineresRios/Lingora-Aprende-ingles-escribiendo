@@ -59,6 +59,7 @@ describe('banco de drills', () => {
         expect(exercise.options).toHaveLength(3)
         expect(exercise.options).toContain(exercise.answer)
         expect(exercise.translation.length).toBeGreaterThan(0)
+        expect(exercise.explanation.length).toBeGreaterThan(20)
       }
     }
   })
