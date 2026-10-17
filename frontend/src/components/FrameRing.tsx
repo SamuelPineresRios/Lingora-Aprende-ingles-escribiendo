@@ -62,6 +62,16 @@ const facetas = (base: string, light: string) =>
 
 const DESIGNS: Record<string, Design> = {
   // Tienda
+  'marco-finde': {
+    band: ([a, b]) => `conic-gradient(from 0deg, #7c2d12, ${a}, #fde68a, ${b}, #7c2d12)`,
+    spin: 12,
+    overlay: {
+      background: ([, b]) => `linear-gradient(120deg, transparent 20%, ${b}66 55%, transparent 85%)`,
+      spin: -6,
+      opacity: 0.7,
+    },
+    sparks: [{ duration: 9, dot: 'h-1 w-1 bg-amber-200' }],
+  },
   'marco-fuego': {
     band: ([a, b]) => `conic-gradient(from 0deg, #7f1d1d, ${a}, ${b}, #fde68a, ${a}, #7f1d1d)`,
     spin: 4.5,

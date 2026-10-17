@@ -5,6 +5,7 @@ import { getCefrLabel } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
 import { DailyQuests } from '@/components/QuestBoard'
+import { WeekendEventBanner } from '@/components/WeekendEventBanner'
 import { StreakNotice } from '@/components/StreakNotice'
 import { ReviewSession } from '@/components/ReviewSession'
 import { ModuleBackdrop } from '@/components/ModuleBackdrop'
@@ -131,6 +132,8 @@ export default function MissionsPage() {
           </div>
         </div>
       </div>
+
+      <WeekendEventBanner />
 
       {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">

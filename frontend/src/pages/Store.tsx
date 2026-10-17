@@ -272,13 +272,17 @@ export default function StorePage() {
 
                           {/* En móvil la acción baja a su propia fila, a todo lo ancho */}
                           <div className="flex w-full shrink-0 items-center justify-between gap-2 pt-1 sm:w-auto sm:flex-col sm:items-end sm:gap-2 sm:pt-0">
-                            {!item.consumable && !item.owned && (
+                            {!item.consumable && !item.owned && !item.event && (
                               <span className="flex items-center gap-1 text-xs uppercase tracking-widest text-amber sm:text-[10px]">
                                 <Coins className="h-3 w-3" /> {item.price}
                               </span>
                             )}
 
-                            {item.consumable ? (
+                            {item.event && !item.owned ? (
+                              <span className="whitespace-nowrap rounded-xl border border-amber/40 bg-amber/10 px-4 py-2.5 text-xs uppercase tracking-widest text-amber sm:px-3.5 sm:py-2 sm:text-[10px]">
+                                Exclusivo del evento
+                              </span>
+                            ) : item.consumable ? (
                               <button
                                 onClick={() => act('purchase', item.id)}
                                 disabled={!canAfford || busy === item.id}

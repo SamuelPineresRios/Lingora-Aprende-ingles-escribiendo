@@ -13,6 +13,8 @@ export interface StoreItem {
   colors?: [string, string]
   accent?: string
   text?: string
+  /** Exclusivo de un evento: no se compra, se gana jugándolo. */
+  event?: boolean
 }
 
 export interface StoreView {

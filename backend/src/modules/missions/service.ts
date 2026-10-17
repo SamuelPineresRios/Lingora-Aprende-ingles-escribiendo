@@ -22,6 +22,7 @@ import { HttpError } from '../../utils/http-error.ts'
 import { getActivityStreak } from '../students/service.ts'
 import { recordChallengeScore } from '../social/service.ts'
 import { consumeSurpriseBonus } from '../quests/service.ts'
+import { applyWeekendEventBonus } from '../events/service.ts'
 import { getWeekStart } from '../../utils/week.ts'
 import { safeTimeZone, todayKeyIn } from '../../lib/date-keys.ts'
 import {
@@ -217,11 +218,16 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
   // había consumido; si falla, el envío sigue con el XP normal.
   let xp = xpConRacha
   if (completed) {
+    const dayKey = todayKeyIn(safeTimeZone(input.timezone))
     try {
-      const dayKey = todayKeyIn(safeTimeZone(input.timezone))
       xp = await consumeSurpriseBonus(input.studentId, input.missionId, dayKey, xpConRacha)
     } catch (err) {
       console.error('[Quests] No se pudo aplicar el bonus de la sorpresa:', err)
+    }
+    try {
+      xp = await applyWeekendEventBonus(input.studentId, input.missionId, mission.cefr_level, dayKey, xp)
+    } catch (err) {
+      console.error('[Event] No se pudo aplicar el bonus del fin de semana:', err)
     }
   }
 

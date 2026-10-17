@@ -84,6 +84,7 @@ export async function purchaseItem(studentId: string, rawItemId: unknown): Promi
   const itemId = typeof rawItemId === 'string' ? rawItemId : ''
   const item = findStoreItem(itemId)
   if (!item) throw new HttpError(404, 'Artículo no encontrado')
+  if (item.event) throw new HttpError(400, 'Se gana en el evento de fin de semana')
 
   if ((await getCoinBalance(studentId)) < item.price) {
     throw new HttpError(400, 'No tienes monedas suficientes')

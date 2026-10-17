@@ -24,10 +24,21 @@ export interface StoreItem {
   accent?: string
   /** Título: texto que se muestra junto al nombre. */
   text?: string
+  /** Exclusivo de un evento: no se compra, se gana jugándolo. */
+  event?: boolean
 }
 
 export const STORE_ITEMS: StoreItem[] = [
   // Marcos
+  {
+    id: 'marco-finde',
+    kind: 'frame',
+    label: 'Marco Fin de Semana',
+    description: 'Exclusivo del evento de fin de semana.',
+    price: 0,
+    colors: ['#f59e0b', '#fb7185'],
+    event: true,
+  },
   {
     id: 'marco-fuego',
     kind: 'frame',
