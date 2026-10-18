@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { resolveAvatar } from '@vox/shared'
@@ -204,19 +205,23 @@ export function StudentSidebar() {
           )
         })}
 
-        {/* Tu personaje completo, con su marco, abajo del menú y pegado al
-            divisor de la sesión. En móvil no se muestra: el cajón se queda con
-            el menú y la sesión. */}
-        <div className="mt-auto hidden justify-center pb-0.5 lg:flex">
+      </nav>
+
+      {/* Tu personaje, fijo en la esquina inferior derecha: siempre a la vista
+          sin ocupar el menú ni capturar clics. Va por portal al body porque un
+          ancestro con transform lo anclaría a la columna del menú. */}
+      {createPortal(
+        <div data-corner-avatar aria-hidden className="pointer-events-none fixed bottom-5 right-5 z-40 hidden lg:block">
           {frame ? (
-            <FrameRing frameId={frame.id} colors={frame.colors as [string, string]} accent={accent} size={160}>
-              <img src={avatar} alt="Tu avatar" className="h-full w-full" />
+            <FrameRing frameId={frame.id} colors={frame.colors as [string, string]} accent={accent} size={96}>
+              <img src={avatar} alt="" className="h-full w-full" />
             </FrameRing>
           ) : (
-            <img src={avatar} alt="Tu avatar" className="h-40 w-40" />
+            <img src={avatar} alt="" className="h-24 w-24" />
           )}
-        </div>
-      </nav>
+        </div>,
+        document.body,
+      )}
 
       {/* User Status / Logout */}
       <div className="relative z-10 p-4 border-t border-white/10 bg-black/20">
