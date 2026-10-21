@@ -18,8 +18,8 @@ import { playKeySound } from '@/lib/key-sound'
 /** Milisegundos que el texto completo se queda en pantalla antes de irse. */
 const HOLD_MS = 1700
 const REDUCED_HOLD_MS = 800
-/** Duración del fundido de salida (debe coincidir con `duration-700`). */
-const FADE_MS = 700
+/** Duración del fundido de salida (debe coincidir con `duration-500`). */
+const FADE_MS = 480
 
 interface MissionTitleCardProps {
   title: string
@@ -106,12 +106,12 @@ export function MissionTitleCard({ title, description, backdrop, seed, character
     return () => clearTimeout(done)
   }, [leaving])
 
-  // Un clic o una tecla: completa el texto; si ya está, salta a la escena.
+  // Un clic o una tecla: completa el texto y salta a la escena de una vez.
   const skip = () => {
+    if (leaving) return
     if (!typingDone) {
       setTypedTitle(title)
       setTypedDescription(description)
-      return
     }
     setLeaving(true)
   }
@@ -131,8 +131,8 @@ export function MissionTitleCard({ title, description, backdrop, seed, character
     <div
       onClick={skip}
       className={cn(
-        'fixed inset-0 z-50 cursor-pointer overflow-hidden bg-slate-950/95 transition-opacity duration-700',
-        leaving ? 'pointer-events-none opacity-0' : 'opacity-100',
+        'fixed inset-0 z-50 cursor-pointer overflow-hidden bg-slate-950/95 transition-all duration-500 ease-out',
+        leaving ? 'pointer-events-none scale-[0.985] opacity-0' : 'scale-100 opacity-100',
       )}
     >
       {/* El lugar de la misión, muy apagado, bajo el velo semi negro */}

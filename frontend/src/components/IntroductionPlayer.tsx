@@ -458,7 +458,7 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
   }
 
   return (
-    <div data-font-legacy className="flex h-[calc(100dvh-4rem)] w-full flex-col bg-slate-950 relative overflow-y-auto overscroll-contain lg:h-dvh lg:overflow-hidden">
+    <div data-font-legacy className="animate-in fade-in duration-500 flex h-[calc(100dvh-4rem)] w-full flex-col bg-slate-950 relative overflow-y-auto overscroll-contain lg:h-dvh lg:overflow-hidden">
       {/* Fondo ambientado según la misión: la dirección de arte generada o,
           si la escena es antigua, el respaldo por palabras clave. El velo
           oscuro mantiene el texto legible sobre cualquier escena. */}
