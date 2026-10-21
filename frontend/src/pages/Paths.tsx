@@ -1,7 +1,11 @@
 /**
  * Rutas por objetivo: itinerarios curados sobre las misiones del nivel del
- * alumno. Cada ruta muestra su progreso y sus misiones en orden; las
- * completadas se marcan y las pendientes enlazan a jugar.
+ * alumno, pintados como un camino con nodos conectados.
+ *
+ * Cada ruta es un trazo serpenteante: las misiones completadas quedan en
+ * verde, la siguiente brilla en cian y las pendientes esperan apagadas. El
+ * trazo se dibuja en SVG detrás de los nodos (coordenadas porcentuales) y el
+ * estado sale de lo completado, la misma fuente que el álbum y las medallas.
  */
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -39,6 +43,113 @@ const ICONS: Record<string, LucideIcon> = {
   users: Users,
   briefcase: Briefcase,
   megaphone: Megaphone,
+}
+
+/** Coordenadas (porcentaje) de los centros de los nodos: zigzag a 1/6 y 5/6. */
+const NODE_X = [100 / 6, (100 / 6) * 5] as const
+/** Cada fila mide lo mismo: 100 unidades de alto en el SVG. */
+const ROW_UNITS = 100
+
+/** El camino de una ruta: nodos alternos unidos por un trazo que sigue el progreso. */
+function MissionTrail({ missions, level }: { missions: PathMission[]; level: string }) {
+  const points = missions.map((_, index) => ({
+    x: NODE_X[index % 2]!,
+    y: (index + 0.5) * ROW_UNITS,
+  }))
+  const nextIndex = missions.findIndex(mission => mission.status === 'pending')
+
+  return (
+    <div className="relative">
+      {/* El trazo del camino: sólido y verde lo completado, punteado lo pendiente */}
+      <svg
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox={`0 0 100 ${missions.length * ROW_UNITS}`}
+        preserveAspectRatio="none"
+      >
+        {points.slice(1).map((point, index) => {
+          const from = points[index]!
+          const done =
+            missions[index]!.status === 'completed' && missions[index + 1]!.status === 'completed'
+          return (
+            <line
+              key={index}
+              x1={from.x}
+              y1={from.y}
+              x2={point.x}
+              y2={point.y}
+              stroke={done ? 'rgba(52, 211, 153, 0.65)' : 'rgba(255, 255, 255, 0.14)'}
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeDasharray={done ? undefined : '3 8'}
+              vectorEffect="non-scaling-stroke"
+            />
+          )
+        })}
+      </svg>
+
+      <ol className="relative">
+        {missions.map((mission, index) => {
+          const even = index % 2 === 0
+          const completed = mission.status === 'completed'
+          const isNext = index === nextIndex
+          return (
+            <li key={mission.mission_id}>
+              <Link
+                to={`/mission/${mission.mission_id}`}
+                title={mission.title}
+                className="grid h-20 grid-cols-3 items-center"
+              >
+                <span
+                  className={cn(
+                    'relative z-10 flex h-11 w-11 items-center justify-center justify-self-center rounded-full border-2 font-mono text-sm transition-colors',
+                    even ? 'col-start-1' : 'col-start-3',
+                    completed
+                      ? 'border-emerald/60 bg-emerald/15 text-emerald'
+                      : isNext
+                        ? 'border-cyan bg-cyan/15 text-cyan shadow-[0_0_22px_rgba(6,182,212,0.35)]'
+                        : 'border-white/15 bg-slate-950 text-slate-500',
+                  )}
+                >
+                  {isNext && <span className="absolute inset-0 animate-ping rounded-full border border-cyan/40" />}
+                  {completed ? <Check className="h-5 w-5" /> : index + 1}
+                </span>
+
+                <span
+                  className={cn(
+                    'min-w-0 rounded-xl border px-3 py-2 transition-colors',
+                    even ? 'col-span-2 col-start-2' : 'col-span-2 col-start-1 text-right',
+                    completed
+                      ? 'border-emerald/20 bg-emerald/5'
+                      : isNext
+                        ? 'border-cyan/40 bg-cyan/10'
+                        : 'border-white/10 bg-black/25 hover:border-cyan/30 hover:bg-cyan/5',
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'block truncate text-sm',
+                      completed ? 'text-emerald-200' : isNext ? 'text-cyan-100' : 'text-white',
+                    )}
+                  >
+                    {mission.title}
+                  </span>
+                  <span
+                    className={cn(
+                      'block text-[10px] uppercase tracking-widest',
+                      completed ? 'text-emerald/70' : isNext ? 'text-cyan/70' : 'text-slate-600',
+                    )}
+                  >
+                    {completed ? 'Completada' : isNext ? 'Siguiente' : `Nivel ${mission.tier ?? 1} · ${level}`}
+                  </span>
+                </span>
+              </Link>
+            </li>
+          )
+        })}
+      </ol>
+    </div>
+  )
 }
 
 export default function PathsPage() {
@@ -105,16 +216,13 @@ export default function PathsPage() {
         )}
 
         {!loading && view && view.paths.length > 0 && (
-          <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <section className="grid grid-cols-1 gap-5 lg:grid-cols-2">
             {view.paths.map(path => {
               const Icon = ICONS[path.icon] ?? Compass
               const pct = Math.round((path.completed / path.total) * 100)
               return (
-                <article
-                  key={path.id}
-                  className="space-y-4 rounded-2xl border border-white/10 bg-black/25 p-5"
-                >
-                  <div className="flex items-start gap-3">
+                <article key={path.id} className="space-y-4 rounded-2xl border border-white/10 bg-black/25 p-5">
+                  <header className="flex items-start gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan/30 bg-cyan/5">
                       <Icon className="h-5 w-5 text-cyan" />
                     </span>
@@ -127,7 +235,7 @@ export default function PathsPage() {
                       </div>
                       <p className="mt-0.5 text-[11px] text-slate-500">{path.description}</p>
                     </div>
-                  </div>
+                  </header>
 
                   <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
                     <div
@@ -136,45 +244,7 @@ export default function PathsPage() {
                     />
                   </div>
 
-                  <ol className="space-y-1.5">
-                    {path.missions.map((mission, index) => (
-                      <li key={mission.mission_id}>
-                        <Link
-                          to={`/mission/${mission.mission_id}`}
-                          className={cn(
-                            'flex items-center gap-3 rounded-xl border px-3 py-2 transition-colors',
-                            mission.status === 'completed'
-                              ? 'border-emerald/25 bg-emerald/5'
-                              : 'border-white/10 bg-black/20 hover:border-cyan/40 hover:bg-cyan/5',
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border font-mono text-[10px]',
-                              mission.status === 'completed'
-                                ? 'border-emerald/50 text-emerald'
-                                : 'border-white/15 text-slate-500',
-                            )}
-                          >
-                            {mission.status === 'completed' ? <Check className="h-3.5 w-3.5" /> : index + 1}
-                          </span>
-                          <span
-                            className={cn(
-                              'min-w-0 flex-1 truncate text-sm',
-                              mission.status === 'completed' ? 'text-emerald-200' : 'text-white',
-                            )}
-                          >
-                            {mission.title}
-                          </span>
-                          {mission.tier && (
-                            <span className="shrink-0 font-mono text-[9px] uppercase tracking-widest text-slate-600">
-                              Nivel {mission.tier}
-                            </span>
-                          )}
-                        </Link>
-                      </li>
-                    ))}
-                  </ol>
+                  <MissionTrail missions={path.missions} level={view.level} />
                 </article>
               )
             })}
