@@ -561,3 +561,17 @@ textarea {
 [data-font-legacy] .font-reading {
   font-family: 'Literata', Georgia, serif;
 }
+
+/* ================================
+   RUTAS: CAMINO DE VIDEOJUEGO
+   El avatar del alumno flota suavemente sobre el nodo actual del camino.
+   ================================ */
+@keyframes route-avatar-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}

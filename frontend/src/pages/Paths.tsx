@@ -1,19 +1,34 @@
 /**
- * Rutas por objetivo: itinerarios curados sobre las misiones del nivel del
- * alumno, pintados como un camino con nodos conectados.
+ * Rutas por objetivo: cada itinerario es un camino de videojuego.
  *
- * Cada ruta es un trazo serpenteante: las misiones completadas quedan en
- * verde, la siguiente brilla en cian y las pendientes esperan apagadas. El
- * trazo se dibuja en SVG detrás de los nodos (coordenadas porcentuales) y el
- * estado sale de lo completado, la misma fuente que el álbum y las medallas.
+ * La carretera se dibuja en SVG (trazos curvos con relieve) y los nodos son
+ * estaciones: completadas con check, la siguiente brillando y el resto
+ * apagadas. El avatar del alumno (con su marco) flota sobre el nodo actual,
+ * como la ficha que avanza por el mapa. Cada ruta tiene su color.
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { Briefcase, Check, Coffee, Compass, Loader2, Megaphone, Plane, Users, type LucideIcon } from 'lucide-react'
+import {
+  Briefcase,
+  Check,
+  Coffee,
+  Compass,
+  Flag,
+  Loader2,
+  Megaphone,
+  Plane,
+  Users,
+  type LucideIcon,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { useStoreView, useThemeAccent } from '@/lib/hooks/useStoreView'
+import { equippedItem } from '@/lib/store'
+import { FrameRing } from '@/components/FrameRing'
 import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { resolveAvatar } from '@vox/shared'
+import { studentAvatarUrl } from '@/lib/avatar'
 
 interface PathMission {
   mission_id: string
@@ -45,49 +60,131 @@ const ICONS: Record<string, LucideIcon> = {
   megaphone: Megaphone,
 }
 
-/** Coordenadas (porcentaje) de los centros de los nodos: zigzag a 1/6 y 5/6. */
+/** Color de cada ruta: cada una es un «mundo» distinto. */
+const ACCENTS: Record<string, string> = {
+  plane: '#22d3ee',
+  coffee: '#f59e0b',
+  users: '#a78bfa',
+  briefcase: '#34d399',
+  megaphone: '#fb7185',
+}
+
+/** Coordenadas (porcentaje del ancho) de los nodos: zigzag a 1/6 y 5/6. */
 const NODE_X = [100 / 6, (100 / 6) * 5] as const
-/** Cada fila mide lo mismo: 100 unidades de alto en el SVG. */
+/** Cada fila mide 100 unidades de alto en el SVG. */
 const ROW_UNITS = 100
 
-/** El camino de una ruta: nodos alternos unidos por un trazo que sigue el progreso. */
-function MissionTrail({ missions, level }: { missions: PathMission[]; level: string }) {
+/** El camino: carretera curva, estaciones y el avatar sobre el nodo actual. */
+function MissionTrail({
+  missions,
+  level,
+  accent,
+  avatar,
+}: {
+  missions: PathMission[]
+  level: string
+  accent: string
+  avatar: ReactNode
+}) {
+  const count = missions.length
+  const viewHeight = count * ROW_UNITS
   const points = missions.map((_, index) => ({
     x: NODE_X[index % 2]!,
     y: (index + 0.5) * ROW_UNITS,
   }))
   const nextIndex = missions.findIndex(mission => mission.status === 'pending')
+  const hereIndex = nextIndex === -1 ? count - 1 : nextIndex
+  const here = points[hereIndex]!
+  const percentY = (value: number) => `${(value / viewHeight) * 100}%`
 
   return (
     <div className="relative">
-      {/* El trazo del camino: sólido y verde lo completado, punteado lo pendiente */}
+      {/* Carretera: base oscura + firme coloreado según lo completado */}
       <svg
         aria-hidden
         className="pointer-events-none absolute inset-0 h-full w-full"
-        viewBox={`0 0 100 ${missions.length * ROW_UNITS}`}
+        viewBox={`0 0 100 ${viewHeight}`}
         preserveAspectRatio="none"
       >
         {points.slice(1).map((point, index) => {
           const from = points[index]!
+          const mid = (from.y + point.y) / 2
+          const road = `M ${from.x} ${from.y} C ${from.x} ${mid}, ${point.x} ${mid}, ${point.x} ${point.y}`
           const done =
             missions[index]!.status === 'completed' && missions[index + 1]!.status === 'completed'
           return (
-            <line
-              key={index}
-              x1={from.x}
-              y1={from.y}
-              x2={point.x}
-              y2={point.y}
-              stroke={done ? 'rgba(52, 211, 153, 0.65)' : 'rgba(255, 255, 255, 0.14)'}
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeDasharray={done ? undefined : '3 8'}
-              vectorEffect="non-scaling-stroke"
-            />
+            <g key={index}>
+              <path
+                d={road}
+                fill="none"
+                stroke="rgba(2, 6, 23, 0.92)"
+                strokeWidth={26}
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+              />
+              <path
+                d={road}
+                fill="none"
+                stroke={done ? `${accent}8c` : 'rgba(255, 255, 255, 0.08)'}
+                strokeWidth={15}
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+              />
+              <path
+                d={road}
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.06)"
+                strokeWidth={3}
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+              />
+            </g>
           )
         })}
       </svg>
 
+      {/* Estaciones */}
+      {points.map((point, index) => {
+        const completed = missions[index]!.status === 'completed'
+        const isNext = index === nextIndex
+        return (
+          <span
+            key={index}
+            aria-hidden
+            className="pointer-events-none absolute z-10 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 font-mono text-sm"
+            style={{
+              left: `${point.x}%`,
+              top: percentY(point.y),
+              ...(completed
+                ? { borderColor: `${accent}aa`, background: '#0b1220', color: accent }
+                : isNext
+                  ? { borderColor: accent, background: '#0b1220', color: accent, boxShadow: `0 0 24px ${accent}66` }
+                  : { borderColor: 'rgba(255,255,255,0.14)', background: '#020617', color: '#64748b' }),
+            }}
+          >
+            {isNext && (
+              <span
+                className="absolute inset-0 animate-ping rounded-full border"
+                style={{ borderColor: `${accent}66` }}
+              />
+            )}
+            {completed ? <Check className="h-5 w-5" /> : index + 1}
+          </span>
+        )
+      })}
+
+      {/* Tu avatar, de pie sobre el nodo actual */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute z-20"
+        style={{ left: `${here.x}%`, top: percentY(here.y), transform: 'translate(-50%, -78%)' }}
+      >
+        <div className="animate-[route-avatar-bob_2.6s_ease-in-out_infinite] motion-reduce:animate-none">
+          {avatar}
+        </div>
+      </div>
+
+      {/* Etiquetas: la estación queda en el lado contrario de cada fila */}
       <ol className="relative">
         {missions.map((mission, index) => {
           const even = index % 2 === 0
@@ -95,50 +192,38 @@ function MissionTrail({ missions, level }: { missions: PathMission[]; level: str
           const isNext = index === nextIndex
           return (
             <li key={mission.mission_id}>
-              <Link
-                to={`/mission/${mission.mission_id}`}
-                title={mission.title}
-                className="grid h-20 grid-cols-3 items-center"
-              >
+              <Link to={`/mission/${mission.mission_id}`} title={mission.title} className="grid h-20 grid-cols-3 items-center">
                 <span
                   className={cn(
-                    'relative z-10 flex h-11 w-11 items-center justify-center justify-self-center rounded-full border-2 font-mono text-sm transition-colors',
-                    even ? 'col-start-1' : 'col-start-3',
-                    completed
-                      ? 'border-emerald/60 bg-emerald/15 text-emerald'
-                      : isNext
-                        ? 'border-cyan bg-cyan/15 text-cyan shadow-[0_0_22px_rgba(6,182,212,0.35)]'
-                        : 'border-white/15 bg-slate-950 text-slate-500',
-                  )}
-                >
-                  {isNext && <span className="absolute inset-0 animate-ping rounded-full border border-cyan/40" />}
-                  {completed ? <Check className="h-5 w-5" /> : index + 1}
-                </span>
-
-                <span
-                  className={cn(
-                    'min-w-0 rounded-xl border px-3 py-2 transition-colors',
+                    'min-w-0 rounded-xl border px-3 py-2 backdrop-blur-[1px] transition-colors',
                     even ? 'col-span-2 col-start-2' : 'col-span-2 col-start-1 text-right',
                     completed
                       ? 'border-emerald/20 bg-emerald/5'
                       : isNext
-                        ? 'border-cyan/40 bg-cyan/10'
-                        : 'border-white/10 bg-black/25 hover:border-cyan/30 hover:bg-cyan/5',
+                        ? undefined
+                        : 'border-white/10 bg-black/30 hover:border-cyan/30 hover:bg-cyan/5',
                   )}
+                  style={
+                    isNext
+                      ? { borderColor: `${accent}66`, background: `${accent}14` }
+                      : undefined
+                  }
                 >
                   <span
                     className={cn(
                       'block truncate text-sm',
-                      completed ? 'text-emerald-200' : isNext ? 'text-cyan-100' : 'text-white',
+                      completed ? 'text-emerald-200' : isNext ? undefined : 'text-white',
                     )}
+                    style={isNext ? { color: accent } : undefined}
                   >
                     {mission.title}
                   </span>
                   <span
                     className={cn(
                       'block text-[10px] uppercase tracking-widest',
-                      completed ? 'text-emerald/70' : isNext ? 'text-cyan/70' : 'text-slate-600',
+                      completed ? 'text-emerald/70' : isNext ? undefined : 'text-slate-600',
                     )}
+                    style={isNext ? { color: `${accent}b3` } : undefined}
                   >
                     {completed ? 'Completada' : isNext ? 'Siguiente' : `Nivel ${mission.tier ?? 1} · ${level}`}
                   </span>
@@ -154,6 +239,8 @@ function MissionTrail({ missions, level }: { missions: PathMission[]; level: str
 
 export default function PathsPage() {
   const { user } = useAuth()
+  const store = useStoreView(user?.id)
+  const themeAccent = useThemeAccent(user?.id)
   const [view, setView] = useState<PathsView | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -178,6 +265,18 @@ export default function PathsPage() {
       cancelled = true
     }
   }, [user?.id])
+
+  const frame = equippedItem(store, 'frame')
+  const avatarUrl = user ? studentAvatarUrl(resolveAvatar({ id: user.id, avatar: user.avatar })) : null
+  const avatar: ReactNode = avatarUrl ? (
+    frame && frame.colors ? (
+      <FrameRing frameId={frame.id} colors={frame.colors} accent={themeAccent} size={62}>
+        <img src={avatarUrl} alt="" className="h-full w-full" />
+      </FrameRing>
+    ) : (
+      <img src={avatarUrl} alt="" className="h-[62px] w-[62px] drop-shadow-[0_8px_10px_rgba(0,0,0,0.55)]" />
+    )
+  ) : null
 
   const totalMissions = view?.paths.reduce((sum, path) => sum + path.total, 0) ?? 0
   const totalCompleted = view?.paths.reduce((sum, path) => sum + path.completed, 0) ?? 0
@@ -219,12 +318,30 @@ export default function PathsPage() {
           <section className="grid grid-cols-1 gap-5 lg:grid-cols-2">
             {view.paths.map(path => {
               const Icon = ICONS[path.icon] ?? Compass
+              const accent = ACCENTS[path.icon] ?? '#22d3ee'
               const pct = Math.round((path.completed / path.total) * 100)
+              const finished = path.completed >= path.total
               return (
-                <article key={path.id} className="space-y-4 rounded-2xl border border-white/10 bg-black/25 p-5">
-                  <header className="flex items-start gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan/30 bg-cyan/5">
-                      <Icon className="h-5 w-5 text-cyan" />
+                <article
+                  key={path.id}
+                  className="relative space-y-4 overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-5"
+                  style={{
+                    backgroundImage: `radial-gradient(120% 80% at 15% 0%, ${accent}14, transparent 55%), radial-gradient(100% 70% at 85% 100%, ${accent}0d, transparent 50%)`,
+                  }}
+                >
+                  {/* Decoración tenue del mundo de la ruta */}
+                  <Icon
+                    aria-hidden
+                    className="pointer-events-none absolute -right-3 top-14 h-24 w-24 opacity-[0.05]"
+                    style={{ color: accent }}
+                  />
+
+                  <header className="relative flex items-start gap-3">
+                    <span
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border"
+                      style={{ borderColor: `${accent}55`, background: `${accent}14`, color: accent }}
+                    >
+                      <Icon className="h-5 w-5" />
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -237,14 +354,20 @@ export default function PathsPage() {
                     </div>
                   </header>
 
-                  <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <div className="relative h-1.5 overflow-hidden rounded-full bg-white/10">
                     <div
-                      className={cn('h-full rounded-full transition-all duration-700', pct === 100 ? 'bg-emerald' : 'bg-cyan')}
-                      style={{ width: `${pct}%` }}
+                      className="h-full rounded-full transition-all duration-700"
+                      style={{ width: `${pct}%`, background: accent }}
                     />
                   </div>
 
-                  <MissionTrail missions={path.missions} level={view.level} />
+                  {finished && (
+                    <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald">
+                      <Flag className="h-3.5 w-3.5" /> Ruta completada
+                    </p>
+                  )}
+
+                  <MissionTrail missions={path.missions} level={view.level} accent={accent} avatar={avatar} />
                 </article>
               )
             })}
