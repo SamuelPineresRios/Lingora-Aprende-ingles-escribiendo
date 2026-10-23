@@ -7,6 +7,7 @@ import { randomUUID } from 'node:crypto'
 import { db } from '../../db/client.ts'
 import {
   evaluations,
+  grammar_errors,
   group_members,
   groups,
   mission_assignments,
@@ -24,6 +25,7 @@ import { minusDays, mondayKeyOf, safeTimeZone, todayKeyIn } from '../../lib/date
 import { LEAGUE_SIZE, leagueZones, zoneAt, type LeagueZone } from '../../lib/league.ts'
 import { SEASON_REWARDS, seasonFor, tierFromXp } from '../../lib/season.ts'
 import { STORE_ITEMS } from '../../lib/store.ts'
+import { errorTypeLabel } from '../../lib/drills.ts'
 import { medalsByStudent } from '../medals/service.ts'
 import type { UserAvatar } from '@vox/shared'
 import { getWeekStart } from '../../utils/week.ts'
@@ -243,7 +245,21 @@ export async function getWeeklyReport(studentId: string, timezone?: unknown) {
     ? sql`((${saved_words.created_at} AT TIME ZONE ${tz}::text)::date)`
     : sql`(${saved_words.created_at}::date)`
 
-  const [current, previous, evolutionRows, savedRow, masteredRow, topStructures] = await Promise.all([
+  const errorsDay = tz
+    ? sql`((${grammar_errors.created_at} AT TIME ZONE ${tz}::text)::date)`
+    : sql`(${grammar_errors.created_at}::date)`
+
+  const [
+    current,
+    previous,
+    evolutionRows,
+    savedRow,
+    masteredRow,
+    topStructures,
+    errorsWeekRow,
+    errorsPrevRow,
+    topErrorRows,
+  ] = await Promise.all([
     weekStats(studentId, tz, weekStartKey, null),
     weekStats(studentId, tz, previousStartKey, weekStartKey),
     db
@@ -268,7 +284,31 @@ export async function getWeeklyReport(studentId: string, timezone?: unknown) {
       .from(saved_words)
       .where(and(eq(saved_words.student_id, studentId), isNull(saved_words.review_due_at))),
     topStructuresForStudent(studentId, 3),
+    db
+      .select({ n: sql<number>`count(*)::int` })
+      .from(grammar_errors)
+      .where(and(eq(grammar_errors.student_id, studentId), sql`${errorsDay} >= ${weekStartKey}::date`)),
+    db
+      .select({ n: sql<number>`count(*)::int` })
+      .from(grammar_errors)
+      .where(
+        and(
+          eq(grammar_errors.student_id, studentId),
+          sql`${errorsDay} >= ${previousStartKey}::date`,
+          sql`${errorsDay} < ${weekStartKey}::date`,
+        ),
+      ),
+    db
+      .select({ error_type: grammar_errors.error_type, count: sql<number>`count(*)::int` })
+      .from(grammar_errors)
+      .where(and(eq(grammar_errors.student_id, studentId), sql`${errorsDay} >= ${weekStartKey}::date`))
+      .groupBy(grammar_errors.error_type)
+      .orderBy(desc(sql`count(*)`))
+      .limit(3),
   ])
+
+  const errorsThisWeek = errorsWeekRow[0]?.n ?? 0
+  const errorsPreviousWeek = errorsPrevRow[0]?.n ?? 0
 
   const evolutionByWeek = new Map(
     evolutionRows.map(row => [
@@ -307,6 +347,16 @@ export async function getWeeklyReport(studentId: string, timezone?: unknown) {
       mastered_total: masteredRow[0]?.n ?? 0,
     },
     top_structures: topStructures,
+    errors: {
+      this_week: errorsThisWeek,
+      previous_week: errorsPreviousWeek,
+      delta: errorsThisWeek - errorsPreviousWeek,
+      top: topErrorRows.map(row => ({
+        type: row.error_type,
+        label: errorTypeLabel(row.error_type),
+        count: row.count,
+      })),
+    },
     evolution,
   }
 }

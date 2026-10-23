@@ -10,7 +10,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { randomUUID } from 'node:crypto'
 import { createApp } from '../src/app.ts'
 import { db } from '../src/db/client.ts'
-import { evaluations, responses, saved_words, word_lookups } from '../src/db/schema.ts'
+import { evaluations, grammar_errors, responses, saved_words, word_lookups } from '../src/db/schema.ts'
 import { minusDays, mondayKeyOf, todayKeyIn } from '../src/lib/date-keys.ts'
 import { resetDb } from './helpers/db.ts'
 import { createMission, signupActor, type Actor } from './helpers/fixtures.ts'
@@ -153,5 +153,25 @@ describe('GET /api/students/:id/weekly-report', () => {
 
     expect((await luis.agent.get(`/api/students/${ana.id}/weekly-report?tz=${TZ}`)).status).toBe(403)
     expect((await teacher.agent.get(`/api/students/${ana.id}/weekly-report?tz=${TZ}`)).status).toBe(200)
+  })
+})
+
+describe('reglas a mejorar del informe', () => {
+  it('cuenta los errores de la semana y sus tipos más repetidos', async () => {
+    const ana = await signupActor(app, 'student')
+    const ahora = new Date()
+    const semanaPasada = new Date(ahora.getTime() - 7 * 86_400_000)
+
+    await db.insert(grammar_errors).values([
+      { id: randomUUID(), student_id: ana.id, error_type: 'third_person_s', created_at: ahora },
+      { id: randomUUID(), student_id: ana.id, error_type: 'third_person_s', created_at: ahora },
+      { id: randomUUID(), student_id: ana.id, error_type: 'article', created_at: ahora },
+      { id: randomUUID(), student_id: ana.id, error_type: 'word_order', created_at: semanaPasada },
+    ])
+
+    const res = await ana.agent.get(`/api/students/${ana.id}/weekly-report?tz=${TZ}`)
+
+    expect(res.body.errors).toMatchObject({ this_week: 3, previous_week: 1, delta: 2 })
+    expect(res.body.errors.top[0]).toEqual({ type: 'third_person_s', label: 'la -s de tercera persona', count: 2 })
   })
 })

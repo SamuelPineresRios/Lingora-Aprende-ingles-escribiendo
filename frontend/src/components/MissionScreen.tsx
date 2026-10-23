@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { Lightbulb, X } from 'lucide-react'
 import { resolveAvatar, type MissionBackdrop as MissionBackdropSpec, type MissionIntroduction } from '@vox/shared'
 import { useNavigate } from 'react-router-dom'
 import { Timer } from './Timer'
@@ -18,8 +19,9 @@ import { IntroductionPlayer } from '@/components/IntroductionPlayer'
 import { MissionBackdrop } from '@/components/MissionBackdrop'
 import { MissionTitleCard } from '@/components/MissionTitleCard'
 import { getCachedIntroduction, prewarmVocabulary, setCachedIntroduction } from '@/lib/mission-content'
-import { ConversationLog } from '@/components/ConversationLog'
 import { ConversationMessages, type ChatMessage } from '@/components/ConversationMessages'
+import { GrammarCorrectionModal, type GrammarCorrection } from '@/components/GrammarCorrectionModal'
+import { lessonFor } from '@/lib/grammar-lessons'
 
 
 /**
@@ -76,6 +78,8 @@ function SceneFigure({
 interface Mission {
   id: string; title: string; objective: string; scene_context: string
   character_name: string; cefr_level: string; base_duration_seconds: number
+  /** Subnivel dentro del CEFR (1-3); null en misiones sin dividir. */
+  tier?: number | null
   key_verbs?: string[]
   useful_phrases?: string[]
   grammar_tips?: string
@@ -86,6 +90,15 @@ interface Mission {
 
 interface MissionScreenProps {
   mission: Mission; studentId: string; groupId?: string
+}
+
+/** Normaliza una frase para comparar la reescritura (mayúsculas y puntuación no cuentan). */
+function normalizeSentence(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[.,!?;:"'’]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
     type MissionState = 'introduction' | 'vocabulary' | 'preparation' | 'active' | 'submitting'
 
@@ -130,6 +143,19 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const HELP_AFTER_FAILURES = 3
   const [hearts, setHearts] = useState(TOTAL_HEARTS)
   const [showFailedNotification, setShowFailedNotification] = useState(false)
+  /** Corrección gramatical pendiente: el mensaje no se envió. */
+  const [grammarCorrection, setGrammarCorrection] = useState<GrammarCorrection | null>(null)
+  /** Frase correcta que hay que reescribir antes de seguir. */
+  const [rewrite, setRewrite] = useState<{ corrected: string; errorType: string } | null>(null)
+  const [rewriteHintLevel, setRewriteHintLevel] = useState(0)
+  const [rewriteNotice, setRewriteNotice] = useState<string | null>(null)
+  /** Dos pistas de la IA para responder al personaje. */
+  const [hints, setHints] = useState<Array<{ en: string; es: string }>>([])
+  const [hintsOpen, setHintsOpen] = useState(false)
+  const [hintsLoading, setHintsLoading] = useState(false)
+  const [hintsError, setHintsError] = useState('')
+  /** Último mensaje del personaje para el que ya se pidieron pistas. */
+  const [hintsUsedFor, setHintsUsedFor] = useState<string | null>(null)
   /** Lo dice la conversación (mission_completed), no el evaluador del reporte. */
   const [missionCompleted, setMissionCompleted] = useState(false)
 
@@ -227,7 +253,21 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
   const handleSendMessage = async () => {
     if (!currentInput.trim() || isThinking) return;
-    
+
+    // Reescritura obligatoria: hasta que la frase no coincida con la
+    // corrección, no se envía nada.
+    if (rewrite) {
+      if (normalizeSentence(currentInput) !== normalizeSentence(rewrite.corrected)) {
+        setRewriteNotice('Aún no coincide con la frase correcta. Fíjate en el orden y vuelve a escribirla.')
+        return
+      }
+      setRewrite(null)
+      setRewriteHintLevel(0)
+      setRewriteNotice(null)
+    }
+
+    setHintsOpen(false)
+
     const userMsg: ChatMessage = { role: 'user', content: currentInput.trim() }
     const newMessages = [...messages, userMsg]
     setMessages(newMessages)
@@ -250,6 +290,37 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
         })
         const data = await readJson(res)
         if (data?.message) {
+            const isA1Tier1 = mission.cefr_level === 'A1' && mission.tier === 1
+            const correctedText = typeof data.correctedText === 'string' ? data.correctedText.trim() : ''
+            const errorType = typeof data.error_type === 'string' ? data.error_type : ''
+
+            // Error gramatical (salvo A1 nivel 1): el mensaje no se envía.
+            // Se retira del chat, se explica la corrección y se obliga a
+            // reescribir la frase antes de continuar.
+            if (!isA1Tier1 && errorType && correctedText) {
+              setMessages(current => current.filter(message => message !== userMsg))
+              setCurrentInput('')
+              setGrammarCorrection({
+                original: userMsg.content,
+                corrected: correctedText,
+                explanation: data.feedback || data.missingStep || 'Revisa la gramática de la frase.',
+                errorType,
+              })
+              setRewrite({ corrected: correctedText, errorType })
+              setRewriteHintLevel(0)
+              setRewriteNotice(null)
+
+              // En el Desafío el rechazo cuesta un corazón.
+              if (missionMode === 'evaluation') {
+                setHearts(current => {
+                  const remaining = Math.max(current - 1, 0)
+                  if (remaining === 0) setShowFailedNotification(true)
+                  return remaining
+                })
+              }
+              return
+            }
+
             // Store the rating on the *User's* message (the one we just sent)
             // But the API returns the rating for the *User's* message in the *Assistant's* payload usually.
             // Wait, the API returns { message: { role: 'assistant', ... }, feedback: ..., rating: ... }
@@ -696,7 +767,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
     )
   }
 
-  const usedPhrases = messages.filter(message => message.role === 'user')
   /** Género del personaje que interpreta la IA, para que el avatar coincida. */
   const characterGender = introduction?.characters.find(character => character.played_by === 'ai')?.gender
   const studentCharacter = introduction?.characters.find(character => character.played_by === 'student')
@@ -704,6 +774,42 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const aiRole = introduction?.characters.find(character => character.played_by === 'ai')?.role ?? 'Lo interpreta la IA'
   /** Último turno de cada lado: la conversación se lee como una escena. */
   const lastAssistant = [...messages].reverse().find(message => message.role === 'assistant')
+
+  /** Pide a la IA exactamente dos pistas para responder al personaje. */
+  const requestHints = async () => {
+    if (!lastAssistant || hintsLoading) return
+    setHintsLoading(true)
+    setHintsError('')
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: 'hints',
+          lastMessage: lastAssistant.content,
+          mission,
+          userLevel: user?.cefr_level || mission.cefr_level,
+        }),
+      })
+      const data = await readJson(res)
+      const list = Array.isArray(data?.hints)
+        ? data.hints.filter(
+            (hint: { en?: unknown; es?: unknown }) =>
+              typeof hint?.en === 'string' && typeof hint?.es === 'string',
+          )
+        : []
+      if (!res.ok || list.length < 2) {
+        throw new Error(typeof data?.error === 'string' ? data.error : 'No se pudieron pedir las pistas.')
+      }
+      setHints(list.slice(0, 2))
+      setHintsOpen(true)
+      setHintsUsedFor(lastAssistant.content)
+    } catch (err) {
+      setHintsError(err instanceof Error ? err.message : 'No se pudieron pedir las pistas.')
+    } finally {
+      setHintsLoading(false)
+    }
+  }
   const lastUser = [...messages].reverse().find(message => message.role === 'user')
   const assistantSpeaking = isThinking || isLastMessageTyping
 
@@ -718,7 +824,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
       />
       <div className="absolute inset-0 bg-slate-950/60" />
 
-      <div className="relative z-10 grid flex-1 min-h-0 lg:grid-cols-[minmax(0,1fr)_320px] gap-4 lg:gap-6">
+      <div className="relative z-10 grid flex-1 min-h-0 gap-4 lg:gap-6">
         {/* Columna izquierda: escena conversacional */}
         <div className="flex flex-col min-h-0">
           {/* Cabecera: volver, título, objetivo, progreso */}
@@ -835,6 +941,59 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
           {/* Entrada */}
           <div className="mission-screen-input shrink-0 px-4 pb-4">
+            {/* Reescritura obligatoria tras un rechazo gramatical */}
+            {rewrite && (
+              <div className="mb-2 space-y-2 rounded-xl border border-amber/40 bg-amber/10 px-3.5 py-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-amber">
+                    Reescribe la frase correcta para continuar
+                  </p>
+                  <button
+                    onClick={() => setRewriteHintLevel(level => Math.min(level + 1, 3))}
+                    disabled={rewriteHintLevel >= 3}
+                    className="rounded-lg border border-amber/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-amber transition-colors hover:bg-amber/10 disabled:opacity-40"
+                  >
+                    {rewriteHintLevel === 0 ? 'Pista' : `Pista ${rewriteHintLevel}/3`}
+                  </button>
+                </div>
+                {rewriteHintLevel >= 1 && (
+                  <p className="text-[12px] leading-relaxed text-slate-300">
+                    Regla: {lessonFor(rewrite.errorType).rule}
+                  </p>
+                )}
+                {rewriteHintLevel >= 2 && (
+                  <p className="text-[12px] leading-relaxed text-slate-400">
+                    Empieza así:{' '}
+                    <span className="text-white">
+                      {rewrite.corrected.split(/\s+/).slice(0, 3).join(' ')}…
+                    </span>
+                  </p>
+                )}
+                {rewriteHintLevel >= 3 && (
+                  <p className="text-[13px] font-semibold leading-relaxed text-emerald-200">
+                    {rewrite.corrected}
+                  </p>
+                )}
+                {rewriteNotice && <p className="text-[11px] text-coral">{rewriteNotice}</p>}
+              </div>
+            )}
+
+            {/* Dos pistas de la IA para responder al personaje */}
+            {!rewrite && lastAssistant && (
+              <div className="mb-2 flex flex-wrap items-center justify-end gap-2">
+                {hintsError && <span className="text-[10px] text-coral">{hintsError}</span>}
+                <button
+                  onClick={() => void requestHints()}
+                  disabled={hintsLoading || isThinking || isLastMessageTyping || hintsUsedFor === lastAssistant.content}
+                  title="Dos ideas para responder a lo que acaba de decir el personaje"
+                  className="flex items-center gap-1.5 rounded-lg border border-violet/40 bg-violet/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-violet transition-colors hover:bg-violet/20 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <Lightbulb className="h-3.5 w-3.5" />
+                  {hintsLoading ? 'Pidiendo…' : '2 pistas'}
+                </button>
+              </div>
+            )}
+
             <div className={cn('relative rounded-xl border transition-all duration-200 bg-white/5 border-white/10 flex items-end gap-2 p-2 backdrop-blur-sm', currentInput.trim() && 'border-cyan/40 bg-cyan/5')}>
               <textarea
                 ref={textareaRef}
@@ -858,10 +1017,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           </div>
         </div>
 
-        {/* Columna derecha: tus frases y correcciones (sólo escritorio) */}
-        <aside className="hidden lg:block lg:min-h-0 lg:pt-4 lg:pr-4">
-          <ConversationLog entries={usedPhrases} />
-        </aside>
       </div>
 
       {/* Generando el reporte: la evaluación tarda unos segundos */}
@@ -964,6 +1119,58 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 [ Volver al desafío ]
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Corrección gramatical: el mensaje no se envió */}
+      {grammarCorrection && (
+        <GrammarCorrectionModal
+          correction={grammarCorrection}
+          onClose={() => {
+            setGrammarCorrection(null)
+            setTimeout(() => textareaRef.current?.focus(), 80)
+          }}
+        />
+      )}
+
+      {/* Dos pistas de la IA */}
+      {hintsOpen && (
+        <div data-hints-modal className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/90 p-4 backdrop-blur-md">
+          <div className="w-full max-w-md space-y-4 rounded-2xl border border-violet/40 bg-slate-950/95 p-6">
+            <header className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-violet">Dos pistas</p>
+                <h3 className="mt-0.5 font-body text-lg font-bold text-white">Así podrías responder</h3>
+              </div>
+              <button
+                onClick={() => setHintsOpen(false)}
+                aria-label="Cerrar las pistas"
+                className="text-slate-400 transition-colors hover:text-white"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </header>
+            <ol className="space-y-2.5">
+              {hints.map((hint, index) => (
+                <li key={index} className="rounded-xl border border-white/10 bg-black/30 px-4 py-3">
+                  <p className="text-sm leading-relaxed text-white">{hint.en}</p>
+                  <p className="mt-0.5 text-[12px] text-slate-500">{hint.es}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="text-[11px] leading-relaxed text-slate-500">
+              Son ideas, no la respuesta obligatoria: escríbelo tú con tus palabras.
+            </p>
+            <button
+              onClick={() => {
+                setHintsOpen(false)
+                setTimeout(() => textareaRef.current?.focus(), 80)
+              }}
+              className="w-full rounded-xl bg-violet py-3 text-[11px] font-bold uppercase tracking-widest text-white transition-colors hover:bg-violet/80"
+            >
+              Entendido
+            </button>
           </div>
         </div>
       )}

@@ -38,6 +38,13 @@ interface WeeklyReport {
   deltas: { missions: number; xp: number; seconds: number; grammar: number | null }
   words: { saved_this_week: number; mastered_total: number }
   top_structures: Array<{ structure: string; count: number }>
+  /** Errores gramaticales de la semana, con las reglas más repetidas. */
+  errors: {
+    this_week: number
+    previous_week: number
+    delta: number
+    top: Array<{ type: string; label: string; count: number }>
+  }
   evolution: Array<{ week_start_date: string; missions: number; xp: number; seconds: number; grammar: number | null }>
 }
 
@@ -224,6 +231,33 @@ export function WeeklyReport() {
                   </span>
                 ))}
               </p>
+            )}
+          </div>
+
+          {/* Reglas a mejorar: los errores gramaticales de la semana */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/10 pt-4">
+            <p className="text-[10px] uppercase tracking-widest text-slate-500">Reglas a mejorar</p>
+            {report.errors.top.length > 0 ? (
+              <div className="flex flex-wrap items-center gap-1.5">
+                {report.errors.top.map(item => (
+                  <span
+                    key={item.type}
+                    className="rounded-full border border-coral/30 bg-coral/5 px-2 py-0.5 text-[10px] uppercase tracking-widest text-coral"
+                  >
+                    {item.label} ×{item.count}
+                  </span>
+                ))}
+                <span className="text-[10px] uppercase tracking-widest text-slate-500">
+                  {report.errors.this_week} esta semana ·{' '}
+                  {report.errors.delta < 0
+                    ? `↓${Math.abs(report.errors.delta)} vs la pasada`
+                    : report.errors.delta > 0
+                      ? `↑${report.errors.delta} vs la pasada`
+                      : 'igual que la pasada'}
+                </span>
+              </div>
+            ) : (
+              <p className="text-[11px] text-slate-500">Sin errores gramaticales esta semana.</p>
             )}
           </div>
         </>

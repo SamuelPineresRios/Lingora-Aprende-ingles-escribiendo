@@ -13,10 +13,13 @@ import {
   type MissionContext,
 } from './prompts.ts'
 
+export interface Hint {
+  en: string
+  es: string
+}
+
 export interface HintsResult {
-  key_verbs: unknown
-  useful_phrases: unknown
-  grammar_tips: unknown
+  hints: Hint[]
 }
 
 function parseJsonObject(content: string): Record<string, unknown> {
@@ -45,11 +48,24 @@ export async function requestHints(params: {
   })
 
   const parsed = parseJsonObject(content)
-  return {
-    key_verbs: parsed.key_verbs,
-    useful_phrases: parsed.useful_phrases,
-    grammar_tips: parsed.grammar_tips,
+  const raw = parsed.hints
+  const hints = Array.isArray(raw)
+    ? raw.flatMap(entry => {
+        if (!entry || typeof entry !== 'object') return []
+        const item = entry as Record<string, unknown>
+        if (typeof item.en !== 'string' || typeof item.es !== 'string') return []
+        const en = item.en.trim()
+        const es = item.es.trim()
+        if (!en || !es) return []
+        return [{ en, es }]
+      })
+    : []
+
+  if (hints.length < 2) {
+    console.error('[chat] El proveedor no devolvió dos pistas válidas')
+    throw new HttpError(502, 'Respuesta inválida del proveedor de IA')
   }
+  return { hints: hints.slice(0, 2) }
 }
 
 interface RawChatMessage {

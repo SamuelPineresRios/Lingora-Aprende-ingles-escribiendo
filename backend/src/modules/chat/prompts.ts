@@ -7,22 +7,23 @@ import type { ChatMessage, JsonSchema } from '../../lib/ai.ts'
 export const HINTS_SCHEMA: JsonSchema = {
   type: 'object',
   properties: {
-    key_verbs: {
+    hints: {
       type: 'array',
-      items: { type: 'string' },
-      description: 'Verbos útiles para responder a la pregunta actual.',
-    },
-    useful_phrases: {
-      type: 'array',
-      items: { type: 'string' },
-      description: 'Frases hechas para usar en la respuesta.',
-    },
-    grammar_tips: {
-      type: 'string',
-      description: 'Consejo gramatical concreto para esta pregunta.',
+      minItems: 2,
+      maxItems: 2,
+      items: {
+        type: 'object',
+        properties: {
+          en: { type: 'string', description: 'Respuesta en inglés, natural y del nivel del alumno.' },
+          es: { type: 'string', description: 'Traducción al español de esa respuesta.' },
+        },
+        required: ['en', 'es'],
+        additionalProperties: false,
+      },
+      description: 'Exactamente dos respuestas posibles (dos pistas) a la pregunta del personaje.',
     },
   },
-  required: ['key_verbs', 'useful_phrases', 'grammar_tips'],
+  required: ['hints'],
   additionalProperties: false,
 }
 
@@ -151,7 +152,7 @@ export function buildHintsPrompt(params: {
   userLevel: string
 }): string {
   return `
-You are a helpful English learning coach. A student is doing a roleplay mission and the AI character just asked them this question:
+You are a helpful English coach. A student is doing a roleplay mission and the character just asked them this question:
 
 "${params.lastMessage}"
 
@@ -159,14 +160,13 @@ Context: "${params.mission.scene_context}"
 Objective: "${params.mission.objective}"
 Student Level: ${params.userLevel}
 
-Based on what the character asked, generate SPECIFIC vocabulary and phrases to help the student answer this particular question.
+Give the student EXACTLY TWO possible short responses they could say next, at their level:
+- natural, concrete and directly answering the character;
+- in English, with their Spanish translation;
+- no grammar explanations, no extra options, no numbering.
 
-Return a valid JSON object (all text values in English) with:
-{
-  "key_verbs": ["verb1", "verb2", "verb3"] - verbs most useful for answering this specific question,
-  "useful_phrases": ["phrase1", "phrase2", "phrase3"] - practical phrases to use in the answer,
-  "grammar_tips": "Specific grammar advice for answering this question in English"
-}
+Return a valid JSON object:
+{ "hints": [ { "en": "first possible response", "es": "su traducción" }, { "en": "second possible response", "es": "su traducción" } ] }
       `.trim()
 }
 

@@ -6,7 +6,7 @@
  * el campo `confused` que pinta la cara de confusión.
  */
 import { describe, expect, it } from 'vitest'
-import { buildRoleplaySystemPrompt, ROLEPLAY_OPENING_SCHEMA, ROLEPLAY_TURN_SCHEMA } from '../src/modules/chat/prompts.ts'
+import { buildHintsPrompt, buildRoleplaySystemPrompt, HINTS_SCHEMA, ROLEPLAY_OPENING_SCHEMA, ROLEPLAY_TURN_SCHEMA } from '../src/modules/chat/prompts.ts'
 
 const mission = {
   character_name: 'Barista',
@@ -67,5 +67,20 @@ describe('prompt del rol por tier', () => {
     expect(ROLEPLAY_TURN_SCHEMA.required).toContain('message_translation')
     expect(openingProperties.message_translation?.type).toBe('string')
     expect(turnProperties.message_translation?.type).toBe('string')
+  })
+})
+
+describe('pistas de ayuda', () => {
+  it('pide exactamente dos respuestas posibles', () => {
+    const prompt = buildHintsPrompt({
+      lastMessage: 'What would you like to drink?',
+      mission: { character_name: 'Barista', objective: 'Pide un café', scene_context: 'Una cafetería' },
+      userLevel: 'A1',
+    })
+    expect(prompt).toContain('EXACTLY TWO')
+
+    const properties = HINTS_SCHEMA.properties as Record<string, { minItems?: number; maxItems?: number }>
+    expect(properties.hints?.minItems).toBe(2)
+    expect(properties.hints?.maxItems).toBe(2)
   })
 })

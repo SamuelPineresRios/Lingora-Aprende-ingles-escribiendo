@@ -127,12 +127,13 @@ describe('POST /api/chat', () => {
     expect(res.body.mission_completed).toBe(false)
   })
 
-  it('en modo hints devuelve vocabulario y frases', async () => {
+  it('en modo hints devuelve exactamente dos pistas', async () => {
     mockedCompleteChat.mockResolvedValue(
       JSON.stringify({
-        key_verbs: ['live', 'work'],
-        useful_phrases: ['I live in...'],
-        grammar_tips: 'Usa el present simple.',
+        hints: [
+          { en: "I'm from Colombia.", es: 'Soy de Colombia.' },
+          { en: 'I live in Madrid now.', es: 'Ahora vivo en Madrid.' },
+        ],
       }),
     )
 
@@ -146,11 +147,22 @@ describe('POST /api/chat', () => {
     })
 
     expect(res.status).toBe(200)
-    expect(res.body).toEqual({
-      key_verbs: ['live', 'work'],
-      useful_phrases: ['I live in...'],
-      grammar_tips: 'Usa el present simple.',
+    expect(res.body.hints).toHaveLength(2)
+    expect(res.body.hints[0]).toEqual({ en: "I'm from Colombia.", es: 'Soy de Colombia.' })
+  })
+
+  it('si el proveedor no da dos pistas válidas responde 502', async () => {
+    mockedCompleteChat.mockResolvedValue(JSON.stringify({ hints: [{ en: 'Only one', es: 'Solo una' }] }))
+
+    const student = await signupActor(app, 'student')
+    const res = await student.agent.post('/api/chat').send({
+      mode: 'hints',
+      mission,
+      userLevel: 'B1',
+      lastMessage: 'Where are you from?',
     })
+
+    expect(res.status).toBe(502)
   })
 
   it('traduce el fallo del proveedor a 502 (no propaga su 401/429)', async () => {
