@@ -16,6 +16,8 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react'
 export function StudentSidebar() {
   const { pathname } = useLocation()
   const { user, logout } = useAuth()
+  /** En la misión el avatar de la esquina estorba: la escena y el chat mandan. */
+  const ocultarAvatarEsquina = pathname.startsWith('/mission/')
   const accent = useThemeAccent(user?.id)
   const shop = useStoreView(user?.id)
   const season = useSeasonProgress(user?.id)
@@ -211,7 +213,7 @@ export function StudentSidebar() {
       {/* Tu personaje, fijo en la esquina inferior derecha: siempre a la vista
           sin ocupar el menú ni capturar clics. Va por portal al body porque un
           ancestro con transform lo anclaría a la columna del menú. */}
-      {createPortal(
+      {!ocultarAvatarEsquina && createPortal(
         <div data-corner-avatar aria-hidden className="pointer-events-none fixed bottom-5 right-5 z-40 hidden lg:block">
           {frame ? (
             <FrameRing frameId={frame.id} colors={frame.colors as [string, string]} accent={accent} size={96}>
