@@ -37,6 +37,25 @@ export const EVALUATION_SCHEMA: JsonSchema = {
       items: { type: 'string' },
       description: 'Estructuras gramaticales detectadas, p. ej. "present-simple".',
     },
+    improvements: {
+      type: 'array',
+      minItems: 1,
+      maxItems: 4,
+      items: {
+        type: 'object',
+        properties: {
+          original: {
+            type: 'string',
+            description: 'Fragmento exacto de la respuesta del alumno que falla (o "" si es una mejora opcional).',
+          },
+          correction: { type: 'string', description: 'Versión correcta o mejora concreta, en inglés.' },
+          explanation: { type: 'string', description: 'Por qué, breve y en español (máximo 20 palabras).' },
+        },
+        required: ['original', 'correction', 'explanation'],
+        additionalProperties: false,
+      },
+      description: '2-4 mejoras concretas de la respuesta, estructuradas para el historial del alumno.',
+    },
   },
   required: [
     'comprehensibility_score',
@@ -45,6 +64,7 @@ export const EVALUATION_SCHEMA: JsonSchema = {
     'judgment',
     'feedback_text',
     'detected_structures',
+    'improvements',
   ],
   additionalProperties: false,
 }
@@ -67,6 +87,7 @@ CRITICAL SCORING RULES:
    PART 1 (2 sentences max): Narrative result — did the character understand the student? State clearly whether the objective was achieved.
    PART 2 (2 sentences max): One thing the student did correctly.
    PART 3 (2 to 4 SHORT lines, one per line, each starting with "- "): WHAT THEY MUST FIX — cada línea señala un problema concreto (cita la frase del alumno que falla y su versión correcta) o una mejora. Nunca un párrafo corrido: una idea por línea. Si todo está bien, una sola línea con una forma concreta de subir de nivel.
+6. Además, rellena el campo improvements con 2-4 objetos { original, correction, explanation }: original es el fragmento exacto que falla (vacío si es una mejora opcional), correction la versión correcta en inglés y explanation el porqué en español (máximo 20 palabras). Deben coincidir con las líneas de la PART 3.
 
 SCORING GUIDELINES:
 - Minimum score for ANY valid attempt: 50 (must answer the question meaningfully)

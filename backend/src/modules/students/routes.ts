@@ -22,6 +22,7 @@ import {
   getSessionSummary,
   getStudentSkills,
   getWeeklyReport,
+  getStudentImprovements,
   getWeeklyStats,
   joinGroup,
   listStudentGroups,
@@ -100,6 +101,15 @@ studentsRouter.get('/:id/weekly-stats', requireAuth, async (req, res) => {
 })
 
 /** Informe semanal del alumno: semana en curso, deltas y evolución. */
+studentsRouter.get('/:id/improvements', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  const studentId = routeParam(req, 'id')
+
+  if (!ownsResource(session, studentId, ['teacher'])) throw new HttpError(403, 'Forbidden')
+
+  res.json(await getStudentImprovements(studentId))
+})
+
 studentsRouter.get('/:id/active-vocabulary', requireAuth, async (req, res) => {
   const session = sessionOf(req)
   const studentId = routeParam(req, 'id')

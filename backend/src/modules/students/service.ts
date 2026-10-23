@@ -311,6 +311,32 @@ export async function getWeeklyReport(studentId: string, timezone?: unknown) {
   }
 }
 
+/**
+ * Historial de mejoras del alumno: evaluaciones con correcciones concretas,
+ * con su misión y fecha. Alimenta el módulo «Errores».
+ */
+export async function getStudentImprovements(studentId: string, limit = 80) {
+  const rows = await db
+    .select({
+      evaluation_id: evaluations.id,
+      mission_id: missions.id,
+      mission_title: missions.title,
+      level: missions.cefr_level,
+      submitted_at: responses.submitted_at,
+      comprehension: evaluations.comprehensibility_score,
+      grammar: evaluations.grammar_score,
+      improvements: evaluations.improvements,
+    })
+    .from(evaluations)
+    .innerJoin(responses, eq(responses.id, evaluations.response_id))
+    .innerJoin(missions, eq(missions.id, responses.mission_id))
+    .where(and(eq(responses.student_id, studentId), sql`jsonb_array_length(${evaluations.improvements}) > 0`))
+    .orderBy(desc(responses.submitted_at))
+    .limit(limit)
+
+  return { items: rows }
+}
+
 export async function getWeeklyStats(studentId: string) {
   const weeks = Array.from({ length: 4 }, (_, index) => {
     const date = new Date()

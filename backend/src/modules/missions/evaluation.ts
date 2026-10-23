@@ -14,6 +14,8 @@ import {
   type EvaluationPromptContext,
 } from './prompts.ts'
 
+import type { EvaluationImprovement } from '../../db/schema.ts'
+
 export interface EvaluationResult {
   comprehensibility_score: number
   grammar_score: number
@@ -21,6 +23,8 @@ export interface EvaluationResult {
   judgment: 'ADVANCE' | 'PAUSE'
   feedback_text: string
   detected_structures: string[]
+  /** Mejoras concretas: frase original, corrección y explicación. */
+  improvements: EvaluationImprovement[]
 }
 
 /** Evaluación fija para respuestas no serias ("haha", "test", ...). */
@@ -32,6 +36,7 @@ export const NON_GENUINE_EVALUATION: EvaluationResult = {
   feedback_text:
     'Tu respuesta debe ser seria y tener sentido. Escribe una respuesta completa que responda a la pregunta.',
   detected_structures: [],
+  improvements: [],
 }
 
 /** Respaldo cuando el proveedor de IA falla o responde con un formato inválido. */
@@ -43,6 +48,7 @@ const TECHNICAL_FALLBACK_EVALUATION: EvaluationResult = {
   feedback_text:
     'Recibimos tu mensaje, pero hubo un problema técnico al evaluarlo. ¡Tu respuesta fue guardada! Intenta de nuevo para continuar la historia.',
   detected_structures: [],
+  improvements: [],
 }
 
 /** Descarta respuestas demasiado cortas, repetitivas o sin letras. */
@@ -76,6 +82,22 @@ function parseStructures(value: unknown): string[] {
   return value.filter((item): item is string => typeof item === 'string')
 }
 
+/** Valida las mejoras estructuradas; cualquier forma rara se descarta entera. */
+function parseImprovements(value: unknown): EvaluationImprovement[] {
+  if (!Array.isArray(value)) return []
+  const items: EvaluationImprovement[] = []
+  for (const entry of value) {
+    if (!entry || typeof entry !== 'object') continue
+    const item = entry as Record<string, unknown>
+    if (typeof item.original !== 'string' || typeof item.correction !== 'string' || typeof item.explanation !== 'string') continue
+    const correction = item.correction.trim()
+    const explanation = item.explanation.trim()
+    if (!correction || !explanation) continue
+    items.push({ original: item.original.trim(), correction, explanation })
+  }
+  return items.slice(0, 4)
+}
+
 /** Devuelve la evaluación validada, o null si el modelo no respetó el formato. */
 function parseEvaluation(content: string): EvaluationResult | null {
   let raw: unknown
@@ -105,6 +127,7 @@ function parseEvaluation(content: string): EvaluationResult | null {
     judgment,
     feedback_text: feedback,
     detected_structures: parseStructures(data.detected_structures),
+    improvements: parseImprovements(data.improvements),
   }
 }
 

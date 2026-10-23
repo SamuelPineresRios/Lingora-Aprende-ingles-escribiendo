@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { resolveAvatar } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { FrameRing } from '@/components/FrameRing'
-import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal, Store, Brush, Swords, Album, Route } from 'lucide-react'
+import { Radio, User, LogOut, Users, Menu, X, BookMarked, Trophy, Medal, Store, Brush, Swords, Album, Route, NotebookPen } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useStoreView, useThemeAccent } from '@/lib/hooks/useStoreView'
 import { useSeasonProgress } from '@/lib/hooks/useSeasonProgress'
@@ -90,6 +90,7 @@ export function StudentSidebar() {
     { href: '/words', label: 'Vocabulario', icon: BookMarked },
     { href: '/album', label: 'Álbum', icon: Album },
     { href: '/paths', label: 'Rutas', icon: Route },
+    { href: '/mistakes', label: 'Errores', icon: NotebookPen },
     { href: '/ranking', label: 'Ranking', icon: Trophy },
     { href: '/friends', label: 'Amigos', icon: Swords },
     { href: '/season', label: 'Pase', icon: Medal },

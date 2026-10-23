@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useProgress } from '@/lib/hooks/useProgress'
@@ -11,6 +12,8 @@ interface EvaluationPayload {
   judgment: 'ADVANCE' | 'PAUSE'
   feedback_text: string
   detected_structures: string[]
+  /** Mejoras estructuradas: frase original, corrección y explicación. */
+  improvements?: Array<{ original: string; correction: string; explanation: string }>
   /** XP que otorgó este envío (0 si fue rechazado). */
   xp_awarded: number | null
 }
@@ -92,7 +95,11 @@ export function FeedbackScreen({
     return () => clearTimeout(timer)
   }, [])
 
-  const feedbackParts = evaluation.feedback_text.split('\n\n').filter(Boolean)
+  const rawParts = evaluation.feedback_text.split('\n\n').filter(Boolean)
+  // Si hay mejoras estructuradas pero el texto no trae la tercera parte, se
+  // añade una vacía para que el bloque «A mejorar» las pinte igualmente.
+  const feedbackParts =
+    evaluation.improvements?.length && rawParts.length < 3 ? [...rawParts, ''] : rawParts
 
   const metrics = [
     { label: 'Comunicación', score: evaluation.comprehensibility_score, stroke: 'stroke-cyan' },
@@ -176,7 +183,25 @@ export function FeedbackScreen({
                   >
                     <span className={cn('absolute left-0 top-3 bottom-3 w-0.5 rounded-full', PART_COLORS[type])} />
                     <p className="mb-1 text-[10px] uppercase tracking-widest text-slate-500">{PART_LABELS[type]}</p>
-                    {type === 'improvement' ? (
+                    {type === 'improvement' && evaluation.improvements && evaluation.improvements.length > 0 ? (
+                      <ul className="space-y-3">
+                        {evaluation.improvements.map((item, itemIndex) => (
+                          <li key={itemIndex} className="space-y-1">
+                            {item.original && (
+                              <p className="text-[12px] leading-relaxed text-slate-400">
+                                <span className="mr-1.5 font-bold uppercase tracking-widest text-coral">Dijiste:</span>
+                                <span className="line-through decoration-coral/50">{item.original}</span>
+                              </p>
+                            )}
+                            <p className="flex items-start gap-2 text-[13px] leading-relaxed text-emerald-200">
+                              <ArrowRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald" />
+                              {item.correction}
+                            </p>
+                            <p className="pl-[22px] text-[12px] leading-relaxed text-slate-500">{item.explanation}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : type === 'improvement' ? (
                       <ul className="space-y-1.5">
                         {improvementItems(part).map((item, itemIndex) => (
                           <li key={itemIndex} className="flex gap-2 text-[13px] leading-relaxed text-slate-200">
@@ -249,6 +274,12 @@ export function FeedbackScreen({
               Reintentar la misión
             </button>
           )}
+          <button
+            onClick={() => navigate('/mistakes')}
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-coral/30 py-3 text-[11px] uppercase tracking-widest text-coral transition-colors hover:bg-coral/10"
+          >
+            Ver historial de errores <ArrowRight className="h-3.5 w-3.5" />
+          </button>
           <button
             onClick={() => navigate('/missions')}
             className="w-full rounded-xl border border-white/10 py-3 text-[11px] uppercase tracking-widest text-slate-400 transition-colors hover:border-white/25 hover:text-white"

@@ -149,6 +149,13 @@ export const responses = pgTable(
   ],
 )
 
+/** Una mejora concreta del informe: frase original, versión correcta y por qué. */
+export interface EvaluationImprovement {
+  original: string
+  correction: string
+  explanation: string
+}
+
 export const evaluations = pgTable(
   'evaluations',
   {
@@ -162,6 +169,8 @@ export const evaluations = pgTable(
     judgment: text('judgment').notNull().$type<'ADVANCE' | 'PAUSE'>(),
     feedback_text: text('feedback_text').notNull(),
     detected_structures: jsonb('detected_structures').$type<string[]>().notNull().default([]),
+    /** Mejoras del informe ya estructuradas (para el módulo de errores). */
+    improvements: jsonb('improvements').$type<EvaluationImprovement[]>().notNull().default([]),
     transcript: text('transcript'),
     evaluated_at: timestamp('evaluated_at', { withTimezone: true }).notNull().defaultNow(),
     /** Puntos de gamificación; hoy siempre null (ver README, deuda conocida). */

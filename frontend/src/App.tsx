@@ -16,6 +16,7 @@ import Ranking from '@/pages/Ranking'
 import Friends from '@/pages/Friends'
 import Album from '@/pages/Album'
 import Paths from '@/pages/Paths'
+import Mistakes from '@/pages/Mistakes'
 import Season from '@/pages/Season'
 import Store from '@/pages/Store'
 import Avatar from '@/pages/Avatar'
@@ -48,6 +49,7 @@ export function App() {
             <Route path="/words" element={<Words />} />
             <Route path="/album" element={<Album />} />
             <Route path="/paths" element={<Paths />} />
+            <Route path="/mistakes" element={<Mistakes />} />
             <Route path="/ranking" element={<Ranking />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/season" element={<Season />} />
