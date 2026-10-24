@@ -9,8 +9,9 @@ export const HINTS_SCHEMA: JsonSchema = {
   properties: {
     hints: {
       type: 'array',
-      minItems: 2,
-      maxItems: 2,
+      // Sin minItems/maxItems: la salida estructurada de Anthropic sólo admite
+      // 0 o 1 y rechaza la petición con un 400. La cantidad se pide en el
+      // prompt y el servicio exige dos pistas válidas.
       items: {
         type: 'object',
         properties: {

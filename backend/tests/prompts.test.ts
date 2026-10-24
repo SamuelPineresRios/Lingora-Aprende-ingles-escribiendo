@@ -7,6 +7,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import { buildHintsPrompt, buildRoleplaySystemPrompt, HINTS_SCHEMA, ROLEPLAY_OPENING_SCHEMA, ROLEPLAY_TURN_SCHEMA } from '../src/modules/chat/prompts.ts'
+import { EVALUATION_SCHEMA } from '../src/modules/missions/prompts.ts'
 
 const mission = {
   character_name: 'Barista',
@@ -79,8 +80,14 @@ describe('pistas de ayuda', () => {
     })
     expect(prompt).toContain('EXACTLY TWO')
 
-    const properties = HINTS_SCHEMA.properties as Record<string, { minItems?: number; maxItems?: number }>
-    expect(properties.hints?.minItems).toBe(2)
-    expect(properties.hints?.maxItems).toBe(2)
+    const properties = HINTS_SCHEMA.properties as Record<string, { type?: string }>
+    expect(properties.hints?.type).toBe('array')
+  })
+
+  it('los esquemas no llevan minItems/maxItems (Anthropic sólo admite 0 o 1)', () => {
+    expect(JSON.stringify(HINTS_SCHEMA)).not.toContain('minItems')
+    expect(JSON.stringify(HINTS_SCHEMA)).not.toContain('maxItems')
+    expect(JSON.stringify(EVALUATION_SCHEMA)).not.toContain('minItems')
+    expect(JSON.stringify(EVALUATION_SCHEMA)).not.toContain('maxItems')
   })
 })

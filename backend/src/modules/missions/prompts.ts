@@ -39,8 +39,8 @@ export const EVALUATION_SCHEMA: JsonSchema = {
     },
     improvements: {
       type: 'array',
-      minItems: 1,
-      maxItems: 4,
+      // Sin minItems/maxItems: la salida estructurada de Anthropic sólo admite
+      // 0 o 1. La cantidad (2-4) se pide en el prompt y el parseo recorta a 4.
       items: {
         type: 'object',
         properties: {
