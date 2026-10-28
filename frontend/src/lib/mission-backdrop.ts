@@ -129,6 +129,15 @@ const RULES: BackdropRule[] = [
     ],
   },
   {
+    test: /desarroll|software|program|codigo|code|deploy|servidor|terminal|api|repositorio|git|sprint|daily|pull request|arquitectura|backend|frontend|bug|debug|test|qa|cloud|base de datos/,
+    kind: 'office',
+    style: 'blueprint',
+    palettes: [
+      ['#071b17', '#0f3b2e', '#4ade80'],
+      ['#081a2b', '#123a4a', '#22d3ee'],
+    ],
+  },
+  {
     test: /oficina|despacho|reunion|empresa|trabajo|jefe|entrevista|contrato|conferencia|corporativ|negoci/,
     kind: 'office',
     style: 'blueprint',

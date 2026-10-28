@@ -57,6 +57,20 @@ export const LEARNING_PATHS: LearningPath[] = [
     ],
   },
   {
+    id: 'ruta-dev',
+    label: 'Desarrollo de software',
+    description:
+      'Daily, PRs, code reviews y system design: inglés para construir software en equipo. Se adapta a tu nivel, del primer daily al diseño de sistemas.',
+    icon: 'code',
+    missions: [
+      'm-151', 'm-152', 'm-153',
+      'm-154', 'm-155', 'm-156', 'm-157',
+      'm-158', 'm-159', 'm-160', 'm-161', 'm-162',
+      'm-163', 'm-164', 'm-165', 'm-166',
+      'm-167', 'm-168', 'm-169', 'm-170',
+    ],
+  },
+  {
     id: 'ruta-trabajo',
     label: 'Trabajo y entrevistas',
     description: 'Del primer día a la negociación: inglés para tu carrera.',

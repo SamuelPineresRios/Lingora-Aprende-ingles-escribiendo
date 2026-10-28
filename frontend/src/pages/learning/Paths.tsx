@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import {
   Briefcase,
   Check,
+  Code2,
   Coffee,
   Compass,
   Flag,
@@ -60,6 +61,7 @@ const ICONS: Record<string, LucideIcon> = {
   users: Users,
   briefcase: Briefcase,
   megaphone: Megaphone,
+  code: Code2,
 }
 
 /** Color de cada ruta: cada una es un «mundo» distinto. */
@@ -69,6 +71,7 @@ const ACCENTS: Record<string, string> = {
   users: '#a78bfa',
   briefcase: '#34d399',
   megaphone: '#fb7185',
+  code: '#4ade80',
 }
 
 /** Coordenadas (porcentaje del ancho) de los nodos: zigzag a 1/6 y 5/6. */

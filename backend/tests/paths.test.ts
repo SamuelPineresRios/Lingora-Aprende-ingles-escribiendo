@@ -51,6 +51,19 @@ describe('GET /api/students/:id/paths', () => {
     expect(viajes.missions.every((mission: { status: string }) => mission.status === 'pending')).toBe(true)
   })
 
+  it('la ruta de desarrollo respeta el nivel y el orden de dificultad', async () => {
+    const ana = await signupActor(app, 'student', { cefr_level: 'A1' })
+    await createMission({ id: 'm-151', title: 'Bienvenida al equipo', cefr_level: 'A1', tier: 1 })
+    await createMission({ id: 'm-153', title: 'Tu primer daily', cefr_level: 'A1', tier: 3 })
+    await createMission({ id: 'm-158', title: 'Explicar tu PR', cefr_level: 'B1', tier: 1 })
+
+    const res = await ana.agent.get(`/api/students/${ana.id}/paths`)
+
+    const dev = res.body.paths.find((path: { id: string }) => path.id === 'ruta-dev')
+    expect(dev).toMatchObject({ id: 'ruta-dev', total: 2, completed: 0 })
+    expect(dev.missions.map((mission: { mission_id: string }) => mission.mission_id)).toEqual(['m-151', 'm-153'])
+  })
+
   it('el progreso sale de las misiones completadas', async () => {
     const ana = await signupActor(app, 'student', { cefr_level: 'A1' })
     await createMission({ id: 'm-001', title: 'Pedir direcciones', cefr_level: 'A1' })

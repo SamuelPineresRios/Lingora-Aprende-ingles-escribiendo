@@ -27,7 +27,7 @@ updated: 2026-10-17
 ## 1. Qué es
 
 - Aprendizaje **productivo**: el alumno escribe, no solo toca botones.
-- **Misiones**: 150 situaciones reales (pedir un café, devolver un abrigo, negociar el alquiler, reclamar un vuelo…).
+- **Misiones**: 170 situaciones reales (pedir un café, devolver un abrigo, negociar el alquiler, reclamar un vuelo…) e itinerarios técnicos para desarrollo de software.
 - **Escena narrativa** estilo novela visual antes de cada conversación.
 - **Vocabulario contextual**: 8 palabras por misión con estudio, emparejamiento, completar frases y repaso espaciado.
 - **Conversación con IA**: un personaje (barista, médica, casero, agente…) responde y evalúa cada turno.
@@ -55,9 +55,9 @@ updated: 2026-10-17
 
 ## 3. Estado actual
 
-- **150 misiones** repartidas en CEFR: A1 (40), A2 (40), B1 (40), B2 (15), C1 (15).
+- **170 misiones** repartidas en CEFR: A1 (43), A2 (44), B1 (45), B2 (19), C1 (19). Incluyen 20 misiones de desarrollo de software.
 - Cada misión de A1/A2/B1 dividida en **3 subniveles (tiers)**: 5 cortas, 10 medias y 25 largas por nivel.
-- **120 escenas y vocabularios** en fixtures (deterministas); la caché/BD cubre las 150 en la base de datos de desarrollo.
+- **120 escenas y vocabularios** en fixtures (deterministas); el resto se genera y precarga con el pipeline de IA. La BD de desarrollo cubre las 170 misiones.
 - **32 suites de test / 291 tests** en verde (Vitest + Supertest).
 - Última verificación: `typecheck` ✅, `build` ✅, `eslint` 0 errores (≈38 avisos de estilo/React Compiler).
 
@@ -183,7 +183,7 @@ speak_project/
 ### Contenido educativo
 | Tabla | Contenido |
 |---|---|
-| `missions` | 150 misiones: título, descripción, objetivo, contexto, personaje, nivel CEFR, `tier` (1-3), duración base |
+| `missions` | 170 misiones: título, descripción, objetivo, contexto, personaje, nivel CEFR, `tier` (1-3), duración base |
 | `mission_introductions` | Escena narrativa: título, descripción, personajes, líneas con traducción, expresiones útiles, backdrop, versión |
 | `mission_vocabulary` | 8 palabras clave por misión (palabra, traducción, ejemplo, traducción del ejemplo) |
 | `word_lookups` | Caché global de fichas de palabras (traducción, categoría, formas verbales, ejemplos) |
@@ -339,16 +339,22 @@ GET  /health
 ## 10. Contenido educativo
 
 ### Misiones y subniveles
-- **150 misiones** con `cefr_level` y `tier` (1-3).
+- **170 misiones** con `cefr_level` y `tier` (1-3), incluidas 20 de desarrollo de software.
 - Tiers por nivel A1/A2/B1: **5 cortas / 10 medias / 25 largas**.
 - Cada tier sube exigencia: más pasos (2 → 3 → 4-5), duraciones (120/180/240 s en A1; 180/240/300 en A2; 240/300/360 en B1) y palabras (5/6/7 en A1; 6/7/8 en A2 y B1).
 - Objetivo y contexto detallados con pasos numerados; el prompt de IA divide el objetivo en tareas.
 
 ### Escena y vocabulario
-- **Fixtures deterministas**: `missions.json` (150), `introductions.json` (120 escenas) y `vocabulary.json` (120 listas de 8 palabras).
+- **Fixtures deterministas**: `missions.json` (170), `introductions.json` (120 escenas) y `vocabulary.json` (120 listas de 8 palabras). El contenido de las misiones nuevas se genera con IA y se cachea en BD (5 palabras por misión).
 - Escenas: título, descripción, personajes (A=IA, B=alumno), líneas con traducción (se guardan en BD, no se muestran), expresiones útiles y fondo.
 - Sin botón de traducción: el diálogo se lee solo en inglés. Las palabras de la escena, al pasar el cursor, solo ofrecen **guardarlas** (sin ficha ni significado).
 - Las misiones sin escena/vocabulario en fixture se generan/cachean (IA) y quedan en BD.
+
+### Desarrollo de software (ruta técnica)
+- **20 misiones A1→C1** pensadas para programadores: primer día, repositorio, daily, bug, pull request, code review, explicar un lenguaje, blocker, pruebas, arquitectura, incidente/postmortem, estimación, CI/CD, system design, mentoría, migración y escalabilidad.
+- **Dificultad progresiva**: A1 (3), A2 (4), B1 (5), B2 (4), C1 (4); dentro del nivel, `tier` 1→3. La ruta muestra la rebanada del CEFR del alumno.
+- **Escenas y vocabulario técnico** generados con el pipeline: `pull request`, `branch`, `deploy`, `staging`, `latency`, `trade-off`, `postmortem`, `rollback`, `sharding`, `eventual consistency`…
+- **Ambiente dev**: icono de código y acento verde en Rutas; escenas de oficina/videollamada/whiteboard y fondos blueprint con paleta verde/cian.
 
 ### Actividades antes de la misión
 1. **Estudio**: 8 palabras con traducción y ejemplo.
@@ -387,8 +393,8 @@ GET  /health
 | **Ruleta diaria** | Misión al azar del nivel con **+50 % XP** (una vez al día; consumo único) |
 | **Evento de fin de semana** | Escena especial por nivel con **+100 % XP** y **Marco Fin de Semana** exclusivo |
 | **Amigos** | Código de 6 caracteres, solicitudes, liga privada con momentum («a N XP de…»), retos 1v1 asíncronos («misma misión, mejor nota») |
-| **Álbum** | 150 cartas de escenas/personajes; colecciones por nivel con la medalla del nivel como premio |
-| **Rutas** | 5 itinerarios por objetivo (Viajar, Vida diaria, Conocer gente, Trabajo, Reclamaciones) pintados como caminos de videojuego: cada ruta con su color, estaciones y tu avatar avanzando por el mapa |
+| **Álbum** | 170 cartas de escenas/personajes; colecciones por nivel con la medalla del nivel como premio |
+| **Rutas** | 6 itinerarios por objetivo (Viajar, Vida diaria, Conocer gente, Trabajo, Reclamaciones y **Desarrollo de software**) pintados como caminos de videojuego: cada ruta con su color, estaciones y tu avatar avanzando por el mapa |
 | **Avatares** | Avatares voxel de **DiceBear** con catálogo de partes y semilla por alumno, editor, marcos animados cuyo color sigue el tema equipado; avatar fijo en la esquina inferior derecha |
 
 > [!tip] Bucle de enganche
