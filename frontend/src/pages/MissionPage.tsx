@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { MissionScreen } from '@/components/MissionScreen'
+import { MissionScreen } from '@/features/mission/MissionScreen'
 import { readJson } from '@/lib/api'
 
 export default function MissionPage() {
