@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/hooks/useAuth'
@@ -23,6 +23,9 @@ interface FeedbackScreenProps {
   missionTitle: string
   /** Lo dice la conversación, no el evaluador: completar el objetivo es lo que cuenta. */
   missionCompleted: boolean
+  /** Cómo se jugó: la práctica libre no da XP y ofrece el Desafío. */
+  mode?: 'free' | 'evaluation'
+  missionId?: string
   onTryAgain?: () => void
   onNextMission?: () => void
 }
@@ -75,6 +78,8 @@ export function FeedbackScreen({
   evaluation,
   missionTitle,
   missionCompleted,
+  mode = 'evaluation',
+  missionId,
   onTryAgain,
   onNextMission,
 }: FeedbackScreenProps) {
@@ -130,6 +135,30 @@ export function FeedbackScreen({
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-white">{missionTitle}</h1>
         </header>
+
+        {user?.is_guest && (
+          <section className="mt-8 rounded-2xl border border-amber/40 bg-amber/10 p-5 text-center">
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-amber">¿Te gustó la misión?</p>
+            <p className="mt-2 text-sm leading-relaxed text-white">
+              Crea tu cuenta gratis para conservar este progreso, <span className="font-bold text-amber">generar XP</span> y
+              subir de nivel.
+            </p>
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
+              <Link
+                to="/signup"
+                className="rounded-xl bg-amber px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-950 transition-colors hover:bg-amber-300"
+              >
+                Crear mi cuenta
+              </Link>
+              <Link
+                to="/login"
+                className="rounded-xl border border-white/15 px-4 py-3 text-[10px] uppercase tracking-widest text-slate-300 transition-colors hover:border-white/30"
+              >
+                Ya tengo cuenta
+              </Link>
+            </div>
+          </section>
+        )}
 
         {/* Puntuaciones */}
         <section className="mt-10">
@@ -253,6 +282,25 @@ export function FeedbackScreen({
                   </p>
                 </>
               )}
+            </div>
+          </section>
+        )}
+
+        {/* ¿Deseas desafiar? Tras la práctica libre, aquí sí se gana XP. */}
+        {mode === 'free' && missionCompleted && missionId && (
+          <section className="mt-10">
+            <SectionTitle>Desafío</SectionTitle>
+            <div className="space-y-3 rounded-xl border border-amber/40 bg-amber/10 p-4">
+              <p className="text-[12px] leading-relaxed text-slate-300">
+                En <span className="text-white">Tiempo ilimitado</span> no se gana XP. En el Desafío sí:
+                3 corazones, un minuto por respuesta y sin traducciones ni pistas.
+              </p>
+              <button
+                onClick={() => navigate(`/mission/${missionId}?desafio=1`)}
+                className="w-full rounded-xl bg-amber py-3 text-[11px] font-bold uppercase tracking-widest text-black transition-colors hover:bg-amber-light"
+              >
+                ¿Deseas desafiar?
+              </button>
             </div>
           </section>
         )}

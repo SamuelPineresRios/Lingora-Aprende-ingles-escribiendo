@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { ShieldCheck, UserCircle, KeyRound, AlertCircle, ChevronRight } from 'lucide-react'
@@ -7,44 +7,27 @@ import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
 
 export default function LoginPage() {
-  const { refetch } = useAuth()
+  const { user, loading: sessionLoading, refetch } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [role, setRole] = useState<'student' | 'teacher'>('student')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [isChecking, setIsChecking] = useState(true)
   const navigate = useNavigate()
+  const submitted = useRef(false)
 
-  // Check if user already has a valid session
+  // La sesión ya la cargó AuthProvider: aquí solo se decide si se muestra el
+  // formulario (sin sesión o invitado) o se vuelve a la última ruta (cuenta real).
   useEffect(() => {
-    const checkExistingSession = async () => {
-      try {
-        const res = await fetch('/api/auth/me', {
-          method: 'GET',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' }
-        })
-        
-        if (res.ok) {
-          // User has valid session, redirect to last route
-          const lastRoute = localStorage.getItem('speak:last-route') || '/missions'
-          navigate(lastRoute)
-        } else {
-          // No valid session, show login form
-          setIsChecking(false)
-        }
-      } catch {
-        // Error checking session, show login form
-        setIsChecking(false)
-      }
-    }
-    
-    checkExistingSession()
-  }, [navigate])
+    if (submitted.current || sessionLoading || !user || user.is_guest) return
+    navigate(localStorage.getItem('speak:last-route') || '/missions')
+  }, [sessionLoading, user, navigate])
+
+  const isChecking = sessionLoading || Boolean(user && !user.is_guest)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    submitted.current = true
     setLoading(true); setError('')
     try {
       const res = await fetch('/api/auth/login', {
@@ -135,9 +118,15 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <div className="text-center">
-              <Link to="/signup" className="text-xs font-mono text-slate-500 hover:text-cyan-400 transition-colors uppercase tracking-widest">
+            <div className="space-y-3 text-center">
+              <Link to="/signup" className="block text-xs font-mono text-slate-500 hover:text-cyan-400 transition-colors uppercase tracking-widest">
                 ¿NO TIENES ACCESO? REGISTRO DE NUEVO OPERADOR
+              </Link>
+              <Link
+                to="/missions"
+                className="inline-flex items-center justify-center rounded-xl border border-amber/30 bg-amber/10 px-4 py-2.5 text-[10px] font-bold uppercase tracking-widest text-amber transition-colors hover:bg-amber/20"
+              >
+                Probar sin cuenta →
               </Link>
             </div>
 

@@ -49,6 +49,8 @@ missionsRouter.post('/:id/submit', requireAuth, async (req, res) => {
   if (!responseText.trim()) throw new HttpError(400, 'response_text required')
 
   const groupId = typeof body.group_id === 'string' ? body.group_id : null
+  // La práctica libre no paga XP: solo el Desafío puntúa.
+  const mode = body.mode === 'free' ? 'free' : 'evaluation'
 
   const outcome = await submitResponse({
     studentId: session.userId,
@@ -57,6 +59,7 @@ missionsRouter.post('/:id/submit', requireAuth, async (req, res) => {
     groupId,
     timeTakenSeconds: readTimeTakenSeconds(body.time_taken_seconds),
     timezone: body.tz,
+    mode,
   })
 
   if (outcome.kind === 'rejected') {

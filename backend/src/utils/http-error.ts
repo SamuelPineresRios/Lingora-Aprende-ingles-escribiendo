@@ -11,10 +11,13 @@
  */
 export class HttpError extends Error {
   readonly status: number
+  /** Código estable para que el cliente distinga casos (p. ej. límite de invitado). */
+  readonly code?: string
 
-  constructor(status: number, message: string) {
+  constructor(status: number, message: string, code?: string) {
     super(message)
     this.name = 'HttpError'
     this.status = status
+    this.code = code
   }
 }

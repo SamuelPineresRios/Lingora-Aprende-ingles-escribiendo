@@ -15,6 +15,7 @@ export const PUBLIC_PATHS = [
   '/signup',
   '/api/auth/login',
   '/api/auth/signup',
+  '/api/auth/guest',
 ] as const
 
 /** Exclusivas del rol `teacher` (páginas y API). */

@@ -3,7 +3,7 @@
  * respuesta (con evaluación por IA y actualización de agregados) y marcado de
  * misión completada con promoción automática de nivel.
  */
-import { and, asc, count, eq, inArray, sql } from 'drizzle-orm'
+import { and, asc, count, eq, gt, inArray, sql } from 'drizzle-orm'
 import { randomUUID } from 'node:crypto'
 import { CEFR_PROGRESSION, CEFR_THRESHOLDS, type CefrLevel } from '@vox/shared'
 import { db } from '../../db/client.ts'
@@ -18,6 +18,8 @@ import {
   weekly_aggregates,
 } from '../../db/schema.ts'
 import { missionXp, streakMultiplier } from '../../lib/xp.ts'
+import { getMissionCompletions } from '../../lib/mission-completion.ts'
+import { assertGuestCanSubmit, isGuestUser } from '../../lib/guests.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { getActivityStreak } from '../students/service.ts'
 import { recordChallengeScore } from '../social/service.ts'
@@ -35,7 +37,7 @@ import {
 export type MissionRow = typeof missions.$inferSelect
 
 export async function listMissions(userId: string) {
-  const [userRows, allMissions, states] = await Promise.all([
+  const [userRows, allMissions, states, completions] = await Promise.all([
     db.select({ cefr_level: users.cefr_level }).from(users).where(eq(users.id, userId)).limit(1),
     // Orden por id: estable entre consultas (Postgres no garantiza orden sin ORDER BY).
     // El fondo viaja con la misión para ambientar también las tarjetas; las
@@ -46,6 +48,7 @@ export async function listMissions(userId: string) {
       .leftJoin(mission_introductions, eq(mission_introductions.mission_id, missions.id))
       .orderBy(asc(missions.tier), asc(missions.id)),
     db.select().from(narrative_states).where(eq(narrative_states.student_id, userId)),
+    getMissionCompletions(userId),
   ])
 
   const cefrLevel = userRows[0]?.cefr_level ?? 'A1'
@@ -53,17 +56,21 @@ export async function listMissions(userId: string) {
 
   const missionsWithStatus = allMissions.map(({ mission, backdrop }) => {
     const state = stateByMission.get(mission.id)
+    const completion = completions.get(mission.id)
     return {
       ...mission,
       backdrop: backdrop ?? null,
-      status:
-        state?.state === 'completed'
-          ? 'completed'
-          : state?.state === 'paused'
+      status: completion?.challenge
+        ? 'completed'
+        : completion?.free
+          ? 'challenge_pending'
+          : state?.state === 'completed'
             ? 'paused'
-            : state
-              ? 'in_progress'
-              : 'not_started',
+            : state?.state === 'paused'
+              ? 'paused'
+              : state
+                ? 'in_progress'
+                : 'not_started',
     }
   })
 
@@ -110,6 +117,8 @@ export interface SubmitInput {
   timeTakenSeconds: number | null
   /** Zona horaria del cliente, para medir la racha en su «hoy». */
   timezone?: unknown
+  /** `free` = práctica sin XP; `evaluation` = Desafío (sí puntúa). */
+  mode: 'free' | 'evaluation'
 }
 
 export interface SubmitOutcome {
@@ -130,6 +139,7 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
     .select({
       cefr_level: users.cefr_level,
       language_preference: users.language_preference,
+      is_guest: users.is_guest,
     })
     .from(users)
     .where(eq(users.id, input.studentId))
@@ -137,6 +147,9 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
 
   const cefrLevel: CefrLevel = user?.cefr_level ?? 'B1'
   const feedbackLanguage = user?.language_preference ?? 'es'
+  // La prueba no genera XP: al registrarse empieza la progresión real.
+  const isGuest = user?.is_guest === true
+  await assertGuestCanSubmit(input.studentId, isGuest)
   const groupId = await resolveGroupId(input.studentId, input.groupId)
 
   const responseId = randomUUID()
@@ -196,9 +209,13 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
   const weekStart = getWeekStart()
   const timeTaken = input.timeTakenSeconds ?? 0
 
-  // ¿Ya había completado esta misión antes? La primera vez paga el bonus;
-  // repetirla sólo da práctica (y evita farmear XP con la misma misión).
-  const firstCompletion = completed ? !(await hasCompletedMission(input.studentId, input.missionId)) : false
+  // Solo el Desafío puntúa: la práctica libre se guarda sin XP.
+  const scored = input.mode === 'evaluation' && !isGuest
+  // ¿Ya había completado puntuando esta misión? La primera puntuación paga el
+  // bonus; repetir solo da práctica (y evita farmear XP con la misma misión).
+  // Una pasada libre previa no gasta el bonus del primer Desafío.
+  const firstCompletion =
+    completed && scored ? !(await hasScoredCompletion(input.studentId, input.missionId)) : false
   const baseXp = missionXp({
     cefrLevel,
     completed,
@@ -217,11 +234,11 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
 
   // La sorpresa del día añade su bonus si esta es la misión sorteada y no se
   // había consumido; si falla, el envío sigue con el XP normal.
-  let xp = xpConRacha
-  if (completed) {
+  let xp = scored ? xpConRacha : 0
+  if (completed && !isGuest) {
     const dayKey = todayKeyIn(safeTimeZone(input.timezone))
     try {
-      xp = await consumeSurpriseBonus(input.studentId, input.missionId, dayKey, xpConRacha)
+      xp = await consumeSurpriseBonus(input.studentId, input.missionId, dayKey, xp)
     } catch (err) {
       console.error('[Quests] No se pudo aplicar el bonus de la sorpresa:', err)
     }
@@ -321,16 +338,18 @@ export async function submitResponse(input: SubmitInput): Promise<SubmitOutcome>
   return { kind: 'evaluated', responseId, evaluationId, evaluation }
 }
 
-/** ¿Este alumno ya tiene una respuesta completada de esa misión? */
-async function hasCompletedMission(studentId: string, missionId: string): Promise<boolean> {
+/** ¿Este alumno ya completó puntuando esa misión (algún envío con XP)? */
+async function hasScoredCompletion(studentId: string, missionId: string): Promise<boolean> {
   const [row] = await db
-    .select({ id: responses.id })
-    .from(responses)
+    .select({ id: evaluations.id })
+    .from(evaluations)
+    .innerJoin(responses, eq(responses.id, evaluations.response_id))
     .where(
       and(
         eq(responses.student_id, studentId),
         eq(responses.mission_id, missionId),
         eq(responses.status, 'completed'),
+        gt(evaluations.xp_awarded, 0),
       ),
     )
     .limit(1)
@@ -397,11 +416,14 @@ export async function markMissionCompleted(
     updateGroupId: true,
   })
 
-  // La promoción es un efecto secundario: si falla, la misión sigue completada.
-  try {
-    await promoteIfLevelCompleted(studentId)
-  } catch (err) {
-    console.error('[MarkCompleted] Error checking promotions:', err)
+  // Un invitado no sube de nivel durante la prueba: eso llega al registrarse.
+  if (!(await isGuestUser(studentId))) {
+    // La promoción es un efecto secundario: si falla, la misión sigue completada.
+    try {
+      await promoteIfLevelCompleted(studentId)
+    } catch (err) {
+      console.error('[MarkCompleted] Error checking promotions:', err)
+    }
   }
 }
 

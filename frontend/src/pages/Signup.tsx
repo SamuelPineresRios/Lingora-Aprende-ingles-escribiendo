@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { UserPlus, Mail, KeyRound, AlertCircle, ChevronRight, Fingerprint } from 'lucide-react'
@@ -7,7 +7,7 @@ import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
 
 export default function SignupPage() {
-  const { refetch } = useAuth()
+  const { user, loading: sessionLoading, refetch } = useAuth()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -15,48 +15,40 @@ export default function SignupPage() {
   const [cefrLevel, setCefrLevel] = useState<'A1' | 'A2' | 'B1' | 'B2' | 'C1'>('A1')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [isChecking, setIsChecking] = useState(true)
   const navigate = useNavigate()
+  const submitted = useRef(false)
+  const isGuest = user?.is_guest === true
 
-  // Check if user already has a valid session/group
+  // La sesión ya está en AuthProvider: una cuenta real no necesita este formulario.
   useEffect(() => {
-    const checkExistingSession = async () => {
-      try {
-        const res = await fetch('/api/auth/me', {
-          method: 'GET',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' }
-        })
-        
-        if (res.ok) {
-          // User has valid session, redirect to missions
-          navigate('/missions')
-        } else {
-          // No valid session, show signup form
-          setIsChecking(false)
-        }
-      } catch {
-        // Error checking session, show signup form
-        setIsChecking(false)
-      }
+    if (!submitted.current && !sessionLoading && user && !user.is_guest) navigate('/missions')
+  }, [sessionLoading, user, navigate])
+
+  useEffect(() => {
+    if (!isGuest) return
+    setRole('student')
+    const level = user?.cefr_level
+    if (level === 'A1' || level === 'A2' || level === 'B1' || level === 'B2' || level === 'C1') {
+      setCefrLevel(level)
     }
-    
-    checkExistingSession()
-  }, [navigate])
+  }, [isGuest, user?.cefr_level])
+
+  const isChecking = sessionLoading || Boolean(user && !user.is_guest)
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
+    submitted.current = true
     setLoading(true); setError('')
     try {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          full_name: name, 
-          email, 
-          password, 
-          role,
-          cefr_level: role === 'student' ? cefrLevel : undefined
+        body: JSON.stringify({
+          full_name: name,
+          email,
+          password,
+          role: isGuest ? 'student' : role,
+          cefr_level: (isGuest || role === 'student') ? cefrLevel : undefined,
         })
       })
       if (!res.ok) {
@@ -67,7 +59,8 @@ export default function SignupPage() {
       // Igual que en el login: el contexto debe conocer la sesión nueva antes
       // de navegar a una ruta protegida.
       await refetch()
-      if (data?.user?.role === 'teacher') navigate('/dashboard')
+      if (isGuest || data?.converted_guest) navigate('/missions')
+      else if (data?.user?.role === 'teacher') navigate('/dashboard')
       else navigate('/join-group')
     } catch (err: any) {
       setError(err.message)
@@ -98,16 +91,29 @@ export default function SignupPage() {
               <div className="inline-flex justify-center items-center w-16 h-16 rounded-2xl bg-cyan-950/50 border border-cyan-500/30 mb-6 shadow-neon-cyan">
                  <Fingerprint className="w-8 h-8 text-cyan-400" />
               </div>
-              <h1 className="text-3xl font-tech font-bold text-white drop-shadow-[0_0_10px_rgba(34,211,238,0.3)] tracking-tight uppercase">Nuevo Registro</h1>
-              <p className="text-xs font-mono text-cyan-500/80 mt-2 tracking-[0.2em] uppercase">Creación de Identidad Digital</p>
+              <h1 className="text-3xl font-tech font-bold text-white drop-shadow-[0_0_10px_rgba(34,211,238,0.3)] tracking-tight uppercase">
+                {isGuest ? 'Crea tu cuenta' : 'Nuevo Registro'}
+              </h1>
+              <p className="text-xs font-mono text-cyan-500/80 mt-2 tracking-[0.2em] uppercase">
+                {isGuest ? 'Guardar prueba · generar XP' : 'Creación de Identidad Digital'}
+              </p>
         </div>
 
-        {/* Roles Toggle */}
-        <div className="flex bg-slate-900/80 p-1.5 rounded-xl border border-slate-700/50 relative overflow-hidden">
-          <div className={cn("absolute inset-y-1.5 w-[calc(50%-0.375rem)] bg-cyan-600 rounded-lg transition-transform duration-300 ease-out", role === 'teacher' ? "translate-x-[calc(100%+0.1rem)]" : "translate-x-0" )} />
-          <button type="button" onClick={() => setRole('student')} className={cn("flex-1 py-2.5 text-xs font-mono font-bold tracking-widest z-10 transition-colors uppercase", role === 'student' ? "text-white drop-shadow-md" : "text-slate-500 hover:text-slate-300")}> Estudiante </button>
-          <button type="button" onClick={() => setRole('teacher')} className={cn("flex-1 py-1.5 text-xs font-mono font-bold tracking-widest z-10 transition-colors uppercase", role === 'teacher' ? "text-white" : "text-slate-500 hover:text-slate-300")}> Profesor </button>
-        </div>
+        {isGuest ? (
+          <div className="rounded-xl border border-amber/35 bg-amber/10 px-4 py-3 text-center">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber">Modo invitado</p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-300">
+              Tu prueba se conserva: mismas misiones, avatar y palabras. Al crear la cuenta empiezas a generar XP y a
+              subir de nivel.
+            </p>
+          </div>
+        ) : (
+          <div className="flex bg-slate-900/80 p-1.5 rounded-xl border border-slate-700/50 relative overflow-hidden">
+            <div className={cn("absolute inset-y-1.5 w-[calc(50%-0.375rem)] bg-cyan-600 rounded-lg transition-transform duration-300 ease-out", role === 'teacher' ? "translate-x-[calc(100%+0.1rem)]" : "translate-x-0" )} />
+            <button type="button" onClick={() => setRole('student')} className={cn("flex-1 py-2.5 text-xs font-mono font-bold tracking-widest z-10 transition-colors uppercase", role === 'student' ? "text-white drop-shadow-md" : "text-slate-500 hover:text-slate-300")}> Estudiante </button>
+            <button type="button" onClick={() => setRole('teacher')} className={cn("flex-1 py-1.5 text-xs font-mono font-bold tracking-widest z-10 transition-colors uppercase", role === 'teacher' ? "text-white" : "text-slate-500 hover:text-slate-300")}> Profesor </button>
+          </div>
+        )}
 
         {/* Signup Form */}
         <form onSubmit={handleSignup} className="glass-effect rounded-2xl p-6 md:p-8 space-y-5 border border-cyan-500/20 relative">
@@ -172,9 +178,12 @@ export default function SignupPage() {
           </button>
         </form>
 
-        <div className="text-center mt-6">
-          <Link to="/login" className="text-xs font-mono text-slate-500 hover:text-cyan-400 transition-colors uppercase tracking-widest">
+        <div className="mt-6 space-y-3 text-center">
+          <Link to="/login" className="block text-xs font-mono text-slate-500 hover:text-cyan-400 transition-colors uppercase tracking-widest">
             ¿YA TIENES ACCESO? INICIAR PROTOCOLO DE RETORNO -&gt;
+          </Link>
+          <Link to="/missions" className="inline-block text-[10px] font-mono uppercase tracking-widest text-slate-600 hover:text-slate-300">
+            ← Volver a las misiones
           </Link>
         </div>
 

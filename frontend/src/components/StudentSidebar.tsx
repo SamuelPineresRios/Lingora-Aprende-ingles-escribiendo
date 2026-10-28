@@ -102,6 +102,9 @@ export function StudentSidebar() {
     { href: '/profile', label: 'Perfil', icon: User },
   ]
 
+  const guestHidden = new Set(['/ranking', '/friends', '/groups'])
+  const visibleLinks = user?.is_guest ? links.filter(link => !guestHidden.has(link.href)) : links
+
   return (
     <>
       {/* Mobile Top Bar */}
@@ -165,8 +168,8 @@ export function StudentSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-10 mt-16 flex flex-1 flex-col gap-2 p-4 min-h-0 lg:mt-0">
-        {links.map((link) => {
+      <nav className="relative z-10 mt-16 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain p-3 lg:mt-0 lg:gap-2 lg:p-4">
+        {visibleLinks.map((link) => {
           const isActive = pathname.startsWith(link.href)
           return (
             <Link
@@ -175,7 +178,7 @@ export function StudentSidebar() {
               to={link.href}
               onClick={() => setIsOpen(false)}
               className={cn(
-                "group relative flex items-center gap-3 px-4 py-3.5 font-poppins text-[15px] font-medium tracking-normal transition-colors duration-300",
+                "group relative flex items-center gap-2.5 px-3 py-2.5 font-poppins text-[13px] font-medium tracking-normal transition-colors duration-300 lg:gap-3 lg:px-4 lg:py-3.5 lg:text-[15px]",
                 // Muescas: dos cuartos de círculo del color del contenido, uno
                 // encima y otro debajo del extremo derecho del activo. Están
                 // siempre en el DOM (transparentes si el módulo no lo está) para
@@ -228,12 +231,33 @@ export function StudentSidebar() {
 
       {/* User Status / Logout */}
       <div className="relative z-10 p-4 border-t border-white/10 bg-black/20">
+        {user?.is_guest && (
+          <div className="mb-3 rounded-xl border border-amber/35 bg-amber/10 p-3">
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-amber">Modo invitado</p>
+            <p className="mt-1 text-[11px] leading-snug text-slate-300">
+              Crea tu cuenta para conservar tu progreso y generar XP.
+            </p>
+            <Link
+              to="/signup"
+              className="mt-2 flex items-center justify-center rounded-lg bg-amber px-2 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-950 transition-colors hover:bg-amber-300"
+            >
+              Crear cuenta
+            </Link>
+            <Link
+              to="/login"
+              className="mt-1.5 block text-center text-[9px] uppercase tracking-widest text-slate-500 transition-colors hover:text-slate-300"
+            >
+              Ya tengo cuenta
+            </Link>
+          </div>
+        )}
+
         <button 
           onClick={logout}
           className="w-full flex items-center gap-3 px-4 py-3 font-poppins text-sm font-medium text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-xl transition-colors group"
         >
           <LogOut className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span>Cerrar sesion</span>
+          <span>{user?.is_guest ? 'Salir de la prueba' : 'Cerrar sesion'}</span>
         </button>
         
         <div className="mt-4 flex items-center justify-between px-2">
@@ -241,7 +265,9 @@ export function StudentSidebar() {
              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
              <span className="text-[9px] text-emerald-400 font-mono uppercase tracking-widest">Online</span>
            </div>
-           <span className="text-[9px] text-slate-600 font-mono">ID::{user?.friend_code ?? '······'}</span>
+           <span className="text-[9px] text-slate-600 font-mono">
+             {user?.is_guest ? 'MODO INVITADO' : `ID::${user?.friend_code ?? '······'}`}
+           </span>
         </div>
       </div>
     </aside>

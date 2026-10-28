@@ -7,26 +7,12 @@
  * se oculten y que el endpoint respete permisos.
  */
 import { beforeEach, describe, expect, it } from 'vitest'
-import { randomUUID } from 'node:crypto'
 import { createApp } from '../src/app.ts'
-import { db } from '../src/db/client.ts'
-import { narrative_states } from '../src/db/schema.ts'
 import { LEARNING_PATHS } from '../src/lib/learning-paths.ts'
 import { resetDb } from './helpers/db.ts'
-import { createMission, signupActor, type Actor } from './helpers/fixtures.ts'
+import { createMission, recordMissionCompletion, signupActor } from './helpers/fixtures.ts'
 
 const app = createApp()
-
-/** Marca una misión como completada. */
-async function completeMission(student: Actor, missionId: string): Promise<void> {
-  await db.insert(narrative_states).values({
-    id: randomUUID(),
-    student_id: student.id,
-    mission_id: missionId,
-    state: 'completed',
-    updated_at: new Date(),
-  })
-}
 
 beforeEach(async () => {
   await resetDb()
@@ -69,14 +55,41 @@ describe('GET /api/students/:id/paths', () => {
     const ana = await signupActor(app, 'student', { cefr_level: 'A1' })
     await createMission({ id: 'm-001', title: 'Pedir direcciones', cefr_level: 'A1' })
     await createMission({ id: 'm-008', title: 'Comprar un billete de autobús', cefr_level: 'A1' })
-    await completeMission(ana, 'm-001')
+    await recordMissionCompletion(ana.id, 'm-001')
 
     const res = await ana.agent.get(`/api/students/${ana.id}/paths`)
 
     const viajes = res.body.paths[0]
     expect(viajes.completed).toBe(1)
-    expect(viajes.missions[0]).toMatchObject({ mission_id: 'm-001', status: 'completed' })
-    expect(viajes.missions[1]).toMatchObject({ mission_id: 'm-008', status: 'pending' })
+    expect(viajes.missions[0]).toMatchObject({ mission_id: 'm-001', status: 'completed', challenge_pending: false })
+    expect(viajes.missions[1]).toMatchObject({ mission_id: 'm-008', status: 'pending', challenge_pending: false })
+  })
+
+  it('la práctica libre deja la misión pendiente de Desafío', async () => {
+    const ana = await signupActor(app, 'student', { cefr_level: 'A1' })
+    await createMission({ id: 'm-001', title: 'Pedir direcciones', cefr_level: 'A1' })
+    await recordMissionCompletion(ana.id, 'm-001', { challenge: false })
+
+    const res = await ana.agent.get(`/api/students/${ana.id}/paths`)
+
+    const viajes = res.body.paths[0]
+    expect(viajes.completed).toBe(0)
+    expect(viajes.missions[0]).toMatchObject({
+      mission_id: 'm-001',
+      status: 'pending',
+      challenge_pending: true,
+    })
+  })
+
+  it('un intento de Desafío sin completar no cuenta', async () => {
+    const ana = await signupActor(app, 'student', { cefr_level: 'A1' })
+    await createMission({ id: 'm-001', title: 'Pedir direcciones', cefr_level: 'A1' })
+    await recordMissionCompletion(ana.id, 'm-001', { challenge: true, status: 'in_progress' })
+
+    const res = await ana.agent.get(`/api/students/${ana.id}/paths`)
+
+    expect(res.body.paths[0].completed).toBe(0)
+    expect(res.body.paths[0].missions[0]).toMatchObject({ status: 'pending', challenge_pending: false })
   })
 
   it('un alumno A2 ve sus rutas de A2 (viajes y trabajo)', async () => {

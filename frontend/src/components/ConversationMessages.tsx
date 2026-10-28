@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Languages } from 'lucide-react'
 import { TypewriterMessage } from './TypewriterMessage'
 import { InteractiveWords } from './InteractiveWords'
 import { characterAvatarUrl, type AvatarGender } from '@/lib/avatar'
@@ -22,39 +20,20 @@ export interface ChatMessage {
   confused?: boolean
 }
 
-/** Traducción plegable de un mensaje del personaje. */
-function TranslationToggle({ translation }: { translation: string }) {
-  const [open, setOpen] = useState(false)
-
-  return (
-    <>
-      <button
-        onClick={() => setOpen(value => !value)}
-        className="mt-2 inline-flex items-center gap-1.5 rounded-md border border-cyan/25 px-2 py-1 text-[10px] font-mono uppercase tracking-widest text-cyan/70 transition-colors hover:border-cyan/50 hover:text-cyan"
-      >
-        <Languages className="h-3 w-3" /> {open ? 'Ocultar' : 'Traducción'}
-      </button>
-      {open && (
-        <p className="mt-2 border-t border-cyan/15 pt-2 font-reading text-sm italic leading-relaxed text-cyan-100/80">
-          {translation}
-        </p>
-      )}
-    </>
-  )
-}
-
 function AssistantBubble({
   message,
   characterName,
   characterGender,
   typing,
   onTypingComplete,
+  enableLookup,
 }: {
   message: ChatMessage
   characterName: string
   characterGender?: AvatarGender
   typing: boolean
   onTypingComplete: () => void
+  enableLookup: boolean
 }) {
   return (
     <div className="flex items-end gap-2.5">
@@ -69,10 +48,9 @@ function AssistantBubble({
           {typing ? (
             <TypewriterMessage text={message.content} isActive speed={30} onComplete={onTypingComplete} />
           ) : (
-            <InteractiveWords text={message.content} context={message.content} />
+            <InteractiveWords text={message.content} context={message.content} enabled={enableLookup} />
           )}
         </p>
-        {message.translation && <TranslationToggle translation={message.translation} />}
       </div>
     </div>
   )
@@ -121,6 +99,7 @@ export function ConversationMessages({
   studentAvatar,
   isLastMessageTyping,
   onTypingComplete,
+  enableLookup = true,
 }: {
   messages: ChatMessage[]
   characterName: string
@@ -128,6 +107,8 @@ export function ConversationMessages({
   studentAvatar: string | null
   isLastMessageTyping: boolean
   onTypingComplete: () => void
+  /** En el Desafío se apaga: sin traducciones al pasar el cursor. */
+  enableLookup?: boolean
 }) {
   const lastAssistantIndex = messages.findLastIndex(message => message.role === 'assistant')
 
@@ -143,6 +124,7 @@ export function ConversationMessages({
               characterGender={characterGender}
               typing={index === lastAssistantIndex && isLastMessageTyping}
               onTypingComplete={onTypingComplete}
+              enableLookup={enableLookup}
             />
           )
         }

@@ -6,7 +6,7 @@
  * El texto se revela palabra a palabra y cada frase se puede escuchar.
  */
 import { type RefObject, useCallback, useEffect, useRef, useState } from 'react'
-import { Pause, Play, RotateCcw, Volume2, Waves, X, Languages, SkipForward, Loader2 } from 'lucide-react'
+import { Pause, Play, RotateCcw, Volume2, Waves, X, SkipForward, Loader2 } from 'lucide-react'
 import { resolveAvatar, type IntroductionCharacter, type MissionIntroduction } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { TypewriterMessage } from './TypewriterMessage'
@@ -169,7 +169,6 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
   const studentAvatar = user ? studentAvatarUrl(resolveAvatar({ id: user.id, avatar: user.avatar })) : null
   const [index, setIndex] = useState(0)
   const [autoPlay, setAutoPlay] = useState(false)
-  const [showTranslations, setShowTranslations] = useState(false)
   /**
    * La narración empieza sonando: la primera frase se lee nada más montar la
    * escena. El clic que abrió la misión da la activación que exige el
@@ -568,17 +567,11 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
 
                 <p className={cn('font-reading text-lg leading-relaxed font-medium tracking-[0.01em] drop-shadow-[0_2px_12px_rgba(2,6,23,0.95)] sm:text-2xl', speaker ? ROLE_THEME[speaker.id].text : 'text-slate-100')}>
                   {lineComplete ? (
-                    <InteractiveWords text={line.text} context={line.text} />
+                    <InteractiveWords text={line.text} context={line.text} showTranslation={false} />
                   ) : (
                     <TypewriterMessage text={line.text} isActive speed={26} onComplete={() => setLineComplete(true)} />
                   )}
                 </p>
-
-                {showTranslations && lineComplete && (
-                  <p className="font-reading mt-2 text-[13px] italic text-emerald-200/90 drop-shadow-[0_2px_10px_rgba(2,6,23,0.95)] animate-in fade-in duration-500 sm:mt-3 sm:text-[15px]">
-                    {line.translation}
-                  </p>
-                )}
               </>
             )}
 
@@ -640,15 +633,6 @@ export function IntroductionPlayer({ introduction, cefrLevel, onFinish, onSkip, 
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setShowTranslations(value => !value)}
-              className={cn(
-                'px-3 py-2 rounded-lg border text-[11px] font-mono uppercase tracking-widest flex items-center gap-1.5 transition-colors',
-                showTranslations ? 'border-emerald/50 bg-emerald/10 text-emerald' : 'border-white/10 text-slate-300 hover:border-white/30',
-              )}
-            >
-              <Languages className="h-3.5 w-3.5" /> Traducción
-            </button>
             <button
               onClick={toggleVoice}
               className={cn(

@@ -39,11 +39,19 @@ export const users = pgTable(
     /** Código corto para que otros te agreguen como amigo (se genera al pedirlo). */
     friend_code: text('friend_code'),
     language_preference: text('language_preference').notNull().default('es'),
+    /** Cuenta de prueba creada al entrar sin sesión; se convierte al registrarse. */
+    is_guest: boolean('is_guest').notNull().default(false),
+    /** Llamadas de IA consumidas por un invitado (límite de la prueba). */
+    guest_ai_calls: integer('guest_ai_calls').notNull().default(0),
     created_at: timestamp('created_at', { withTimezone: true })
       .notNull()
       .defaultNow(),
   },
-  (t) => [uniqueIndex('users_email_key').on(t.email), uniqueIndex('users_friend_code_key').on(t.friend_code)],
+  (t) => [
+    uniqueIndex('users_email_key').on(t.email),
+    uniqueIndex('users_friend_code_key').on(t.friend_code),
+    index('users_guest_created_idx').on(t.is_guest, t.created_at),
+  ],
 )
 
 export const missions = pgTable('missions', {

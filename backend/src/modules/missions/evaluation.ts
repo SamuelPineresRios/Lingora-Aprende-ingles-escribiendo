@@ -15,6 +15,7 @@ import {
 } from './prompts.ts'
 
 import type { EvaluationImprovement } from '../../db/schema.ts'
+import { addContextualVerbImprovements } from './context-fixes.ts'
 
 export interface EvaluationResult {
   comprehensibility_score: number
@@ -152,10 +153,14 @@ export async function evaluateResponse(
       return { ...TECHNICAL_FALLBACK_EVALUATION }
     }
 
+    const evaluation = {
+      ...parsed,
+      improvements: addContextualVerbImprovements(parsed.improvements, context.responseText),
+    }
     console.log(
-      `[Eval] ${Date.now() - startedAt}ms judgment=${parsed.judgment} score=${parsed.comprehensibility_score}`,
+      `[Eval] ${Date.now() - startedAt}ms judgment=${evaluation.judgment} score=${evaluation.comprehensibility_score}`,
     )
-    return parsed
+    return evaluation
   } catch (err) {
     console.error('[Eval] Fallback:', err)
     return { ...TECHNICAL_FALLBACK_EVALUATION }

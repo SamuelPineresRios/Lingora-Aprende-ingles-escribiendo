@@ -11,6 +11,7 @@ import {
   Bar,
   CartesianGrid,
   ComposedChart,
+  LabelList,
   Line,
   ResponsiveContainer,
   Tooltip,
@@ -170,48 +171,106 @@ export function WeeklyReport() {
           </div>
 
           {/* Evolución de las últimas seis semanas */}
-          <div className="h-40 w-full">
+          <div className="h-48 w-full sm:h-52">
             <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={report.evolution} margin={{ top: 6, right: 4, bottom: 0, left: 4 }}>
-                <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
+              <ComposedChart data={report.evolution} margin={{ top: 22, right: 2, bottom: 2, left: 0 }}>
+                <defs>
+                  <linearGradient id="weekly-mission-bars" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.95} />
+                    <stop offset="100%" stopColor="#0e7490" stopOpacity={0.32} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid stroke="rgba(255,255,255,0.07)" strokeDasharray="4 4" vertical={false} />
                 <XAxis
                   dataKey="week_start_date"
                   tickFormatter={formatShort}
-                  tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 10, fontFamily: 'monospace' }}
+                  tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10, fontFamily: 'monospace' }}
+                  axisLine={false}
+                  tickLine={false}
+                  tickMargin={8}
+                  minTickGap={12}
+                  padding={{ left: 14, right: 14 }}
+                  interval="preserveStartEnd"
+                />
+                <YAxis
+                  yAxisId="m"
+                  allowDecimals={false}
+                  width={24}
+                  tickCount={4}
+                  tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 9, fontFamily: 'monospace' }}
                   axisLine={false}
                   tickLine={false}
                 />
-                <YAxis yAxisId="m" hide />
-                <YAxis yAxisId="g" hide domain={[0, 100]} />
+                <YAxis
+                  yAxisId="g"
+                  orientation="right"
+                  domain={[0, 100]}
+                  ticks={[0, 50, 100]}
+                  width={34}
+                  tickFormatter={value => `${value}%`}
+                  tick={{ fill: 'rgba(251,191,36,0.65)', fontSize: 9, fontFamily: 'monospace' }}
+                  axisLine={false}
+                  tickLine={false}
+                />
                 <Tooltip
-                  cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                  cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                   contentStyle={{
-                    background: 'rgba(2,6,23,0.95)',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: 'rgba(2,6,23,0.96)',
+                    border: '1px solid rgba(255,255,255,0.12)',
                     borderRadius: 12,
                     fontSize: 12,
+                    boxShadow: '0 10px 30px -12px rgba(6,182,212,0.45)',
                   }}
+                  labelStyle={{ color: 'rgba(255,255,255,0.65)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}
+                  itemStyle={{ paddingTop: 2 }}
                   labelFormatter={formatShort}
                   formatter={(value: number, name: string) =>
-                    name === 'Precisión' ? [`${Math.round(value)}%`, name] : [value, name]
+                    name === 'Precisión'
+                      ? [`${Math.round(value)}%`, name]
+                      : [`${value} ${value === 1 ? 'misión' : 'misiones'}`, name]
                   }
                 />
-                <Bar yAxisId="m" dataKey="missions" name="Misiones" fill="rgba(6,182,212,0.55)" radius={[4, 4, 0, 0]} />
+                <Bar
+                  yAxisId="m"
+                  dataKey="missions"
+                  name="Misiones"
+                  fill="url(#weekly-mission-bars)"
+                  radius={[6, 6, 0, 0]}
+                  maxBarSize={42}
+                  background={{ fill: 'rgba(255,255,255,0.035)' }}
+                >
+                  <LabelList
+                    dataKey="missions"
+                    position="top"
+                    offset={7}
+                    fill="rgba(255,255,255,0.72)"
+                    fontSize={10}
+                    fontFamily="monospace"
+                    formatter={(value: number) => (value > 0 ? String(value) : '')}
+                  />
+                </Bar>
                 <Line
                   yAxisId="g"
                   dataKey="grammar"
                   name="Precisión"
+                  type="monotone"
                   stroke="#fbbf24"
-                  strokeWidth={2}
-                  dot={{ r: 3, fill: '#fbbf24' }}
+                  strokeWidth={2.5}
+                  dot={{ r: 4, strokeWidth: 2, stroke: '#020617', fill: '#fbbf24' }}
+                  activeDot={{ r: 6, strokeWidth: 2, stroke: '#020617', fill: '#fde68a' }}
                   connectNulls
                 />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
-          <p className="text-center text-[10px] uppercase tracking-widest text-slate-600">
-            Barras: misiones · Línea: precisión gramatical
-          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-[10px] uppercase tracking-widest text-slate-500">
+            <span className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-[3px] bg-cyan" /> Misiones
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-0.5 w-4 rounded-full bg-amber" /> Precisión gramatical
+            </span>
+          </div>
 
           {/* Vocabulario y estructuras */}
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 pt-4">

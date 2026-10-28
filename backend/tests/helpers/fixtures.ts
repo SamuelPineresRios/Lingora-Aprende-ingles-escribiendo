@@ -5,7 +5,7 @@ import request from 'supertest'
 import type { Express } from 'express'
 import { randomUUID } from 'node:crypto'
 import { db } from '../../src/db/client.ts'
-import { mission_introductions, missions } from '../../src/db/schema.ts'
+import { evaluations, mission_introductions, missions, responses } from '../../src/db/schema.ts'
 import type { MissionBackdrop } from '@vox/shared'
 
 export const TEST_PASSWORD = 'contrasena-segura'
@@ -108,4 +108,33 @@ export async function createIntroduction(
   })
 
   return id
+}
+
+/**
+ * Deja una misión con una respuesta y su evaluación, sin pasar por la IA.
+ * La práctica libre guarda XP 0; el Desafío, XP positivo.
+ */
+export async function recordMissionCompletion(
+  studentId: string,
+  missionId: string,
+  options: { challenge?: boolean; status?: 'completed' | 'in_progress' } = {},
+): Promise<void> {
+  const responseId = randomUUID()
+  await db.insert(responses).values({
+    id: responseId,
+    mission_id: missionId,
+    student_id: studentId,
+    text_content: 'I finished the mission.',
+    status: options.status ?? 'completed',
+  })
+  await db.insert(evaluations).values({
+    id: randomUUID(),
+    response_id: responseId,
+    comprehensibility_score: 90,
+    grammar_score: 90,
+    lexical_richness_score: 90,
+    judgment: 'ADVANCE',
+    feedback_text: 'Buen trabajo.',
+    xp_awarded: options.challenge === false ? 0 : 120,
+  })
 }

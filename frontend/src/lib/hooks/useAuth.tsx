@@ -20,6 +20,8 @@ export interface AuthUser {
   cefr_level: string | null
   /** Código para agregar amigos; los docentes van a null. */
   friend_code: string | null
+  /** Cuenta de prueba: puede jugar 2 misiones, sin XP, hasta registrarse. */
+  is_guest: boolean
 }
 
 interface AuthState {
@@ -27,6 +29,8 @@ interface AuthState {
   loading: boolean
   logout: () => Promise<void>
   refetch: () => Promise<void>
+  /** Entra como invitado (crea la sesión de prueba si no existe). */
+  startGuest: () => Promise<AuthUser | null>
 }
 
 const AuthContext = createContext<AuthState | null>(null)
@@ -41,6 +45,12 @@ async function fetchCurrentUser(): Promise<AuthUser | null> {
   const data = await readJson(res)
   return data?.user ?? null
 }
+
+/**
+ * Promesa compartida: en StrictMode el guard de rutas monta dos veces y no
+ * queremos crear dos invitados en paralelo.
+ */
+let guestRequest: Promise<AuthUser | null> | null = null
 
 /**
  * Proveedor único de sesión.
@@ -82,8 +92,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(await fetchCurrentUser())
   }, [])
 
+  const startGuest = useCallback(async (): Promise<AuthUser | null> => {
+    if (!guestRequest) {
+      guestRequest = fetch('/api/auth/guest', { method: 'POST' })
+        .then(async res => {
+          if (!res.ok) return null
+          const data = await readJson<{ user: AuthUser }>(res)
+          return data?.user ?? null
+        })
+        .catch(() => null)
+        .finally(() => {
+          guestRequest = null
+        })
+    }
+
+    const guest = await guestRequest
+    if (guest) setUser(guest)
+    return guest
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ user, loading, logout, refetch }}>
+    <AuthContext.Provider value={{ user, loading, logout, refetch, startGuest }}>
       {children}
     </AuthContext.Provider>
   )

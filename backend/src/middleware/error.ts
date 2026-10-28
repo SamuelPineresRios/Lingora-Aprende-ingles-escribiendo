@@ -19,7 +19,7 @@ interface BodyParserError {
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof HttpError) {
-    res.status(err.status).json({ error: err.message })
+    res.status(err.status).json({ error: err.message, ...(err.code ? { code: err.code } : {}) })
     return
   }
 

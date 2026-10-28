@@ -15,8 +15,9 @@ import {
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import {
+  createGuestUser,
   findPublicUserById,
-  registerUser,
+  signupAccount,
   updateFullName,
   verifyCredentials,
 } from './service.ts'
@@ -24,6 +25,43 @@ import {
 const VALID_CEFR: readonly CefrLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1']
 
 export const authRouter = Router()
+
+/** Límite simple por IP para que crear invitados no sea una vía de abuso. */
+const guestCreations = new Map<string, number[]>()
+const GUEST_CREATIONS_PER_HOUR = 20
+const HOUR_MS = 60 * 60 * 1000
+
+function allowGuestCreation(ip: string): boolean {
+  const now = Date.now()
+  const recent = (guestCreations.get(ip) ?? []).filter(at => now - at < HOUR_MS)
+  if (recent.length >= GUEST_CREATIONS_PER_HOUR) return false
+  recent.push(now)
+  guestCreations.set(ip, recent)
+  return true
+}
+
+/** Entrar sin cuenta: sesión de prueba para mirar el sistema y jugar 2 misiones. */
+authRouter.post('/guest', async (req, res) => {
+  // Idempotente: si ya hay sesión (invitado o alumno) no se crea otra cuenta.
+  if (req.session) {
+    const existing = await findPublicUserById(req.session.userId)
+    if (existing) {
+      res.json({ user: existing })
+      return
+    }
+  }
+
+  if (!allowGuestCreation(req.ip ?? 'unknown')) {
+    throw new HttpError(429, 'Demasiadas cuentas de prueba. Inténtalo más tarde o crea una cuenta.')
+  }
+
+  const user = await createGuestUser()
+  const token = await createToken({ userId: user.id, email: user.email, role: user.role })
+  res
+    .status(201)
+    .cookie(SESSION_COOKIE_NAME, token, sessionCookieOptions())
+    .json({ user })
+})
 
 authRouter.post('/signup', async (req, res) => {
   const body = (req.body ?? {}) as Record<string, unknown>
@@ -54,19 +92,22 @@ authRouter.post('/signup', async (req, res) => {
     throw new HttpError(400, 'Nivel CEFR no válido')
   }
 
-  const user = await registerUser({
-    email: email.toLowerCase(),
-    password,
-    full_name: fullName,
-    role,
-    cefr_level: (cefrLevel ?? null) as CefrLevel | null,
-  })
+  const { user, converted } = await signupAccount(
+    {
+      email: email.toLowerCase(),
+      password,
+      full_name: fullName,
+      role,
+      cefr_level: (cefrLevel ?? null) as CefrLevel | null,
+    },
+    req.session?.userId,
+  )
 
   const token = await createToken({ userId: user.id, email: user.email, role: user.role })
   res
     .status(201)
     .cookie(SESSION_COOKIE_NAME, token, sessionCookieOptions())
-    .json({ user })
+    .json({ user, ...(converted ? { converted_guest: true } : {}) })
 })
 
 authRouter.post('/login', async (req, res) => {

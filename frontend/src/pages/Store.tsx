@@ -1,10 +1,3 @@
-/**
- * Tienda de monedas: marcos, títulos, temas y escudos de racha.
- *
- * El catálogo y el saldo los sirve el backend; comprar y equipar se reflejan
- * al momento con la vista que devuelve cada acción. El fondo son monedas
- * cayendo en cascada y al comprar cae una ráfaga.
- */
 import { useEffect, useState } from 'react'
 import {
   Check,
@@ -20,6 +13,7 @@ import {
   Tag,
   type LucideIcon,
 } from 'lucide-react'
+
 import { cn } from '@/lib/utils'
 import { resolveAvatar } from '@vox/shared'
 import { studentAvatarUrl } from '@/lib/avatar'

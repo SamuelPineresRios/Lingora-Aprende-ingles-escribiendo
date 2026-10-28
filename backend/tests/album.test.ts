@@ -112,6 +112,38 @@ describe('GET /api/students/:id/album', () => {
     expect(a2.medal.earned).toBe(false)
   })
 
+  it('devuelve 10 cartas por página y filtra por nivel', async () => {
+    const ana = await signupActor(app, 'student')
+    for (let i = 1; i <= 12; i++) {
+      await createMission({ id: `m-pag-${String(i).padStart(2, '0')}`, cefr_level: 'A1' })
+    }
+    await createMission({ id: 'm-pag-b1', cefr_level: 'B1' })
+    await createMission({ id: 'm-pag-b2', cefr_level: 'B1' })
+
+    const page1 = await ana.agent.get(`/api/students/${ana.id}/album?page=1`)
+    expect(page1.status).toBe(200)
+    expect(page1.body.characters).toHaveLength(10)
+    expect(page1.body.pagination).toMatchObject({ level: 'all', page: 1, page_size: 10, total: 14, pages: 2 })
+
+    const page2 = await ana.agent.get(`/api/students/${ana.id}/album?page=2`)
+    expect(page2.body.characters).toHaveLength(4)
+    const ids = [...page1.body.characters, ...page2.body.characters].map((card: { mission_id: string }) => card.mission_id)
+    expect(new Set(ids).size).toBe(14)
+
+    const a1 = await ana.agent.get(`/api/students/${ana.id}/album?level=A1&page=1`)
+    expect(a1.body.characters).toHaveLength(10)
+    expect(a1.body.pagination).toMatchObject({ level: 'A1', total: 12, pages: 2 })
+    const a1Page2 = await ana.agent.get(`/api/students/${ana.id}/album?level=A1&page=2`)
+    expect(a1Page2.body.characters).toHaveLength(2)
+    expect(a1Page2.body.characters.every((card: { level: string }) => card.level === 'A1')).toBe(true)
+
+    const b1 = await ana.agent.get(`/api/students/${ana.id}/album?level=B1&page=1`)
+    expect(b1.body.characters).toHaveLength(2)
+    expect(b1.body.pagination.pages).toBe(1)
+
+    expect((await ana.agent.get(`/api/students/${ana.id}/album?level=Z9`)).status).toBe(400)
+  })
+
   it('respeta permisos: solo el alumno o sus docentes', async () => {
     const ana = await signupActor(app, 'student')
     const luis = await signupActor(app, 'student')

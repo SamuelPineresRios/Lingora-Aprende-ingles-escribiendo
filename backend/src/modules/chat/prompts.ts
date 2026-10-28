@@ -103,12 +103,12 @@ export const ROLEPLAY_TURN_SCHEMA: JsonSchema = {
         { type: 'null' },
       ],
       description:
-        'Categoría del error que bloquea el avance (null si la frase fue aceptada). third_person_s = falta la -s de tercera persona; word_order = orden sujeto+verbo; article = a/an/the; plural = falta -s de plural; auxiliary = do/does o am/is/are; past_tense = pasado simple; preposition = preposición básica; other = otra regla.',
+        'Categoría del error que bloquea el avance SEGÚN EL NIVEL (null si no bloquea o la frase fue aceptada). third_person_s = falta la -s de tercera persona; word_order = orden sujeto+verbo; article = a/an/the; plural = falta -s de plural; auxiliary = do/does o am/is/are; past_tense = pasado simple; preposition = preposición básica; other = otra regla.',
     },
     confused: {
       type: 'boolean',
       description:
-        'true cuando tu personaje se queda confundido: respuesta fuera de tema o error gramatical que bloquea el paso. false si la respuesta fue aceptada.',
+        'true cuando tu personaje se queda confundido: respuesta fuera de tema o error gramatical que bloquea el paso según el nivel. false si la respuesta fue aceptada.',
     },
     mission_completed: {
       type: 'boolean',
@@ -128,14 +128,26 @@ export interface MissionContext {
 }
 
 /**
- * Exigencia según el subnivel del A1: 1 primeros pasos (no bloquea), 2 frases
- * completas (bloquea errores básicos) y 3 reto (bloquea también tiempos y
- * preposiciones y pide dos frases cuando el paso lo necesite).
+ * Exigencia de forma según el subnivel: 1 primeros pasos (respuestas cortas),
+ * 2 frases completas y 3 reto (dos frases cuando el paso pide detalles). La
+ * severidad de los errores la decide el nivel (ERROR_STRICTNESS), no el tier.
  */
 const TIER_DIRECTIVES: Record<number, string> = {
-  1: 'This mission is A1 tier 1 (first steps): keep everything short and easy. Accept short answers; when there is an error give the correct sentence in correctedText but you MAY rate 3-4 and advance.',
-  2: 'This mission is A1 tier 2: require complete sentences (subject + verb). Do NOT advance the step when the answer has a blocking grammar error (see GRAMMAR FIRST).',
-  3: 'This mission is A1 tier 3 (the A1 challenge): be very strict. Require complete sentences and, when the step asks for details, two sentences. Never advance with any error from GRAMMAR FIRST and repeat the step in character until the sentence is correct.',
+  1: 'This mission is tier 1 (first steps): keep everything short and easy. Accept short answers; when there is an error give the correct sentence in correctedText but you MAY rate 3-4 and advance. At A1 never block; at A2+ apply the level strictness.',
+  2: 'This mission is tier 2: require complete sentences (subject + verb). Apply the level strictness to decide whether an error blocks the step.',
+  3: 'This mission is tier 3 (the challenge of this level): require complete sentences and, when the step asks for details, two sentences. Apply the level strictness to errors; the challenge is clarity, not catching every slip.',
+}
+
+/**
+ * Severidad de los errores según el CEFR. La misma falta puede ser aceptable
+ * en A1 y bloquear en B2: el nivel manda.
+ */
+const ERROR_STRICTNESS: Record<string, string> = {
+  A1: 'ERROR STRICTNESS - A1 (BE LENIENT): The student is starting. Do NOT block for missing articles, plural -s, small prepositions, punctuation or spelling slips, or short/telegraphic answers when the meaning is understandable. Block ONLY when the message is unintelligible, unrelated to the step, or the key information is missing (rating 1-2). If the answer is understandable, advance (rating 4-5), do not set error_type, and at most mention the improvement gently in feedback. Never scold a beginner.',
+  A2: 'ERROR STRICTNESS - A2: Block clear errors in the core patterns (verb order, third-person -s, do/does, am/is/are, a/an, plural) and simple past when the task is about the past. Ignore isolated typos and minor slips that do not change the meaning; do not block a telegraphic but clear answer unless the step requires a full sentence.',
+  B1: 'ERROR STRICTNESS - B1: Block the core grammar errors whenever they appear and require complete, connected sentences. An isolated typo does not block, but repeated basic errors do.',
+  B2: 'ERROR STRICTNESS - B2 (STRICTER): Besides the core errors, block wrong tense/aspect, incorrect prepositions or collocations, and unnatural word order. Expect accurate complex sentences and precise vocabulary; do not let clear inaccuracies pass just because the message is understandable.',
+  C1: 'ERROR STRICTNESS - C1 (VERY STRICT): Block even subtle grammar, article/preposition, collocation, register and naturalness issues that a proficient speaker would notice. Demand precision, range and natural phrasing.',
 }
 
 /** Instrucciones de registro lingüístico según el nivel del alumno. */
@@ -177,6 +189,7 @@ export function buildRoleplaySystemPrompt(params: {
 }): string {
   const { mission, userLevel } = params
   const specificInstruction = LEVEL_DIRECTIVES[userLevel] ?? LEVEL_DIRECTIVES.A2
+  const levelStrictness = ERROR_STRICTNESS[userLevel] ?? ERROR_STRICTNESS.A2
   const tierInstruction = mission.tier ? TIER_DIRECTIVES[mission.tier] ?? '' : ''
 
   return `You are ${mission.character_name} in a roleplay conversation.
@@ -184,6 +197,7 @@ Your job: Have a conversation to help student complete this objective: "${missio
 Context: "${mission.scene_context}"
 Student level: ${userLevel}
 ${specificInstruction}
+${levelStrictness}
 ${tierInstruction}
 
 CONVERSATION FLOW - DRIVEN BY THE OBJECTIVE:
@@ -201,17 +215,20 @@ DO NOT do this (WRONG):
   ✗ Asking about something the objective never mentions
   ✗ Following the typical steps of a different mission
 
-GRAMMAR FIRST - THE SENTENCE MUST BE CORRECT TO ADVANCE:
+GRAMMAR FIRST - CORRECT ENGLISH, STRICTNESS BY LEVEL:
 
-You are a language class disguised as a scene: a grammatically wrong sentence
-is NOT a completed step. Be strict, like a real teacher who cares.
+You are a language class disguised as a scene. Correct the student's English,
+but only stop the step when the error is blocking at their level (see ERROR
+STRICTNESS above). A1 is lenient; B2 and C1 are demanding.
 
-BLOCKING errors (rating 1 or 2, NEVER 3+, progress does NOT move):
+CORE BLOCKING ERRORS (A2-B1; A1 applies the lenient filter above; rating 1 or
+2, NEVER 3+, progress does NOT move):
 - Verb before subject ("Want I a coffee", "Is very good the coffee").
 - Missing third-person -s ("She go", "He want").
 - Missing article a/an/the, or plural without -s.
 - Wrong am/is/are, or missing do/does in questions and negatives.
-- Tier 3 only: also simple past mistakes, mixed tenses and wrong basic prepositions.
+- B2/C1 also: wrong tense/aspect, prepositions or collocations, unnatural word
+  order, and imprecise vocabulary/register.
 
 CHECK THE SUBJECT BEFORE YOU BLOCK - NEVER INVENT AN ERROR:
 - Third-person -s exists ONLY with he/she/it. With I, you, we, they asking for
@@ -222,7 +239,8 @@ CHECK THE SUBJECT BEFORE YOU BLOCK - NEVER INVENT AN ERROR:
   not sure an error exists, do not mention it: a false correction confuses the
   student more than a missed one.
 
-When one appears: scold briefly through the coach note (feedback), correctedText
+When a blocking error appears (per the level policy): correct it briefly through
+the coach note (feedback; at A1, gently), correctedText
 is the correct sentence, missing_step names the grammar point in Spanish
 (e.g. "la -s de tercera persona", "el orden: sujeto + verbo", "el artículo a"),
 and error_type classifies it exactly: third_person_s, word_order, article,
@@ -231,10 +249,7 @@ error, error_type is null.
 The character reacts confused and repeats the step in character; the coach note
 is the one that explains what was wrong.
 
-TIER 1 (first steps): correct the error in correctedText, but you may rate 3-4
-and let the step advance; do not block a beginner.
-
-CRITICAL RULES - EVALUATE RESPONSES STRICTLY:
+EVALUATE THE ANSWER AND THE LEVEL:
 
 1. QUESTION RELEVANCE - Is the student answering YOUR CURRENT question (the one from the objective steps)?
    ✓ VALID: Responds to the specific step you asked about
@@ -385,8 +400,8 @@ KEY ABOUT correctedText:
 - For rating 4-5 (good): null
 
 REMEMBER:
-- A grammatically wrong sentence does NOT complete a step (except tier 1)
-- confused = true when you are confused (off-topic or blocking grammar error)
+- Only errors that are blocking at the student's level stop the step (A1 lenient; tier 1 never blocks)
+- confused = true when you are confused (off-topic or a blocking grammar error at the student's level)
 - Derive the steps from the objective and follow them strictly
 - Ask ONLY for what the objective requires
 - Ask one thing at a time

@@ -7,6 +7,7 @@
  */
 import { Router } from 'express'
 import { AIProviderError } from '../../lib/ai.ts'
+import { guardGuestAiRequest } from '../../lib/guests.ts'
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
 import { recordGrammarError } from '../drills/service.ts'
 import type { MissionContext } from './prompts.ts'
@@ -26,6 +27,9 @@ function readMission(value: unknown): MissionContext {
 }
 
 chatRouter.post('/', requireAuth, async (req, res) => {
+  const session = sessionOf(req)
+  await guardGuestAiRequest(session.userId)
+
   const body = (req.body ?? {}) as Record<string, unknown>
   const mission = readMission(body.mission)
   const userLevel = typeof body.userLevel === 'string' ? body.userLevel : 'A2'
@@ -46,7 +50,7 @@ chatRouter.post('/', requireAuth, async (req, res) => {
       const missionRaw = body.mission as Record<string, unknown> | undefined
       const missionId = typeof missionRaw?.id === 'string' ? missionRaw.id : null
       try {
-        await recordGrammarError(sessionOf(req).userId, missionId, errorType)
+        await recordGrammarError(session.userId, missionId, errorType)
       } catch (recordError) {
         console.error('[Drills] No se pudo registrar el error:', recordError)
       }

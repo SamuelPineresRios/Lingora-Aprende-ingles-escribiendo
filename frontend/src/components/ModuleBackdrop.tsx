@@ -2,7 +2,7 @@
  * Fondo común de los módulos: el mismo ambiente que usa Misiones.
  *
  * Gradiente espacial, rejilla enmascarada, hilos de datos, brillos ambientales
- * y los sprites pixelados que pasean por el fondo. Es decorativo y no captura
+ * y los avatares voxel que pasean por el fondo. Es decorativo y no captura
  * el ratón (`pointer-events-none`), así que las páginas solo tienen que
  * montarlo detrás de su contenido (`relative z-10`).
  */
@@ -29,7 +29,7 @@ export function ModuleBackdrop() {
       <div className="absolute top-[-10%] right-[-5%] w-96 h-96 bg-violet-500/10 rounded-full blur-[128px] animate-pulse" />
       <div className="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-cyan-500/10 rounded-full blur-[128px] animate-pulse delay-1000" />
 
-      {/* 👾 Pixel Sprites Layer - Desktop Only */}
+      {/* 👾 Voxel Avatars Layer - Desktop Only */}
       <div className="absolute inset-0 z-10 opacity-70">
         <ResponsiveBackgroundSprites />
       </div>

@@ -14,6 +14,7 @@ function FeedbackContent() {
     const missionId = params.get('mission_id')
     // Lo que decide el badge es el resultado de la conversación, no la nota.
     const missionCompleted = params.get('completed') === '1'
+    const mode = params.get('mode') === 'free' ? ('free' as const) : ('evaluation' as const)
     if (!evalId || !missionId) { navigate('/missions'); return }
 
     Promise.all([
@@ -24,6 +25,8 @@ function FeedbackContent() {
         evaluation: evalData?.evaluation,
         missionTitle: missionData?.mission?.title ?? '',
         missionCompleted,
+        mode,
+        missionId,
       })
       setLoading(false)
     }).catch(() => { navigate('/missions') })
@@ -35,7 +38,9 @@ function FeedbackContent() {
     evaluation={data.evaluation}
     missionTitle={data.missionTitle}
     missionCompleted={data.missionCompleted}
-    onTryAgain={() => navigate(-1)} 
+    mode={data.mode}
+    missionId={data.missionId}
+    onTryAgain={() => navigate(-1)}
     onNextMission={() => navigate('/missions')}
   />
 }

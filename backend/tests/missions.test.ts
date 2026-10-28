@@ -10,7 +10,7 @@ import request from 'supertest'
 import { createApp } from '../src/app.ts'
 import { sql } from '../src/db/client.ts'
 import { resetDb } from './helpers/db.ts'
-import { createIntroduction, createMission, signupActor, TEST_BACKDROP } from './helpers/fixtures.ts'
+import { createIntroduction, createMission, recordMissionCompletion, signupActor, TEST_BACKDROP } from './helpers/fixtures.ts'
 
 const app = createApp()
 
@@ -54,14 +54,16 @@ describe('GET /api/missions', () => {
     expect(res.body.missions[0].status).toBe('not_started')
   })
 
-  it('marca como completed la misión con estado narrativo completado', async () => {
+  it('solo está completada cuando se hace el Desafío', async () => {
     const student = await signupActor(app, 'student')
     const missionId = await createMission()
 
     await student.agent.post(`/api/missions/${missionId}/mark-completed`).send({})
+    await recordMissionCompletion(student.id, missionId, { challenge: false })
+    expect((await student.agent.get('/api/missions')).body.missions[0].status).toBe('challenge_pending')
 
-    const res = await student.agent.get('/api/missions')
-    expect(res.body.missions[0].status).toBe('completed')
+    await recordMissionCompletion(student.id, missionId, { challenge: true })
+    expect((await student.agent.get('/api/missions')).body.missions[0].status).toBe('completed')
   })
 })
 

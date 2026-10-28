@@ -7,10 +7,21 @@
  */
 import type { Request, RequestHandler } from 'express'
 import type { SessionPayload } from '@vox/shared'
+import { isGuestUser } from '../lib/guests.ts'
 import { HttpError } from '../utils/http-error.ts'
 
 export const requireAuth: RequestHandler = (req, _res, next) => {
   if (!req.session) return next(new HttpError(401, 'Unauthorized'))
+  next()
+}
+
+/** Exige una cuenta real: las secciones sociales no se abren a invitados. */
+export const requireAccount: RequestHandler = async (req, _res, next) => {
+  if (!req.session) return next(new HttpError(401, 'Unauthorized'))
+
+  if (await isGuestUser(req.session.userId)) {
+    return next(new HttpError(403, 'Crea una cuenta para acceder a esta sección', 'account_required'))
+  }
   next()
 }
 

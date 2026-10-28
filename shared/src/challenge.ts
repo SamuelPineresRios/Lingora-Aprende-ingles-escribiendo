@@ -1,0 +1,6 @@
+export const CHALLENGE_MISSION_SECONDS = 180
+
+export function formatClock(totalSeconds: number): string {
+  const safe = Math.max(0, Math.floor(totalSeconds))
+  return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, '0')}`
+}

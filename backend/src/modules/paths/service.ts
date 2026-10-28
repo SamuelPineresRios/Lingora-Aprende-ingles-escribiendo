@@ -2,12 +2,14 @@
  * Rutas por objetivo: la rebanada del nivel del alumno en cada itinerario.
  *
  * Las rutas son datos (`lib/learning-paths.ts`); aquí se cruzan con el
- * catálogo real de misiones y con lo completado (misma fuente que el álbum y
- * las medallas). Las rutas sin misiones del nivel del alumno se ocultan.
+ * catálogo real de misiones y con lo completado en el Desafío (respuesta
+ * completada con XP); la práctica libre deja el Desafío pendiente. Las rutas
+ * sin misiones del nivel del alumno se ocultan.
  */
-import { and, eq, inArray } from 'drizzle-orm'
+import { eq, inArray } from 'drizzle-orm'
 import { db } from '../../db/client.ts'
-import { missions, narrative_states, users } from '../../db/schema.ts'
+import { missions, users } from '../../db/schema.ts'
+import { getMissionCompletions } from '../../lib/mission-completion.ts'
 import { LEARNING_PATHS } from '../../lib/learning-paths.ts'
 
 export interface PathMissionView {
@@ -15,6 +17,8 @@ export interface PathMissionView {
   title: string
   tier: number | null
   status: 'completed' | 'pending'
+  /** Libre hecha, Desafío pendiente: se ofrece «Desafiar» en la ruta. */
+  challenge_pending: boolean
 }
 
 export interface LearningPathView {
@@ -42,29 +46,27 @@ export async function getStudentPaths(studentId: string): Promise<PathsView> {
   const level = studentRow?.cefr_level ?? 'A1'
 
   const allIds = [...new Set(LEARNING_PATHS.flatMap(path => path.missions))]
-  const [missionRows, completedRows] = await Promise.all([
+  const [missionRows, completions] = await Promise.all([
     db
       .select({ id: missions.id, title: missions.title, level: missions.cefr_level, tier: missions.tier })
       .from(missions)
       .where(inArray(missions.id, allIds)),
-    db
-      .select({ mission_id: narrative_states.mission_id })
-      .from(narrative_states)
-      .where(and(eq(narrative_states.student_id, studentId), eq(narrative_states.state, 'completed'))),
+    getMissionCompletions(studentId),
   ])
 
   const missionById = new Map(missionRows.map(row => [row.id, row]))
-  const completed = new Set(completedRows.map(row => row.mission_id))
 
   const paths: LearningPathView[] = LEARNING_PATHS.flatMap(path => {
     const pathMissions: PathMissionView[] = path.missions.flatMap(missionId => {
       const mission = missionById.get(missionId)
       if (!mission || mission.level !== level) return []
+      const completion = completions.get(mission.id)
       return [{
         mission_id: mission.id,
         title: mission.title,
         tier: mission.tier,
-        status: completed.has(mission.id) ? ('completed' as const) : ('pending' as const),
+        status: completion?.challenge ? ('completed' as const) : ('pending' as const),
+        challenge_pending: Boolean(completion?.free),
       }]
     })
 

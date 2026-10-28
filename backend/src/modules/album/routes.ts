@@ -9,7 +9,7 @@ import { ownsResource } from '../../lib/authorization.ts'
 import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
 import { HttpError } from '../../utils/http-error.ts'
 import { routeParam } from '../../utils/route-params.ts'
-import { getAlbum } from './service.ts'
+import { ALBUM_LEVELS, getAlbum, type AlbumLevel } from './service.ts'
 
 export const albumRouter = Router()
 
@@ -22,5 +22,15 @@ function viewerStudent(req: Request): string {
 }
 
 albumRouter.get('/:id/album', requireAuth, async (req, res) => {
-  res.json(await getAlbum(viewerStudent(req)))
+  const rawLevel = typeof req.query.level === 'string' ? req.query.level.toUpperCase() : 'ALL'
+  if (rawLevel !== 'ALL' && !(ALBUM_LEVELS as readonly string[]).includes(rawLevel)) {
+    throw new HttpError(400, 'Nivel inválido')
+  }
+  const rawPage = Number(req.query.page ?? 1)
+  const page = Number.isFinite(rawPage) ? Math.max(1, Math.floor(rawPage)) : 1
+
+  res.json(await getAlbum(viewerStudent(req), {
+    level: rawLevel === 'ALL' ? null : (rawLevel as AlbumLevel),
+    page,
+  }))
 })

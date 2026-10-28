@@ -17,6 +17,7 @@ import {
   Loader2,
   Megaphone,
   Plane,
+  Swords,
   Users,
   type LucideIcon,
 } from 'lucide-react'
@@ -35,6 +36,7 @@ interface PathMission {
   title: string
   tier: number | null
   status: 'completed' | 'pending'
+  challenge_pending: boolean
 }
 
 interface LearningPath {
@@ -189,46 +191,92 @@ function MissionTrail({
         {missions.map((mission, index) => {
           const even = index % 2 === 0
           const completed = mission.status === 'completed'
+          const challengePending = mission.challenge_pending && !completed
           const isNext = index === nextIndex
           return (
-            <li key={mission.mission_id}>
-              <Link to={`/mission/${mission.mission_id}`} title={mission.title} className="grid h-20 grid-cols-3 items-center">
-                <span
-                  className={cn(
-                    'min-w-0 rounded-xl border px-3 py-2 backdrop-blur-[1px] transition-colors',
-                    even ? 'col-span-2 col-start-2' : 'col-span-2 col-start-1 text-right',
-                    completed
-                      ? 'border-emerald/20 bg-emerald/5'
-                      : isNext
+            <li key={mission.mission_id} className="relative">
+              <div className="grid h-20 grid-cols-3 items-center">
+                {completed ? (
+                  <Link
+                    to={`/mission/${mission.mission_id}`}
+                    title={mission.title}
+                    className={cn(
+                      'group/completada relative flex h-full items-center justify-center overflow-hidden rounded-xl bg-cyan-light/5 px-3 py-2 transition-all duration-300 hover:bg-cyan-light/10',
+                      even ? 'col-span-2 col-start-2' : 'col-span-2 col-start-1',
+                    )}
+                    style={{
+                      boxShadow:
+                        '0 0 26px rgba(103, 232, 249, 0.35), inset 0 0 26px rgba(103, 232, 249, 0.18)',
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(103,232,249,0.32),transparent_72%)]"
+                    />
+                    <span className="relative flex max-w-full items-center justify-center gap-1.5 text-center font-poppins text-[11px] font-black uppercase leading-tight tracking-[0.1em] text-cyan-light drop-shadow-[0_0_16px_rgba(103,232,249,1)] sm:gap-2 sm:text-lg sm:tracking-[0.3em]">
+                      <Check className="h-3.5 w-3.5 shrink-0 sm:h-5 sm:w-5" /> Completada
+                    </span>
+                  </Link>
+                ) : challengePending ? (
+                  <Link
+                    to={`/mission/${mission.mission_id}?desafio=1`}
+                    title={`Desafiar: ${mission.title}`}
+                    aria-label={`Desafiar: ${mission.title}`}
+                    className={cn(
+                      'group/desafio relative flex h-full items-center justify-center overflow-hidden rounded-xl border border-amber/60 bg-amber/10 px-3 py-2 backdrop-blur-[1px] transition-all duration-300 hover:border-amber hover:bg-amber/20',
+                      even ? 'col-span-2 col-start-2' : 'col-span-2 col-start-1',
+                    )}
+                    style={{
+                      boxShadow:
+                        '0 0 26px rgba(245, 158, 11, 0.4), inset 0 0 26px rgba(245, 158, 11, 0.2)',
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.38),transparent_72%)]"
+                    />
+                    <span className="relative flex max-w-full items-center justify-center gap-1.5 text-center font-poppins text-[11px] font-black uppercase leading-tight tracking-[0.1em] text-amber drop-shadow-[0_0_16px_rgba(245,158,11,1)] sm:gap-2 sm:text-lg sm:tracking-[0.3em]">
+                      <Swords className="h-3.5 w-3.5 shrink-0 sm:h-5 sm:w-5" /> Desafiar
+                    </span>
+                  </Link>
+                ) : (
+                  <div
+                    className={cn(
+                      'min-w-0 rounded-xl border px-3 py-1.5 backdrop-blur-[1px] transition-colors',
+                      even ? 'col-span-2 col-start-2' : 'col-span-2 col-start-1 text-right',
+                      isNext
                         ? undefined
                         : 'border-white/10 bg-black/30 hover:border-cyan/30 hover:bg-cyan/5',
-                  )}
-                  style={
-                    isNext
-                      ? { borderColor: `${accent}66`, background: `${accent}14` }
-                      : undefined
-                  }
-                >
-                  <span
-                    className={cn(
-                      'block truncate text-sm',
-                      completed ? 'text-emerald-200' : isNext ? undefined : 'text-white',
                     )}
-                    style={isNext ? { color: accent } : undefined}
+                    style={
+                      isNext
+                        ? { borderColor: `${accent}66`, background: `${accent}14` }
+                        : undefined
+                    }
                   >
-                    {mission.title}
-                  </span>
-                  <span
-                    className={cn(
-                      'block text-[10px] uppercase tracking-widest',
-                      completed ? 'text-emerald/70' : isNext ? undefined : 'text-slate-600',
-                    )}
-                    style={isNext ? { color: `${accent}b3` } : undefined}
-                  >
-                    {completed ? 'Completada' : isNext ? 'Siguiente' : `Nivel ${mission.tier ?? 1} · ${level}`}
-                  </span>
-                </span>
-              </Link>
+                    <Link to={`/mission/${mission.mission_id}`} title={mission.title} className="block">
+                      <span
+                        className={cn(
+                          'block truncate text-sm',
+                          isNext ? undefined : 'text-white',
+                        )}
+                        style={isNext ? { color: accent } : undefined}
+                      >
+                        {mission.title}
+                      </span>
+                      <span
+                        className={cn(
+                          'block text-[10px] uppercase tracking-widest',
+                          isNext ? undefined : 'text-slate-600',
+                        )}
+                        style={isNext ? { color: `${accent}b3` } : undefined}
+                      >
+                        {isNext ? 'Siguiente' : `Nivel ${mission.tier ?? 1} · ${level}`}
+                      </span>
+                    </Link>
+                  </div>
+                )}
+              </div>
             </li>
           )
         })}

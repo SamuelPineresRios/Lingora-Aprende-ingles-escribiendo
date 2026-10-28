@@ -85,6 +85,41 @@ describe('historial de errores', () => {
     })
   })
 
+  it('el verbo contextual llega al informe y a Errores aunque la IA no lo vea', async () => {
+    mockedCompleteChat.mockResolvedValue(JSON.stringify({
+      ...EVALUATION,
+      feedback_text: 'Te entendieron.\n\nBuen intento.\n\n- Añade la hora del plan.',
+      improvements: [
+        { original: '', correction: 'Add the time of the plan.', explanation: 'Así el plan queda más concreto.' },
+      ],
+    }))
+    const ana = await signupActor(app, 'student', { cefr_level: 'A2' })
+    const missionId = await createMission({
+      id: 'm-imp-cine',
+      title: 'Planes de fin de semana',
+      cefr_level: 'A2',
+      objective: 'Invita a tu amigo a ver una película el sábado.',
+    })
+
+    const submit = await ana.agent
+      .post(`/api/missions/${missionId}/submit`)
+      .send({ response_text: 'I see the new action movie on Saturday.', time_taken_seconds: 60 })
+
+    expect(submit.status).toBe(200)
+    expect(submit.body.evaluation.improvements).toContainEqual({
+      original: 'see the new action movie',
+      correction: 'watch the new action movie',
+      explanation: 'Para películas, series o partidos se usa "watch", no "see".',
+    })
+
+    const history = await ana.agent.get(`/api/students/${ana.id}/improvements`)
+    expect(history.body.items[0].improvements).toContainEqual({
+      original: 'see the new action movie',
+      correction: 'watch the new action movie',
+      explanation: 'Para películas, series o partidos se usa "watch", no "see".',
+    })
+  })
+
   it('sin correcciones el historial está vacío', async () => {
     const ana = await signupActor(app, 'student')
 

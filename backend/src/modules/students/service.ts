@@ -763,7 +763,7 @@ export async function getGlobalRanking(
     .from(users)
     .leftJoin(responses, eq(responses.student_id, users.id))
     .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
-    .where(eq(users.role, 'student'))
+    .where(and(eq(users.role, 'student'), eq(users.is_guest, false)))
     .groupBy(users.id, users.full_name)
     .as('ranking')
 
@@ -1026,7 +1026,7 @@ export async function getWeeklyLeague(studentId: string, timezone?: unknown): Pr
     .from(users)
     .leftJoin(responses, eq(responses.student_id, users.id))
     .leftJoin(evaluations, eq(evaluations.response_id, responses.id))
-    .where(eq(users.role, 'student'))
+    .where(and(eq(users.role, 'student'), eq(users.is_guest, false)))
     .groupBy(users.id, users.full_name)
     .orderBy(
       desc(sql`coalesce(sum(${evaluations.xp_awarded}) filter (where ${day} >= ${weekStartKey}::date), 0)::int`),

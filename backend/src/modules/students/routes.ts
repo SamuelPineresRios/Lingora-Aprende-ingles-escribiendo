@@ -5,7 +5,7 @@ import { Router } from 'express'
 import type { Request } from 'express'
 import { ownsResource } from '../../lib/authorization.ts'
 import { normalizeAvatar } from '../../lib/avatar.ts'
-import { requireAuth, sessionOf } from '../../middleware/require-auth.ts'
+import { requireAccount, requireAuth, sessionOf } from '../../middleware/require-auth.ts'
 import { updateUserAvatar } from '../auth/service.ts'
 import { getStudentMedals } from '../medals/service.ts'
 import { getActiveVocabulary } from '../vocabulary/service.ts'
@@ -49,7 +49,7 @@ studentsRouter.get('/groups', requireAuth, async (req, res) => {
   res.status(200).json(data)
 })
 
-studentsRouter.post('/join-group', requireAuth, async (req, res) => {
+studentsRouter.post('/join-group', requireAuth, requireAccount, async (req, res) => {
   const session = sessionOf(req)
   const accessCode = typeof req.body?.access_code === 'string' ? req.body.access_code : ''
 
@@ -167,7 +167,7 @@ function readRankingLimit(value: unknown): number {
  * según la métrica (xp, misiones o tiempo). Incluye la posición de quien
  * consulta aunque quede fuera del top.
  */
-studentsRouter.get('/ranking', requireAuth, async (req, res) => {
+studentsRouter.get('/ranking', requireAuth, requireAccount, async (req, res) => {
   const session = sessionOf(req)
   const metric = readRankingMetric(req.query.metric)
   const limit = readRankingLimit(req.query.limit)
@@ -179,7 +179,7 @@ studentsRouter.get('/ranking', requireAuth, async (req, res) => {
  * Liga semanal: el bracket de 15 del alumno por XP de la semana en curso,
  * con las zonas de ascenso y descenso.
  */
-studentsRouter.get('/:id/league', requireAuth, async (req, res) => {
+studentsRouter.get('/:id/league', requireAuth, requireAccount, async (req, res) => {
   const session = sessionOf(req)
   const studentId = routeParam(req, 'id')
 

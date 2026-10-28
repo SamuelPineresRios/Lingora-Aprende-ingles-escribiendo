@@ -72,6 +72,9 @@ node-repl-history
 db.sqlite3
 local.db
 
+# ----- Brag / Hyperframes
+brag-output-2026-10-27-092716/
+
 # ----- Generated files -----
 *.lock.json
 *.log

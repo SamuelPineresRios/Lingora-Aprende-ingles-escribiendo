@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Lightbulb, X } from 'lucide-react'
-import { resolveAvatar, type MissionBackdrop as MissionBackdropSpec, type MissionIntroduction } from '@vox/shared'
-import { useNavigate } from 'react-router-dom'
-import { Timer } from './Timer'
+import { CHALLENGE_MISSION_SECONDS, formatClock, resolveAvatar, type MissionBackdrop as MissionBackdropSpec, type MissionIntroduction } from '@vox/shared'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { TypewriterMessage } from './TypewriterMessage'
 import { VocabularyQuiz } from './VocabularyQuiz'
 import { XpBar } from './XpBar'
@@ -10,8 +9,10 @@ import { useProgress } from '@/lib/hooks/useProgress'
 import { warmWords } from '@/lib/word-cache'
 import { GrammarToastStack, HeartMeter, type GrammarNotice } from './GrammarToast'
 import { StepHintStack, type StepHint } from './StepHintToast'
+import { GuestLimitNotice } from './GuestLimitNotice'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { useGuestTrialLimit } from '@/lib/hooks/useGuestTrialLimit'
 import { readJson } from '@/lib/api'
 import { characterAvatarUrl, studentAvatarUrl } from '@/lib/avatar'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
@@ -116,9 +117,10 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const [isLastMessageTyping, setIsLastMessageTyping] = useState(false)
   /** El saludo inicial no llegó (proveedor de IA): se ofrece reintentar. */
   const [startError, setStartError] = useState<string | null>(null)
+  const { guestLimit, flagGuestLimit, clearGuestLimit } = useGuestTrialLimit()
+
   /** Misión cuya cabecera de presentación ya se vio (se rearma al cambiar). */
   const [titleDoneFor, setTitleDoneFor] = useState<string | null>(null)
-  const [timedOut, setTimedOut] = useState(false)
   const { progress } = useProgress(user?.id)
   const [showCompletionNotification, setShowCompletionNotification] = useState(false)
   /** El titular terminó de escribirse: salen la línea y el subtítulo. */
@@ -127,8 +129,10 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   const [completionActions, setCompletionActions] = useState(false)
   const [hasNotifiedCompletion, setHasNotifiedCompletion] = useState(false)
   const [missionProgress, setMissionProgress] = useState(0)
-  const [timerDuration, setTimerDuration] = useState(mission.base_duration_seconds)
-  const [timerKey, setTimerKey] = useState(0)
+  /** Límite total del Desafío (3:00), sin reloj por respuesta. */
+  const [missionSeconds, setMissionSeconds] = useState(CHALLENGE_MISSION_SECONDS)
+  const [timeUp, setTimeUp] = useState(false)
+  const challengeDeadline = useRef<number | null>(null)
   
   // Correcciones en curso: cada una es una notificación en la esquina.
   const [grammarNotices, setGrammarNotices] = useState<GrammarNotice[]>([])
@@ -181,6 +185,14 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
     setHearts(TOTAL_HEARTS)
     setShowFailedNotification(false)
     setMissionCompleted(false)
+    clearGuestLimit()
+    if (mode === 'evaluation') {
+      challengeDeadline.current = Date.now() + CHALLENGE_MISSION_SECONDS * 1000
+      setMissionSeconds(CHALLENGE_MISSION_SECONDS)
+      setTimeUp(false)
+    } else {
+      challengeDeadline.current = null
+    }
 
     const payload = {
         mode: 'chat',
@@ -205,15 +217,15 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
             if (!res.ok || !data?.message) {
                 lastError = data?.error ?? 'El coach no pudo responder. Reintenta en unos segundos.'
+                if (flagGuestLimit(data)) {
+                    setStartError(lastError)
+                    setIsThinking(false)
+                    return
+                }
                 console.warn(`[chat] Arranque fallido (intento ${attempt}):`, res.status, data)
             } else {
                 setMessages([data.message])
                 setIsLastMessageTyping(true)
-                if (mode === 'evaluation' && data.estimated_time) {
-                    setTimerDuration(data.estimated_time)
-                    setTimerKey(prev => prev + 1)
-                    setTimedOut(false)
-                }
                 setIsThinking(false)
                 setTimeout(() => textareaRef.current?.focus(), 100)
                 return
@@ -227,7 +239,16 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
     setStartError(lastError)
     setIsThinking(false)
-  }, [mission, user])
+  }, [mission, user, clearGuestLimit])
+
+  /** El informe del modo libre ofrece «¿Deseas desafiar?» y entra directo. */
+  const [searchParams] = useSearchParams()
+  const autoChallenge = useRef(false)
+  useEffect(() => {
+    if (searchParams.get('desafio') !== '1' || autoChallenge.current) return
+    autoChallenge.current = true
+    void startMission('evaluation')
+  }, [searchParams, startMission])
 
   /**
    * Un envío fallido no debe dejar al alumno bloqueado: se retira su mensaje
@@ -274,7 +295,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
     setCurrentInput('')
     setIsThinking(true)
     setIsLastMessageTyping(false)
-    setTimedOut(false) // Reset timeout state on user action
 
     try {
         const res = await fetch('/api/chat', {
@@ -289,14 +309,18 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             })
         })
         const data = await readJson(res)
+        if (!res.ok && flagGuestLimit(data)) {
+            setIsThinking(false)
+            return
+        }
         if (data?.message) {
             const isA1Tier1 = mission.cefr_level === 'A1' && mission.tier === 1
             const correctedText = typeof data.correctedText === 'string' ? data.correctedText.trim() : ''
             const errorType = typeof data.error_type === 'string' ? data.error_type : ''
 
-            // Error gramatical (salvo A1 nivel 1): el mensaje no se envía.
-            // Se retira del chat, se explica la corrección y se obliga a
-            // reescribir la frase antes de continuar.
+            // Error que bloquea según el nivel (el prompt ya filtra: A1 es
+            // indulgente y el nivel 1 nunca bloquea). Se retira del chat, se
+            // explica la corrección y se obliga a reescribir la frase.
             if (!isA1Tier1 && errorType && correctedText) {
               setMessages(current => current.filter(message => message !== userMsg))
               setCurrentInput('')
@@ -390,11 +414,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             // Enable typewriter effect for the new assistant message
             setIsLastMessageTyping(true)
 
-            if (missionMode === 'evaluation' && data.estimated_time) {
-                setTimerDuration(data.estimated_time)
-                setTimerKey(prev => prev + 1)
-            }
-            
             // Update Mission Progress from API
             if (data.progress !== undefined) {
                 setMissionProgress(data.progress)
@@ -488,12 +507,17 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 group_id: groupId,
                 time_taken_seconds: timeTaken,
                 tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                mode: missionMode,
             }),
             })
             const data = await readJson(res)
 
             if (!res.ok) {
                 console.error('Submission error', data)
+                if (flagGuestLimit(data)) {
+                    setState('active'); setIsThinking(false)
+                    return
+                }
                 // Revert UI state and show brief alert to user
                 setState('active'); setIsThinking(false)
                 alert('Submission failed: ' + (data?.error || 'Unknown error'))
@@ -520,6 +544,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             response_id: data.response_id,
             evaluation_id: data.evaluation_id,
             completed: missionCompleted ? '1' : '0',
+            mode: missionMode,
         })
                         try {
                                 await navigate(`/feedback?${p}`)
@@ -588,6 +613,27 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
           handleSendMessage() 
       } 
   }
+
+  const lastAssistant = [...messages].reverse().find(message => message.role === 'assistant')
+
+  // El Desafío dura 3:00 en total. No hay reloj por respuesta: el límite
+  // solo condiciona la misión completa y corre mientras la conversación está activa.
+  useEffect(() => {
+    if (missionMode !== 'evaluation' || state !== 'active' || !challengeDeadline.current) return
+    const update = () => {
+      const remaining = Math.max(0, Math.ceil((challengeDeadline.current! - Date.now()) / 1000))
+      setMissionSeconds(remaining)
+    }
+    update()
+    const interval = setInterval(update, 500)
+    return () => clearInterval(interval)
+  }, [missionMode, state])
+
+  useEffect(() => {
+    if (missionMode !== 'evaluation' || state !== 'active' || missionSeconds > 0) return
+    setTimeUp(true)
+    setShowFailedNotification(true)
+  }, [missionMode, state, missionSeconds])
 
   // ── Fase 2: escena narrativa ──────────────────────────────────────────
   if (state === 'introduction') {
@@ -750,7 +796,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 className="py-4 rounded-xl bg-slate-900/95 border border-amber/40 hover:border-amber hover:bg-amber/10 text-amber font-bold uppercase tracking-widest transition-all disabled:opacity-50"
               >
                 Desafío
-                <span className="block text-[10px] text-slate-400 font-normal mt-1">Tres corazones · tiempo ajustado</span>
+                <span className="block text-[10px] text-slate-400 font-normal mt-1">Tres corazones · 3:00 en total</span>
               </button>
             </div>
 
@@ -773,7 +819,6 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
   /** Cargo del personaje de la IA, para su etiqueta en escena. */
   const aiRole = introduction?.characters.find(character => character.played_by === 'ai')?.role ?? 'Lo interpreta la IA'
   /** Último turno de cada lado: la conversación se lee como una escena. */
-  const lastAssistant = [...messages].reverse().find(message => message.role === 'assistant')
 
   /** Pide a la IA exactamente dos pistas para responder al personaje. */
   const requestHints = async () => {
@@ -810,6 +855,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
       setHintsLoading(false)
     }
   }
+
   const lastUser = [...messages].reverse().find(message => message.role === 'user')
   const assistantSpeaking = isThinking || isLastMessageTyping
 
@@ -838,11 +884,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             <div className="bg-gradient-to-r from-cyan-950/60 to-slate-900/60 backdrop-blur-sm p-3 rounded-lg border border-cyan/30 space-y-2">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[0.7rem] md:text-[0.75rem] text-cyan-300 font-bold uppercase tracking-widest">🎯 Objetivo</span>
-                {missionMode === 'evaluation' && (
-                  <Timer key={timerKey} durationSeconds={timerDuration} onTimeout={() => setTimedOut(true)} />
-                )}
               </div>
-              <p className="text-[0.8rem] md:text-sm text-cyan-50 leading-snug line-clamp-2">{mission.objective}</p>
+              <p className="text-[0.8rem] md:text-sm text-cyan-50 leading-snug">{mission.objective}</p>
             </div>
 
             <div className="relative">
@@ -861,7 +904,11 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                   )}
                 />
               </div>
-              {missionMode === 'evaluation' && <HeartMeter hearts={hearts} total={TOTAL_HEARTS} />}
+              {missionMode === 'evaluation' && (
+                <div className="flex items-center justify-between gap-3">
+                  <HeartMeter hearts={hearts} total={TOTAL_HEARTS} />
+                </div>
+              )}
             </div>
           </header>
 
@@ -890,6 +937,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 studentAvatar={studentAvatar}
                 isLastMessageTyping={isLastMessageTyping}
                 onTypingComplete={() => setIsLastMessageTyping(false)}
+                enableLookup={missionMode !== 'evaluation'}
               />
 
               {isThinking && (
@@ -912,15 +960,19 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
               )}
 
               {startError && messages.length === 0 && (
-                <div className="mx-auto max-w-md rounded-xl border border-coral/30 bg-coral/10 px-4 py-3 text-center text-sm text-red-100 space-y-2">
-                  <p>{startError}</p>
-                  <button
-                    onClick={() => startMission(missionMode)}
-                    className="text-[11px] font-mono uppercase tracking-widest border border-coral/40 rounded-lg px-3 py-1.5 text-red-100 hover:bg-coral/10 transition-colors"
-                  >
-                    Reintentar
-                  </button>
-                </div>
+                guestLimit ? (
+                  <GuestLimitNotice message={startError} />
+                ) : (
+                  <div className="mx-auto max-w-md rounded-xl border border-coral/30 bg-coral/10 px-4 py-3 text-center text-sm text-red-100 space-y-2">
+                    <p>{startError}</p>
+                    <button
+                      onClick={() => startMission(missionMode)}
+                      className="text-[11px] font-mono uppercase tracking-widest border border-coral/40 rounded-lg px-3 py-1.5 text-red-100 hover:bg-coral/10 transition-colors"
+                    >
+                      Reintentar
+                    </button>
+                  </div>
+                )
               )}
             </div>
 
@@ -939,6 +991,8 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             </div>
           </div>
 
+          {guestLimit && messages.length > 0 && <GuestLimitNotice compact />}
+
           {/* Entrada */}
           <div className="mission-screen-input shrink-0 px-4 pb-4">
             {/* Reescritura obligatoria tras un rechazo gramatical */}
@@ -948,13 +1002,15 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                   <p className="text-[10px] font-bold uppercase tracking-widest text-amber">
                     Reescribe la frase correcta para continuar
                   </p>
-                  <button
-                    onClick={() => setRewriteHintLevel(level => Math.min(level + 1, 3))}
-                    disabled={rewriteHintLevel >= 3}
-                    className="rounded-lg border border-amber/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-amber transition-colors hover:bg-amber/10 disabled:opacity-40"
-                  >
-                    {rewriteHintLevel === 0 ? 'Pista' : `Pista ${rewriteHintLevel}/3`}
-                  </button>
+                  {missionMode !== 'evaluation' && (
+                    <button
+                      onClick={() => setRewriteHintLevel(level => Math.min(level + 1, 3))}
+                      disabled={rewriteHintLevel >= 3}
+                      className="rounded-lg border border-amber/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-amber transition-colors hover:bg-amber/10 disabled:opacity-40"
+                    >
+                      {rewriteHintLevel === 0 ? 'Pista' : `Pista ${rewriteHintLevel}/3`}
+                    </button>
+                  )}
                 </div>
                 {rewriteHintLevel >= 1 && (
                   <p className="text-[12px] leading-relaxed text-slate-300">
@@ -979,7 +1035,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
             )}
 
             {/* Dos pistas de la IA para responder al personaje */}
-            {!rewrite && lastAssistant && (
+            {!rewrite && missionMode !== 'evaluation' && lastAssistant && (
               <div className="mb-2 flex flex-wrap items-center justify-end gap-2">
                 {hintsError && <span className="text-[10px] text-coral">{hintsError}</span>}
                 <button
@@ -1000,7 +1056,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 value={currentInput}
                 onChange={e => setCurrentInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={timedOut ? 'Mission time ended. Finish up!' : 'Type your message...'}
+                placeholder="Type your message..."
                 disabled={state === 'submitting' || isThinking}
                 rows={1}
                 className="flex-1 bg-transparent resize-none p-2 text-foreground placeholder:text-slate/40 focus:outline-none text-sm leading-relaxed disabled:opacity-50 max-h-32"
@@ -1089,7 +1145,7 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
 
           <div className="relative z-10 text-center space-y-6 p-8 max-w-md w-full">
             <div className="mx-auto w-24 h-24 bg-red-400/15 rounded-full flex items-center justify-center border-2 border-red-400 shadow-[0_0_30px_rgba(248,113,113,0.4)]">
-              <span className="text-5xl">💔</span>
+              <span className="text-5xl">{timeUp ? '⏱️' : '💔'}</span>
             </div>
 
             <div className="space-y-2">
@@ -1097,27 +1153,31 @@ export function MissionScreen({ mission, studentId, groupId }: MissionScreenProp
                 Desafío<br/>Fallido
               </h2>
               <p className="text-red-200 font-body text-sm tracking-[0.2em] animate-pulse">
-                TE QUEDASTE SIN CORAZONES
+                {timeUp ? `SE ACABÓ EL TIEMPO (${formatClock(CHALLENGE_MISSION_SECONDS)})` : 'TE QUEDASTE SIN CORAZONES'}
               </p>
             </div>
 
             <p className="text-red-100/80 text-base font-light leading-relaxed max-w-xs mx-auto">
-              Repasa las correcciones de la lista de la derecha y vuelve a intentarlo: en el Desafío cada frase fuera de tema o mal escrita cuesta un corazón.
+              {timeUp
+                ? 'El Desafío dura 3:00 en total. Vuelve a intentarlo y administra mejor el tiempo de la conversación.'
+                : 'Repasa las correcciones de la lista de la derecha y vuelve a intentarlo: en el Desafío cada frase fuera de tema o mal escrita cuesta un corazón.'}
             </p>
 
             <div className="flex flex-col gap-3 w-full pt-2">
               <button
-                onClick={() => { setState('preparation'); setShowFailedNotification(false); setMissionProgress(0); setHearts(TOTAL_HEARTS) }}
+                onClick={() => { setState('preparation'); setShowFailedNotification(false); setMissionProgress(0); setHearts(TOTAL_HEARTS); setTimeUp(false); setMissionSeconds(CHALLENGE_MISSION_SECONDS) }}
                 className="w-full py-4 rounded-xl bg-white text-red-900 font-black text-lg uppercase tracking-wider shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 transition-all active:scale-95"
               >
                 Reintentar
               </button>
-              <button
-                onClick={() => setShowFailedNotification(false)}
-                className="w-full py-3 text-red-200/60 font-body text-xs uppercase tracking-widest hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-              >
-                [ Volver al desafío ]
-              </button>
+              {!timeUp && (
+                <button
+                  onClick={() => setShowFailedNotification(false)}
+                  className="w-full py-3 text-red-200/60 font-body text-xs uppercase tracking-widest hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  [ Volver al desafío ]
+                </button>
+              )}
             </div>
           </div>
         </div>

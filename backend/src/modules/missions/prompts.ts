@@ -54,7 +54,7 @@ export const EVALUATION_SCHEMA: JsonSchema = {
         required: ['original', 'correction', 'explanation'],
         additionalProperties: false,
       },
-      description: '2-4 mejoras concretas de la respuesta, estructuradas para el historial del alumno.',
+      description: '2-4 mejoras concretas de la respuesta (gramática, vocabulario y verbos/colocaciones que no encajan en la escena), estructuradas para el historial del alumno.',
     },
   },
   required: [
@@ -86,15 +86,25 @@ CRITICAL SCORING RULES:
 5. feedback_text MUST follow this exact 3-part structure (separated by \\n\\n):
    PART 1 (2 sentences max): Narrative result — did the character understand the student? State clearly whether the objective was achieved.
    PART 2 (2 sentences max): One thing the student did correctly.
-   PART 3 (2 to 4 SHORT lines, one per line, each starting with "- "): WHAT THEY MUST FIX — cada línea señala un problema concreto (cita la frase del alumno que falla y su versión correcta) o una mejora. Nunca un párrafo corrido: una idea por línea. Si todo está bien, una sola línea con una forma concreta de subir de nivel.
-6. Además, rellena el campo improvements con 2-4 objetos { original, correction, explanation }: original es el fragmento exacto que falla (vacío si es una mejora opcional), correction la versión correcta en inglés y explanation el porqué en español (máximo 20 palabras). Deben coincidir con las líneas de la PART 3.
+   PART 3 (2 to 4 SHORT lines, one per line, each starting with "- "): WHAT THEY MUST FIX — cada línea señala un problema concreto (cita la frase del alumno que falla y su versión correcta) o una mejora. Incluye la elección de verbo/colocación que no encaja en la escena (p. ej. "see a movie" → "watch a movie"). Nunca un párrafo corrido: una idea por línea. Si todo está bien, una sola línea con una forma concreta de subir de nivel.
+6. Además, rellena el campo improvements con 2-4 objetos { original, correction, explanation }: original es el fragmento exacto que falla (vacío si es una mejora opcional), correction la versión correcta en inglés y explanation el porqué en español (máximo 20 palabras). Deben coincidir con las líneas de la PART 3. Si hay una elección de verbo o colocación que no encaja en la escena, debe ser una de las mejoras.
+
+CONTEXTUAL VERB & COLLOCATION CHECK (antes de puntuar):
+- Usa el objetivo y la escena para decidir qué verbo usaría un nativo en ESTE contexto.
+- Si el alumno usa un verbo gramaticalmente correcto pero poco natural aquí, añádelo a improvements con el verbo/expresión natural. Ejemplos: "see a movie" → "watch a movie"; "look at a film" → "watch a film"; "listen music" → "listen to music"; "make a photo" → "take a photo"; "say me" → "tell me".
+- Es una mejora léxica, no un motivo para PAUSE: si la respuesta cumple el objetivo, mantén ADVANCE y la comprensibilidad, pero incluye la mejora y menciónala en la PART 3.
+- Elige el verbo que pegue con la escena: order/have food, take/catch a train, try on clothes, watch a movie, listen to music, take a photo, play a game, do homework, etc.
+- Entre las 2-4 mejoras, incluye siempre la corrección de verbo/colocación contextual más importante cuando exista.
+- OBLIGATORIO: "see" + movie/film/show/series/TV/match/game → corrige a "watch" y añádelo a improvements aunque el resto sea perfecto. "listen music" → "listen to music"; "make/do a photo" → "take a photo".
 
 SCORING GUIDELINES:
 - Minimum score for ANY valid attempt: 50 (must answer the question meaningfully)
 - Score based on UNDERSTANDING and COMMUNICATIVE INTENT first, grammar second
-- A1/A2: Accept basic but correct responses. Core meaning is key.
-- B1: Accept mostly correct with minor errors
-- B2: Accept well-formed responses with natural flow
+- A1: Accept basic responses. Core meaning is key; small article/plural/preposition slips do NOT invalidate the answer.
+- A2: Accept mostly correct responses with minor errors if the message is clear.
+- B1: Accept well-formed responses; minor errors are acceptable if meaning is clear.
+- B2: Be stricter: expect accurate, natural language. Recurring tense, preposition or collocation errors must lower grammar_score and appear in improvements, even if communication succeeds.
+- C1: Be very strict: demand precision, range and natural register.
 
 JUDGMENT CALCULATION (AUTOMATIC):
 1. Validate content quality first (reject if nonsense/off-topic)
@@ -121,8 +131,8 @@ const CEFR_EVALUATION_CRITERIA: Record<CefrLevel, string> = {
   A1: 'Accept basic responses with simple structures. Focus: Can you understand the core meaning? Grammar perfection is NOT required.',
   A2: 'Accept mostly correct responses with minor errors. Focus: Is the message clear? Minor grammar errors are OK.',
   B1: 'Accept well-formed responses with natural flow. Minor errors acceptable if meaning is clear.',
-  B2: 'Expect more sophisticated language. Minor errors still acceptable if communication is successful.',
-  C1: 'Expect fluent, precise, near-native language: varied structures, accurate register and nuanced ideas. Only occasional slips are acceptable.',
+  B2: 'Be stricter than B1: expect well-formed, natural responses with accurate tense/aspect, prepositions and collocations. Recurring errors must lower grammar_score and appear in improvements even if the message is understandable.',
+  C1: 'Be very strict: expect fluent, precise, near-native language with varied structures, accurate register and nuanced ideas. Only occasional slips are acceptable.',
 }
 
 export interface EvaluationPromptContext {

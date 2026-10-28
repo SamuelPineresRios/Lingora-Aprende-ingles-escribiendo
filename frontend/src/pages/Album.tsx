@@ -3,7 +3,7 @@
  * su carta (personaje + escena); las colecciones van por nivel y su premio es
  * la medalla del nivel. Las cartas enlazan a su misión para jugarla.
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Album as AlbumIcon, Lock, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -31,11 +31,20 @@ interface AlbumCollection {
   medal: { id: string; name: string; icon: string; earned: boolean }
 }
 
+interface AlbumPagination {
+  level: string
+  page: number
+  page_size: number
+  total: number
+  pages: number
+}
+
 interface AlbumView {
   total: number
   unlocked: number
   collections: AlbumCollection[]
   characters: AlbumCharacter[]
+  pagination: AlbumPagination
 }
 
 export default function AlbumPage() {
@@ -44,12 +53,18 @@ export default function AlbumPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [filter, setFilter] = useState('all')
+  const [page, setPage] = useState(1)
+  const cardsRef = useRef<HTMLElement | null>(null)
+  const skipScroll = useRef(true)
 
   useEffect(() => {
     if (!user?.id) return
     let cancelled = false
+    setLoading(true)
+    setError('')
 
-    fetch(`/api/students/${user.id}/album`)
+    const params = new URLSearchParams({ level: filter, page: String(page) })
+    fetch(`/api/students/${user.id}/album?${params.toString()}`)
       .then(readJson<AlbumView>)
       .then(data => {
         if (!cancelled && data) setAlbum(data)
@@ -64,9 +79,17 @@ export default function AlbumPage() {
     return () => {
       cancelled = true
     }
-  }, [user?.id])
+  }, [user?.id, filter, page])
 
-  const characters = album?.characters.filter(card => filter === 'all' || card.level === filter) ?? []
+  useEffect(() => {
+    if (skipScroll.current) {
+      skipScroll.current = false
+      return
+    }
+    cardsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [filter, page])
+
+  const characters = album?.characters ?? []
   const pct = album && album.total > 0 ? Math.round((album.unlocked / album.total) * 100) : 0
 
   return (
@@ -94,15 +117,15 @@ export default function AlbumPage() {
           </div>
         )}
 
-        {loading && (
+        {loading && !album && (
           <div className="flex items-center justify-center py-20 text-slate-500 gap-2 text-xs uppercase tracking-widest">
             <Loader2 className="h-4 w-4 animate-spin" /> Cargando…
           </div>
         )}
 
-        {!loading && error && <p className="text-coral text-sm">{error}</p>}
+        {error && <p className="text-coral text-sm">{error}</p>}
 
-        {!loading && album && (
+        {album && (
           <>
             {/* Colecciones por nivel, con la medalla como premio */}
             <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -143,7 +166,7 @@ export default function AlbumPage() {
               {['all', ...album.collections.map(collection => collection.level)].map(level => (
                 <button
                   key={level}
-                  onClick={() => setFilter(level)}
+                  onClick={() => { setFilter(level); setPage(1) }}
                   className={cn(
                     'rounded-lg border px-4 py-2 text-[11px] uppercase tracking-widest transition-colors',
                     filter === level
@@ -156,8 +179,15 @@ export default function AlbumPage() {
               ))}
             </div>
 
-            {/* Cartas */}
-            <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {/* Cartas: 10 por página */}
+            <section
+              ref={cardsRef}
+              aria-busy={loading}
+              className={cn(
+                'grid grid-cols-2 gap-3 transition-opacity sm:grid-cols-3 lg:grid-cols-5',
+                loading && 'pointer-events-none opacity-40',
+              )}
+            >
               {characters.map(card => (
                 <Link
                   key={card.mission_id}
@@ -191,11 +221,36 @@ export default function AlbumPage() {
               ))}
             </section>
 
-            {characters.length === 0 && (
+            {!loading && characters.length === 0 && (
               <div className="text-center py-16 border-2 border-dashed border-white/5 rounded-2xl space-y-2">
                 <AlbumIcon className="h-8 w-8 text-slate-600 mx-auto" />
                 <p className="text-slate-400 text-xs uppercase tracking-widest">Sin cartas en este nivel</p>
               </div>
+            )}
+
+            {album.pagination.pages > 1 && (
+              <nav
+                aria-label="Paginación del álbum"
+                className="flex flex-wrap items-center justify-center gap-3 pt-1"
+              >
+                <button
+                  onClick={() => setPage(current => Math.max(1, current - 1))}
+                  disabled={page <= 1 || loading}
+                  className="rounded-lg border border-white/10 px-4 py-2 text-[11px] uppercase tracking-widest text-slate-300 transition-colors hover:border-cyan/40 hover:text-cyan disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  ← Anterior
+                </button>
+                <span className="text-[10px] uppercase tracking-widest text-slate-500">
+                  Página {page} de {album.pagination.pages} · {album.pagination.page_size} por página
+                </span>
+                <button
+                  onClick={() => setPage(current => Math.min(album.pagination.pages, current + 1))}
+                  disabled={page >= album.pagination.pages || loading}
+                  className="rounded-lg border border-white/10 px-4 py-2 text-[11px] uppercase tracking-widest text-slate-300 transition-colors hover:border-cyan/40 hover:text-cyan disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  Siguiente →
+                </button>
+              </nav>
             )}
           </>
         )}

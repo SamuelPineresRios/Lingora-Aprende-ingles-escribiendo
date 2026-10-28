@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Check, Swords } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { getCefrLabel } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { MissionSimulationAside } from '@/components/MissionSimulationAside'
+import { GuestTrialBanner } from '@/components/GuestTrialBanner'
 import { DailyQuests } from '@/components/QuestBoard'
 import { WeekendEventBanner } from '@/components/WeekendEventBanner'
 import { WeaknessDrills } from '@/components/WeaknessDrills'
@@ -25,7 +27,7 @@ const TIER_COLORS: Record<number, string> = {
   3: 'border-amber/50 text-amber',
 }
 
-const STATUS = { not_started:{label:'',color:''}, in_progress:{label:'IN PROGRESS',color:'text-amber animate-pulse'}, completed:{label:'COMPLETED',color:'text-cyan-light'}, paused:{label:'RETRY',color:'text-slate-light'} }
+const STATUS = { not_started:{label:'',color:''}, in_progress:{label:'IN PROGRESS',color:'text-amber animate-pulse'}, challenge_pending:{label:'DESAFIAR',color:'text-amber'}, completed:{label:'COMPLETED',color:'text-cyan-light'}, paused:{label:'RETRY',color:'text-slate-light'} }
 
 export default function MissionsPage() {
   const { user, logout } = useAuth()
@@ -126,7 +128,11 @@ export default function MissionsPage() {
         <div className="flex flex-col items-end gap-2">
           <div className="flex flex-wrap items-center justify-end gap-3">
              <StreakNotice />
-             <button onClick={logout} className="text-[10px] uppercase tracking-wider text-slate/50 hover:text-coral transition-colors px-2 py-1">Disconnect</button>
+             {user?.is_guest ? (
+               <Link to="/signup" className="text-[10px] uppercase tracking-wider text-amber hover:text-amber-300 transition-colors px-2 py-1">Crear cuenta</Link>
+             ) : (
+               <button onClick={logout} className="text-[10px] uppercase tracking-wider text-slate/50 hover:text-coral transition-colors px-2 py-1">Disconnect</button>
+             )}
           </div>
           <div className="flex gap-1">
              {[1,2,3].map(i => <div key={i} className={cn("w-1.5 h-1.5 rounded-full", i===1 ? "bg-emerald animate-pulse" : "bg-white/10")} />)}
@@ -134,6 +140,7 @@ export default function MissionsPage() {
         </div>
       </div>
 
+      <GuestTrialBanner />
       <WeekendEventBanner />
 
       {/* Grid Layout */}
@@ -167,14 +174,18 @@ export default function MissionsPage() {
               return (
                 <div key={m.id}>
                   <Link
-                    to={`/mission/${m.id}`}
+                    to={m.status === 'challenge_pending' ? `/mission/${m.id}?desafio=1` : `/mission/${m.id}`}
                     className="group block relative"
                     onMouseEnter={() => prewarmIntroduction(m.id)}
                     onFocus={() => prewarmIntroduction(m.id)}
                   >
                     {/* Cyber Card Background */}
-                    <div className={cn("absolute inset-0 border border-white/10 bg-black/40 backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] clip-path-cyber", 
-                      m.status==='completed' ? 'opacity-80 grayscale-[0.8] border-dashed' : 'opacity-100'
+                    <div className={cn("absolute inset-0 border border-white/10 bg-black/40 backdrop-blur-sm transition-all duration-300 clip-path-cyber", 
+                      m.status==='completed'
+                        ? 'opacity-80 grayscale-[0.8] border-dashed'
+                        : m.status==='challenge_pending'
+                          ? 'border-amber/50 shadow-[0_0_35px_rgba(245,158,11,0.35)] group-hover:border-amber'
+                          : 'opacity-100 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]'
                     )} />
 
                     {/* Fondo ambientado de la misión (el generado o el de respaldo).
@@ -196,7 +207,7 @@ export default function MissionsPage() {
 
                     <div className={cn("relative p-4 pr-8 flex flex-col gap-2 h-full", m.status==='completed' && 'opacity-60')}>
                       {/* Header with Level and ID */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                          <span className={cn('text-[12px] font-bold border px-2 py-1 rounded tracking-wider', LEVEL_COLORS[m.cefr_level], LEVEL_BG[m.cefr_level])}>{m.cefr_level}</span>
                          {m.tier && (
                            <span className={cn('text-[10px] font-bold border px-1.5 py-0.5 rounded tracking-wider', TIER_COLORS[m.tier])}>
@@ -204,7 +215,9 @@ export default function MissionsPage() {
                            </span>
                          )}
                          <span className="text-[10px] text-slate-500 font-body tracking-tighter">ID:{m.id}</span>
-                         {st.label && <span className={cn('text-[10px] font-bold tracking-wider ml-auto', st.color)}>{st.label}</span>}
+                         {st.label && m.status !== 'completed' && m.status !== 'challenge_pending' && (
+                           <span className={cn('ml-auto shrink-0 text-[10px] font-bold tracking-wider', st.color)}>{st.label}</span>
+                         )}
                       </div>
                       
                       <h3 className={cn("font-body font-semibold text-sm uppercase tracking-tight", 'text-white group-hover:text-cyan-400 transition-colors')}>{m.title}</h3>
@@ -234,11 +247,26 @@ export default function MissionsPage() {
                       </div>
                     </div>
 
-                    {/* Sello de misión completada, centrado sobre el contenido */}
+                    {m.status === 'challenge_pending' && (
+                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-slate-950/60 px-2 backdrop-blur-[2px]">
+                        <span
+                          aria-hidden
+                          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.4),rgba(2,6,23,0.55))]"
+                        />
+                        <span className="relative flex max-w-full items-center justify-center gap-1.5 text-center font-poppins text-[12px] font-black uppercase leading-tight tracking-[0.1em] text-amber drop-shadow-[0_0_20px_rgba(245,158,11,1)] sm:gap-2 sm:text-2xl sm:tracking-[0.35em]">
+                          <Swords className="h-3.5 w-3.5 shrink-0 sm:h-6 sm:w-6" /> Desafiar
+                        </span>
+                      </div>
+                    )}
+
                     {m.status === 'completed' && (
-                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
-                        <span className="rounded-lg border border-cyan-light/50 bg-slate-950/70 px-3 py-1 font-poppins text-[12px] font-bold uppercase tracking-[0.3em] text-cyan-light shadow-[0_0_25px_-8px_rgba(103,232,249,0.9)] backdrop-blur-sm">
-                          Completadas
+                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-slate-950/60 px-2 backdrop-blur-[2px]">
+                        <span
+                          aria-hidden
+                          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(103,232,249,0.4),rgba(2,6,23,0.55))]"
+                        />
+                        <span className="relative flex max-w-full items-center justify-center gap-1.5 text-center font-poppins text-[12px] font-black uppercase leading-tight tracking-[0.1em] text-cyan-light drop-shadow-[0_0_20px_rgba(103,232,249,1)] sm:gap-2 sm:text-2xl sm:tracking-[0.35em]">
+                          <Check className="h-3.5 w-3.5 shrink-0 sm:h-6 sm:w-6" /> Completada
                         </span>
                       </div>
                     )}

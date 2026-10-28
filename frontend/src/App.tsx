@@ -33,28 +33,30 @@ export function App() {
       <RouteTracker />
 
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Navigate to="/missions" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<StudentLayout />}>
+            <Route element={<ProtectedRoute accountOnly />}>
+              <Route path="/join-group" element={<JoinGroup />} />
+              <Route path="/groups" element={<StudentGroups />} />
+              <Route path="/ranking" element={<Ranking />} />
+              <Route path="/friends" element={<Friends />} />
+            </Route>
             <Route path="/missions" element={<Missions />} />
             <Route path="/mission/:id" element={<MissionPage />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/session-summary" element={<SessionSummary />} />
-            <Route path="/join-group" element={<JoinGroup />} />
-            <Route path="/groups" element={<StudentGroups />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/words" element={<Words />} />
             <Route path="/album" element={<Album />} />
             <Route path="/paths" element={<Paths />} />
             <Route path="/mistakes" element={<Mistakes />} />
-            <Route path="/ranking" element={<Ranking />} />
-            <Route path="/friends" element={<Friends />} />
             <Route path="/season" element={<Season />} />
             <Route path="/store" element={<Store />} />
-          <Route path="/avatar" element={<Avatar />} />
+            <Route path="/avatar" element={<Avatar />} />
           </Route>
 
           <Route element={<ProtectedRoute teacherOnly />}>
