@@ -6,7 +6,7 @@
  * el ratón (`pointer-events-none`), así que las páginas solo tienen que
  * montarlo detrás de su contenido (`relative z-10`).
  */
-import { ResponsiveBackgroundSprites } from './ResponsiveBackgroundSprites'
+import { ResponsiveBackgroundSprites } from '@/components/layout/ResponsiveBackgroundSprites'
 
 export function ModuleBackdrop() {
   return (

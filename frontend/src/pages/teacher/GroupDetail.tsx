@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { TeacherDashboard } from '@/components/TeacherDashboard'
-import { StudentProfileModal } from '@/components/StudentProfileModal'
+import { TeacherDashboard } from '@/components/teacher/TeacherDashboard'
+import { StudentProfileModal } from '@/components/teacher/StudentProfileModal'
 import { cn } from '@/lib/utils'
 import { readJson } from '@/lib/api'
 import { 

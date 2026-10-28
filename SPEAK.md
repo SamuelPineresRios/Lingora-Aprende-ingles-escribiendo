@@ -299,7 +299,7 @@ GET  /health
 
 ## 9. Frontend: páginas y componentes
 
-### Páginas (`frontend/src/pages`)
+### Páginas (`frontend/src/pages/<área>`)
 | Ruta | Página | Qué muestra |
 |---|---|---|
 | `/login`, `/signup` | Login, Signup | Acceso y alta (alumno/docente) |
@@ -319,8 +319,17 @@ GET  /health
 | `/avatar` | Avatar | Editor de avatar, marco y título |
 | `/dashboard`, `/group/:id`, … | TeacherDashboard, GroupDetail… | Zona docente |
 
+### Estructura del frontend
+- **`features/mission/`**: pantalla de misión, `api`, tipos/constantes/utilidades, `hooks/` (conversación, desafío, flujo, introducción y envío) y `components/` (fases, chat, compositor, escena, overlays, informe). La escena, el chat y el reporte viven juntos en el feature.
+- **`components/layout/`**: `StudentLayout`, `StudentSidebar`, `ProtectedRoute`, `RouteTracker`, `ModuleTransitionLayer`, `ModuleBackdrop` y sprites de fondo.
+- **`components/progress/`**: `XpBar`, `WeeklyReport`, `ActivityHistory`, `MedalBadge`.
+- **`components/gamification/`**: `QuestBoard`, `CoinRain`, `WeekendEventBanner`, `StreakNotice`.
+- **`components/learning/`**: `ActiveVocabulary`, `ReviewSession`, `WeaknessDrills`.
+- **`components/profile/`**, **`components/teacher/`**, **`components/onboarding/`** y **`components/ui/`**: marcos, vista docente, invitado y primitivas de UI.
+- **`pages/{auth,missions,learning,profile,social,teacher}/`**: páginas agrupadas por área.
+
 ### Componentes clave
-- **Escena y chat**: `IntroductionPlayer`, `MissionTitleCard`, `NarrativeCharacter`, `Chat` → `ConversationMessages` (historial), `TypewriterMessage`, `InteractiveWords` (ficha/guardar palabra), `GrammarToast`, `StepHintToast`, `Timer`, `XpBar`, `StreakNotice`.
+- **Misión**: `features/mission` → `MissionScreen` orquesta fases; `ConversationMessages` (historial), `TypewriterMessage`, `InteractiveWords` (ficha/guardar), `GrammarToast`, `StepHintToast`, `GuestLimitNotice`, `XpBar`.
 - **Vocabulario**: `VocabularyQuiz` (estudio → emparejar → completar frases → resumen), `ReviewSession` (SRS), `WeaknessDrills` (puntos débiles con «¿Por qué?»), `ActiveVocabulary`.
 - **Juego**: `QuestBoard` (`DailyQuests`/`WeeklyQuests`), `MedalBadge`, `FrameRing`, `CoinRain`, `ModuleBackdrop`, `WeekendEventBanner`.
 - **Perfil y progreso**: `ActivityHistory`, `WeeklyReport`, `StudentProfileModal`, `StudentSidebar`, `StudentLayout`, `ProtectedRoute`, `RouteTracker`.

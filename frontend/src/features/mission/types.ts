@@ -1,8 +1,8 @@
 import type { IntroductionCharacter, MissionBackdrop, MissionIntroduction } from '@vox/shared'
-import type { ChatMessage } from '@/components/ConversationMessages'
-import type { GrammarCorrection } from '@/components/GrammarCorrectionModal'
-import type { GrammarNotice } from '@/components/GrammarToast'
-import type { StepHint } from '@/components/StepHintToast'
+import type { ChatMessage } from '@/features/mission/components/ConversationMessages'
+import type { GrammarCorrection } from '@/features/mission/components/GrammarCorrectionModal'
+import type { GrammarNotice } from '@/features/mission/components/GrammarToast'
+import type { StepHint } from '@/features/mission/components/StepHintToast'
 
 export interface Mission {
   id: string

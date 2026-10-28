@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Users, Clock, AlertCircle, PlayCircle, Trophy, Target, Award, ShieldAlert, Cpu } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { ModuleBackdrop } from '@/components/layout/ModuleBackdrop'
 import { readJson } from '@/lib/api'
 
 export default function StudentGroupsPage() {

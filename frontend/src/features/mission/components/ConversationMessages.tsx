@@ -1,5 +1,5 @@
-import { TypewriterMessage } from './TypewriterMessage'
-import { InteractiveWords } from './InteractiveWords'
+import { TypewriterMessage } from '@/features/mission/components/TypewriterMessage'
+import { InteractiveWords } from '@/features/mission/components/InteractiveWords'
 import { characterAvatarUrl, type AvatarGender } from '@/lib/avatar'
 
 /**

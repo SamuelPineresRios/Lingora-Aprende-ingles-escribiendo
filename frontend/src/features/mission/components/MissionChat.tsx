@@ -1,5 +1,5 @@
-import { MissionBackdrop } from '@/components/MissionBackdrop'
-import { GuestLimitNotice } from '@/components/GuestLimitNotice'
+import { MissionBackdrop } from '@/features/mission/components/MissionBackdrop'
+import { GuestLimitNotice } from '@/features/mission/components/GuestLimitNotice'
 import { resolveBackdrop } from '@/lib/mission-backdrop'
 import type { StudentProgress } from '@/lib/hooks/useProgress'
 import { ConversationStage } from './ConversationStage'

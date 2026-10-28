@@ -1,5 +1,5 @@
-import { IntroductionPlayer } from '@/components/IntroductionPlayer'
-import { MissionTitleCard } from '@/components/MissionTitleCard'
+import { IntroductionPlayer } from '@/features/mission/components/IntroductionPlayer'
+import { MissionTitleCard } from '@/features/mission/components/MissionTitleCard'
 import type { Mission, MissionIntroduction } from '../types'
 
 interface IntroductionPhaseProps {

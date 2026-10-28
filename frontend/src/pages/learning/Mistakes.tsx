@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Loader2, NotebookPen } from 'lucide-react'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { ModuleBackdrop } from '@/components/layout/ModuleBackdrop'
 
 interface Improvement {
   original: string

@@ -1,5 +1,5 @@
-import { XpBar } from '@/components/XpBar'
-import { HeartMeter } from '@/components/GrammarToast'
+import { XpBar } from '@/components/progress/XpBar'
+import { HeartMeter } from '@/features/mission/components/GrammarToast'
 import { cn } from '@/lib/utils'
 import type { StudentProgress } from '@/lib/hooks/useProgress'
 import { TOTAL_HEARTS } from '../constants'

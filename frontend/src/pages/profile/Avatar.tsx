@@ -7,7 +7,7 @@
  * el contexto. El registro guarda un skin base y aquí solo se pisa lo que se
  * toca; al guardar, la sesión se refresca y el avatar cambia en toda la app.
  */
-import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { ModuleBackdrop } from '@/components/layout/ModuleBackdrop'
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Check, Dices, Loader2, Palette, RotateCcw, Scissors, Shirt, Smile } from 'lucide-react'
@@ -31,7 +31,7 @@ import {
 } from '@vox/shared'
 import { cn } from '@/lib/utils'
 import { studentAvatarUrl } from '@/lib/avatar'
-import { FrameRing } from '@/components/FrameRing'
+import { FrameRing } from '@/components/profile/FrameRing'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useThemeAccent } from '@/lib/hooks/useStoreView'
 import { useStoreView } from '@/lib/hooks/useStoreView'

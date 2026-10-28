@@ -1,5 +1,5 @@
-import { ConversationMessages } from '@/components/ConversationMessages'
-import { GuestLimitNotice } from '@/components/GuestLimitNotice'
+import { ConversationMessages } from '@/features/mission/components/ConversationMessages'
+import { GuestLimitNotice } from '@/features/mission/components/GuestLimitNotice'
 import { characterAvatarUrl } from '@/lib/avatar'
 import { SceneFigure } from './SceneFigure'
 import type { IntroductionCharacter, Mission, MissionMode } from '../types'

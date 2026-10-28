@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Volume2, VolumeX } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { MissionBackdrop } from '@vox/shared'
-import { MissionBackdrop as MissionBackdropLayer } from './MissionBackdrop'
+import { MissionBackdrop as MissionBackdropLayer } from '@/features/mission/components/MissionBackdrop'
 import { preloadAvatar, preloadAvatars, type AvatarGender } from '@/lib/avatar'
 import { playKeySound } from '@/lib/key-sound'
 

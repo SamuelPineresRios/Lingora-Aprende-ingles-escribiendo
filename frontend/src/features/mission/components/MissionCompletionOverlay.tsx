@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { TypewriterMessage } from '@/components/TypewriterMessage'
+import { TypewriterMessage } from '@/features/mission/components/TypewriterMessage'
 
 interface MissionCompletionOverlayProps {
   open: boolean

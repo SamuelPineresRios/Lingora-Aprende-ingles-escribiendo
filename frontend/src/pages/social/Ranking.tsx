@@ -5,13 +5,13 @@
  * con ascensos y descensos; el global ordena a todos los registrados por XP,
  * misiones o tiempo de toda la app.
  */
-import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { ModuleBackdrop } from '@/components/layout/ModuleBackdrop'
 import { useEffect, useMemo, useState } from 'react'
 import { Crown, Flame, Loader2, TrendingDown, TrendingUp, Trophy } from 'lucide-react'
 import { resolveAvatar, type UserAvatar } from '@vox/shared'
 import { cn } from '@/lib/utils'
-import { FrameRing } from '@/components/FrameRing'
-import { MedalBadge } from '@/components/MedalBadge'
+import { FrameRing } from '@/components/profile/FrameRing'
+import { MedalBadge } from '@/components/progress/MedalBadge'
 import { studentAvatarUrl } from '@/lib/avatar'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'

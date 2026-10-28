@@ -1,6 +1,6 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import { FeedbackScreen } from '@/components/FeedbackScreen'
+import { FeedbackScreen } from '@/features/mission/components/FeedbackScreen'
 import { readJson } from '@/lib/api'
 
 function FeedbackContent() {

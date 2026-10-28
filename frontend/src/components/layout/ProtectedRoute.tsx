@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { GuestGate } from '@/components/GuestGate'
+import { GuestGate } from '@/components/onboarding/GuestGate'
 
 /**
  * Guardia de rutas del SPA.

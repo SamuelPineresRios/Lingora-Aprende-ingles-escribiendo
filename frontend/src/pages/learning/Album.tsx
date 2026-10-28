@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { characterAvatarUrl, type AvatarGender } from '@/lib/avatar'
-import { MedalBadge } from '@/components/MedalBadge'
-import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { MedalBadge } from '@/components/progress/MedalBadge'
+import { ModuleBackdrop } from '@/components/layout/ModuleBackdrop'
 
 interface AlbumCharacter {
   mission_id: string

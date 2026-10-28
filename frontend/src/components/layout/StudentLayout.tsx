@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { StudentSidebar } from '@/components/StudentSidebar'
+import { StudentSidebar } from '@/components/layout/StudentSidebar'
 
 /** Layout de las páginas de alumno (antes `app/(student)/layout.tsx`). */
 export function StudentLayout() {

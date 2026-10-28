@@ -4,8 +4,8 @@
  * La lista ya llega con la ficha completa (traducción, formas verbales y
  * ejemplos), así que el detalle se pinta sin pedir nada más.
  */
-import { ModuleBackdrop } from '@/components/ModuleBackdrop'
-import { ActiveVocabulary } from '@/components/ActiveVocabulary'
+import { ModuleBackdrop } from '@/components/layout/ModuleBackdrop'
+import { ActiveVocabulary } from '@/components/learning/ActiveVocabulary'
 import { useEffect, useMemo, useState } from 'react'
 import { BookMarked, Loader2, Search, Trash2, X } from 'lucide-react'
 import { cn } from '@/lib/utils'

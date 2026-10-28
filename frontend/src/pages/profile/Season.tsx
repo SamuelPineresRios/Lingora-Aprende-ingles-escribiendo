@@ -6,12 +6,12 @@
  * La temporada rota sola cada 4 semanas; el progreso y el catálogo los calcula
  * el backend, aquí solo se pinta.
  */
-import { ModuleBackdrop } from '@/components/ModuleBackdrop'
+import { ModuleBackdrop } from '@/components/layout/ModuleBackdrop'
 import { createElement, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Coins, Lock, Medal, Store } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { WeeklyQuests } from '@/components/QuestBoard'
+import { WeeklyQuests } from '@/components/gamification/QuestBoard'
 import { readJson } from '@/lib/api'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { publishSeasonProgress } from '@/lib/hooks/useSeasonProgress'

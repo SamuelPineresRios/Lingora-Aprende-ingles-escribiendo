@@ -1,5 +1,5 @@
 import { useIsDesktop } from '@/lib/hooks/useMediaQuery'
-import { BackgroundSprites as BackgroundSpritesComponent } from './BackgroundSprites'
+import { BackgroundSprites as BackgroundSpritesComponent } from '@/components/layout/BackgroundSprites'
 
 /**
  * Responsive wrapper for BackgroundSprites
