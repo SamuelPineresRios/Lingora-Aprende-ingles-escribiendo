@@ -34,6 +34,7 @@ export interface MissionHint {
 }
 
 export interface MissionRewrite {
+  original: string
   corrected: string
   errorType: string
 }

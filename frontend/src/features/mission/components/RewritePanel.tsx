@@ -14,7 +14,7 @@ export function RewritePanel({ mode, rewrite, hintLevel, notice, onHint }: Rewri
     <div className="mb-2 space-y-2 rounded-xl border border-amber/40 bg-amber/10 px-3.5 py-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-[10px] font-bold uppercase tracking-widest text-amber">
-          Reescribe la frase correcta para continuar
+          Corrige el error y reescribe la frase
         </p>
         {mode !== 'evaluation' && (
           <button

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from 'react'
+import { checkRewrite } from '@vox/shared'
 import { warmWords } from '@/lib/word-cache'
 import { openMissionChat, requestMissionHints, sendMissionTurn } from '../api'
 import {
@@ -8,7 +9,6 @@ import {
   INPUT_FOCUS_DELAY_MS,
   MODAL_FOCUS_DELAY_MS,
 } from '../constants'
-import { normalizeSentence } from '../utils'
 import type {
   ChatMessage,
   GrammarCorrection,
@@ -187,9 +187,13 @@ export function useMissionConversation({
     if (!currentInput.trim() || isThinking) return
 
     if (rewrite) {
-      if (normalizeSentence(currentInput) !== normalizeSentence(rewrite.corrected)) {
+      const check = checkRewrite(currentInput, rewrite)
+      if (!check.accepted) {
+        const missing = [...new Set(check.missing)].slice(0, 4)
         setRewriteNotice(
-          'Aún no coincide con la frase correcta. Fíjate en el orden y vuelve a escribirla.',
+          missing.length > 0
+            ? `Aún no se entiende igual que la corrección. Falta: ${missing.join(', ')}. Corrígelo con tus propias palabras.`
+            : 'Aún no se entiende igual que la corrección. Revisa el orden o la forma verbal y vuelve a intentarlo con tus palabras.',
         )
         return
       }
@@ -234,7 +238,7 @@ export function useMissionConversation({
               data.feedback || data.missingStep || 'Revisa la gramática de la frase.',
             errorType,
           })
-          setRewrite({ corrected: correctedText, errorType })
+          setRewrite({ original: userMsg.content, corrected: correctedText, errorType })
           setRewriteHintLevel(0)
           setRewriteNotice(null)
           onMistake()

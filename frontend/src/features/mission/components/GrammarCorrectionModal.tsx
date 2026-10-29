@@ -68,7 +68,7 @@ export function GrammarCorrectionModal({
         </div>
 
         <p className="text-[11px] leading-relaxed text-slate-500">
-          Al cerrar no se enviará tu mensaje: tendrás que escribir de nuevo la frase correcta para continuar.
+          Al cerrar no se enviará tu mensaje: tendrás que reescribirlo corrigiendo el error. Puedes usar tus propias palabras; no hace falta copiar la corrección literalmente.
         </p>
 
         <button
