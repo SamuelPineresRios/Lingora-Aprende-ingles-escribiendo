@@ -27,6 +27,13 @@ cd "$(dirname "$0")/.."
 echo "Aplicando el esquema en Neon..."
 DATABASE_URL="$NEON_DIRECT_URL" npm run db:push -w @vox/backend
 
+if ! psql "$NEON_DIRECT_URL" -tAc "select to_regclass('public.missions')" | grep -qx 'missions'; then
+  echo "El esquema no se aplicó en Neon: no existe public.missions." >&2
+  echo "Comprueba que NEON_DIRECT_URL sea la conexión directa de Neon (sin -pooler)" >&2
+  echo "y que no sea la URL local de backend/.env.local." >&2
+  exit 1
+fi
+
 existing="$(psql "$NEON_DIRECT_URL" -tAc 'select count(*) from missions' | tr -d '[:space:]')"
 if [ "$existing" != "0" ]; then
   echo "Neon ya tiene $existing misiones. No se sobrescribe nada." >&2

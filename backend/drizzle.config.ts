@@ -1,15 +1,19 @@
 /**
  * Configuración de Drizzle Kit (push del esquema y futuras migraciones).
  *
- * Carga `backend/.env.local` si existe (Node ≥ 20.12); si no, usa el entorno
- * tal cual, de modo que en CI o en tests basta con exportar DATABASE_URL.
+ * Si `DATABASE_URL` viene del entorno (CI, Render o el script de Neon), se
+ * respeta y no se carga `.env.local`; así un `db:push` de producción nunca
+ * termina aplicándose a la base local por accidente. Sin variable, carga
+ * `backend/.env.local` para el flujo de desarrollo.
  */
 import { defineConfig } from 'drizzle-kit'
 
-try {
-  process.loadEnvFile('.env.local')
-} catch {
-  // Sin .env.local: se usa el entorno tal cual.
+if (!process.env.DATABASE_URL) {
+  try {
+    process.loadEnvFile('.env.local')
+  } catch {
+    // Sin .env.local: se usa el entorno tal cual.
+  }
 }
 
 const url = process.env.DATABASE_URL

@@ -130,6 +130,7 @@ frontend, así la cookie de sesión funciona sin CORS.
 | El login no mantiene la sesión | Comprueba que la API se llama a través de Vercel, no directo al dominio de Render |
 | `pg_dump` falla por FK al restaurar | El script restaura en orden (misiones → escenas → vocabulario); no mezcles los ficheros |
 | Neon dice que no hay tablas | Ejecuta primero `db:push`; el script lo hace |
+| `relation "missions" does not exist` | El esquema se aplicó a la base local, no a Neon. Revisa que `NEON_DIRECT_URL` sea la conexión directa de Neon (sin `-pooler`) y vuelve a ejecutar `deploy:content`; el script ya verifica `public.missions` antes de copiar |
 | El chat responde 503 | Falta `ANTHROPIC_API_KEY` o el proveedor `AI_*` |
 | La escena no tiene voz | Es esperado sin ElevenLabs; el navegador puede ofrecer voz nativa |
 | Render tarda en responder | Plan Free suspendido por inactividad; primera petición lenta |
