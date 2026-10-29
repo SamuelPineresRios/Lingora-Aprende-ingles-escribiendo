@@ -7,7 +7,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://TU-API.onrender.com/api/:path*"
+      "destination": "https://lingora-aprende-ingles-escribiendo.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
