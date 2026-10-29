@@ -1,3 +1,4 @@
+import { rewriteHint } from '@vox/shared'
 import { lessonFor } from '@/lib/grammar-lessons'
 import type { MissionMode, MissionRewrite } from '../types'
 
@@ -10,6 +11,8 @@ interface RewritePanelProps {
 }
 
 export function RewritePanel({ mode, rewrite, hintLevel, notice, onHint }: RewritePanelProps) {
+  const snippet = rewriteHint(rewrite.corrected, hintLevel >= 3 ? 0.5 : 0.3)
+
   return (
     <div className="mb-2 space-y-2 rounded-xl border border-amber/40 bg-amber/10 px-3.5 py-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -31,14 +34,11 @@ export function RewritePanel({ mode, rewrite, hintLevel, notice, onHint }: Rewri
           Regla: {lessonFor(rewrite.errorType).rule}
         </p>
       )}
-      {hintLevel >= 2 && (
+      {hintLevel >= 2 && snippet && (
         <p className="text-[12px] leading-relaxed text-slate-400">
-          Empieza así:{' '}
-          <span className="text-white">{rewrite.corrected.split(/\s+/).slice(0, 3).join(' ')}…</span>
+          {hintLevel === 2 ? 'Empieza así:' : 'Continúa desde aquí:'}{' '}
+          <span className="text-white">{snippet}</span>
         </p>
-      )}
-      {hintLevel >= 3 && (
-        <p className="text-[13px] font-semibold leading-relaxed text-emerald-200">{rewrite.corrected}</p>
       )}
       {notice && <p className="text-[11px] text-coral">{notice}</p>}
     </div>

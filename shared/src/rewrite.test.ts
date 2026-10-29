@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { checkRewrite } from './rewrite.ts'
+import { checkRewrite, rewriteHint } from './rewrite.ts'
 
 const correction = {
   original:
@@ -37,5 +37,19 @@ describe('reescritura flexible', () => {
       correction,
     )
     expect(result.missing).toContain('also')
+  })
+})
+
+describe('pistas de reescritura', () => {
+  it('nunca devuelve la frase completa', () => {
+    const hint = rewriteHint(correction.corrected, 0.5)
+    expect(hint).not.toBe(correction.corrected)
+    expect(hint.endsWith('…')).toBe(true)
+    expect(hint.split(/\s+/).length).toBeLessThan(correction.corrected.split(/\s+/).length + 1)
+  })
+
+  it('deja algo por escribir incluso en frases cortas', () => {
+    expect(rewriteHint('One', 0.5)).toBe('')
+    expect(rewriteHint('One two', 0.5)).toBe('One…')
   })
 })

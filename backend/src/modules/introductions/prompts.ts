@@ -146,7 +146,8 @@ MISSION DATA
 ${source.exampleConversation ? `REFERENCE CONVERSATION provided by the teacher (follow its situation and the kind of phrases it uses, but you may improve the wording):\n${source.exampleConversation}` : 'There is no reference conversation: invent the scene from the mission data above.'}
 
 RULES
-1. Exactly TWO characters: one with played_by "ai" and one with played_by "student".
+1. The objective is the complete case: use its names, places, numbers, options and constraints. Do not invent conflicting facts or ask the student for case data that the objective already provides.
+1a. Exactly TWO characters: one with played_by "ai" and one with played_by "student".
 1b. Give each character a gender ("male" or "female") that fits their name and role. If the name is ambiguous (Alex, Sam, Jordan…), pick the most likely one for that role and stay consistent with it.
 2. The character played_by "ai" MUST be named exactly "${source.characterName ?? 'Assistant'}". Never rename that character.
 3. The character played_by "student" is a natural counterpart (customer, passenger, patient...). Never name it after the student.

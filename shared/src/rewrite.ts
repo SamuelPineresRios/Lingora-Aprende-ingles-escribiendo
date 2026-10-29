@@ -150,3 +150,14 @@ export function checkRewrite(input: string, correction: RewriteCorrection): Rewr
     extra,
   }
 }
+
+/**
+ * Devuelve un inicio de la frase corregida, nunca la frase completa.
+ * Se usa en las pistas de reescritura para no regalar la respuesta.
+ */
+export function rewriteHint(corrected: string, fraction: number): string {
+  const words = corrected.trim().split(/\s+/).filter(Boolean)
+  if (words.length <= 1) return ''
+  const count = Math.min(words.length - 1, Math.max(1, Math.floor(words.length * fraction)))
+  return `${words.slice(0, count).join(' ')}…`
+}

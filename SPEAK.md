@@ -342,7 +342,7 @@ GET  /health
 - **170 misiones** con `cefr_level` y `tier` (1-3), incluidas 20 de desarrollo de software.
 - Tiers por nivel A1/A2/B1: **5 cortas / 10 medias / 25 largas**.
 - Cada tier sube exigencia: más pasos (2 → 3 → 4-5), duraciones (120/180/240 s en A1; 180/240/300 en A2; 240/300/360 en B1) y palabras (5/6/7 en A1; 6/7/8 en A2 y B1).
-- Objetivo y contexto detallados con pasos numerados; el prompt de IA divide el objetivo en tareas.
+- El **objetivo es el caso completo y la tarea**: incluye todos los datos que el alumno necesita para responder (nombres, archivos, comandos, cifras, opciones, riesgos y decisiones). El alumno nunca debe inventar un dato del caso. El contexto sitúa la escena; el prompt de IA divide el objetivo en tareas.
 
 ### Escena y vocabulario
 - **Fixtures deterministas**: `missions.json` (170), `introductions.json` (120 escenas) y `vocabulary.json` (120 listas de 8 palabras). El contenido de las misiones nuevas se genera con IA y se cachea en BD (5 palabras por misión).
@@ -364,7 +364,7 @@ GET  /health
 
 ### Chat y corrección
 - Turno estructurado por JSON Schema: mensaje, traducción, rating 1-5, feedback, `correctedText`, `missing_step`, `confused`, `error_type`, progreso, `mission_completed`.
-- **Rechazo gramatical**: si el turno trae `error_type` (el modelo solo lo marca cuando el error bloquea **según el nivel**), el mensaje **no se envía**: se retira del chat, se abre una **modal** con la frase correcta, la explicación y una **micro-lección de 60 s**, y se obliga a **reescribir la frase** con **pistas graduadas** (regla → inicio → frase completa). La validación es flexible: acepta una reformulación equivalente (normaliza contracciones/puntuación y compara por tokens, exigiendo que esté más cerca de la corrección que del error original); si no, señala las palabras que faltan. En el Desafío cuesta un corazón.
+- **Rechazo gramatical**: si el turno trae `error_type` (el modelo solo lo marca cuando el error bloquea **según el nivel**), el mensaje **no se envía**: se retira del chat, se abre una **modal** con la frase correcta, la explicación y una **micro-lección de 60 s**, y se obliga a **reescribir la frase** con **pistas graduadas** (regla → inicio → mitad de la frase; la pista nunca muestra la corrección completa). La validación es flexible: acepta una reformulación equivalente (normaliza contracciones/puntuación y compara por tokens, exigiendo que esté más cerca de la corrección que del error original); si no, señala las palabras que faltan. En el Desafío cuesta un corazón.
 - Errores **bloqueantes** (no avanza el paso) con nota de coach en español. La severidad sube con el CEFR: **A1 es indulgente** (solo bloquea lo ininteligible, fuera de tema o si falta la información clave; el nivel 1 nunca bloquea), **A2/B1 moderados** y **B2/C1 más estrictos** (tiempos, preposiciones, colocaciones y naturalidad). La evaluación del informe también puntúa con criterios de nivel.
 - El personaje reacciona en escena; si no entiende, aparece un **«?»** sobre su cabeza.
 - Sin traducción del mensaje: el alumno lee en inglés (la traducción se guarda en BD para análisis, pero no se muestra).
@@ -568,6 +568,6 @@ npm test -w @vox/backend -- --watch         # modo watch
 | **Ruta** | Itinerario curado por objetivo (viajar, trabajo…) |
 | **Puntos débiles** | Errores frecuentes del alumno + drills con explicación |
 | **Errores** | Historial de correcciones estructuradas por misión (dijiste → correcto + porqué), con enlace desde el informe |
-| **Rechazo gramatical** | Modal con corrección, micro-lección y reescritura flexible (se acepta una reformulación equivalente); en el Desafío cuesta un corazón |
+| **Rechazo gramatical** | Modal con corrección, micro-lección y reescritura flexible (se acepta una reformulación equivalente) y pistas que nunca muestran la frase completa; en el Desafío cuesta un corazón |
 | **Pistas** | Botón «2 pistas»: dos respuestas posibles de la IA por turno |
 | **Vocabulario activo** | Palabras que el alumno ya produce en sus textos |

@@ -206,6 +206,7 @@ Objective: "${mission.objective}"
 
 - Read the objective and break it into the exact tasks the student must complete, in the natural order of THIS scene.
 - The steps come ONLY from the objective text. NEVER invent extra steps: if the objective does not ask for the student's name, origin, hobbies or feelings, do not ask for them either.
+- The objective contains the complete case: names, files, numbers, options, risks and decisions are given there. Use those facts. NEVER ask the student to invent or decide a case fact that is not in the objective; if the objective asks for their opinion or choice, ask for that opinion or choice.
 - Ask for ONE task at a time, in your character's voice.
 - If the objective is open, the steps are the concrete details it mentions (for example: interests, notes, two options, agree on one).
 - Adapt to the scene: a career-guidance session asks about studies; a cafe asks about the order; a station asks about the destination.

@@ -45,11 +45,11 @@ const MISSION_SCHEMA: JsonSchema = {
           objective: {
             type: 'string',
             description:
-              'Qué debe lograr el alumno, en ESPAÑOL, con detalles concretos (nombres, horas, precios, cantidades).',
+              'Caso completo y tarea, en ESPAÑOL: todos los datos que el alumno necesita para responder (nombres, horas, precios, cantidades, archivos, comandos, opciones, riesgos o decisiones).',
           },
           scene_context: {
             type: 'string',
-            description: 'Dónde está y con quién habla, en ESPAÑOL, 1-2 frases.',
+            description: 'Dónde está y con quién habla, en ESPAÑOL, 1-2 frases. Sin lista de pasos.',
           },
           character_name: {
             type: 'string',
@@ -134,7 +134,8 @@ ${LEVEL_GUIDANCE[level]}
 FORMAT (respect it exactly):
 - title, description, objective and scene_context: in SPANISH.
 - character_name and example_conversation: in ENGLISH.
-- objective must be concrete: include names, times, prices or quantities the student has to mention.
+- objective must be a COMPLETE CASE and the task: include every fact the student needs to answer (names, dates, times, prices, quantities, file paths, commands, options, constraints, risks or decisions). The learner must NEVER have to invent a case fact. 2-4 sentences in Spanish. Personal facts (their name, their opinion) may be referred to as "tu nombre" or "tu opinión", but case facts must be explicit.
+- scene_context: where they are and who they talk to, 1-2 sentences in Spanish. Do NOT put a numbered step list here; the steps are derived from the objective.
 - example_conversation: one turn per line (real newline characters), 4-6 lines for A1 and more as the level rises, alternating "Person:" (the AI character) and "User:" (the student), in English. NEVER put the whole dialogue on a single line.
 - character_name: the person the AI plays (waiter, clerk, neighbour, nurse...), never "Assistant".
 
