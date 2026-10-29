@@ -302,13 +302,16 @@ npm run db:push:test -w @vox/backend  # aplicar el esquema a vox_test
 | Sin realtime | El dashboard docente usa polling. |
 | Alta de docentes abierta | Cualquiera puede registrarse como `teacher`. Requiere invitación o aprobación. |
 | Autorización a nivel de API | PostgreSQL se usa con un único rol compartido: el aislamiento lo garantizan los guards de Express, no row-level security. |
-| Sin despliegue definido | Esta fase prioriza local. Ver abajo. |
+| Despliegue | Vercel (frontend) + Render (API) + Neon (Postgres). Guía en [`docs/DEPLOY.md`](docs/DEPLOY.md). |
 
 ---
 
 ## Despliegue
 
 Guía completa del contenido generado: [`docs/PRODUCCION.md`](docs/PRODUCCION.md).
+
+Guía de despliegue recomendada (Vercel + Render + Neon, sin ElevenLabs):
+[`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 Orden de puesta en producción:
 
@@ -329,11 +332,12 @@ Orden de puesta en producción:
    «Preparando el vocabulario»: el contenido es dato, no código, y cada
    entorno necesita su precalentado.
 
-Puntos a resolver (fase posterior):
+El despliegue preparado usa Vercel para el frontend y Render para la API,
+con rewrite `/api` en el mismo origen para conservar la cookie de sesión. La
+base de datos y el contenido se cargan en Neon con `npm run deploy:content`.
 
-- El frontend es estático (`frontend/dist/`): se puede servir desde un CDN/host
-  estático con fallback SPA a `index.html`.
-- Si frontend y API quedan en dominios distintos, harán falta CORS con
-  credenciales y `SameSite=None; Secure` en la cookie, además de
-  `Strict-Transport-Security`.
-- Añadir rate limiting en auth y en las rutas de IA (ver `SECURITY.md`).
+Pendiente antes de abrir al público:
+
+- Añadir rate limiting en auth y en las rutas de IA.
+- Configurar límites de gasto en el proveedor de IA.
+- Definir dominio propio y backups de Neon.
